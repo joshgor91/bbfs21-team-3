@@ -5,7 +5,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import { Provider } from "react-redux"
 
-import registerReducer from './modules/register'
+import userReducer from './modules/user'
 
 
 
@@ -18,7 +18,7 @@ const asyncMiddleware = storeAPI => next => action => {
 
 
 const middlewareEnhancer = applyMiddleware(asyncMiddleware)
-const rootReducer = combineReducers({registerReducer})
+const rootReducer = combineReducers({userReducer})
 const store = createStore(rootReducer, middlewareEnhancer)
 
 
