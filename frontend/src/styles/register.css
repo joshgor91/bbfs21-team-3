@@ -1,0 +1,10 @@
+.register-form{
+    margin: 30px;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: lightblue;
+}
+
+.hide {
+    display: none;
+}

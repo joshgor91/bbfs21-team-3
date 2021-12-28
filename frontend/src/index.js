@@ -1,14 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {applyMiddleware, combineReducers, createStore} from "redux"
+import { Provider } from "react-redux"
+
+import userReducer from './modules/user'
+
+
+
+const asyncMiddleware = storeAPI => next => action => {
+    if (typeof action === 'function') {
+        return action(storeAPI.dispatch, storeAPI.getState)
+    }
+    next(action)
+}
+
+
+const middlewareEnhancer = applyMiddleware(asyncMiddleware)
+const rootReducer = combineReducers({userReducer})
+const store = createStore(rootReducer, middlewareEnhancer)
+
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 );
-
-
