@@ -30,8 +30,6 @@ export default function reducer(state = initialState, action){
 
         case LOGIN_SUCCESS:
             return {
-                // use spread operator when we only want
-                // to change one field, and leave everything else the same
                 ...state,
                 isLoggedIn: true,
                 loginErrorOccurred: false,
