@@ -25,8 +25,8 @@ public class UserController {
     @PostMapping("/login")
     String login(@RequestBody User user) {
         Optional<User> response = userRepo.findByEmail(user.getEmail());
-        String loginStatus = "";
-        if (!response.isEmpty() &&  response.get().getPassword().equals(user.password)) {
+        String loginStatus;
+        if (response.isPresent() &&  response.get().getPassword().equals(user.password)) {
             loginStatus = "success";
         } else {
             loginStatus = "failure";
