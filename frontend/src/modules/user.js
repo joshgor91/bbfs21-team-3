@@ -126,7 +126,7 @@ export function initiateLogin(user) {
 
         dispatch(requestLogin())
 
-        fetch("http://localhost:8080/user/login", {
+        fetch("http://localhost:8080/api/users/login", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -134,15 +134,14 @@ export function initiateLogin(user) {
             body: JSON.stringify(user)
 
         }).then(response => {
-
             if (!response.ok)
                 return dispatch(loginFailure())
 
             response.json().then(json => {
-
-                if (json.length > 0) {
+                console.log(json)
+                if (json) {
                     dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(json[0].username))
+                    dispatch(setUserLoggedIn(json.email))
 
                 }
                 else
@@ -157,22 +156,25 @@ export function initiateAddUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(addingUser())
 
-        fetch("http://localhost:8080/api/users", {
+        fetch("http://localhost:8080/api/users/register", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user)
         }).then(response => {
-            console.log(response)
             if (!response.ok)
                 return dispatch(addUserFailed())
 
             response.text().then(text => {
                 if (text === 'success')
-                    dispatch(initiateLogin(user))
-                else
+                    // dispatch(initiateLogin(user))
+                    console.log("user registered")
+
+                else {
+                    console.log("did not hit success")
                     dispatch(addUserFailed())
+                }
             })
         }).catch(error => console.log(error))
     }

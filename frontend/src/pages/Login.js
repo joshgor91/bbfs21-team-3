@@ -1,17 +1,31 @@
-import LoginComponent from "../components/LoginComponent";
+import LoginForm from "../components/LoginForm";
+import {connect} from "react-redux";
+import Home from "./Home";
 
-const Login = () => {
-
-
-    return <>
-        <h1>Login</h1>
-        <LoginComponent/>
-    </>
+const Login = ({isLoggedIn}) => {
 
 
+    if(isLoggedIn){
+        return <>
+            <Home/>
+        </>
+    }
+    else {
+        return <>
+            <LoginForm/>
+        </>
+    }
 
 
 
 };
 
-export default Login;
+
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: state.userReducer.isLoggedIn,
+    }
+}
+
+
+export default connect(mapStateToProps)(Login)

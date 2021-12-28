@@ -23,8 +23,8 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
         e.preventDefault()
 
         initiateAddUser({
-            fname: fname,
-            lname: lname,
+            firstName: fname,
+            lastName: lname,
             email: email,
             password: password
         })
@@ -36,7 +36,7 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
 
         return <>
             <Col sm={6}>
-                <Alert variant="danger"> An account with this email address already exists! </Alert>
+                <Alert variant="danger"> Register error occured </Alert>
             </Col>
         </>
     } else {
