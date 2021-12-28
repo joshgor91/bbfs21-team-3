@@ -59,6 +59,15 @@ public class User {
         this.password = password;
     }
 
+    // returns as user logs in
+    public User(Long id, String firstName, String lastName, String email, int authLevel) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.authLevel = authLevel;
+    }
+
     public Long getId() {
         return id;
     }
