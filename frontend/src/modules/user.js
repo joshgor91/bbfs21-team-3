@@ -30,8 +30,6 @@ export default function reducer(state = initialState, action){
 
         case LOGIN_SUCCESS:
             return {
-                // use spread operator when we only want
-                // to change one field, and leave everything else the same
                 ...state,
                 isLoggedIn: true,
                 loginErrorOccurred: false,
@@ -126,7 +124,7 @@ export function initiateLogin(user) {
 
         dispatch(requestLogin())
 
-        fetch("http://localhost:8080/user/login", {
+        fetch("http://localhost:8080/api/users/", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
