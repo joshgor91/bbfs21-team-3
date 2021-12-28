@@ -12,18 +12,6 @@ function ReactRouter() {
     return (
 
     <Router>
-        <div>
-            <Link to="/">Home</Link>
-        </div>
-        <div>
-            <Link to="/login">Login</Link>
-        </div>
-        <div>
-            <Link to="/register">Register</Link>
-        </div>
-        <div>
-            <Link to="/admin">Register</Link>
-        </div>
 
         <hr/>
 
