@@ -26,13 +26,24 @@ public class UserController {
     String login(@RequestBody User user) {
         Optional<User> response = userRepo.findByEmail(user.getEmail());
         String loginStatus;
-        if (response.isPresent() &&  response.get().getPassword().equals(user.password)) {
+        if (response.isPresent() && response.get().getPassword().equals(user.password)) {
             loginStatus = "success";
         } else {
             loginStatus = "failure";
 
         }
         return loginStatus;
+    }
+
+    @CrossOrigin
+    @PostMapping("/register")
+    String registerUser(@RequestBody User newUser) {
+        Optional<User> users = userRepo.findByEmail(newUser.getEmail());
+        if (users.isPresent()) {
+            return "failure";
+        }
+        userRepo.save(newUser);
+        return "success";
     }
 
 }
