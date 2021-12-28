@@ -134,13 +134,12 @@ export function initiateLogin(user) {
             body: JSON.stringify(user)
 
         }).then(response => {
-
             if (!response.ok)
                 return dispatch(loginFailure())
 
             response.json().then(json => {
-
-                if (json.length > 0) {
+                console.log(json)
+                if (json) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(json.email))
 
