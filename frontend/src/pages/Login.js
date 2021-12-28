@@ -1,11 +1,11 @@
-import LoginComponent from "../components/LoginComponent";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
 
 
     return <>
         <h1>Login</h1>
-        <LoginComponent/>
+        <LoginForm/>
     </>
 
 

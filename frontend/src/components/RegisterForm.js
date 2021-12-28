@@ -36,7 +36,7 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
 
         return <>
             <Col sm={6}>
-                <Alert variant="danger"> An account with this email address already exists! </Alert>
+                <Alert variant="danger"> Error occurred with registration. Please try again! </Alert>
             </Col>
         </>
     } else {

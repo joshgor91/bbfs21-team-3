@@ -1,10 +1,10 @@
-const REQUEST_LOGIN = 'react-redux-calendar-app/user/REQUEST_LOGIN'
-const LOGIN_ERROR = 'react-redux-calendar-app/user/LOGIN_ERROR'
-const LOGIN_SUCCESS = 'react-redux-calendar-app/user/LOGIN_SUCCESS'
-const LOGOUT = 'react-redux-calendar-app/user/LOGOUT'
-const ADDING_USER = 'react-redux-calendar-app/user/ADDING_USER'
-const ADD_USER_FAILED = 'react-redux-calendar-app/user/ADD_USER_FAILED'
-const SET_USER_LOGGED_IN = 'react-redux-calendar-app/event/SET_USER_LOGGED_IN'
+const REQUEST_LOGIN = 'REQUEST_LOGIN'
+const LOGIN_ERROR = 'LOGIN_ERROR'
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const LOGOUT = 'LOGOUT'
+const ADDING_USER = 'ADDING_USER'
+const ADD_USER_FAILED = 'ADD_USER_FAILED'
+const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 
 
 
@@ -124,7 +124,7 @@ export function initiateLogin(user) {
 
         dispatch(requestLogin())
 
-        fetch("http://localhost:8080/api/users/", {
+        fetch("http://localhost:8080/api/users/login", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ export function initiateAddUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(addingUser())
 
-        fetch("http://localhost:8080/api/users", {
+        fetch("http://localhost:8080/api/users/register", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
