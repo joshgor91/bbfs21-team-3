@@ -1,88 +1,180 @@
-const CREATE_USER = 'CREATE_USER'
-const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
-const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
-const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+const REQUEST_LOGIN = 'react-redux-calendar-app/user/REQUEST_LOGIN'
+const LOGIN_ERROR = 'react-redux-calendar-app/user/LOGIN_ERROR'
+const LOGIN_SUCCESS = 'react-redux-calendar-app/user/LOGIN_SUCCESS'
+const LOGOUT = 'react-redux-calendar-app/user/LOGOUT'
+const ADDING_USER = 'react-redux-calendar-app/user/ADDING_USER'
+const ADD_USER_FAILED = 'react-redux-calendar-app/user/ADD_USER_FAILED'
+const SET_USER_LOGGED_IN = 'react-redux-calendar-app/event/SET_USER_LOGGED_IN'
 
 
 
 const initialState = {
-    signupPending: false,
-    isSignedup: false,
-    // users: {username: 'esma', password: 'abc'},
-    newUsers:[{email: '', newUsername: '', newUserPassword: ''}],
+    isLoggedIn: false,
+    loginPending: false,
+    loginErrorOccurred: false,
+    users: [],
+    loggedInUser:'',
+    registerErrorOccurred: false
 }
 
-export default function reducer(state = initialState, action) {
 
+export default function reducer(state = initialState, action){
     switch (action.type) {
-
-        case CREATE_USER:
+        case REQUEST_LOGIN:
             return {
                 ...state,
-                newUsers: [...state.users, action.user]
+                isLoggedIn: false,
+                loginErrorOccurred: false,
+                loginPending: true
             }
 
-        case SIGNUP_REQUEST:
+        case LOGIN_SUCCESS:
             return {
+                // use spread operator when we only want
+                // to change one field, and leave everything else the same
                 ...state,
-                newLoginPending: true,
+                isLoggedIn: true,
+                loginErrorOccurred: false,
+                loginPending: false,
             }
 
-        case SIGNUP_SUCCESS:
+        case LOGOUT:
             return {
                 ...state,
-                newLoginPending: false,
-                isNewLoggedIn: true
-            }
-        case SIGNUP_FAILURE:
-            return {
-                ...state,
-                newLoginPending: false,
+                isLoggedIn: false,
+                loginErrorOccurred: false,
+                loginPending: false
             }
 
+        case LOGIN_ERROR:
+            return {
+                ...state,
+                isLoggedIn: false,
+                loginErrorOccurred: true,
+                loginPending: false
+            }
+
+        case SET_USER_LOGGED_IN:
+            return {
+                ...state,
+                loggedInUser: action.user
+            }
+
+        case ADD_USER_FAILED:
+            return {
+                ...state,
+                registerErrorOccurred: true
+            }
+
+
+
+
+        default:
+            return state
     }
 }
 
 
-function signUpSuccess() {
+
+export function requestLogin() {
     return {
-        type: SIGNUP_SUCCESS
+        type: REQUEST_LOGIN,
     }
 }
 
-function signUpFailure() {
+export function loginFailure(errorMessage) {
+    return {type: LOGIN_ERROR,
+        payload: errorMessage}
+}
+
+export function loginSuccess() {
+    return {type: LOGIN_SUCCESS,
+    }
+}
+
+export function logout() {
+    return {type: LOGOUT}
+}
+
+
+function addingUser() {
     return {
-        type: SIGNUP_FAILURE
+        type: ADDING_USER
+    }
+}
+
+function addUserFailed() {
+    return {
+        type: ADD_USER_FAILED
     }
 }
 
 
-function signUpRequest(user) {
+function setUserLoggedIn(user) {
     return {
-        type: SIGNUP_REQUEST,
+        type: SET_USER_LOGGED_IN,
         user
     }
 }
 
-export function initiateCreateUser(credentials) {
-    console.log(credentials.username)
-    return function sideEffect(dispatch) {
-        dispatch(signUpRequest())
-        fetch("http://localhost:8080/user/register", {
+
+
+
+export function initiateLogin(user) {
+
+    return function sideEffect(dispatch, getState) {
+
+        dispatch(requestLogin())
+
+        fetch("http://localhost:8080/user/login", {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(credentials)
-        }).then(response => {
-            if (response.ok)
-                return dispatch(signUpSuccess( "success"))
+            body: JSON.stringify(user)
 
-            response.text().then(text => {
-                if (text === "success") dispatch(signUpSuccess(credentials.username))
-                else dispatch(signUpFailure(text))
-                alert("Signup is invalid! Please try again.")
+        }).then(response => {
+
+            if (!response.ok)
+                return dispatch(loginFailure())
+
+            response.json().then(json => {
+
+                if (json.length > 0) {
+                    dispatch(loginSuccess())
+                    dispatch(setUserLoggedIn(json[0].username))
+
+                }
+                else
+                    dispatch(loginFailure())
             })
         }).catch(error => console.log(error))
     }
 }
+
+
+export function initiateAddUser(user) {
+    return function sideEffect(dispatch, getState) {
+        dispatch(addingUser())
+
+        fetch("http://localhost:8080/api/users", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        }).then(response => {
+            console.log(response)
+            if (!response.ok)
+                return dispatch(addUserFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                    dispatch(initiateLogin(user))
+                else
+                    dispatch(addUserFailed())
+            })
+        }).catch(error => console.log(error))
+    }
+}
+

@@ -1,54 +1,83 @@
-import {Button, Form} from "react-bootstrap";
+import {Accordion, Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
-import {connect} from "react-redux";
-import {initiateCreateUser} from "../modules/register";
+import AccordionHeader from "react-bootstrap/AccordionHeader";
+import AccordionBody from "react-bootstrap/AccordionBody";
+import {initiateAddUser} from "../modules/register";
 import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
 
-function RegisterForm({initiateCreateUser}){
 
-    const [email, setEmail] = useState('');
-    const [newUsername, setNewUsername] = useState('');
-    const [newUserPassword, setNewUserPassword] = useState('');
 
-    function onSignUp(event){
-        event.preventDefault()
-        console.log('register working')
-        initiateCreateUser({email, username: newUsername, password: newUserPassword})
+function RegisterForm({register, registerErrorOccurred}) {
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+
+    function handleSubmitRegister(e) {
+        e.preventDefault()
+
+        register({
+            // id: Math.random() * 999999 + 100,
+            username: username,
+            password: password
+        })
+        const registered = document.getElementById("registered")
+        registered.classList.remove("hide")
     }
 
-    return<>
-        <Form onSubmit={onSignUp}>
-            <div>REGISTER NEW USER</div>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" onChange={event => setEmail(event.target.value)} required />
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Username</Form.Label>
-                <Form.Control type='username'  placeholder="Enter Username" onChange={event => setNewUsername(event.target.value)} required />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type='password' placeholder="Password" onChange={event => setNewUserPassword(event.target.value)} required/>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            </Form.Group>
-            <Button variant="dark" type="submit">Sign Up</Button>
-        </Form>
-    </>
+    if (registerErrorOccurred) {
 
+        return <>
+            <Col sm={6}>
+                <Alert variant="danger"> Username already exists! </Alert>
+            </Col>
+        </>
+    } else {
+
+        return <>
+            <Col sm={6}>
+                <Accordion>
+                    <Form className="login-register-form" onSubmit={handleSubmitRegister}>
+                        <AccordionHeader>
+                            <h1>Register</h1>
+                        </AccordionHeader>
+                        <AccordionBody>
+                            <Form.Group className="mb-3" controlId="formBasicEmail1">
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control type="text" placeholder="Enter username"
+                                              onChange={event => setUsername(event.target.value)}/>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formBasicPassword1">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Password"
+                                              onChange={event => setPassword(event.target.value)}/>
+                            </Form.Group>
+
+                            <Button variant="light" type="submit">
+                                Submit
+                            </Button>
+                        </AccordionBody>
+
+                    </Form>
+                </Accordion>
+                <Alert className="hide" id="registered" variant="success"> You are registered! </Alert>
+            </Col>
+        </>
+    }
+}
+function mapStateToProps(state){
+    return {
+        users: state.registerReducer.users,
+        registerErrorOccurred: state.registerReducer.registerErrorOccurred
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({initiateAddUser}, dispatch)
 }
 
 
-// function mapDispatchToProps(dispatch) {
-//     return bindActionCreators({initiateCreateUser}, dispatch)
-// }
-//
-//
-// export default connect(undefined, mapDispatchToProps)(RegisterForm)
-
-export default RegisterForm
+export default connect(mapStateToProps,mapDispatchToProps)(RegisterForm);
