@@ -5,12 +5,15 @@ import AccordionBody from "react-bootstrap/AccordionBody";
 import {initiateAddUser} from "../modules/register";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import '../styles/register.css'
 
 
 
 
-function RegisterForm({register, registerErrorOccurred}) {
+function RegisterForm({initiateAddUser, registerErrorOccurred}) {
 
+
+    const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -18,8 +21,8 @@ function RegisterForm({register, registerErrorOccurred}) {
     function handleSubmitRegister(e) {
         e.preventDefault()
 
-        register({
-            // id: Math.random() * 999999 + 100,
+        initiateAddUser({
+            email: email,
             username: username,
             password: password
         })
@@ -39,12 +42,19 @@ function RegisterForm({register, registerErrorOccurred}) {
         return <>
             <Col sm={6}>
                 <Accordion>
-                    <Form className="login-register-form" onSubmit={handleSubmitRegister}>
+                    <Form className="register-form" onSubmit={handleSubmitRegister}>
                         <AccordionHeader>
                             <h1>Register</h1>
                         </AccordionHeader>
                         <AccordionBody>
-                            <Form.Group className="mb-3" controlId="formBasicEmail1">
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" placeholder="Enter email" onChange={event => setEmail(event.target.value)}required />
+                                <Form.Text className="text-muted">
+                                    We'll never share your email with anyone else.
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control type="text" placeholder="Enter username"
                                               onChange={event => setUsername(event.target.value)}/>
