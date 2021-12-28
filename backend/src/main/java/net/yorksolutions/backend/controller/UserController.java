@@ -46,4 +46,20 @@ public class UserController {
         return "success";
     }
 
+    @CrossOrigin
+    //Admin is able to delete a user.
+    @DeleteMapping("/delete/{id}")
+    String delete(@PathVariable Long id) {
+        userRepo.deleteById(id);
+        return "success";
+    }
+
+    @CrossOrigin
+    @PutMapping("/edit")
+    User edit(@RequestBody User user) {
+      User response = userRepo.findById(user.getId()).orElseThrow();
+        userRepo.save(user);
+        return userRepo.findById(user.getId()).get();
+
+    }
 }
