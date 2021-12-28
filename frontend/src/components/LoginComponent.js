@@ -1,13 +1,17 @@
 import {Form, Button} from 'react-bootstrap'
 import {useState} from 'react'
+import {initiateLogin} from "../modules/user"
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
-export default function LoginComponent({initiateLogin, loginPending}) {
+
+function LoginComponent({initiateLogin, loginPending}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     function handleSubmit(event) {
         event.preventDefault()
-        initiateLogin({username, password})// LoginComponent side effect from Emeka
+        initiateLogin({username, password})
     }
 
     return<>
@@ -26,3 +30,16 @@ export default function LoginComponent({initiateLogin, loginPending}) {
         </Form>
     </>
 }
+
+function mapStateToProps(state) {
+    return {
+        loginPending: state.loginPending // is it state.loginPending or state.userReducer.loginPending due to multiple modules
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({initiateLogin}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
+
