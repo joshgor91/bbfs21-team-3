@@ -16,31 +16,32 @@ export default function reducer(state = initialState, action) {
 
     switch (action.type) {
 
-case CREATE_USER:
-    return {
-        ...state,
-        newUsers: [...state.users,action.user]
-    }
+        case CREATE_USER:
+            return {
+                ...state,
+                newUsers: [...state.users, action.user]
+            }
 
-case SIGNUP_REQUEST:
-    return {
-        ...state,
-        newLoginPending: true,
-    }
+        case SIGNUP_REQUEST:
+            return {
+                ...state,
+                newLoginPending: true,
+            }
 
-case SIGNUP_SUCCESS:
-    return {
-        ...state,
-        newLoginPending: false,
-        isNewLoggedIn: true
-    }
-case SIGNUP_FAILURE:
-    return {
-        ...state,
-        newLoginPending: false,
-    }
+        case SIGNUP_SUCCESS:
+            return {
+                ...state,
+                newLoginPending: false,
+                isNewLoggedIn: true
+            }
+        case SIGNUP_FAILURE:
+            return {
+                ...state,
+                newLoginPending: false,
+            }
 
-
+    }
+}
 
 
 function signUpSuccess() {
