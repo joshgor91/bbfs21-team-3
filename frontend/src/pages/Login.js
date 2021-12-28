@@ -1,12 +1,20 @@
 import LoginForm from "../components/LoginForm";
+import {connect} from "react-redux";
+import Home from "./Home";
 
-const Login = () => {
+const Login = ({isLoggedIn}) => {
 
 
-    return <>
-        <h1>Login</h1>
-        <LoginForm/>
-    </>
+    if(isLoggedIn){
+        return <>
+            <Home/>
+        </>
+    }
+    else {
+        return <>
+            <LoginForm/>
+        </>
+    }
 
 
 
@@ -14,4 +22,12 @@ const Login = () => {
 
 };
 
-export default Login;
+
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: state.userReducer.isLoggedIn,
+    }
+}
+
+
+export default connect(mapStateToProps)(Login)
