@@ -23,6 +23,8 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
         e.preventDefault()
 
         initiateAddUser({
+            fname: fname,
+            lname: lname,
             email: email,
             password: password
         })
