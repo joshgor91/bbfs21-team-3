@@ -2,7 +2,7 @@ import {Accordion, Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
 import AccordionHeader from "react-bootstrap/AccordionHeader";
 import AccordionBody from "react-bootstrap/AccordionBody";
-import {initiateAddUser} from "../modules/register";
+import {initiateAddUser} from "../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import '../styles/register.css'
@@ -80,8 +80,8 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
 }
 function mapStateToProps(state){
     return {
-        users: state.registerReducer.users,
-        registerErrorOccurred: state.registerReducer.registerErrorOccurred
+        users: state.userReducer.users,
+        registerErrorOccurred: state.userReducer.registerErrorOccurred
     }
 }
 
