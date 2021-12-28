@@ -8,13 +8,13 @@ import AccordionBody from "react-bootstrap/AccordionBody";
 
 function LoginForm({error, initiateLogin}) {
 
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
 
     function handleSubmit(event) {
         event.preventDefault()
-        initiateLogin({username, password})
+        initiateLogin({email, password})
     }
 
     if (error) {
@@ -30,7 +30,7 @@ function LoginForm({error, initiateLogin}) {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control type="text" placeholder="Enter username"
-                                              onChange={event => setUsername(event.target.value)}/>
+                                              onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -61,7 +61,7 @@ function LoginForm({error, initiateLogin}) {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control type="text" placeholder="Enter username"
-                                              onChange={event => setUsername(event.target.value)}/>
+                                              onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
