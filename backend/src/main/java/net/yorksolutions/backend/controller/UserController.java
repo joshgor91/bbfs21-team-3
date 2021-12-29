@@ -40,13 +40,30 @@ public class UserController {
         return userRepo.findAll();
     }
 
+//    @CrossOrigin
+//    @PostMapping("/login")
+//    Object login(@RequestBody User user) {
+//        Optional<User> response = userRepo.findByEmail(user.getEmail());
+//
+//        if (response.isPresent() && response.get().getPassword().equals(user.password)) {
+//            User res = response.get();
+//            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.email, res.authLevel);
+//            return foundUser;
+//        } else {
+//            return null;
+//        }
+//    }
+
     @CrossOrigin
     @PostMapping("/login")
     Object login(@RequestBody User user) {
-        Optional<User> response = userRepo.findByEmail(user.getEmail());
+        Optional<User> response = userRepo.findByEmail(user.email);
 
-        if (response.isPresent() && response.get().getPassword().equals(user.password)) {
+        if (response.isPresent() && response.get().password.equals(user.password)) {
             User res = response.get();
+            // now we are taking all the information from User that we got from the database, and copying this object information
+            // to a new user Output object, that excludes the password.
+            // we dont want to send over the password.
             UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.email, res.authLevel);
             return foundUser;
         } else {
@@ -65,4 +82,40 @@ public class UserController {
         return "success";
     }
 
+    @CrossOrigin
+    //Admin is able to delete a user.
+    @DeleteMapping("/delete/{id}")
+    String delete(@PathVariable Long id) {
+        userRepo.deleteById(id);
+        return "success";
+    }
+
+//    @CrossOrigin
+//    @PutMapping("/edit")
+//    User edit(@RequestBody User user) {
+//      User response = userRepo.findById(user.getId()).orElseThrow();
+//        userRepo.save(user);
+//        return userRepo.findById(user.getId()).get();
+//
+//    }
+//    @CrossOrigin
+//    @PutMapping("/edit")
+//    //returning user, for what?? why are we returning the user????
+//    User editTwo(@RequestBody User user) {
+//        userRepo.findById(user.getId()).orElseThrow();
+//        userRepo.save(user);
+//        // the user is already updated in the database, let just return this user from the database
+//        return user;
+//
+//    }
+
+    @CrossOrigin
+    @PutMapping("/edit")
+    // retruning string to notify the front end that the admin successfully edited the user.
+    String editThree(@RequestBody User user) {
+        userRepo.findById(user.getId()).orElseThrow();
+        userRepo.save(user);
+        return "success";
+
+    }
 }
