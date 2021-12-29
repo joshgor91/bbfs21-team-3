@@ -1,6 +1,7 @@
 import AdminForm from "../components/admin/AdminForm";
 import AdminCreateUser from "../components/admin/AdminCreateUser";
 import AdminSeeUsers from "../components/admin/AdminSeeUsers";
+import AdminEditUsers from "../components/admin/AdminEditUsers";
 
 const Admin = () => {
     return <>
@@ -10,7 +11,8 @@ const Admin = () => {
 
         {/*<AdminForm/>*/}
         {/*<AdminCreateUser/>*/}
-        <AdminSeeUsers/>
+        {/*<AdminSeeUsers/>*/}
+        <AdminEditUsers/>
     </>
 };
 

@@ -268,7 +268,7 @@ export function initiateEditUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(editingUser())
 
-        fetch("http://localhost:8080/api/users/register", {
+        fetch("http://localhost:8080/api/users/edit", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
