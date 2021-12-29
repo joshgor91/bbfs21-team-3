@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -12,20 +13,28 @@ public class Product {
     @JsonProperty
     public Long id;
 
+    @OneToMany
     @JsonProperty
-    public String product_name;
+    Set<Category> categories;
 
     @JsonProperty
-    public String product_description;
+    @Column(name = "product_name")
+    public String productName;
+
+    @JsonProperty
+    @Column(name = "product_description")
+    public String productDescription;
 
     @JsonProperty
     public String brand;
 
     @JsonProperty
-    public Float unit_price;
+    @Column(name = "unit_price")
+    public Float unitPrice;
 
     @JsonProperty
-    public int units_in_stock;
+    @Column(name = "units_in_stock")
+    public int unitsInStock;
 
     @JsonProperty
     public String size;
@@ -34,21 +43,25 @@ public class Product {
     public String color;
 
     @JsonProperty
-    public Date product_available;
+    @Column(name = "product_available")
+    public Date productAvailable;
 
     @JsonProperty
     public Boolean discontinued;
 
     @JsonProperty
-    public Boolean discount_available;
+    @Column(name = "discount_available")
+    public Boolean discountAvailable;
 
     @JsonProperty
     public String picture;
 
     @JsonProperty
-    public Date date_recieved;
+    @Column(name = "date_received")
+    public Date dateReceived;
 
     @JsonProperty
-    public int units_recieved;
+    @Column(name = "units_received")
+    public int unitsReceived;
 
 }
