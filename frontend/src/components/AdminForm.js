@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 
 
 
-function AdminForm({createUser, deleteUser, editUser, existingUsers}) {
+function AdminForm({createUser, deleteUser, editUser, existingUsers, logout}) {
 
 
 
@@ -19,10 +19,11 @@ function AdminForm({createUser, deleteUser, editUser, existingUsers}) {
                     <Dropdown.Item  onClick={() => createUser(user)}>Create</Dropdown.Item>
                     <Dropdown.Item onClick={() => editUser(user)}>Edit</Dropdown.Item>
                     <Dropdown.Item onClick={() => deleteUser(user.id)}>Delete</Dropdown.Item>
-                    <Dropdown.Item onClick={() => existingUsers(user)}>Users>Users</Dropdown.Item>
+                    <Dropdown.Item onClick={() => existingUsers(user)}>Users</Dropdown.Item>
 
                 </Dropdown.Menu>
             </Dropdown>
+                    <Button variant="dark" onClick={logout}>Logout</Button>
             </Col></>
 
 }
