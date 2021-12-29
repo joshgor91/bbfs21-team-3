@@ -27,5 +27,19 @@ public class ProductController {
         return "success";
     }
 
+    @CrossOrigin
+    @DeleteMapping("/delete/{id}")
+    String deleteProductById(@PathVariable Long id) {
+        productRepo.deleteById(id);
+        return "success";
+    }
+
+    @CrossOrigin
+    @GetMapping("/getById/{id}")
+    Product getProductById(@PathVariable Long id) {
+        return productRepo.findById(id).get();
+    }
+
+
 
 }
