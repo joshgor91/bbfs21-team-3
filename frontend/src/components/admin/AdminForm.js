@@ -4,7 +4,9 @@ import {connect} from "react-redux";
 
 
 
-function AdminForm({createUser, deleteUser, editUser, existingUsers, logout}) {
+function AdminForm(
+    // {createUser, deleteUser, editUser, existingUsers, logout}
+) {
 
 
 
@@ -16,10 +18,18 @@ function AdminForm({createUser, deleteUser, editUser, existingUsers, logout}) {
                 <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
 
                 <Dropdown.Menu>
-                    <Dropdown.Item  onClick={() => createUser(user)}>Create</Dropdown.Item>
-                    <Dropdown.Item onClick={() => editUser(user)}>Edit</Dropdown.Item>
-                    <Dropdown.Item onClick={() => deleteUser(user.id)}>Delete</Dropdown.Item>
-                    <Dropdown.Item onClick={() => existingUsers(user)}>Users</Dropdown.Item>
+                    <Dropdown.Item
+                        // onClick={() => createUser(user)}
+                    >Create</Dropdown.Item>
+                    <Dropdown.Item
+                        // onClick={() => editUser(user)}
+                    >Edit</Dropdown.Item>
+                    <Dropdown.Item
+                        // onClick={() => deleteUser(user.id)}
+                    >Delete</Dropdown.Item>
+                    <Dropdown.Item
+                        // onClick={() => existingUsers(user)}
+                    >Users</Dropdown.Item>
 
                 </Dropdown.Menu>
             </Dropdown>
