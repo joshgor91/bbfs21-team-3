@@ -27,9 +27,14 @@ public class User {
     public String password;
 
     @JsonProperty
+    // 0-disabled
+    //the reason we dont have an auth level for guest is because they ain't logged in, and they are guests, they checkout
+    // but we dont save their infomration.
     // 1-guest
-    // 2-Shop keeper
-    // 3- Admin
+    // 2-customer
+    // 3-shopkeeper
+    // 4- admin
+
     public int authLevel = 1;
 
 
@@ -42,9 +47,12 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        // me and Emeka altered the constructor so that self registered users, are set as customers.
+        // their authlevels will be intialized to 2.
+        this.authLevel = 2;
     }
 
-    //register shop keeper as admin
+    //admin is registering a user to shopkeeper or admin.
     public User(String firstName, String lastName, String email, String password, int authLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,19 +62,23 @@ public class User {
     }
 
     //login
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    // emeka says this is not needed so I commented it out
+//    public User(String email, String password) {
+//        this.email = email;
+//        this.password = password;
+//    }
 
     // returns as user logs in
-    public User(Long id, String firstName, String lastName, String email, int authLevel) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.authLevel = authLevel;
-    }
+    // THE USEROUTPUT CLASS TOOK THE PLACE OF THIS CONSTRUCTOR.
+    // JOHHNY TOOK CARE OF THIS
+    // SO BRING THIS UP WITH DATA GROUP TOMMOROW.
+//    public User(Long id, String firstName, String lastName, String email, int authLevel) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.email = email;
+//        this.authLevel = authLevel;
+//    }
 
     public Long getId() {
         return id;
