@@ -13,11 +13,11 @@ function Products({inventory}) {
                     <Col md={'auto'} style={{align: "center"}}>Current Deals here?</Col>
                 </Row>
                 <Row>
-                    <Col>
+
                         {inventory && inventory.map((product, idx) =>
                             <Product key={idx} product={product}/>
                         )}
-                    </Col>
+
                 </Row>
             </Container>
         </>
