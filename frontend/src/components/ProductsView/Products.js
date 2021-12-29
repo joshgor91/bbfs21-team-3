@@ -27,7 +27,6 @@ function Products({inventory}) {
 function mapStateToProps(state) {
     return {
         inventory: state.productsReducer.products,
-
     }
 }
 
