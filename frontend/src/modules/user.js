@@ -2,8 +2,11 @@ const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_ERROR = 'LOGIN_ERROR'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGOUT = 'LOGOUT'
+
+const START_ADDING_USER = 'START_ADDING_USER'
 const ADDING_USER = 'ADDING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
+
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const EDITING_USER = 'EDITING_USER'
 const EDIT_USER_FAILED = 'EDIT_USER_FAILED'
@@ -26,6 +29,12 @@ const initialState = {
     userToEdit: undefined,
     showEditUser: false,
     gettingUsers: false,
+    firstName: '',
+    lastName: '',
+    role: '',
+    authLevel: '',
+    email: '',
+    password: ''
 }
 
 
@@ -69,12 +78,18 @@ export default function reducer(state = initialState, action){
                 loggedInUser: action.user
             }
 
-            //Why don't we need this?
-        // case ADDING_USER:
-        //     return {
-        //         ...state,
-        //         showEditUser:
-        //     }
+
+        case START_ADDING_USER:
+            return {
+                ...state,
+                showEditUser: true,
+                firstName: '',
+                lastName: '',
+                role: '',
+                authLevel: '',
+                email: '',
+                password: ''
+            }
 
         case ADD_USER_FAILED:
             return {
@@ -134,6 +149,12 @@ export function logout() {
     return {type: LOGOUT}
 }
 
+export function startAddingUser(){
+    console.log(("inside startaddinguser"))
+    return {
+        type: START_ADDING_USER
+    }
+}
 
 function addingUser() {
     return {
@@ -268,7 +289,7 @@ export function initiateEditUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(editingUser())
 
-        fetch("http://localhost:8080/api/users/register", {
+        fetch("http://localhost:8080/api/users/edit", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
