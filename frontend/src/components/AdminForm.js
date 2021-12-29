@@ -23,7 +23,7 @@ function AdminForm({createUser, deleteUser, editUser, existingUsers, logout}) {
 
                 </Dropdown.Menu>
             </Dropdown>
-                    <Button variant="dark" onClick={logout}>Logout</Button>
+                    <Col><Button variant="dark" onClick={logout}>Logout</Button></Col>
             </Col></>
 
 }
