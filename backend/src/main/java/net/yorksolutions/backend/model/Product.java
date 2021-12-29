@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -11,6 +12,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty
     public Long id;
+
+    @OneToMany
+    @JsonProperty
+    Set<Category> categories;
 
     @JsonProperty
     @Column(name = "product_name")

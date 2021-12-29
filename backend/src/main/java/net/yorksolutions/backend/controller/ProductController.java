@@ -28,6 +28,14 @@ public class ProductController {
     }
 
     @CrossOrigin
+    @PutMapping("/edit")
+    String editProduct(@RequestBody Product product) {
+        productRepo.findById(product.id).orElseThrow();
+        productRepo.save(product);
+        return "success";
+    }
+
+    @CrossOrigin
     @DeleteMapping("/delete/{id}")
     String deleteProductById(@PathVariable Long id) {
         productRepo.deleteById(id);
