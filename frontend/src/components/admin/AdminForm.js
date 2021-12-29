@@ -33,18 +33,18 @@ function AdminForm(
 
                 </Dropdown.Menu>
             </Dropdown>
-                    <Col><Button variant="dark" onClick={logout}>Logout</Button></Col>
+                    {/*<Col><Button variant="dark" onClick={logout}>Logout</Button></Col>*/}
             </Col></>
 
 }
 
 
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({createUser, deleteUser, editUser, existingUsers}, dispatch)
-}
-
-export default connect(undefined, mapDispatchToProps)(AdminForm)
-
+//
+// function mapDispatchToProps(dispatch) {
+//     return bindActionCreators({createUser, deleteUser, editUser, existingUsers}, dispatch)
+// }
+//
+// export default connect(undefined, mapDispatchToProps)(AdminForm)
+export default AdminForm
 
 
