@@ -1,10 +1,12 @@
 package net.yorksolutions.backend.controller;
 
 import net.yorksolutions.backend.model.Product;
+import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -32,6 +34,20 @@ public class ProductController {
         productRepo.save(product);
         return "success";
     }
+
+    @CrossOrigin
+    @DeleteMapping("/delete/{id}")
+    String deleteProductById(@PathVariable Long id) {
+        productRepo.deleteById(id);
+        return "success";
+    }
+
+    @CrossOrigin
+    @GetMapping("/getById/{id}")
+    Product getProductById(@PathVariable Long id) {
+        return productRepo.findById(id).get();
+    }
+
 
 
 }
