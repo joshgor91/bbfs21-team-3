@@ -1,13 +1,11 @@
 import {Button, ButtonGroup, Col, Dropdown} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {startAddingUser} from "../../modules/user";
 
 
 
-function AdminForm(
-    // {createUser, deleteUser, editUser, existingUsers, logout}
-) {
-
+function AdminForm({startAddingUser}){
 
 
     return <>
@@ -19,7 +17,7 @@ function AdminForm(
 
                 <Dropdown.Menu>
                     <Dropdown.Item
-                        // onClick={() => createUser(user)}
+                        onClick={startAddingUser}
                     >Create</Dropdown.Item>
                     <Dropdown.Item
                         // onClick={() => editUser(user)}
@@ -39,12 +37,12 @@ function AdminForm(
 }
 
 
-//
-// function mapDispatchToProps(dispatch) {
-//     return bindActionCreators({createUser, deleteUser, editUser, existingUsers}, dispatch)
-// }
-//
-// export default connect(undefined, mapDispatchToProps)(AdminForm)
-export default AdminForm
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({startAddingUser}, dispatch)
+}
+
+export default connect(undefined, mapDispatchToProps)(AdminForm)
+// export default AdminForm
 
 

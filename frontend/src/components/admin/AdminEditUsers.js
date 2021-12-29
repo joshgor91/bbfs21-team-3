@@ -6,7 +6,9 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 
-function AdminCreateUser ({initiateAddUser, initiateEditUser}) {
+function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName, lastName
+                              // role, authLevel, email, password
+}) {
     const [email, setEmail] = useState('')
     const [fname, setFName] = useState('')
     const [lname, setLName] = useState('')
@@ -19,8 +21,9 @@ function AdminCreateUser ({initiateAddUser, initiateEditUser}) {
         console.log("btn clicked")
 
         if (users)
-            initiateEditUser(...users, firstName, )
-        var user = {
+            initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
+        else
+         initiateAddUser({
             id: Math.floor(Math.random() * 9999),
             firstName: fname,
             lastName: lname,
@@ -28,8 +31,8 @@ function AdminCreateUser ({initiateAddUser, initiateEditUser}) {
             authLevel:authLevel,
             email: email,
             password: password
-        }
-        console.log(user)
+        })
+        console.log(users)
     }
     return (
         <Modal show={true}>
@@ -81,15 +84,17 @@ function AdminCreateUser ({initiateAddUser, initiateEditUser}) {
         </Modal>
     );
 }
-
-function mapStateToProps(state) {
-    return {
-        error: state.userReducer.loginErrorOccurred,
-    }
-}
+//
+// function mapStateToProps(state) {
+//     return {
+//         show:
+//     }
+// }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({initiateAddUser, initiateEditUser}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)
+export default connect(
+    // mapStateToProps
+    undefined, mapDispatchToProps)(AdminCreateUser)
