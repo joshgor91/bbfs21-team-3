@@ -4,7 +4,10 @@ const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_FAILED = 'ADD_PRODUCT_FAILED'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
+const EDIT_PRODUCT_FAILED = 'EDIT_PRODUCT_FAILED'
 const CANCEL_EDIT_PRODUCT = 'CANCEL_EDIT_PRODUCT'
+const DELETE_PRODUCT = 'DELETE_PRODUCT'
+const DELETE_PRODUCT_FAILED = 'DELETE_PRODUCT_FAILED'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
@@ -28,7 +31,8 @@ const initialState = {
     showEditProduct: false,
     getProducts: false,
     addProduct: false,
-    registerErrorOccurred: false,
+    addErrorOccurred: false,
+    editErrorOccurred: false,
     productName: '',
     productDescription: '',
     brand: '',
@@ -52,6 +56,12 @@ export default function reducer(state = initialState, action) {
                 addProduct: true,
             }
 
+        case ADD_PRODUCT_FAILED:
+            return {
+                ...state,
+                addErrorOccurred: true
+            }
+
         case CREATE_PRODUCT:
             return {
                 ...state,
@@ -68,12 +78,6 @@ export default function reducer(state = initialState, action) {
                 picture: '',
                 dateReceived: new Date(''),
                 unitsReceived: 0
-            }
-
-        case ADD_PRODUCT_FAILED:
-            return {
-                ...state,
-                registerErrorOccurred: true
             }
 
         case EDIT_PRODUCT:
@@ -99,6 +103,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 showEditProduct: false
+            }
+
+        case EDIT_PRODUCT_FAILED:
+            return {
+                ...state,
+                editErrorOccurred: true
             }
 
         case UPDATE_PRODUCT_NAME:
@@ -197,13 +207,13 @@ export default function reducer(state = initialState, action) {
 }
 
 
-export function createProduct(){
+export function createProduct() {
     return {
         type: CREATE_PRODUCT
     }
 }
 
-export function addProduct(){
+export function addProduct() {
     return {
         type: ADD_PRODUCT
     }
@@ -215,16 +225,35 @@ function addProductFailed() {
     }
 }
 
-function editProduct(product) {
+export function editProduct(product) {
     return {
         type: EDIT_PRODUCT,
         product
     }
 }
 
+function editProductFailed() {
+    return {
+        type: EDIT_PRODUCT_FAILED
+    }
+}
+
 export function cancelEditProduct() {
     return {
         type: CANCEL_EDIT_PRODUCT
+    }
+}
+
+export function deleteProduct(id) {
+    return {
+        type: DELETE_PRODUCT,
+        id
+    }
+}
+
+export function deleteProductFailed() {
+    return {
+        type: DELETE_PRODUCT_FAILED
     }
 }
 
@@ -258,7 +287,7 @@ export function updateUnitPrice(unitPrice) {
 
 export function updateUnitsInStock(unitsInStock) {
     return {
-        type: UPDATE_UNITS_IN_STOCK
+        type: UPDATE_UNITS_IN_STOCK,
         unitsInStock
     }
 }
@@ -311,7 +340,6 @@ export function updateUnitsReceived(unitsReceived) {
         unitsReceived
     }
 }
-
 
 export function getProducts() {
     return {
@@ -367,6 +395,49 @@ export function initiateGetProducts() {
                 return dispatch(getProductsFailed())
             response.json().then(products => {
                 dispatch(productsUpdated(products))
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateEditProduct(product) {
+    return function sideEffect(dispatch, getState) {
+        dispatch(editProduct())
+
+        fetch('http://localhost:8080/api/products/edit', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        }).then(response => {
+            if (!response.ok)
+                return dispatch(editProductFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                    dispatch(initiateGetProducts())
+                else
+                    dispatch(editProductFailed())
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateDeleteProduct(productId) {
+    return function sideEffect(dispatch, getState) {
+        dispatch(deleteProduct())
+
+        fetch('http://localhost:8080/api/products/delete/${productId}', {
+            method: 'DELETE'
+        }).then(response => {
+            if (!response.ok)
+                dispatch(deleteProductFailed())
+            response.text().then(text => {
+                if (text === 'success')
+                    dispatch(initiateGetProducts())
+                else
+                    dispatch(deleteProductFailed())
             })
         }).catch(error => console.log(error))
     }
