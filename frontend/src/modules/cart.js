@@ -6,6 +6,8 @@ const GETTING_CART_ITEMS_FAILED = 'GETTING_CART_ITEMS_FAILED'
 const ADDING_CART_ITEM = 'ADD_CART_ITEM'
 const ADD_CART_ITEM_FAILURE = 'ADD_CART_ITEM_FAILURE'
 const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
+const TEST_ADD_ITEM = 'TEST_ADD_ITEM'
+
 
 const initialState = {
     cartItems: [],
@@ -56,12 +58,26 @@ export default function reducer(state = initialState, action) {
                 errorMessage: action.payload
             }
 
+        case TEST_ADD_ITEM:
+            console.log(action.payload)
+            return {
+                ...state,
+                cartItems: [...state.cartItems, action.payload]
+            }
+
         default:
             return state
     }
 }
 
 //Action Creators
+export function testAddItem(testItem) {
+    return {
+        type: TEST_ADD_ITEM,
+        payload: testItem
+    }
+}
+
 function gettingCartItems() {
     return {
         type: GETTING_CART_ITEMS

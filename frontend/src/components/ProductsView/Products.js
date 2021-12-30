@@ -5,7 +5,6 @@ import Product from "./Product";
 
 
 function Products({inventory}) {
-    console.log(inventory)
     return (
         <>
             <Container fluid>

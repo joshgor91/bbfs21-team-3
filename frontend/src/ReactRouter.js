@@ -5,8 +5,7 @@ import Register from "./pages/Register";
 import Admin from "./pages/Admin";
 import Shopkeeper from "./pages/Shopkeeper";
 import ProductPage from "./pages/ProductPage";
-
-
+import CartPage from "./pages/CartPage";
 
 
 function ReactRouter() {
@@ -25,6 +24,7 @@ function ReactRouter() {
             <Route path='/admin' element={<Admin/>}/>
             <Route path='/shopkeeper' element={<Shopkeeper/>}/>
             <Route path='/product/:id' element={<ProductPage/>}/>
+            <Route path='/cart' element={<CartPage/>}/>
         </Routes>
     </Router>
 
