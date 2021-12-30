@@ -9,7 +9,7 @@ function AdminForm({startAddingUser}){
 
 
     return <>
-        <Col>
+        <Col className={'m-5'}>
             <Dropdown as={ButtonGroup}>
                 <Button variant="success">Admin Stuff</Button>
 

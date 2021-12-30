@@ -6,7 +6,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 
-function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName, lastName
+function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, firstName, lastName
                               // role, authLevel, email, password
 }) {
     const [email, setEmail] = useState('')
@@ -15,12 +15,14 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
     const [authLevel, setAuthLevel] = useState('')
-    const [show, setShow] = useState(true)
+    // const [show, setShow] = useState(true)
+    console.log("edit user")
+    console.log(show)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
-        setShow(false)
+        // setShow(false)
 
         if (users)
             initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
@@ -86,12 +88,13 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
         </Modal>
     );
 }
-//
-// function mapStateToProps(state) {
-//     return {
-//         show:
-//     }
-// }
+
+function mapStateToProps(state) {
+    console.log(state.showEditUser)
+    return {
+        show: state.showEditUser
+    }
+}
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({initiateAddUser, initiateEditUser}, dispatch)
@@ -99,4 +102,4 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
     // mapStateToProps
-    undefined, mapDispatchToProps)(AdminCreateUser)
+    mapStateToProps, mapDispatchToProps)(AdminCreateUser)
