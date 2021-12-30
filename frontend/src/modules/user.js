@@ -2,9 +2,20 @@ const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_ERROR = 'LOGIN_ERROR'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGOUT = 'LOGOUT'
+
+const START_ADDING_USER = 'START_ADDING_USER'
 const ADDING_USER = 'ADDING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
+
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
+const EDITING_USER = 'EDITING_USER'
+const EDIT_USER_FAILED = 'EDIT_USER_FAILED'
+const DELETING_USER = 'DELETING_USER'
+const DELETING_USER_FAILED = 'DELETING_USER_FAILED'
+const GETTING_USERS = 'GETTING_USERS'
+const GET_USERS_FAILED = 'GET_USERS_FAILED'
+const USERS_UPDATED = 'USERS_UPDATED'
+
 
 
 
@@ -13,8 +24,17 @@ const initialState = {
     loginPending: false,
     loginErrorOccurred: false,
     users: [],
-    loggedInUser:'',
-    registerErrorOccurred: false
+    loggedInUser: {},
+    registerErrorOccurred: false,
+    userToEdit: undefined,
+    showEditUser: false,
+    gettingUsers: false,
+    firstName: '',
+    lastName: '',
+    role: '',
+    authLevel: '',
+    email: '',
+    password: ''
 }
 
 
@@ -58,14 +78,49 @@ export default function reducer(state = initialState, action){
                 loggedInUser: action.user
             }
 
+
+        case START_ADDING_USER:
+            return {
+                ...state,
+                showEditUser: true,
+                firstName: '',
+                lastName: '',
+                role: '',
+                authLevel: '',
+                email: '',
+                password: ''
+            }
+
         case ADD_USER_FAILED:
             return {
                 ...state,
                 registerErrorOccurred: true
             }
 
+        case EDITING_USER:
+            return {
+                ...state,
+                showEditUser: true,
+                userToEdit: action.user
+            }
 
+        case EDIT_USER_FAILED:
+            return {
+                ...state,
+                showEditUser: false
+            }
 
+        case DELETING_USER:
+            return {
+                ...state,
+
+            }
+
+        case USERS_UPDATED:
+            return {
+                ...state,
+                users: action.users
+            }
 
         default:
             return state
@@ -94,10 +149,22 @@ export function logout() {
     return {type: LOGOUT}
 }
 
+export function startAddingUser(){
+    console.log(("inside startaddinguser"))
+    return {
+        type: START_ADDING_USER
+    }
+}
 
 function addingUser() {
     return {
         type: ADDING_USER
+    }
+}
+
+function editingUser() {
+    return {
+        type: EDITING_USER
     }
 }
 
@@ -115,7 +182,36 @@ function setUserLoggedIn(user) {
     }
 }
 
+function gettingUsers() {
+    return {
+        type: GETTING_USERS
+    }
+}
 
+function getUsersFailed() {
+    return {
+        type: GET_USERS_FAILED
+    }
+}
+
+function usersUpdated(users) {
+    return {
+        type: USERS_UPDATED,
+        users
+    }
+}
+
+function deletingUser() {
+    return {
+        type: DELETING_USER
+    }
+}
+
+function deleteUserFailed() {
+    return {
+        type: DELETING_USER_FAILED
+    }
+}
 
 
 export function initiateLogin(user) {
@@ -135,12 +231,23 @@ export function initiateLogin(user) {
             if (!response.ok)
                 return dispatch(loginFailure())
 
-            response.json().then(json => {
-                console.log(json)
-                if (json) {
+            response.json().then(user => {
+                console.log(user)
+                if (user.authLevel === 3) {
                     dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(json.email))
+                    dispatch(setUserLoggedIn(user))
+                    dispatch(initiateGetUsers())
+                    // dispatch(navigate(admin))
 
+
+                } else if (user.authLevel === 2) {
+                    dispatch(loginSuccess())
+                    dispatch(setUserLoggedIn(user))
+                    //dispatch(navigate(shopkeeper))
+                } else if (user.authLevel === 1) {
+                    dispatch(loginSuccess())
+                    dispatch(setUserLoggedIn(user))
+                    //dispatch(navigate(home))
                 }
                 else
                     dispatch(loginFailure())
@@ -173,6 +280,72 @@ export function initiateAddUser(user) {
                     console.log("did not hit success")
                     dispatch(addUserFailed())
                 }
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateEditUser(user) {
+    return function sideEffect(dispatch, getState) {
+        dispatch(editingUser())
+
+        fetch("http://localhost:8080/api/users/edit", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        }).then(response => {
+            if (!response.ok)
+                return dispatch(addUserFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                    // dispatch(initiateLogin(user))
+                    console.log("user registered")
+
+                else {
+                    console.log("did not hit success")
+                    dispatch(addUserFailed())
+                }
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateGetUsers() {
+
+    return function sideEffect(dispatch, getState) {
+        dispatch(gettingUsers())
+
+        fetch('http://localhost:8080/api/users/all', {
+            method: 'GET'
+        }).then(response => {
+            if (!response.ok)
+                return dispatch (getUsersFailed())
+
+            response.json().then(users => {
+                dispatch(usersUpdated(users))
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateDeleteUser(userId) {
+    return function sideEffect({dispatch, getState}) {
+        dispatch(deletingUser())
+
+        fetch('http://localhost:8080/api/users/delete/${userID}', {
+            method: 'DELETE'
+        }).then(response => {
+            if(!response.ok)
+                return dispatch(deleteUserFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                    dispatch(initiateGetUsers())
+                else
+                    dispatch(deleteUserFailed())
             })
         }).catch(error => console.log(error))
     }
