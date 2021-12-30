@@ -45,7 +45,7 @@ public class User {
     }
 
     //register
-    public User(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String role, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
@@ -57,7 +57,7 @@ public class User {
     }
 
     //admin is registering a user to shopkeeper or admin.
-    public User(String firstName, String lastName, String email, String password, int authLevel) {
+    public User(String firstName, String lastName, String role, String email, String password, int authLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;

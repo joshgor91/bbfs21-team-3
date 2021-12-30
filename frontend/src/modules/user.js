@@ -267,18 +267,17 @@ export function initiateLogin(user) {
 
             response.json().then(user => {
                 console.log(user)
-                if (user.authLevel === 3) {
+                if (user.authLevel === 4) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     dispatch(initiateGetUsers())
                     // dispatch(navigate(admin))
 
-
-                } else if (user.authLevel === 2) {
+                } else if (user.authLevel === 3) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     //dispatch(navigate(shopkeeper))
-                } else if (user.authLevel === 1) {
+                } else if (user.authLevel === 2) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     //dispatch(navigate(home))

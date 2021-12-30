@@ -23,9 +23,9 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
         e.preventDefault()
         console.log("btn clicked")
 
-        if (users)
-            initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
-        else
+        // if (users)
+        //     initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
+        // else
          initiateAddUser({
             id: Math.floor(Math.random() * 9999),
             firstName: fname,
