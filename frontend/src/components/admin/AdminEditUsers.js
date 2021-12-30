@@ -15,10 +15,12 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
     const [authLevel, setAuthLevel] = useState('')
+    const [show, setShow] = useState(true)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
+        setShow(false)
 
         if (users)
             initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
@@ -35,7 +37,7 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
         console.log(users)
     }
     return (
-        <Modal show={true}>
+        <Modal show={show}>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>

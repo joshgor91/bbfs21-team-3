@@ -12,7 +12,7 @@ const Admin = () => {
         <AdminForm/>
         {/*<AdminCreateUser/>*/}
         {/*<AdminSeeUsers/>*/}
-        {/*<AdminEditUsers/>*/}
+        <AdminEditUsers/>
     </>
 };
 

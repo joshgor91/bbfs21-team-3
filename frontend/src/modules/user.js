@@ -34,7 +34,8 @@ const initialState = {
     role: '',
     authLevel: '',
     email: '',
-    password: ''
+    password: '',
+    addingUser: false
 }
 
 
@@ -78,6 +79,12 @@ export default function reducer(state = initialState, action){
                 loggedInUser: action.user
             }
 
+        case ADDING_USER:
+            return {
+                ...state,
+                showEditUser: false,
+                addingUser: true
+            }
 
         case START_ADDING_USER:
             return {
@@ -150,7 +157,7 @@ export function logout() {
 }
 
 export function startAddingUser(){
-    console.log(("inside startaddinguser"))
+    console.log("inside startaddinguser")
     return {
         type: START_ADDING_USER
     }
