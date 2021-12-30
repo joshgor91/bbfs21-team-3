@@ -6,6 +6,7 @@ const LOGOUT = 'LOGOUT'
 const START_ADDING_USER = 'START_ADDING_USER'
 const ADDING_USER = 'ADDING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
+const CANCEL_EDIT_USER ='CANCEL_EDIT_USER'
 
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const EDITING_USER = 'EDITING_USER'
@@ -117,6 +118,18 @@ export default function reducer(state = initialState, action){
                 showEditUser: false
             }
 
+        case CANCEL_EDIT_USER:
+            return {
+                ...state,
+                showEditUser: false,
+                firstName: '',
+                lastName: '',
+                role: '',
+                authLevel: '',
+                email: '',
+                password: ''
+            }
+
         case DELETING_USER:
             return {
                 ...state,
@@ -133,7 +146,6 @@ export default function reducer(state = initialState, action){
             return state
     }
 }
-
 
 
 export function requestLogin() {
@@ -181,6 +193,11 @@ function addUserFailed() {
     }
 }
 
+export function cancelEditUser(){
+    return {
+        type: CANCEL_EDIT_USER
+    }
+}
 
 function setUserLoggedIn(user) {
     return {

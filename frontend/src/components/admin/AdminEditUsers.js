@@ -1,12 +1,12 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
 import {useState} from "react";
-import {initiateAddUser, initiateEditUser} from "../../modules/user";
+import {initiateAddUser, initiateEditUser, cancelEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 
-function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, firstName, lastName
+function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, firstName, lastName, cancelEditUser
                               // role, authLevel, email, password
 }) {
     const [email, setEmail] = useState('')
@@ -15,14 +15,12 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
     const [authLevel, setAuthLevel] = useState('')
-    // const [show, setShow] = useState(true)
     console.log("edit user")
     console.log(show)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
-        // setShow(false)
 
         if (users)
             initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
@@ -39,7 +37,7 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
         console.log(users)
     }
     return (
-        <Modal show={show}>
+        <Modal show={show} onHide={cancelEditUser}>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>
@@ -97,7 +95,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser}, dispatch)
+    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser}, dispatch)
 }
 
 export default connect(
