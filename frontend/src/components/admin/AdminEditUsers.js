@@ -1,12 +1,12 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
 import {useState} from "react";
-import {initiateAddUser, initiateEditUser} from "../../modules/user";
+import {initiateAddUser, initiateEditUser, cancelEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 
-function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName, lastName
+function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, firstName, lastName, cancelEditUser
                               // role, authLevel, email, password
 }) {
     const [email, setEmail] = useState('')
@@ -15,14 +15,17 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
     const [authLevel, setAuthLevel] = useState('')
+    console.log("edit user")
+    console.log(show)
+    console.log(users)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
 
-        if (users)
-            initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
-        else
+        // if (users)
+        //     initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
+        // else
          initiateAddUser({
             id: Math.floor(Math.random() * 9999),
             firstName: fname,
@@ -35,7 +38,7 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
         console.log(users)
     }
     return (
-        <Modal show={true}>
+        <Modal show={show} onHide={cancelEditUser}>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>
@@ -84,17 +87,17 @@ function AdminCreateUser ({ initiateAddUser, initiateEditUser, users, firstName,
         </Modal>
     );
 }
-//
-// function mapStateToProps(state) {
-//     return {
-//         show:
-//     }
-// }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser}, dispatch)
+function mapStateToProps(state) {
+    return {
+        show: state.userReducer.showEditUser,
+        users: state.userReducer.users
+
+    }
 }
 
-export default connect(
-    // mapStateToProps
-    undefined, mapDispatchToProps)(AdminCreateUser)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)

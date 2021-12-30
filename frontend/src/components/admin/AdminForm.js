@@ -1,15 +1,15 @@
 import {Button, ButtonGroup, Col, Dropdown} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {startAddingUser} from "../../modules/user";
+import {startAddingUser, initiateGetUsers} from "../../modules/user";
 
 
 
-function AdminForm({startAddingUser}){
+function AdminForm({startAddingUser, initiateGetUsers}){
 
 
     return <>
-        <Col>
+        <Col className={'m-5'}>
             <Dropdown as={ButtonGroup}>
                 <Button variant="success">Admin Stuff</Button>
 
@@ -20,14 +20,16 @@ function AdminForm({startAddingUser}){
                         onClick={startAddingUser}
                     >Create</Dropdown.Item>
                     <Dropdown.Item
-                        // onClick={() => editUser(user)}
+                        // onClick={() => editingUser}
+                        //Need to view users first, then add edit button
                     >Edit</Dropdown.Item>
                     <Dropdown.Item
                         // onClick={() => deleteUser(user.id)}
+                        //Need to see users first, then add delete button
                     >Delete</Dropdown.Item>
                     <Dropdown.Item
-                        // onClick={() => existingUsers(user)}
-                    >Users</Dropdown.Item>
+                        onClick={initiateGetUsers}
+                    >View all Users</Dropdown.Item>
 
                 </Dropdown.Menu>
             </Dropdown>
@@ -39,10 +41,9 @@ function AdminForm({startAddingUser}){
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({startAddingUser}, dispatch)
+    return bindActionCreators({startAddingUser, initiateGetUsers}, dispatch)
 }
 
 export default connect(undefined, mapDispatchToProps)(AdminForm)
-// export default AdminForm
 
 

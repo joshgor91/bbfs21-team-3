@@ -6,6 +6,7 @@ const LOGOUT = 'LOGOUT'
 const START_ADDING_USER = 'START_ADDING_USER'
 const ADDING_USER = 'ADDING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
+const CANCEL_EDIT_USER ='CANCEL_EDIT_USER'
 
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const EDITING_USER = 'EDITING_USER'
@@ -29,12 +30,15 @@ const initialState = {
     userToEdit: undefined,
     showEditUser: false,
     gettingUsers: false,
+    id: '',
     firstName: '',
     lastName: '',
     role: '',
     authLevel: '',
     email: '',
-    password: ''
+    password: '',
+    hideTable: true,
+    addingUser: false
 }
 
 
@@ -78,6 +82,12 @@ export default function reducer(state = initialState, action){
                 loggedInUser: action.user
             }
 
+        case ADDING_USER:
+            return {
+                ...state,
+                showEditUser: false,
+                addingUser: true
+            }
 
         case START_ADDING_USER:
             return {
@@ -110,6 +120,26 @@ export default function reducer(state = initialState, action){
                 showEditUser: false
             }
 
+        case CANCEL_EDIT_USER:
+            return {
+                ...state,
+                showEditUser: false,
+                id: '',
+                firstName: '',
+                lastName: '',
+                role: '',
+                authLevel: '',
+                email: '',
+                password: ''
+            }
+
+        case GETTING_USERS:
+            return {
+                ...state,
+                gettingUsers: true,
+                hideTable: false
+            }
+
         case DELETING_USER:
             return {
                 ...state,
@@ -126,7 +156,6 @@ export default function reducer(state = initialState, action){
             return state
     }
 }
-
 
 
 export function requestLogin() {
@@ -150,7 +179,6 @@ export function logout() {
 }
 
 export function startAddingUser(){
-    console.log(("inside startaddinguser"))
     return {
         type: START_ADDING_USER
     }
@@ -162,9 +190,10 @@ function addingUser() {
     }
 }
 
-function editingUser() {
+function editingUser(user) {
     return {
-        type: EDITING_USER
+        type: EDITING_USER,
+        user
     }
 }
 
@@ -174,6 +203,11 @@ function addUserFailed() {
     }
 }
 
+export function cancelEditUser(){
+    return {
+        type: CANCEL_EDIT_USER
+    }
+}
 
 function setUserLoggedIn(user) {
     return {
@@ -182,7 +216,7 @@ function setUserLoggedIn(user) {
     }
 }
 
-function gettingUsers() {
+export function gettingUsers() {
     return {
         type: GETTING_USERS
     }
@@ -233,18 +267,17 @@ export function initiateLogin(user) {
 
             response.json().then(user => {
                 console.log(user)
-                if (user.authLevel === 3) {
+                if (user.authLevel === 4) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     dispatch(initiateGetUsers())
                     // dispatch(navigate(admin))
 
-
-                } else if (user.authLevel === 2) {
+                } else if (user.authLevel === 3) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     //dispatch(navigate(shopkeeper))
-                } else if (user.authLevel === 1) {
+                } else if (user.authLevel === 2) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     //dispatch(navigate(home))
@@ -314,7 +347,7 @@ export function initiateEditUser(user) {
 }
 
 export function initiateGetUsers() {
-
+    console.log("inside initiateGetUsers")
     return function sideEffect(dispatch, getState) {
         dispatch(gettingUsers())
 
@@ -331,11 +364,11 @@ export function initiateGetUsers() {
     }
 }
 
-export function initiateDeleteUser(userId) {
+export function initiateDeleteUser(id) {
     return function sideEffect({dispatch, getState}) {
         dispatch(deletingUser())
 
-        fetch('http://localhost:8080/api/users/delete/${userID}', {
+        fetch('http://localhost:8080/api/users/delete/${id}', {
             method: 'DELETE'
         }).then(response => {
             if(!response.ok)
