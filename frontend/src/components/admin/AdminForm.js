@@ -6,11 +6,7 @@ import {startAddingUser, initiateGetUsers} from "../../modules/user";
 
 
 function AdminForm({startAddingUser, initiateGetUsers}){
-    // Toggle hidden inside table to true and/or false when clicked
-    function handleView(e){
-     e.preventDefault()
-     initiateGetUsers()
- }
+
 
     return <>
         <Col className={'m-5'}>
@@ -32,7 +28,7 @@ function AdminForm({startAddingUser, initiateGetUsers}){
                         //Need to see users first, then add delete button
                     >Delete</Dropdown.Item>
                     <Dropdown.Item
-                        onClick={handleView}
+                        onClick={initiateGetUsers}
                     >View all Users</Dropdown.Item>
 
                 </Dropdown.Menu>
@@ -49,6 +45,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(undefined, mapDispatchToProps)(AdminForm)
-// export default AdminForm
 
 

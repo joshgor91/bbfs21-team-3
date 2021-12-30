@@ -24,13 +24,7 @@ const initialState = {
     isLoggedIn: false,
     loginPending: false,
     loginErrorOccurred: false,
-    users: [
-        // {id: '1111',
-        // firstname: 'jeff',
-        // lastname: 'thao',
-        // role: 'customer',
-        // authLevel: '1'}
-    ],
+    users: [],
     loggedInUser: {},
     registerErrorOccurred: false,
     userToEdit: undefined,
@@ -43,6 +37,7 @@ const initialState = {
     authLevel: '',
     email: '',
     password: '',
+    hideTable: true,
     addingUser: false
 }
 
@@ -141,7 +136,8 @@ export default function reducer(state = initialState, action){
         case GETTING_USERS:
             return {
                 ...state,
-                gettingUsers: true
+                gettingUsers: true,
+                hideTable: false
             }
 
         case DELETING_USER:

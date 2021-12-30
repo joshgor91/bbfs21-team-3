@@ -3,12 +3,12 @@ import { gettingUsers} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function AdminSeeUsers({ users, gettingUsers}) {
+function AdminSeeUsers({ users, hide}) {
     const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password"]
     console.log(users)
     return (
     // Toggle hidden to true and false wil clicked on View all in AdminForm.js
-        <Table striped bordered responsive >
+        <Table striped bordered responsive hidden={hide}>
             <thead>
             <tr>
                 {tHead.map((tHead, index) => (
@@ -36,6 +36,7 @@ function AdminSeeUsers({ users, gettingUsers}) {
 
 function mapStateToProps(state) {
     return {
+        hide: state.userReducer.hideTable,
         users: state.userReducer.users
     }
 }

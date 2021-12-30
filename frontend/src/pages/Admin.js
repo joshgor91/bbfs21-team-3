@@ -4,7 +4,7 @@ import AdminEditUsers from "../components/admin/AdminEditUsers";
 import React from "react";
 
 
-const Admin = () => {
+function Admin() {
     return <>
     <h1>Welcome Admin
     {/* add conditional to this page that if user auth /= 3,
@@ -17,6 +17,6 @@ const Admin = () => {
         <AdminEditUsers/>
 
     </>
-};
+}
 
 export default Admin;
