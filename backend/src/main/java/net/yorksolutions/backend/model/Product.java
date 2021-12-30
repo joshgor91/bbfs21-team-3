@@ -15,7 +15,7 @@ public class Product {
     @JsonProperty
     public Long id;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "products",cascade = {CascadeType.MERGE})
     @JsonIgnoreProperties("products")
     @JsonProperty
     Set<Category> categories = new HashSet<>();
