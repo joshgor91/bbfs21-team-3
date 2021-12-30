@@ -8,7 +8,18 @@ const CANCEL_EDIT_PRODUCT = 'CANCEL_EDIT_PRODUCT'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
-
+const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
+const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
+const UPDATE_BRAND = 'UPDATE_BRAND'
+const UPDATE_UNIT_PRICE = 'UPDATE_UNIT_PRICE'
+const UPDATE_UNITS_IN_STOCK = 'UPDATE_UNITS_IN_STOCK'
+const UPDATE_SIZE = 'UPDATE_SIZE'
+const UPDATE_COLOR = 'UPDATE_COLOR'
+const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
+const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
+const UPDATE_PICTURE = 'UPDATE_PICTURE'
+const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
+const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
 
 
 const initialState = {
@@ -90,6 +101,78 @@ export default function reducer(state = initialState, action) {
                 showEditProduct: false
             }
 
+        case UPDATE_PRODUCT_NAME:
+            return {
+                ...state,
+                productName: action.productName
+            }
+
+        case UPDATE_PRODUCT_DESCRIPTION:
+            return {
+                ...state,
+                productDescription: action.productDescription
+            }
+
+        case UPDATE_BRAND:
+            return {
+                ...state,
+                brand: action.brand
+            }
+
+        case UPDATE_UNIT_PRICE:
+            return {
+                ...state,
+                unitPrice: action.unitPrice
+            }
+
+        case UPDATE_UNITS_IN_STOCK:
+            return {
+                ...state,
+                unitsInStock: action.unitsInStock
+            }
+
+        case UPDATE_SIZE:
+            return {
+                ...state,
+                size: action.size
+            }
+
+        case UPDATE_COLOR:
+            return {
+                ...state,
+                color: action.color
+            }
+
+        case UPDATE_PRODUCT_AVAILABLE:
+            return {
+                ...state,
+                productAvailable: action.productAvailable
+            }
+
+        case UPDATE_DISCONTINUED:
+            return {
+                ...state,
+                discontinued: action.discontinued
+            }
+
+        case UPDATE_PICTURE:
+            return {
+                ...state,
+                picture: action.picture
+            }
+
+        case UPDATE_DATE_RECEIVED:
+            return {
+                ...state,
+                dateReceived: action.dateReceived
+            }
+
+        case UPDATE_UNITS_RECEIVED:
+            return {
+                ...state,
+                unitsReceived: action.unitsReceived
+            }
+
         case GET_PRODUCTS:
             return {
                 ...state,
@@ -144,6 +227,91 @@ export function cancelEditProduct() {
         type: CANCEL_EDIT_PRODUCT
     }
 }
+
+export function updateProductName(productName) {
+    return {
+        type: UPDATE_PRODUCT_NAME,
+        productName
+    }
+}
+
+export function updateProductDescription(productDescription) {
+    return {
+        type: UPDATE_PRODUCT_DESCRIPTION,
+        productDescription
+    }
+}
+
+export function updateBrand(brand) {
+    return {
+        type: UPDATE_BRAND,
+        brand
+    }
+}
+
+export function updateUnitPrice(unitPrice) {
+    return {
+        type: UPDATE_UNIT_PRICE,
+        unitPrice
+    }
+}
+
+export function updateUnitsInStock(unitsInStock) {
+    return {
+        type: UPDATE_UNITS_IN_STOCK
+        unitsInStock
+    }
+}
+
+export function updateSize(size) {
+    return {
+        type: UPDATE_SIZE,
+        size
+    }
+}
+
+export function updateColor(color) {
+    return {
+        type: UPDATE_COLOR,
+        color
+    }
+}
+
+export function updateProductAvailable(productAvailable) {
+    return {
+        type: UPDATE_PRODUCT_AVAILABLE,
+        productAvailable
+    }
+}
+
+export function updateDiscontinued(discontinued) {
+    return {
+        type: UPDATE_DISCONTINUED,
+        discontinued
+    }
+}
+
+export function updatePicture(picture) {
+    return {
+        type: UPDATE_PICTURE,
+        picture
+    }
+}
+
+export function updateDateReceived(dateReceived) {
+    return {
+        type: UPDATE_DATE_RECEIVED,
+        dateReceived
+    }
+}
+
+export function updateUnitsReceived(unitsReceived) {
+    return {
+        type: UPDATE_UNITS_RECEIVED,
+        unitsReceived
+    }
+}
+
 
 export function getProducts() {
     return {

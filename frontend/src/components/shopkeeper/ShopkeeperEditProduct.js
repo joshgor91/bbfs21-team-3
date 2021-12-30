@@ -1,0 +1,3 @@
+function ShopkeeperEditProduct({show, product, productName, productDescription, brand, unitPrice, unitsInStock, size, color, productAvailable, discontinued, picture, dateReceived, unitsReceieved,
+                               initiateAddProduct, initiateEditProduct, cancelEditProduct, updateProductName, updateProductDescription, updateBrand, updateUnitPrice, updateUnitsInStock, updateSize,
+                               updateColor, updateProductAvailable, updateDiscontinued, updatePicture, updateDateReceived, updateUnitsReceived})
