@@ -1,9 +1,12 @@
 package net.yorksolutions.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -12,19 +15,21 @@ public class Product {
     @JsonProperty
     public Long id;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties("products")
     @JsonProperty
-    @Column(name = "product_name")
+    Set<Category> categories = new HashSet<>();
+
+    @JsonProperty
     public String productName;
 
     @JsonProperty
-    @Column(name = "product_description")
     public String productDescription;
 
     @JsonProperty
     public String brand;
 
     @JsonProperty
-    @Column(name = "unit_price")
     public Float unitPrice;
 
     @JsonProperty
@@ -59,4 +64,11 @@ public class Product {
     @Column(name = "units_received")
     public int unitsReceived;
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
 }
