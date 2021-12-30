@@ -16,13 +16,20 @@ public class Category {
     @JsonProperty
     public Long id;
 
-    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("categories")
     @JsonProperty
-    public Set<Product> products = new HashSet<>();
-
-    @JsonProperty
-    @Column(name = "category_name")
+    @Column(name = "category_name", unique = true)
     public String categoryName;
 
+    @ManyToMany( mappedBy = "categories", cascade = {CascadeType.MERGE})
+    @JsonIgnoreProperties("categories")
+    @JsonProperty
+    Set<Product> products = new HashSet<>();
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }

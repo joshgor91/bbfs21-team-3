@@ -39,10 +39,16 @@ function NavBar() {
                             </Nav.Link>
                         </Nav.Item>
 
+                        <Nav.Item>
+                            <Nav.Link className='navitem' href='/shopkeeper' title='Shopkeeper'>
+                                Shopkeeper
+                            </Nav.Link>
+                        </Nav.Item>
+
                     </Nav>
                 </Navbar.Collapse>
             </>
-        )}
+
     </Navbar>
     </>
     )
