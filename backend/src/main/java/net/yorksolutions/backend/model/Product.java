@@ -24,7 +24,11 @@ public class Product {
             joinColumns = { @JoinColumn(name = "product_id")},
             inverseJoinColumns = { @JoinColumn(name = "category_id")}
     )
-    Set<Category> categories;
+    Set<Category> categories = new HashSet<>();
+
+    public void deleteCategory(Long id) {
+        categories.removeIf(catId -> (catId.getId() == id));
+    }
 
     @JsonProperty
     public String productName;

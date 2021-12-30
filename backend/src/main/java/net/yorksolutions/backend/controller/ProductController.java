@@ -10,6 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+class IdCat {
+    public Long id;
+    public String categoryName;
+
+    public IdCat(Long id, String categoryName) {
+        this.id = id;
+        this.categoryName = categoryName;
+    }
+}
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -66,15 +76,26 @@ public class ProductController {
         return categoryRepo.findAll();
     }
     @CrossOrigin
-    @DeleteMapping("/category/delete/{id}")
-    String deleteCategoryById(@PathVariable Long id) {
-        categoryRepo.deleteById(id);
+    @DeleteMapping("/category/delete/{id}/{categoryId}")
+    String deleteCategoryById(@PathVariable Long id, @PathVariable Long categoryId) {
+        Optional<Product> response = productRepo.findById(id);
+        if(response.isPresent()) {
+            Product prod = response.get();
+            prod.deleteCategory(categoryId);
+            productRepo.save(prod);
+        }
         return "success";
     }
     @CrossOrigin
     @GetMapping("/getbyname/{category}")
     Iterable<Product> getByCategory(@PathVariable String category) {
         return productRepo.findByCategories_CategoryName(category);
+    }
+
+    @CrossOrigin
+    @PostMapping("/getbyIdCat")
+    Product getByIdCat(@RequestBody IdCat input) {
+        return productRepo.findByIdAndCategories_CategoryName(input.id, input.categoryName);
     }
 
 }
