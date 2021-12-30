@@ -18,7 +18,7 @@ public class Category {
     @Column(name = "category_name", unique = true)
     public String categoryName;
 
-    @ManyToMany(mappedBy = "categories", cascade = CascadeType.MERGE)
+    @ManyToMany( mappedBy = "categories", cascade = CascadeType.MERGE)
     @JsonIgnoreProperties("categories")
     @JsonProperty
     Set<Product> products = new HashSet<>();
