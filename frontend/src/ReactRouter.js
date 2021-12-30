@@ -4,6 +4,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Admin from "./pages/Admin";
 import Shopkeeper from "./pages/Shopkeeper";
+import ProductPage from "./pages/ProductPage";
+
+
 
 
 function ReactRouter() {
@@ -21,6 +24,7 @@ function ReactRouter() {
             <Route path='/register' element={<Register/>}/>
             <Route path='/admin' element={<Admin/>}/>
             <Route path='/shopkeeper' element={<Shopkeeper/>}/>
+            <Route path='/product/:id' element={<ProductPage/>}/>
         </Routes>
     </Router>
 
