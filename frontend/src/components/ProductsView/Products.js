@@ -10,7 +10,7 @@ function Products({inventory}) {
         <>
             <Container fluid>
                 <Row>
-                    <Col md={'auto'} style={{align: "center"}}>Current Deals here?</Col>
+                    <Col md={'auto'}>Current Deals here?</Col>
                 </Row>
                 <Row>
 
