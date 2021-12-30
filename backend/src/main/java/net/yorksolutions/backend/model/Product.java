@@ -9,18 +9,17 @@ import java.util.Set;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "product_id")
-    @JsonProperty
-    public Long id;
+    public Long productId;
 
+    @JsonProperty
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "product_category",
             joinColumns = { @JoinColumn(name = "product_id")},
             inverseJoinColumns = { @JoinColumn(name = "category_id")}
     )
-    @JsonProperty
     Set<Category> categories;
 
     @JsonProperty

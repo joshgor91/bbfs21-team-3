@@ -10,10 +10,10 @@ import java.util.Set;
 @Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     @JsonProperty
-    public Long id;
+    public Long categoryId;
 
     @ManyToMany(mappedBy = "categories")
     @JsonProperty

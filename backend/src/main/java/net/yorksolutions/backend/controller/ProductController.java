@@ -30,7 +30,7 @@ public class ProductController {
     @CrossOrigin
     @PutMapping("/edit")
     String editProduct(@RequestBody Product product) {
-        productRepo.findById(product.id).orElseThrow();
+        productRepo.findById(product.productId).orElseThrow();
         productRepo.save(product);
         return "success";
     }
