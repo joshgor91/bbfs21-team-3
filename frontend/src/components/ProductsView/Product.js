@@ -1,4 +1,4 @@
-import {Card} from "react-bootstrap";
+import {Card, Col} from "react-bootstrap";
 import './Product.css'
 
 function Product({product}) {
@@ -6,6 +6,7 @@ function Product({product}) {
 
     return (
         <>
+            <Col>
             <Card className='product-card' >
                 <Card.Img className='product-img' variant="top" src="holder.js/100px180" />
                 <Card.Body>
@@ -16,6 +17,7 @@ function Product({product}) {
                     </Card.Text>
                 </Card.Body>
             </Card>
+            </Col>
         </>
     )
 }
