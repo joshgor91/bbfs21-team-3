@@ -92,7 +92,7 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
 function mapStateToProps(state) {
     console.log(state.showEditUser)
     return {
-        show: state.showEditUser
+        show: state.userReducer.showEditUser
     }
 }
 
