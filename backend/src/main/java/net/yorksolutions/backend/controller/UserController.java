@@ -13,15 +13,17 @@ class UserOutput {
     public Long id;
     public String firstName;
     public String lastName;
+    public String role;
     public String email;
     public int authLevel;
 
     UserOutput(){};
 
-    public UserOutput(Long id, String firstName, String lastName, String email, int authLevel) {
+    public UserOutput(Long id, String firstName, String lastName, String role, String email, int authLevel) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role = role;
         this.email = email;
         this.authLevel = authLevel;
     }
@@ -64,7 +66,7 @@ public class UserController {
             // now we are taking all the information from User that we got from the database, and copying this object information
             // to a new user Output object, that excludes the password.
             // we dont want to send over the password.
-            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.email, res.authLevel);
+            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel);
             return foundUser;
         } else {
             return null;
