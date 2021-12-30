@@ -1,5 +1,6 @@
 package net.yorksolutions.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -9,11 +10,12 @@ import java.util.Set;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column (name = "product_id")
-    public Long productId;
+    public Long id;
 
     @JsonProperty
+    @JsonIgnoreProperties("products")
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "product_category",

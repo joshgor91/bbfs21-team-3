@@ -30,7 +30,7 @@ public class ProductController {
     @CrossOrigin
     @PutMapping("/edit")
     String editProduct(@RequestBody Product product) {
-        productRepo.findById(product.productId).orElseThrow();
+        productRepo.findById(product.id).orElseThrow();
         productRepo.save(product);
         return "success";
     }
@@ -48,6 +48,10 @@ public class ProductController {
         return productRepo.findById(id).get();
     }
 
-
+    @CrossOrigin
+    @GetMapping("/getbyname/{category}")
+    Iterable<Product> getByCategory(@PathVariable String category) {
+        return productRepo.findByCategories_CategoryName(category);
+    }
 
 }
