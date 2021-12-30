@@ -65,4 +65,11 @@ public class ProductController {
     Iterable<Category> all2() {
         return categoryRepo.findAll();
     }
+    @CrossOrigin
+    @DeleteMapping("/category/delete/{id}")
+    String deleteCategoryById(@PathVariable Long id) {
+        categoryRepo.deleteById(id);
+        return "success";
+    }
+
 }
