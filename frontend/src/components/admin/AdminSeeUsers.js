@@ -1,11 +1,14 @@
 import {Table} from "react-bootstrap";
+import { gettingUsers} from "../../modules/user";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
-function AdminSeeUsers () {
- var tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password"]
-
+function AdminSeeUsers({ users, gettingUsers}) {
+    const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password"]
+    console.log(users)
     return (
-
-        <Table responsive>
+    // Toggle hidden to true and false wil clicked on View all in AdminForm.js
+        <Table striped bordered responsive >
             <thead>
             <tr>
                 {tHead.map((tHead, index) => (
@@ -14,28 +17,31 @@ function AdminSeeUsers () {
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                {Array.from({ length: 6 }).map((_, index) => (
-                    <td key={index}>Table cell {index}</td>
+                {users.map((user, index) => (
+                    <tr>
+                    <td key={index}>{user.id}</td>
+                    <td key={index}>{user.firstName}</td>
+                    <td key={index}>{user.lastName}</td>
+                    <td key={index}>{user.role}</td>
+                    <td key={index}>{user.email}</td>
+                    <td key={index}>{user.authLevel}</td>
+                    <td key={index}>{user.password}</td>
+                    </tr>
                 ))}
-            </tr>
-            <tr>
-                <td>2</td>
-                {Array.from({ length: 6 }).map((_, index) => (
-                    <td key={index}>Table cell {index}</td>
-                ))}
-            </tr>
-            <tr>
-                <td>3</td>
-                {Array.from({ length: 6 }).map((_, index) => (
-                    <td key={index}>Table cell {index}</td>
-                ))}
-            </tr>
             </tbody>
         </Table>
 
     );
 }
 
-export default AdminSeeUsers
+function mapStateToProps(state) {
+    return {
+        users: state.userReducer.users
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ gettingUsers}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminSeeUsers)

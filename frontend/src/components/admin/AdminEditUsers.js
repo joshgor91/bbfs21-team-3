@@ -17,6 +17,7 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
     const [authLevel, setAuthLevel] = useState('')
     console.log("edit user")
     console.log(show)
+    console.log(users)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
@@ -88,9 +89,10 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
 }
 
 function mapStateToProps(state) {
-    console.log(state.showEditUser)
     return {
-        show: state.userReducer.showEditUser
+        show: state.userReducer.showEditUser,
+        users: state.userReducer.users
+
     }
 }
 
@@ -98,6 +100,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser}, dispatch)
 }
 
-export default connect(
-    // mapStateToProps
-    mapStateToProps, mapDispatchToProps)(AdminCreateUser)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)

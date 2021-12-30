@@ -21,6 +21,9 @@ public class User {
     public String lastName;
 
     @JsonProperty
+    public String role;
+
+    @JsonProperty
     public String email;
 
     @JsonProperty
@@ -45,6 +48,7 @@ public class User {
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role = role;
         this.email = email;
         this.password = password;
         // me and Emeka altered the constructor so that self registered users, are set as customers.
@@ -56,6 +60,7 @@ public class User {
     public User(String firstName, String lastName, String email, String password, int authLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role = role;
         this.email = email;
         this.password = password;
         this.authLevel= authLevel;

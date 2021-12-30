@@ -1,5 +1,4 @@
 import AdminForm from "../components/admin/AdminForm";
-import AdminCreateUser from "../components/admin/AdminCreateUser";
 import AdminSeeUsers from "../components/admin/AdminSeeUsers";
 import AdminEditUsers from "../components/admin/AdminEditUsers";
 import React from "react";
@@ -14,8 +13,7 @@ const Admin = () => {
     </h1>
 
         <AdminForm/>
-        {/*<AdminCreateUser/>*/}
-        {/*<AdminSeeUsers/>*/}
+        <AdminSeeUsers/>
         <AdminEditUsers/>
 
     </>

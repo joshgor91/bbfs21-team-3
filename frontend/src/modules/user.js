@@ -24,12 +24,19 @@ const initialState = {
     isLoggedIn: false,
     loginPending: false,
     loginErrorOccurred: false,
-    users: [],
+    users: [
+        // {id: '1111',
+        // firstname: 'jeff',
+        // lastname: 'thao',
+        // role: 'customer',
+        // authLevel: '1'}
+    ],
     loggedInUser: {},
     registerErrorOccurred: false,
     userToEdit: undefined,
     showEditUser: false,
     gettingUsers: false,
+    id: '',
     firstName: '',
     lastName: '',
     role: '',
@@ -122,12 +129,19 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 showEditUser: false,
+                id: '',
                 firstName: '',
                 lastName: '',
                 role: '',
                 authLevel: '',
                 email: '',
                 password: ''
+            }
+
+        case GETTING_USERS:
+            return {
+                ...state,
+                gettingUsers: true
             }
 
         case DELETING_USER:
@@ -169,7 +183,6 @@ export function logout() {
 }
 
 export function startAddingUser(){
-    console.log("inside startaddinguser")
     return {
         type: START_ADDING_USER
     }
@@ -181,9 +194,10 @@ function addingUser() {
     }
 }
 
-function editingUser() {
+function editingUser(user) {
     return {
-        type: EDITING_USER
+        type: EDITING_USER,
+        user
     }
 }
 
@@ -206,7 +220,7 @@ function setUserLoggedIn(user) {
     }
 }
 
-function gettingUsers() {
+export function gettingUsers() {
     return {
         type: GETTING_USERS
     }
@@ -338,7 +352,7 @@ export function initiateEditUser(user) {
 }
 
 export function initiateGetUsers() {
-
+    console.log("inside initiateGetUsers")
     return function sideEffect(dispatch, getState) {
         dispatch(gettingUsers())
 
@@ -355,11 +369,11 @@ export function initiateGetUsers() {
     }
 }
 
-export function initiateDeleteUser(userId) {
+export function initiateDeleteUser(id) {
     return function sideEffect({dispatch, getState}) {
         dispatch(deletingUser())
 
-        fetch('http://localhost:8080/api/users/delete/${userID}', {
+        fetch('http://localhost:8080/api/users/delete/${id}', {
             method: 'DELETE'
         }).then(response => {
             if(!response.ok)
