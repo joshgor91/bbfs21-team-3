@@ -6,7 +6,6 @@ function App() {
   return (
       <>
           <NavBar/>
-        <h1>Hello Team 3</h1>
           <ReactRouter/>
       </>
   )
