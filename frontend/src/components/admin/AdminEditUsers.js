@@ -20,7 +20,6 @@ function AdminCreateUser ({
                               setUserForm,
                               show,
                               initiateAddUser,
-                              initiateEditUser,
                               initiateGetUsers,
                               userToEdit,
                               user,
@@ -37,9 +36,8 @@ function AdminCreateUser ({
             submitEditUser({...userForm})
         }
         else {
-         initiateAddUser({
-             ...userForm
-        })
+            initiateAddUser({...userForm})
+            initiateGetUsers()
         console.log(userForm)
     }}
 

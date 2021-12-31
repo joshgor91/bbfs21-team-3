@@ -23,15 +23,15 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
             </thead>
             <tbody>
                 {users.map((user, index) => (
-                    <tr>
-                    <td key={index}>{user.id}</td>
-                    <td key={index}>{user.firstName}</td>
-                    <td key={index}>{user.lastName}</td>
-                    <td key={index}>{user.role}</td>
-                    <td key={index}>{user.email}</td>
-                    <td key={index}>{user.authLevel}</td>
-                    <td key={index}>{user.password}</td>
-                        <td key={index}>
+                    <tr key={index}>
+                    <td >{user.id}</td>
+                    <td >{user.firstName}</td>
+                    <td >{user.lastName}</td>
+                    <td >{user.role}</td>
+                    <td >{user.email}</td>
+                    <td >{user.authLevel}</td>
+                    <td >{user.password}</td>
+                        <td>
                             <Stack>
                             <Button onClick={handleEdit(user)}>edit</Button>
                             <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>

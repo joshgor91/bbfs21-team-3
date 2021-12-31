@@ -115,8 +115,7 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 showEditUser: true,
-                userToEdit: action.user,
-
+/*                userToEdit: action.user,*/
             }
 
         case EDIT_USER_FAILED:
@@ -142,6 +141,7 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 gettingUsers: true,
+                showEditUser: false,
                 hideTable: false
             }
 
