@@ -138,7 +138,7 @@ public class UserController {
 
     @CrossOrigin
     @PutMapping("/edit")
-    // retruning string to notify the front end that the admin successfully edited the user.
+    // returning string to notify the front end that the admin successfully edited the user.
     String editThree(@RequestBody User user) {
         userRepo.findById(user.getId()).orElseThrow();
         userRepo.save(user);

@@ -20,14 +20,6 @@ function AdminForm({startAddingUser, initiateGetUsers}){
                         onClick={startAddingUser}
                     >Create</Dropdown.Item>
                     <Dropdown.Item
-                        // onClick={() => editingUser}
-                        //Need to view users first, then add edit button
-                    >Edit</Dropdown.Item>
-                    <Dropdown.Item
-                        // onClick={() => deleteUser(user.id)}
-                        //Need to see users first, then add delete button
-                    >Delete</Dropdown.Item>
-                    <Dropdown.Item
                         onClick={initiateGetUsers}
                     >View all Users</Dropdown.Item>
 

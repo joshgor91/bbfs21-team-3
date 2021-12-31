@@ -1,10 +1,22 @@
 import AdminForm from "../components/admin/AdminForm";
 import AdminSeeUsers from "../components/admin/AdminSeeUsers";
 import AdminEditUsers from "../components/admin/AdminEditUsers";
-import React from "react";
+import React, {useState} from "react";
 
+const initialUserForm = {
+    id: null,
+    firstName: '',
+    lastName: '',
+    role: '',
+    authLevel: '',
+    email: '',
+    password: '',
+}
 
 function Admin() {
+
+    const [userForm, setUserForm] = useState(initialUserForm);
+
     return <>
     <h1>Welcome Admin
     {/* add conditional to this page that if user auth /= 3,
@@ -13,8 +25,8 @@ function Admin() {
     </h1>
 
         <AdminForm/>
-        <AdminSeeUsers/>
-        <AdminEditUsers/>
+        <AdminSeeUsers setUserForm={setUserForm}/>
+        <AdminEditUsers userForm={userForm} setUserForm={setUserForm}/>
 
     </>
 }

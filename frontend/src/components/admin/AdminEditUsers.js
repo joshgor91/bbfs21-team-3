@@ -1,66 +1,91 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
-import {useState} from "react";
-import {initiateAddUser, initiateEditUser, cancelEditUser} from "../../modules/user";
+import {useEffect, useState} from "react";
+import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
+const initialUserForm = {
+    id: null,
+    firstName: '',
+    lastName: '',
+    role: '',
+    authLevel: '',
+    email: '',
+    password: '',
+}
 
-function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, firstName, lastName, cancelEditUser
+function AdminCreateUser ({
+                              userForm,
+                              setUserForm,
+                              show,
+                              initiateAddUser,
+                              initiateGetUsers,
+                              userToEdit,
+                              user,
+                              cancelEditUser,
+                              submitEditUser
                               // role, authLevel, email, password
 }) {
-    const [email, setEmail] = useState('')
-    const [fname, setFName] = useState('')
-    const [lname, setLName] = useState('')
-    const [password, setPassword] = useState('')
-    const [role, setRole] = useState('')
-    const [authLevel, setAuthLevel] = useState('')
-    console.log("edit user")
-    console.log(show)
-    console.log(users)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
+        console.log(user)
+        if (userToEdit){
+            submitEditUser({...userForm})
+        }
+        else {
+            initiateAddUser({...userForm})
+            initiateGetUsers()
+        console.log(userForm)
+    }}
 
-        // if (users)
-        //     initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
-        // else
-         initiateAddUser({
-            id: Math.floor(Math.random() * 9999),
-            firstName: fname,
-            lastName: lname,
-            role: role,
-            authLevel:authLevel,
-            email: email,
-            password: password
+    function onChange(e) {
+        const {name, value} = e.target
+        setUserForm({
+            ...userForm,
+            [name]:value
         })
-        console.log(users)
     }
+
+    function onHide() {
+        cancelEditUser()
+        setUserForm(initialUserForm)
+    }
+
     return (
-        <Modal show={show} onHide={cancelEditUser}>
+        <Modal show={show} onHide={onHide}>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter first name"
-                              onChange={event => setFName(event.target.value)}
+                              value={userForm.firstName}
+                              name="firstName"
+                              onChange={onChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastName">
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter last name"
-                              onChange={event => setLName(event.target.value)}
+                              value={userForm.lastName}
+                              name="lastName"
+                              onChange={onChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="role">
                 <Form.Label>Role</Form.Label>
                 <Form.Control type="text" placeholder="Enter team member role"
-                              onChange={event => setRole(event.target.value)}/>
+                              value={userForm.role}
+                              name="role"
+                              onChange={onChange}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="authLevel">
                 <Form.Label>Auth Level</Form.Label>
                 <Form.Control type="text" placeholder="Enter their access level"
-                              onChange={event => setAuthLevel(event.target.value)}/>
+                              value={userForm.authLevel}
+                              name="authLevel"
+                              onChange={onChange}/>
                 <Form.Text className="text-muted">
                    '1' for Consumer, '2' for Business Owner, '3' for Admin.
                 </Form.Text>
@@ -68,7 +93,9 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email"
-                              onChange={event => setEmail(event.target.value)}
+                              value={userForm.email}
+                              name="email"
+                              onChange={onChange}
                 />
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
@@ -77,7 +104,9 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password"
-                              onChange={event => setPassword(event.target.value)}
+                              value={userForm.password}
+                              name="password"
+                              onChange={onChange}
                 />
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -91,13 +120,21 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
 function mapStateToProps(state) {
     return {
         show: state.userReducer.showEditUser,
-        users: state.userReducer.users
+        user: state.userReducer.users,
+        firstName: state.userReducer.firstName,
+        lastName: state.userReducer.lastName,
+        role: state.userReducer.role,
+        authLevel: state.userReducer.authLevel,
+        email: state.userReducer.email,
+        password: state.userReducer.password,
+        userToEdit: state.userReducer.userToEdit
+
 
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser}, dispatch)
+    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)

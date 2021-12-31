@@ -1,12 +1,18 @@
 import {Button, Stack, Table} from "react-bootstrap";
-import {gettingUsers, initiateDeleteUser, startEditingUser} from "../../modules/user";
+import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function AdminSeeUsers({ users, hide, startEditingUser, initiateDeleteUser}) {
+function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setUserForm}) {
     const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password", "Edit/Delete"]
+
+    const handleEdit = user => event => {
+        event.preventDefault()
+        initiateEditUser(user)
+        setUserForm(user)
+    }
     return (
-    // Toggle hidden to true and false wil clicked on View all in AdminForm.js
+
         <Table striped bordered responsive hidden={hide}>
             <thead>
             <tr>
@@ -17,17 +23,17 @@ function AdminSeeUsers({ users, hide, startEditingUser, initiateDeleteUser}) {
             </thead>
             <tbody>
                 {users.map((user, index) => (
-                    <tr>
-                    <td key={index}>{user.id}</td>
-                    <td key={index}>{user.firstName}</td>
-                    <td key={index}>{user.lastName}</td>
-                    <td key={index}>{user.role}</td>
-                    <td key={index}>{user.email}</td>
-                    <td key={index}>{user.authLevel}</td>
-                    <td key={index}>{user.password}</td>
-                        <td key={index}>
+                    <tr key={index}>
+                    <td >{user.id}</td>
+                    <td >{user.firstName}</td>
+                    <td >{user.lastName}</td>
+                    <td >{user.role}</td>
+                    <td >{user.email}</td>
+                    <td >{user.authLevel}</td>
+                    <td >{user.password}</td>
+                        <td>
                             <Stack>
-                            <Button onClick={startEditingUser}>edit</Button>
+                            <Button onClick={handleEdit(user)}>edit</Button>
                             <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
                             </Stack>
                         </td>
@@ -47,7 +53,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ gettingUsers, startEditingUser, initiateDeleteUser}, dispatch)
+    return bindActionCreators({ gettingUsers, initiateEditUser, initiateDeleteUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSeeUsers)
