@@ -7,6 +7,7 @@ const START_ADDING_USER = 'START_ADDING_USER'
 const ADDING_USER = 'ADDING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const CANCEL_EDIT_USER ='CANCEL_EDIT_USER'
+const START_EDITING_USER = 'START_EDITING_USER'
 
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const EDITING_USER = 'EDITING_USER'
@@ -140,9 +141,15 @@ export default function reducer(state = initialState, action){
                 hideTable: false
             }
 
-        case DELETING_USER:
+        case GET_USERS_FAILED:
             return {
                 ...state,
+                gettingUsers: false
+            }
+
+        case DELETING_USER:
+            return {
+                ...state
 
             }
 
@@ -190,7 +197,15 @@ function addingUser() {
     }
 }
 
+export function startEditingUser(){
+    console.log("inside startEditingUser")
+    return{
+        type: START_EDITING_USER
+    }
+}
+
 function editingUser(user) {
+    console.log("inside editingUser")
     return {
         type: EDITING_USER,
         user
@@ -236,6 +251,7 @@ function usersUpdated(users) {
 }
 
 function deletingUser() {
+    console.log("trying to delete")
     return {
         type: DELETING_USER
     }
@@ -365,10 +381,10 @@ export function initiateGetUsers() {
 }
 
 export function initiateDeleteUser(id) {
-    return function sideEffect({dispatch, getState}) {
+    console.log("deleting " + id)
+    return function sideEffect(dispatch) {
         dispatch(deletingUser())
-
-        fetch('http://localhost:8080/api/users/delete/${id}', {
+        fetch(`http://localhost:8080/api/users/delete/${id}`, {
             method: 'DELETE'
         }).then(response => {
             if(!response.ok)
