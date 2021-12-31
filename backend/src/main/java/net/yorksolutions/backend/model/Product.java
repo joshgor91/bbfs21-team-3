@@ -12,14 +12,23 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column (name = "product_id")
     @JsonProperty
     public Long id;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @JsonIgnoreProperties("products")
     @JsonProperty
+    @JsonIgnoreProperties("products")
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "product_category",
+            joinColumns = { @JoinColumn(name = "product_id")},
+            inverseJoinColumns = { @JoinColumn(name = "category_id")}
+    )
     Set<Category> categories = new HashSet<>();
 
+    public void deleteCategory(Long id) {
+        categories.removeIf(catId -> (catId.getId() == id));
+    }
 
     @JsonProperty
     public String productName;
