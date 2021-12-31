@@ -35,20 +35,16 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
     if (registerErrorOccurred) {
 
         return <>
-            <Col sm={6}>
                 <Alert variant="danger"> Register error occured </Alert>
-            </Col>
         </>
     } else {
 
         return <>
-            <Col sm={6}>
-                <Accordion>
-                    <Form className="register-form" onSubmit={handleSubmitRegister}>
-                        <AccordionHeader>
+            <Col>
+                <Form className="login-register-form" onSubmit={handleSubmitRegister}>
+
                             <h1>Register</h1>
-                        </AccordionHeader>
-                        <AccordionBody>
+
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Group className="mb-3">
                                     <Form.Label>First name</Form.Label>
@@ -74,13 +70,13 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
                                               onChange={event => setPassword(event.target.value)}/>
                             </Form.Group>
 
-                            <Button variant="light" type="submit">
-                                Submit
+                            <Button className="login-register-button" type="submit">
+                                Register
                             </Button>
-                        </AccordionBody>
+
 
                     </Form>
-                </Accordion>
+
                 <Alert className="hide" id="registered" variant="success"> You are registered! </Alert>
             </Col>
         </>
