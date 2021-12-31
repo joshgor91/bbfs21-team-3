@@ -51,13 +51,10 @@ function LoginForm({error, initiateLogin}) {
     } else {
 
         return <>
-            <Col sm={6}>
-                <Accordion>
-                    <Form className="register-form" onSubmit={handleSubmit}>
-                        <AccordionHeader>
+            <Col>
+                    <Form className="login-register-form" onSubmit={handleSubmit}>
                             <h1> Login </h1>
-                        </AccordionHeader>
-                        <AccordionBody>
+
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control type="text" placeholder="Enter username"
@@ -70,12 +67,12 @@ function LoginForm({error, initiateLogin}) {
                                               onChange={event => setPassword(event.target.value)}/>
                             </Form.Group>
 
-                            <Button variant="light" type="submit">
-                                Submit
+                            <Button className="login-register-button" type="submit">
+                                Login
                             </Button>
-                        </AccordionBody>
+
                     </Form>
-                </Accordion>
+
             </Col>
         </>
     }
