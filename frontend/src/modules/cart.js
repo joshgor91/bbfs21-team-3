@@ -6,9 +6,41 @@ const GETTING_CART_ITEMS_FAILED = 'GETTING_CART_ITEMS_FAILED'
 const ADDING_CART_ITEM = 'ADD_CART_ITEM'
 const ADD_CART_ITEM_FAILURE = 'ADD_CART_ITEM_FAILURE'
 const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
+const TEST_ADD_ITEM = 'TEST_ADD_ITEM'
+
+const cart = [
+    {
+        productName:"Bose - TV Speaker Bluetooth Soundbar",
+        productDescription: "TV Speaker Bluetooth Soundbar",
+        brand:"Bose",
+        unitPrice:279.99,
+        sale: 0.10,
+        size: null,
+        color:"black",
+        discontinued:false,
+        picture: "soundbar.jpeg",
+    },
+    {
+        brand: "Hisense",
+        color: "black",
+        dateReceived: "2021-12-25T00:00:00.000+00:00",
+        discontinued: false,
+        discountAvailable: false,
+        id: 1,
+        picture: "tv.jpeg",
+        productAvailable: "2022-01-10T00:00:00.000+00:00",
+        productDescription: "L9 Series",
+        productName: "Hisense TriChroma Laser TV with ALR Screen",
+        size: "100\"",
+        unitPrice: 5499.99,
+        sale: 0.15,
+        unitsInStock: 20,
+        unitsReceived: 20,
+    }
+]
 
 const initialState = {
-    cartItems: [],
+    cartItems: cart,
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: ''
@@ -56,12 +88,27 @@ export default function reducer(state = initialState, action) {
                 errorMessage: action.payload
             }
 
+            //for testing local storage or useNavigate
+        // case TEST_ADD_ITEM:
+        //     console.log(action.payload)
+        //     return {
+        //         ...state,
+        //         cartItems: [...state.cartItems, action.payload]
+        //     }
+
         default:
             return state
     }
 }
 
 //Action Creators
+// export function testAddItem(testItem) {
+//     return {
+//         type: TEST_ADD_ITEM,
+//         payload: testItem
+//     }
+// }
+
 function gettingCartItems() {
     return {
         type: GETTING_CART_ITEMS
