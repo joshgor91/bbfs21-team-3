@@ -35,9 +35,7 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
     if (registerErrorOccurred) {
 
         return <>
-            <Col sm={6}>
                 <Alert variant="danger"> Register error occured </Alert>
-            </Col>
         </>
     } else {
 
@@ -46,7 +44,6 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
                 <Form className="login-register-form" onSubmit={handleSubmitRegister}>
 
                             <h1>Register</h1>
-
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Group className="mb-3">

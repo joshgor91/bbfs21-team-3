@@ -20,7 +20,6 @@ function LoginForm({error, initiateLogin}) {
     if (error) {
 
         return <>
-            <Col sm={6}>
                 <Accordion>
                     <Form className="login-register-form" onSubmit={handleSubmit}>
                         <AccordionHeader>
@@ -46,7 +45,6 @@ function LoginForm({error, initiateLogin}) {
                     </Form>
                     <Alert variant="danger"> Incorrect username or password! </Alert>
                 </Accordion>
-            </Col>
         </>
     } else {
 
