@@ -18,6 +18,9 @@ public class CartController {
     @Autowired
     CartItemRepository cartItemRepo;
 
+
+
+
     @CrossOrigin
     @PostMapping("/add")
     String addItemToCart(@RequestBody CartItem item) {
@@ -26,9 +29,11 @@ public class CartController {
     }
 
     @CrossOrigin
-    @GetMapping("/viewCart/{id}")
-    Iterable<CartItem> viewCart(@PathVariable Long id) {
-        return cartItemRepo.findAllByCartId(id);
+    @GetMapping("/viewCart/{userid}")
+    Iterable<CartItem> viewCart(@PathVariable Long userid) {
+
+        var cartid = cartRepo.findByUserId(userid).get().id;
+        return cartItemRepo.findAllByCartId(cartid);
     }
 
 
