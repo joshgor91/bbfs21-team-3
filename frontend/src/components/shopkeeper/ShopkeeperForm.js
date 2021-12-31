@@ -8,11 +8,15 @@ import ShopkeeperProductList from "./ShopkeeperProductList";
 
 function ShopkeeperForm({products, dispatch}) {
     const [show, setShow] = useState(false)
-    // const [showProductList, setShowProductList] = useState(false)
+    const [showProductList, setShowProductList] = useState(false)
 
     const handleShow = () => setShow(true)
-    // const handleShowProductList = () => setShowProductList(true)
-
+    function handleShowProductList() {
+        setShowProductList(true)
+    }
+    function handleHideProductList() {
+        setShowProductList(false)
+    }
     function handleDeleteProduct(id) {
         dispatch(deleteProduct(id))
     }
@@ -37,14 +41,15 @@ function ShopkeeperForm({products, dispatch}) {
 
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleShow}>Create</Dropdown.Item>
-                        <Dropdown.Item>Display Product List</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
+                        <Dropdown.Item onClick={handleHideProductList}>Hide Product List</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Col>
         </Row>
             <Row>
                 <h4>Shopkeeper Product List</h4>
-                <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/>
+                <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct} showProductList={handleHideProductList}/>
             </Row>
         </Container>
 

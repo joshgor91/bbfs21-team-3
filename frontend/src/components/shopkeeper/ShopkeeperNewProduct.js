@@ -53,7 +53,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
 
         <Modal.Body>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className='mb-3' controlId='formBasicEmail'>
+                <Form.Group className='mb-3'>
                     <Form.Label>Product Name</Form.Label>
                     <Form.Control type='productName' placeholder='Product Name' id='productName'/>
                     <Form.Label>Product Description</Form.Label>
@@ -76,7 +76,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                         <option value={false}>False</option>
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
-                    <Form.Control type='image' placeholder='Picture' id='picture'/>
+                    <Form.Control type='file' placeholder='Picture' id='picture'/>
                     <Form.Label>Date Received</Form.Label>
                     <Form.Control type='date' placeholder='Date Received' id='dateReceived'/>
                     <Form.Label>Units Received</Form.Label>
