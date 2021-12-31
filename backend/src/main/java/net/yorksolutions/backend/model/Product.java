@@ -20,6 +20,7 @@ public class Product {
     @JsonProperty
     Set<Category> categories = new HashSet<>();
 
+
     @JsonProperty
     public String productName;
 
