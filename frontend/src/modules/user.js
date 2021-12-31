@@ -164,6 +164,12 @@ export default function reducer(state = initialState, action){
                 firstName: action.firstName
             }
 
+        case GET_USERS_FAILED:
+            return {
+                ...state,
+                gettingUsers: false
+            }
+
         case DELETING_USER:
             return {
                 ...state

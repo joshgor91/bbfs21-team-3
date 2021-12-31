@@ -7,7 +7,7 @@ import { Provider } from "react-redux"
 
 import userReducer from './modules/user'
 import productsReducer from './modules/products'
-
+import shopkeeperReducer from './modules/shopkeeper'
 
 
 const asyncMiddleware = storeAPI => next => action => {
@@ -19,7 +19,7 @@ const asyncMiddleware = storeAPI => next => action => {
 
 
 const middlewareEnhancer = applyMiddleware(asyncMiddleware)
-const rootReducer = combineReducers({userReducer, productsReducer})
+const rootReducer = combineReducers({userReducer, productsReducer, shopkeeperReducer})
 const store = createStore(rootReducer, middlewareEnhancer)
 
 

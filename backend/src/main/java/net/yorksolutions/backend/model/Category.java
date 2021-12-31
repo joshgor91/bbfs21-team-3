@@ -8,9 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "category_id")
     @JsonProperty
     public Long id;
 
@@ -29,5 +31,9 @@ public class Category {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

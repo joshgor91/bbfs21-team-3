@@ -1,6 +1,5 @@
 package net.yorksolutions.backend.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
