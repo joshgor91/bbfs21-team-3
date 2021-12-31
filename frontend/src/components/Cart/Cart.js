@@ -1,6 +1,7 @@
 import {connect} from "react-redux"
 import CartItems from "./CartItems";
-import {Container} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
+import CartSummary from "./CartSummary";
 
 
 function Cart({cartItems}) {
@@ -8,9 +9,16 @@ function Cart({cartItems}) {
 
     return <>
         <Container>
+            <Row>
+                <Col xs={9}>
             {cartItems &&
             cartItems.map((cartItem, idx) =>
                 <CartItems key={idx} cartItem={cartItem}/>)}
+                </Col>
+                <Col xs={3}>
+                    <CartSummary cartItems={cartItems}/>
+                </Col>
+            </Row>
         </Container>
     </>
 }

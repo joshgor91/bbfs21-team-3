@@ -14,6 +14,7 @@ const cart = [
         productDescription: "TV Speaker Bluetooth Soundbar",
         brand:"Bose",
         unitPrice:279.99,
+        sale: 0.10,
         size: null,
         color:"black",
         discontinued:false,
@@ -32,6 +33,7 @@ const cart = [
         productName: "Hisense TriChroma Laser TV with ALR Screen",
         size: "100\"",
         unitPrice: 5499.99,
+        sale: 0.15,
         unitsInStock: 20,
         unitsReceived: 20,
     }
