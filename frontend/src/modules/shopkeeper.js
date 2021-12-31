@@ -11,6 +11,7 @@ const DELETE_PRODUCT_FAILED = 'DELETE_PRODUCT_FAILED'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
+// const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
 const UPDATE_BRAND = 'UPDATE_BRAND'
@@ -33,18 +34,19 @@ const initialState = {
     addProduct: false,
     addErrorOccurred: false,
     editErrorOccurred: false,
+    // categories: [],
     productName: '',
     productDescription: '',
     brand: '',
-    unitPrice: 0.00, // or should we still use '' ? unitPrice is listed as type Float in Product controller in Backend
-    unitsInStock: 0,
+    unitPrice: '', // or should we still use '' ? unitPrice is listed as type Float in Product controller in Backend
+    unitsInStock: '',
     size: '',
     color: '',
-    productAvailable: new Date(''), // similar question for type date, also tried combining both for date
-    discontinued: false, // similar question for type boolean
+    productAvailable: '', // similar question for type date, also tried combining both for date
+    discontinued: '', // similar question for type boolean
     picture: '',
-    dateReceived: new Date(''),
-    unitsReceived: 0
+    dateReceived: '',
+    unitsReceived: ''
 }
 
 export default function reducer(state = initialState, action) {
@@ -66,18 +68,19 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 showEditProduct: true,
-                productName: '',
-                productDescription: '',
-                brand: '',
-                unitPrice: 0.00,
-                unitsInStock: 0,
-                size: '',
-                color: '',
-                productAvailable: new Date(''),
-                discontinued: false,
-                picture: '',
-                dateReceived: new Date(''),
-                unitsReceived: 0
+                productToEdit: undefined
+                // productName: '',
+                // productDescription: '',
+                // brand: '',
+                // unitPrice: 0.00,
+                // unitsInStock: 0,
+                // size: '',
+                // color: '',
+                // productAvailable: new Date(''),
+                // discontinued: false,
+                // picture: '',
+                // dateReceived: new Date(''),
+                // unitsReceived: 0
             }
 
         case EDIT_PRODUCT:
@@ -110,6 +113,12 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 editErrorOccurred: true
             }
+
+        // case UPDATE_CATEGORIES:
+        //     return {
+        //         ...state,
+        //         categories: [...state.categories, action.categoryName]
+        //     }
 
         case UPDATE_PRODUCT_NAME:
             return {
@@ -207,9 +216,10 @@ export default function reducer(state = initialState, action) {
 }
 
 
-export function createProduct() {
+export function createProduct(product) {
     return {
-        type: CREATE_PRODUCT
+        type: CREATE_PRODUCT,
+        product
     }
 }
 
@@ -256,6 +266,13 @@ export function deleteProductFailed() {
         type: DELETE_PRODUCT_FAILED
     }
 }
+
+// export function updateCategories(categories) {
+//     return {
+//         type: UPDATE_CATEGORIES,
+//         categories
+//     }
+// }
 
 export function updateProductName(productName) {
     return {

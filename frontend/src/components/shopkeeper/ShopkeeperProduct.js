@@ -5,17 +5,29 @@ import {connect} from "react-redux";
 
 function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
     return<Col><Card>
-        <Card.Title>{product.productName}</Card.Title>
+        <Card.Subtitle text={'danger'}>Product Name</Card.Subtitle>
+        <Card.Text>{product.productName}</Card.Text>
+        <Card.Subtitle>Product Description</Card.Subtitle>
         <Card.Text>{product.productDescription}</Card.Text>
+        <Card.Subtitle>Brand</Card.Subtitle>
         <Card.Text>{product.brand}</Card.Text>
+        <Card.Subtitle>Unit Price</Card.Subtitle>
         <Card.Text>{product.unitPrice}</Card.Text>
+        <Card.Subtitle>Units in Stock</Card.Subtitle>
         <Card.Text>{product.unitsInStock}</Card.Text>
+        <Card.Subtitle>Size</Card.Subtitle>
         <Card.Text>{product.size}</Card.Text>
+        <Card.Subtitle>Color</Card.Subtitle>
         <Card.Text>{product.color}</Card.Text>
-        <Card.Text>{product.productAvailable}</Card.Text>
+        <Card.Subtitle>Product Available</Card.Subtitle>
+        <Card.Text>{product.productAvailable?.toString()}</Card.Text>
+        <Card.Subtitle>Discontinued</Card.Subtitle>
         <Card.Text>{product.discontinued}</Card.Text>
+        <Card.Subtitle>Product Picture</Card.Subtitle>
         <Card.Text>{product.picture}</Card.Text>
-        <Card.Text>{product.dateReceived}</Card.Text>
+        <Card.Subtitle>Date Received</Card.Subtitle>
+        <Card.Text>{product.dateReceived?.toString()}</Card.Text>
+        <Card.Subtitle>Units Received</Card.Subtitle>
         <Card.Text>{product.unitsReceived}</Card.Text>
         <Row>
             <Col><Button variant='primary' onClick={() => editProduct(product)}>Edit Product</Button></Col>

@@ -3,7 +3,7 @@ import {Button, Form, Modal} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddProduct}) {
+function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddProduct, handleAddProduct}) {
     function handleClose() {
         setShowNewProduct(false)
     }
@@ -40,7 +40,9 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             unitsReceived
         }
 
+        handleAddProduct(newProduct)
         initiateAddProduct(newProduct)
+        console.log('what up')
 
     }
 
@@ -53,32 +55,36 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='mb-3' controlId='formBasicEmail'>
                     <Form.Label>Product Name</Form.Label>
-                    <Form.Control type='text' placeholder='Product Name' id='productName'/>
+                    <Form.Control type='productName' placeholder='Product Name' id='productName'/>
                     <Form.Label>Product Description</Form.Label>
-                    <Form.Control type='text' placeholder='Product Description' id='productDescription'/>
+                    <Form.Control type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
-                    <Form.Control type='text' placeholder='Brand' id='brand'/>
+                    <Form.Control type='brand' placeholder='Brand' id='brand'/>
                     <Form.Label>Unit Price</Form.Label>
-                    <Form.Control type='float' placeholder='Unit Price' id='unitPrice'/>
+                    <Form.Control type='number' step='.01' placeholder='Unit Price' id='unitPrice'/>
                     <Form.Label>Units In Stock</Form.Label>
-                    <Form.Control type='int' placeholder='Units In Stock' id='unitsInStock'/>
+                    <Form.Control type='number' placeholder='Units In Stock' id='unitsInStock'/>
                     <Form.Label>Size</Form.Label>
-                    <Form.Control type='text' placeholder='Size' id='size'/>
+                    <Form.Control type='size' placeholder='Size' id='size'/>
                     <Form.Label>Color</Form.Label>
-                    <Form.Control type='text' placeholder='Color' id='color'/>
+                    <Form.Control type='color' placeholder='Color' id='color'/>
                     <Form.Label>Product Available</Form.Label>
                     <Form.Control type='date' placeholder='Product Available' id='productAvailable'/>
                     <Form.Label>Discontinued</Form.Label>
-                    <Form.Control type='boolean' placeholder='Discontinued' id='discontinued'/>
+                    <Form.Control type='discontinued' as='select' defaultValue={false} id='discontinued'>
+                        <option value={true}>True</option>
+                        <option value={false}>False</option>
+                    </Form.Control>
                     <Form.Label>Picture</Form.Label>
-                    <Form.Control type='text' placeholder='Picture' id='picture'/>
+                    <Form.Control type='image' placeholder='Picture' id='picture'/>
                     <Form.Label>Date Received</Form.Label>
                     <Form.Control type='date' placeholder='Date Received' id='dateReceived'/>
                     <Form.Label>Units Received</Form.Label>
-                    <Form.Control type='int' placeholder='Units Received' id='unitsReceived'/>
+                    <Form.Control type='number' placeholder='Units Received' id='unitsReceived'/>
                 </Form.Group>
+                <Button variant='primary' type='submit'>Create</Button>
             </Form>
-            <Button variant='primary' type='submit'>Create</Button>
+
         </Modal.Body>
     </Modal>
 }
