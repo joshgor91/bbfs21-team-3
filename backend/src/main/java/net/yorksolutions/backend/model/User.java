@@ -40,6 +40,21 @@ public class User {
 
     public int authLevel = 1;
 
+    @JsonProperty
+    public String address1;
+
+    @JsonProperty
+    public String address2;
+
+    @JsonProperty
+    public String city;
+
+    @JsonProperty
+    public String state;
+
+    @JsonProperty
+    public Integer zipcode;
+
 
     public User() {
     }
@@ -64,6 +79,21 @@ public class User {
         this.email = email;
         this.password = password;
         this.authLevel= authLevel;
+    }
+
+    public User(Long id, String firstName, String lastName, String role, String email, String password, int authLevel, String address1, String address2, String city, String state, Integer zipcode) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.authLevel = authLevel;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
     }
 
     //login
@@ -104,4 +134,6 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+
 }

@@ -18,16 +18,28 @@ class UserOutput {
     public String role;
     public String email;
     public int authLevel;
+    public String address1;
+    public String address2;
+    public String city;
+    public String state;
+    public int zipcode;
+
+
 
     UserOutput(){};
 
-    public UserOutput(Long id, String firstName, String lastName, String role, String email, int authLevel) {
+    public UserOutput(Long id, String firstName, String lastName, String role, String email, int authLevel, String address1, String address2, String city, String state, Integer zipcode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
         this.email = email;
         this.authLevel = authLevel;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
     }
 }
 
@@ -39,6 +51,7 @@ public class UserController {
 
     @Autowired
     CartRepository cartRepo;
+
 
     @CrossOrigin
     // for admin, to get all users
@@ -71,11 +84,13 @@ public class UserController {
             // now we are taking all the information from User that we got from the database, and copying this object information
             // to a new user Output object, that excludes the password.
             // we dont want to send over the password.
-            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel);
+            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
 
 
             //create cart object
-            Cart cart = new Cart(user.id);
+            Cart cart = new Cart(foundUser.id);
+
+            if (cartRepo.findByUserId(foundUser.id).isEmpty())
             cartRepo.save(cart);
             return foundUser;
         } else {

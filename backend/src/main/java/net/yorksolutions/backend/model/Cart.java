@@ -20,11 +20,11 @@ public class Cart {
     public Float totalCost;
 
     @JsonProperty
-    public Long customerId;
+    public Long userId;
 
     public Cart(){};
 
-    public Cart(Long customerId) {
-        this.customerId = customerId;
+    public Cart(Long userId) {
+        this.userId = userId;
     }
 }
