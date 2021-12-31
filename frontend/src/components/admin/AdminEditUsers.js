@@ -1,14 +1,25 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
-import {useState} from "react";
-import {initiateAddUser, initiateEditUser, cancelEditUser} from "../../modules/user";
+import {useEffect, useState} from "react";
+import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 
-function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, firstName, lastName, cancelEditUser
+function AdminCreateUser ({show, initiateAddUser, initiateEditUser, initiateGetUsers, userToEdit, user, firstName, lastName, cancelEditUser
                               // role, authLevel, email, password
 }) {
+    useEffect(() => {
+        if (userToEdit){
+            // initiateEditUser({...user, firstName, lastName, role, authLevel, email, password})
+            setEmail(userToEdit.email)
+            setFName(userToEdit.firstName)
+            setLName(userToEdit.lastName)
+            setPassword(userToEdit.password)
+            setRole(userToEdit.role)
+            setAuthLevel(userToEdit.authLevel)
+        }
+    }, [])
     const [email, setEmail] = useState('')
     const [fname, setFName] = useState('')
     const [lname, setLName] = useState('')
@@ -17,25 +28,34 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
     const [authLevel, setAuthLevel] = useState('')
     console.log("edit user")
     console.log(show)
-    console.log(users)
+    console.log(user)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
+        // console.log(user)
+        // if (userToEdit){
+        //     // initiateEditUser({...user, firstName, lastName, role, authLevel, email, password})
+        //     setEmail(userToEdit.email)
+        //     setFName(userToEdit.firstName)
+        //     setLName(userToEdit.lastName)
+        //     setPassword(userToEdit.password)
+        //     setRole(userToEdit.role)
+        //     setAuthLevel(userToEdit.authLevel)
+        // }
 
-        // if (users)
-        //     initiateEditUser(...users, firstName, lastName, role, authLevel, email, password)
         // else
          initiateAddUser({
             id: Math.floor(Math.random() * 9999),
-            firstName: fname,
-            lastName: lname,
-            role: role,
-            authLevel:authLevel,
-            email: email,
-            password: password
+            fname,
+            lname,
+            role,
+            authLevel,
+            email,
+            password
         })
-        console.log(users)
+        console.log(user)
+
     }
     return (
         <Modal show={show} onHide={cancelEditUser}>
@@ -91,13 +111,21 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, users, first
 function mapStateToProps(state) {
     return {
         show: state.userReducer.showEditUser,
-        users: state.userReducer.users
+        user: state.userReducer.users,
+        firstName: state.userReducer.firstName,
+        lastName: state.userReducer.lastName,
+        role: state.userReducer.role,
+        authLevel: state.userReducer.authLevel,
+        email: state.userReducer.email,
+        password: state.userReducer.password,
+        userToEdit: state.userReducer.userToEdit
+
 
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser}, dispatch)
+    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)

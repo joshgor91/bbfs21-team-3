@@ -16,7 +16,10 @@ const DELETING_USER = 'DELETING_USER'
 const DELETING_USER_FAILED = 'DELETING_USER_FAILED'
 const GETTING_USERS = 'GETTING_USERS'
 const GET_USERS_FAILED = 'GET_USERS_FAILED'
+
+const UPDATE_USER_FNAME = 'UPDATE_USER_FNAME'
 const USERS_UPDATED = 'USERS_UPDATED'
+const UPDATE_USER = 'UPDATE_USER'
 
 
 
@@ -28,7 +31,7 @@ const initialState = {
     users: [],
     loggedInUser: {},
     registerErrorOccurred: false,
-    userToEdit: undefined,
+    userToEdit: {},
     showEditUser: false,
     gettingUsers: false,
     id: '',
@@ -109,10 +112,12 @@ export default function reducer(state = initialState, action){
             }
 
         case EDITING_USER:
+            console.log("inside editing_user " + action.user.id)
             return {
                 ...state,
-                showEditUser: true,
-                userToEdit: action.user
+                showEditUser: false,
+                userToEdit: action.user,
+
             }
 
         case EDIT_USER_FAILED:
@@ -141,6 +146,24 @@ export default function reducer(state = initialState, action){
                 hideTable: false
             }
 
+        case UPDATE_USER:
+            return {
+                ...state,
+                showEditUser: true,
+                firstName: '',
+                lastName: '',
+                role: '',
+                authLevel: '',
+                email: '',
+                password: ''
+            }
+
+        case UPDATE_USER_FNAME:
+            return {
+                ...state,
+                firstName: action.firstName
+            }
+
         case DELETING_USER:
             return {
                 ...state
@@ -158,6 +181,12 @@ export default function reducer(state = initialState, action){
     }
 }
 
+export function updateUserFname(firstName) {
+    return {
+        type: UPDATE_USER_FNAME,
+        firstName
+    }
+}
 
 export function requestLogin() {
     return {
@@ -198,7 +227,7 @@ export function startEditingUser(){
     }
 }
 
-function editingUser(user) {
+export function editingUser(user) {
     console.log("inside editingUser")
     return {
         type: EDITING_USER,
@@ -237,6 +266,9 @@ function getUsersFailed() {
     }
 }
 
+function updateUser(){
+    return{type: UPDATE_USER}
+}
 function usersUpdated(users) {
     return {
         type: USERS_UPDATED,
@@ -329,32 +361,42 @@ export function initiateAddUser(user) {
 }
 
 export function initiateEditUser(user) {
+    console.log("logging user from initiateEditUser" + user)
+    console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
     return function sideEffect(dispatch, getState) {
-        dispatch(editingUser())
+        dispatch(editingUser(user))
 
-        fetch("http://localhost:8080/api/users/edit", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user)
-        }).then(response => {
-            if (!response.ok)
-                return dispatch(addUserFailed())
-
-            response.text().then(text => {
-                if (text === 'success')
-                    // dispatch(initiateLogin(user))
-                    console.log("user registered")
-
-                else {
-                    console.log("did not hit success")
-                    dispatch(addUserFailed())
-                }
-            })
-        }).catch(error => console.log(error))
     }
 }
+
+//=======================
+export function submitEditUser(user){
+    return function sideEffect(dispatch, getState) {
+    fetch("http://localhost:8080/api/users/edit", {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    }).then(response => {
+        if (!response.ok)
+            return dispatch(addUserFailed())
+
+        response.text().then(text => {
+            if (text === 'success') {
+                dispatch(initiateGetUsers())
+                console.log("user registered")
+            }
+
+            else {
+                console.log("did not hit success")
+                dispatch(addUserFailed())
+            }
+        })
+    }).catch(error => console.log(error))
+}}
+
+    //===============
 
 export function initiateGetUsers() {
     console.log("inside initiateGetUsers")

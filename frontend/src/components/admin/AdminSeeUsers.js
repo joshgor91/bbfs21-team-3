@@ -1,12 +1,12 @@
 import {Button, Stack, Table} from "react-bootstrap";
-import {gettingUsers, initiateDeleteUser, startEditingUser} from "../../modules/user";
+import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function AdminSeeUsers({ users, hide, startEditingUser, initiateDeleteUser}) {
+function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser}) {
     const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password", "Edit/Delete"]
     return (
-    // Toggle hidden to true and false wil clicked on View all in AdminForm.js
+
         <Table striped bordered responsive hidden={hide}>
             <thead>
             <tr>
@@ -27,7 +27,7 @@ function AdminSeeUsers({ users, hide, startEditingUser, initiateDeleteUser}) {
                     <td key={index}>{user.password}</td>
                         <td key={index}>
                             <Stack>
-                            <Button onClick={startEditingUser}>edit</Button>
+                            <Button onClick={() => initiateEditUser(user)}>edit</Button>
                             <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
                             </Stack>
                         </td>
@@ -47,7 +47,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ gettingUsers, startEditingUser, initiateDeleteUser}, dispatch)
+    return bindActionCreators({ gettingUsers, initiateEditUser, initiateDeleteUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSeeUsers)
