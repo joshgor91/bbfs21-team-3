@@ -1,6 +1,7 @@
 import {Nav, Navbar} from "react-bootstrap";
 import { GiShoppingCart } from "react-icons/gi";
 
+
 function NavBar() {
 
 

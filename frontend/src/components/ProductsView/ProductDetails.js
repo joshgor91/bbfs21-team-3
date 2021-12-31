@@ -22,7 +22,7 @@ function ProductDetails({product, cartItems}) {
                                 <Card.Title>{product.productName}</Card.Title>
                                 <Card.Header>Sold by {product.brand}</Card.Header>
                                 <Card.Text>{product.productDescription}</Card.Text>
-                                {product.unitsInStock != 0 ?
+                                {product.unitsInStock !== 0 ?
                                     <Card.Text>Available</Card.Text>
                                     : <Card.Text>Out of Stock</Card.Text>}
                                 <Button variant="primary" >Add to Cart</Button>

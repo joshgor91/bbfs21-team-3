@@ -1,14 +1,17 @@
 import {connect} from "react-redux"
 import CartItems from "./CartItems";
+import {Container} from "react-bootstrap";
 
 
 function Cart({cartItems}) {
     console.log(cartItems)
 
     return <>
-        {cartItems &&
-        cartItems.map((cartItem, idx) =>
-            <CartItems key={idx} cartItem={cartItem}/>)}
+        <Container>
+            {cartItems &&
+            cartItems.map((cartItem, idx) =>
+                <CartItems key={idx} cartItem={cartItem}/>)}
+        </Container>
     </>
 }
 

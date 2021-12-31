@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,20 +13,20 @@ function ReactRouter() {
 
     return (
 
-    <Router>
+        <Router>
 
-        <hr/>
+            <hr/>
 
-        <Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
-            <Route path='/admin' element={<Admin/>}/>
-            <Route path='/shopkeeper' element={<Shopkeeper/>}/>
-            <Route path='/product/:id' element={<ProductPage/>}/>
-            <Route path='/cart' element={<CartPage/>}/>
-        </Routes>
-    </Router>
+            <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/register' element={<Register/>}/>
+                <Route path='/admin' element={<Admin/>}/>
+                <Route path='/shopkeeper' element={<Shopkeeper/>}/>
+                <Route path='/product/:id' element={<ProductPage/>}/>
+                <Route path='/cart' element={<CartPage/>}/>
+            </Routes>
+        </Router>
 
     )
 
