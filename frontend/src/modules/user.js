@@ -30,6 +30,7 @@ const initialState = {
     loginErrorOccurred: false,
     users: [],
     loggedInUser: {},
+    userForm:{},
     registerErrorOccurred: false,
     userToEdit: {},
     showEditUser: false,
@@ -104,18 +105,16 @@ export default function reducer(state = initialState, action){
                 email: '',
                 password: ''
             }
-
         case ADD_USER_FAILED:
             return {
                 ...state,
                 registerErrorOccurred: true
             }
-
         case EDITING_USER:
             console.log("inside editing_user " + action.user.id)
             return {
                 ...state,
-                showEditUser: false,
+                showEditUser: true,
                 userToEdit: action.user,
 
             }
@@ -226,14 +225,7 @@ function addingUser() {
     }
 }
 
-export function startEditingUser(){
-    console.log("inside startEditingUser")
-    return{
-        type: START_EDITING_USER
-    }
-}
-
-export function editingUser(user) {
+export function startEditingUser(user) {
     console.log("inside editingUser")
     return {
         type: EDITING_USER,
@@ -370,7 +362,7 @@ export function initiateEditUser(user) {
     console.log("logging user from initiateEditUser" + user)
     console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
     return function sideEffect(dispatch, getState) {
-        dispatch(editingUser(user))
+        dispatch(startEditingUser(user))
 
     }
 }
@@ -378,6 +370,7 @@ export function initiateEditUser(user) {
 //=======================
 export function submitEditUser(user){
     return function sideEffect(dispatch, getState) {
+
     fetch("http://localhost:8080/api/users/edit", {
         method: "PUT",
         headers: {

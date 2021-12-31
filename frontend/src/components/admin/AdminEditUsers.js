@@ -1,86 +1,93 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers} from "../../modules/user";
+import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
+const initialUserForm = {
+    id: null,
+    firstName: '',
+    lastName: '',
+    role: '',
+    authLevel: '',
+    email: '',
+    password: '',
+}
 
-function AdminCreateUser ({show, initiateAddUser, initiateEditUser, initiateGetUsers, userToEdit, user, firstName, lastName, cancelEditUser
+function AdminCreateUser ({
+                              userForm,
+                              setUserForm,
+                              show,
+                              initiateAddUser,
+                              initiateEditUser,
+                              initiateGetUsers,
+                              userToEdit,
+                              user,
+                              cancelEditUser,
+                              submitEditUser
                               // role, authLevel, email, password
 }) {
-    useEffect(() => {
-        if (userToEdit){
-            // initiateEditUser({...user, firstName, lastName, role, authLevel, email, password})
-            setEmail(userToEdit.email)
-            setFName(userToEdit.firstName)
-            setLName(userToEdit.lastName)
-            setPassword(userToEdit.password)
-            setRole(userToEdit.role)
-            setAuthLevel(userToEdit.authLevel)
-        }
-    }, [])
-    const [email, setEmail] = useState('')
-    const [fname, setFName] = useState('')
-    const [lname, setLName] = useState('')
-    const [password, setPassword] = useState('')
-    const [role, setRole] = useState('')
-    const [authLevel, setAuthLevel] = useState('')
-    console.log("edit user")
-    console.log(show)
-    console.log(user)
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
         console.log("btn clicked")
-        // console.log(user)
-        // if (userToEdit){
-        //     // initiateEditUser({...user, firstName, lastName, role, authLevel, email, password})
-        //     setEmail(userToEdit.email)
-        //     setFName(userToEdit.firstName)
-        //     setLName(userToEdit.lastName)
-        //     setPassword(userToEdit.password)
-        //     setRole(userToEdit.role)
-        //     setAuthLevel(userToEdit.authLevel)
-        // }
-
-        // else
-         initiateAddUser({
-            id: Math.floor(Math.random() * 9999),
-            fname,
-            lname,
-            role,
-            authLevel,
-            email,
-            password
-        })
         console.log(user)
+        if (userToEdit){
+            submitEditUser({...userForm})
+        }
+        else {
+         initiateAddUser({
+             ...userForm
+        })
+        console.log(userForm)
+    }}
 
+    function onChange(e) {
+        const {name, value} = e.target
+        setUserForm({
+            ...userForm,
+            [name]:value
+        })
     }
+
+    function onHide() {
+        cancelEditUser()
+        setUserForm(initialUserForm)
+    }
+
     return (
-        <Modal show={show} onHide={cancelEditUser}>
+        <Modal show={show} onHide={onHide}>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter first name"
-                              onChange={event => setFName(event.target.value)}
+                              value={userForm.firstName}
+                              name="firstName"
+                              onChange={onChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastName">
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter last name"
-                              onChange={event => setLName(event.target.value)}
+                              value={userForm.lastName}
+                              name="lastName"
+                              onChange={onChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="role">
                 <Form.Label>Role</Form.Label>
                 <Form.Control type="text" placeholder="Enter team member role"
-                              onChange={event => setRole(event.target.value)}/>
+                              value={userForm.role}
+                              name="role"
+                              onChange={onChange}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="authLevel">
                 <Form.Label>Auth Level</Form.Label>
                 <Form.Control type="text" placeholder="Enter their access level"
-                              onChange={event => setAuthLevel(event.target.value)}/>
+                              value={userForm.authLevel}
+                              name="authLevel"
+                              onChange={onChange}/>
                 <Form.Text className="text-muted">
                    '1' for Consumer, '2' for Business Owner, '3' for Admin.
                 </Form.Text>
@@ -88,7 +95,9 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, initiateGetU
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email"
-                              onChange={event => setEmail(event.target.value)}
+                              value={userForm.email}
+                              name="email"
+                              onChange={onChange}
                 />
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
@@ -97,7 +106,9 @@ function AdminCreateUser ({show, initiateAddUser, initiateEditUser, initiateGetU
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password"
-                              onChange={event => setPassword(event.target.value)}
+                              value={userForm.password}
+                              name="password"
+                              onChange={onChange}
                 />
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -125,7 +136,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers}, dispatch)
+    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)

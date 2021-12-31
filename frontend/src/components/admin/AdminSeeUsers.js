@@ -3,8 +3,14 @@ import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser}) {
+function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setUserForm}) {
     const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password", "Edit/Delete"]
+
+    const handleEdit = user => event => {
+        event.preventDefault()
+        initiateEditUser(user)
+        setUserForm(user)
+    }
     return (
 
         <Table striped bordered responsive hidden={hide}>
@@ -27,7 +33,7 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser}) {
                     <td key={index}>{user.password}</td>
                         <td key={index}>
                             <Stack>
-                            <Button onClick={() => initiateEditUser(user)}>edit</Button>
+                            <Button onClick={handleEdit(user)}>edit</Button>
                             <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
                             </Stack>
                         </td>
