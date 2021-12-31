@@ -1,6 +1,9 @@
 package net.yorksolutions.backend.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import net.yorksolutions.backend.model.Cart;
 import net.yorksolutions.backend.model.User;
+import net.yorksolutions.backend.repository.CartRepository;
 import net.yorksolutions.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,9 @@ public class UserController {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    CartRepository cartRepo;
+
     @CrossOrigin
     // for admin, to get all users
     @GetMapping("/all")
@@ -66,6 +72,11 @@ public class UserController {
             // to a new user Output object, that excludes the password.
             // we dont want to send over the password.
             UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel);
+
+
+            //create cart object
+            Cart cart = new Cart(user.id);
+            cartRepo.save(cart);
             return foundUser;
         } else {
             return null;
