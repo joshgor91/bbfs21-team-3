@@ -141,6 +141,12 @@ export default function reducer(state = initialState, action){
                 hideTable: false
             }
 
+        case GET_USERS_FAILED:
+            return {
+                ...state,
+                gettingUsers: false
+            }
+
         case DELETING_USER:
             return {
                 ...state
