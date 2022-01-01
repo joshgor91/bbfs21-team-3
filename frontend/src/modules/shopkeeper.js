@@ -11,7 +11,7 @@ const DELETE_PRODUCT_FAILED = 'DELETE_PRODUCT_FAILED'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
-// const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
+const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
 const UPDATE_BRAND = 'UPDATE_BRAND'
@@ -21,6 +21,7 @@ const UPDATE_SIZE = 'UPDATE_SIZE'
 const UPDATE_COLOR = 'UPDATE_COLOR'
 const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
 const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
+const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
 const UPDATE_PICTURE = 'UPDATE_PICTURE'
 const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
 const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
@@ -34,7 +35,7 @@ const initialState = {
     addProduct: false,
     addErrorOccurred: false,
     editErrorOccurred: false,
-    // categories: [],
+    categories: [],
     productName: '',
     productDescription: '',
     brand: '',
@@ -44,6 +45,7 @@ const initialState = {
     color: '',
     productAvailable: '', // similar question for type date, also tried combining both for date
     discontinued: '', // similar question for type boolean
+    discountAvailable: '',
     picture: '',
     dateReceived: '',
     unitsReceived: ''
@@ -114,11 +116,11 @@ export default function reducer(state = initialState, action) {
                 editErrorOccurred: true
             }
 
-        // case UPDATE_CATEGORIES:
-        //     return {
-        //         ...state,
-        //         categories: [...state.categories, action.categoryName]
-        //     }
+        case UPDATE_CATEGORIES:
+            return {
+                ...state,
+                categories: [...state.categories, action.categories]
+            }
 
         case UPDATE_PRODUCT_NAME:
             return {
@@ -172,6 +174,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 discontinued: action.discontinued
+            }
+
+        case UPDATE_DISCOUNT_AVAILABLE:
+            return {
+                ...state,
+                discountAvailable: action.discountAvailable
             }
 
         case UPDATE_PICTURE:
@@ -267,12 +275,12 @@ export function deleteProductFailed() {
     }
 }
 
-// export function updateCategories(categories) {
-//     return {
-//         type: UPDATE_CATEGORIES,
-//         categories
-//     }
-// }
+export function updateCategories(categories) {
+    return {
+        type: UPDATE_CATEGORIES,
+        categories
+    }
+}
 
 export function updateProductName(productName) {
     return {
@@ -337,6 +345,13 @@ export function updateDiscontinued(discontinued) {
     }
 }
 
+export function updateDiscountAvailable(discountAvailable) {
+    return {
+        type: UPDATE_DISCOUNT_AVAILABLE,
+        discountAvailable
+    }
+}
+
 export function updatePicture(picture) {
     return {
         type: UPDATE_PICTURE,
@@ -364,7 +379,7 @@ export function getProducts() {
     }
 }
 
-function getProductsFailed() {
+export function getProductsFailed() {
     return {
         type: GET_PRODUCTS_FAILED
     }
@@ -393,7 +408,8 @@ export function initiateAddProduct(product) {
 
             response.text().then(text => {
                 if (text === 'success')
-                    dispatch(initiateGetProducts())
+                    // dispatch(initiateGetProducts())
+                    alert('New Product Added Successfully')
                 else
                     dispatch(addProductFailed())
             })
@@ -405,15 +421,17 @@ export function initiateGetProducts() {
     return function sideEffect(dispatch, useState) {
         dispatch(getProducts())
 
-        fetch('http://localhost:8080/api/products/all', {
+            fetch('http://localhost:8080/api/products/all', {
             method: 'GET'
         }).then(response => {
             if (!response.ok)
                 return dispatch(getProductsFailed())
+
             response.json().then(products => {
                 dispatch(productsUpdated(products))
             })
         }).catch(error => console.log(error))
+
     }
 }
 
@@ -441,11 +459,11 @@ export function initiateEditProduct(product) {
     }
 }
 
-export function initiateDeleteProduct(productId) {
+export function initiateDeleteProduct(Id) {
     return function sideEffect(dispatch, getState) {
         dispatch(deleteProduct())
 
-        fetch('http://localhost:8080/api/products/delete/${productId}', {
+        fetch('http://localhost:8080/api/products/delete/${Id}', {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok)

@@ -2,21 +2,28 @@ import {Button, ButtonGroup, Col, Container, Dropdown, Row} from "react-bootstra
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ShopkeeperNewProduct from "./ShopkeeperNewProduct";
-import {addProduct, createProduct, deleteProduct, initiateGetProducts} from '../../modules/shopkeeper'
+import {
+    addProduct,
+    createProduct,
+    deleteProduct,
+    getProductsFailed,
+    initiateGetProducts
+} from '../../modules/shopkeeper'
 import {useState} from "react";
 import ShopkeeperProductList from "./ShopkeeperProductList";
+
+
 
 function ShopkeeperForm({products, dispatch}) {
     const [show, setShow] = useState(false)
     const [showProductList, setShowProductList] = useState(false)
+    dispatch(initiateGetProducts())
 
     const handleShow = () => setShow(true)
-    function handleShowProductList() {
-        setShowProductList(true)
-    }
-    function handleHideProductList() {
-        setShowProductList(false)
-    }
+
+  const handleShowProductList = () => setShowProductList(true)
+    const handleHideProductList = () => setShowProductList(false)
+
     function handleDeleteProduct(id) {
         dispatch(deleteProduct(id))
     }
@@ -48,8 +55,7 @@ function ShopkeeperForm({products, dispatch}) {
             </Col>
         </Row>
             <Row>
-                <h4>Shopkeeper Product List</h4>
-                <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct} showProductList={handleHideProductList}/>
+                {showProductList? <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/> : ''}
             </Row>
         </Container>
 
