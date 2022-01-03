@@ -29,10 +29,15 @@ public class CartController {
         return "success";
     }
 
+
+
     @CrossOrigin
     @GetMapping("/viewCart/{userid}")
     Iterable<CartItem> viewCart(@PathVariable Long userid) {
 
+//        var cartid = cartRepo.findByUserId(userid).get().id;
+//        return cartItemRepo.findAllByCartId(cartid);
+//    }
         var cart = cartRepo.findByUserId(userid).get();
         return cart.viewCartItems();
     }
