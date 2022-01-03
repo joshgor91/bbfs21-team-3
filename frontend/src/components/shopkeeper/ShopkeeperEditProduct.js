@@ -135,7 +135,7 @@ function ShopkeeperEditProduct({
             </Form.Control>
 
             <Form.Label>Picture</Form.Label>
-            <Form.Control type='img' value={picture} onChange={event => updatePicture(event.target.value)}/>
+            <Form.Control type='file' value={picture} onChange={event => updatePicture(event.target.value)}/>
             <Form.Label>Date Received</Form.Label>
             <Form.Control type='date' value={dateReceived}
                           onChange={event => updateDateReceived(event.target.value)}/>

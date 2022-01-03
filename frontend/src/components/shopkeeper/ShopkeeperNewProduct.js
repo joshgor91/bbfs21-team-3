@@ -82,7 +82,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                         <option value={false}>False</option>
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
-                    <Form.Control type='img' placeholder='Picture' id='picture'/>
+                    <Form.Control type='file' placeholder='Picture' id='picture'/>
                     <Form.Label>Date Received</Form.Label>
                     <Form.Control type='date' placeholder='Date Received' id='dateReceived'/>
                     <Form.Label>Units Received</Form.Label>
