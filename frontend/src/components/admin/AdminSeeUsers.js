@@ -1,5 +1,5 @@
 import {Button, Stack, Table} from "react-bootstrap";
-import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/user";
+import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/admin";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
@@ -44,10 +44,10 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
     );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state){
     return {
-        hide: state.userReducer.hideTable,
-        users: state.userReducer.users
+        hide: state.adminReducer.hideTable,
+        users: state.adminReducer.users
 
     }
 }
