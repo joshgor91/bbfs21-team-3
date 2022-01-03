@@ -1,6 +1,6 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
-import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser} from "../../modules/user";
+import {cancelEditUser, submitEditUser, initiateAddUser, initiateGetUsers} from "../../modules/admin"
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
@@ -135,7 +135,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser}, dispatch)
+    return bindActionCreators({initiateAddUser, cancelEditUser, initiateGetUsers, submitEditUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)

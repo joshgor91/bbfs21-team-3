@@ -304,7 +304,7 @@ export function initiateLogin(user) {
                 if (user.authLevel === 3) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
-                    dispatch(initiateGetUsers())
+                    // dispatch(initiateGetUsers())
                     // dispatch(navigate(admin))
                 }
                 else if (user.authLevel === 2) {
@@ -330,7 +330,7 @@ export function initiateLogin(user) {
 }
 
 
-export function initiateAddUser(user) {
+export function initiateRegisterUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(addingUser())
 
@@ -358,81 +358,81 @@ export function initiateAddUser(user) {
     }
 }
 
-export function initiateEditUser(user) {
-    console.log("logging user from initiateEditUser" + user)
-    console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
-    return function sideEffect(dispatch, getState) {
-        dispatch(startEditingUser(user))
-
-    }
-}
+// export function initiateEditUser(user) {
+//     console.log("logging user from initiateEditUser" + user)
+//     console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
+//     return function sideEffect(dispatch, getState) {
+//         dispatch(startEditingUser(user))
+//
+//     }
+// }
 
 //=======================
-export function submitEditUser(user){
-    return function sideEffect(dispatch, getState) {
-        dispatch(startEditingUser(user))
-
-    fetch("http://localhost:8080/api/users/edit", {
-        method: "PUT",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-    }).then(response => {
-        if (!response.ok)
-            return dispatch(addUserFailed())
-
-        response.text().then(text => {
-            if (text === 'success') {
-                dispatch(initiateGetUsers())
-                console.log("user registered")
-            }
-
-            else {
-                console.log("did not hit success")
-                dispatch(addUserFailed())
-            }
-        })
-    }).catch(error => console.log(error))
-}}
+// export function submitEditUser(user){
+//     return function sideEffect(dispatch, getState) {
+//         dispatch(startEditingUser(user))
+//
+//     fetch("http://localhost:8080/api/users/edit", {
+//         method: "PUT",
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(user)
+//     }).then(response => {
+//         if (!response.ok)
+//             return dispatch(addUserFailed())
+//
+//         response.text().then(text => {
+//             if (text === 'success') {
+//                 dispatch(initiateGetUsers())
+//                 console.log("user registered")
+//             }
+//
+//             else {
+//                 console.log("did not hit success")
+//                 dispatch(addUserFailed())
+//             }
+//         })
+//     }).catch(error => console.log(error))
+// }}
 
     //===============
 
-export function initiateGetUsers() {
-    console.log("inside initiateGetUsers")
-    return function sideEffect(dispatch, getState) {
-        dispatch(gettingUsers())
+// export function initiateGetUsers() {
+//     console.log("inside initiateGetUsers")
+//     return function sideEffect(dispatch, getState) {
+//         dispatch(gettingUsers())
+//
+//         fetch('http://localhost:8080/api/users/all', {
+//             method: 'GET'
+//         }).then(response => {
+//             if (!response.ok)
+//                 return dispatch (getUsersFailed())
+//
+//             response.json().then(users => {
+//                 dispatch(usersUpdated(users))
+//             })
+//         }).catch(error => console.log(error))
+//     }
+// }
 
-        fetch('http://localhost:8080/api/users/all', {
-            method: 'GET'
-        }).then(response => {
-            if (!response.ok)
-                return dispatch (getUsersFailed())
-
-            response.json().then(users => {
-                dispatch(usersUpdated(users))
-            })
-        }).catch(error => console.log(error))
-    }
-}
-
-export function initiateDeleteUser(id) {
-    console.log("deleting " + id)
-    return function sideEffect(dispatch) {
-        dispatch(deletingUser())
-        fetch(`http://localhost:8080/api/users/delete/${id}`, {
-            method: 'DELETE'
-        }).then(response => {
-            if(!response.ok)
-                return dispatch(deleteUserFailed())
-
-            response.text().then(text => {
-                if (text === 'success')
-                    dispatch(initiateGetUsers())
-                else
-                    dispatch(deleteUserFailed())
-            })
-        }).catch(error => console.log(error))
-    }
-}
+// export function initiateDeleteUser(id) {
+//     console.log("deleting " + id)
+//     return function sideEffect(dispatch) {
+//         dispatch(deletingUser())
+//         fetch(`http://localhost:8080/api/users/delete/${id}`, {
+//             method: 'DELETE'
+//         }).then(response => {
+//             if(!response.ok)
+//                 return dispatch(deleteUserFailed())
+//
+//             response.text().then(text => {
+//                 if (text === 'success')
+//                     dispatch(initiateGetUsers())
+//                 else
+//                     dispatch(deleteUserFailed())
+//             })
+//         }).catch(error => console.log(error))
+//     }
+// }
 

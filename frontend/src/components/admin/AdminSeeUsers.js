@@ -1,15 +1,17 @@
 import {Button, Stack, Table} from "react-bootstrap";
-import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/user";
+import {gettingUsers, initiateDeleteUser} from "../../modules/admin";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {submitEditUser} from "../../modules/admin";
 
-function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setUserForm}) {
+function AdminSeeUsers({ users, hide, initiateDeleteUser, setUserForm}) {
     const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password", "Edit/Delete"]
 
     const handleEdit = user => event => {
         event.preventDefault()
-        initiateEditUser(user)
+        submitEditUser(user)
         setUserForm(user)
+        console.log("edit btn clicked")
     }
     return (
 
@@ -53,7 +55,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ gettingUsers, initiateEditUser, initiateDeleteUser}, dispatch)
+    return bindActionCreators({ gettingUsers, initiateDeleteUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSeeUsers)
