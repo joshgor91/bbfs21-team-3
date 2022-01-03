@@ -3,10 +3,8 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ShopkeeperNewProduct from "./ShopkeeperNewProduct";
 import {
-    addProduct,
     createProduct,
     deleteProduct,
-    getProductsFailed,
     initiateGetProducts
 } from '../../modules/shopkeeper'
 import {useState} from "react";
