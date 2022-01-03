@@ -40,7 +40,7 @@ const cart = [
 ]
 
 const initialState = {
-    cartItems: cart,
+    cartItems: [],
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: ''
@@ -89,12 +89,12 @@ export default function reducer(state = initialState, action) {
             }
 
             //for testing local storage or useNavigate
-        // case TEST_ADD_ITEM:
-        //     console.log(action.payload)
-        //     return {
-        //         ...state,
-        //         cartItems: [...state.cartItems, action.payload]
-        //     }
+        case TEST_ADD_ITEM:
+            console.log(action.payload)
+            return {
+                ...state,
+                cartItems: [...state.cartItems, action.payload]
+            }
 
         default:
             return state
@@ -102,12 +102,12 @@ export default function reducer(state = initialState, action) {
 }
 
 //Action Creators
-// export function testAddItem(testItem) {
-//     return {
-//         type: TEST_ADD_ITEM,
-//         payload: testItem
-//     }
-// }
+export function testAddItem(testItem) {
+    return {
+        type: TEST_ADD_ITEM,
+        payload: testItem
+    }
+}
 
 function gettingCartItems() {
     return {
