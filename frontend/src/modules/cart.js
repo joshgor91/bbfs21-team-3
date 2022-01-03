@@ -39,7 +39,7 @@ const cart = [
 ]
 
 const initialState = {
-    cartItems: cart,
+    cartItems: [],
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: ''
@@ -135,10 +135,11 @@ function addCartItemSuccess() {
 
 
 //sideEffects
-export function initiateGetCartItems(userId) {
-    return function gettingCartItemsSideEffect(dispatch) {
+export function initiateGetCartItems() {
+    return function gettingCartItemsSideEffect(dispatch, getState) {
         dispatch(gettingCartItems())
-        getCartItemsRequest(userId).then(res => {
+
+        getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
             else
@@ -168,7 +169,7 @@ export function initiateAddCartItem(productToAdd) {
                 } else {
                     console.log(res.data)
                     dispatch(addCartItemSuccess());
-                    dispatch(initiateGetCartItems(getState().userReducer.loggedInUser.id))
+                    dispatch(initiateGetCartItems())
                 }
             })
                 .catch(err => console.log(`Error in initiateAddCartItem = ${err}`));
