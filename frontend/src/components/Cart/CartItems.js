@@ -1,6 +1,4 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
-import {useNavigate} from "react-router";
-
 
 function CartItems({cartItem}) {
 
@@ -11,7 +9,7 @@ function CartItems({cartItem}) {
         const updatedCart = cartStorage.filter(item => item.id !== cartItem.id)
         console.log(updatedCart)
         localStorage.setItem('cartItems', JSON.stringify(updatedCart))
-
+        window.location.reload(false)
     }
     return <>
         <Card style={{marginBottom: '1.5rem', width: 'auto', height: '13.5rem'}}>
