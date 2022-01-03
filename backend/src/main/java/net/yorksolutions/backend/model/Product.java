@@ -12,7 +12,7 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-//    @Column (name = "product_id")
+    @Column (name = "product_id")
     @JsonProperty
     public Long id;
 

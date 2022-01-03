@@ -11,7 +11,7 @@ function Product({product}) {
 
     function goToProductDetails(productId) {
         dispatch(initiateGetProductById(productId))
-        navigate(`../product/${productId}`)
+        navigate(`../product/${productId}`, {replace: true})
     }
 
     return (
