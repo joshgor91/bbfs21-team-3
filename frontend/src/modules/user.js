@@ -17,7 +17,7 @@ const DELETING_USER_FAILED = 'DELETING_USER_FAILED'
 const GETTING_USERS = 'GETTING_USERS'
 const GET_USERS_FAILED = 'GET_USERS_FAILED'
 
-const UPDATE_USER_FNAME = 'UPDATE_USER_FNAME'
+// const UPDATE_USER_FNAME = 'UPDATE_USER_FNAME'
 const USERS_UPDATED = 'USERS_UPDATED'
 const UPDATE_USER = 'UPDATE_USER'
 
@@ -124,7 +124,8 @@ export default function reducer(state = initialState, action){
         case EDIT_USER_FAILED:
             return {
                 ...state,
-                showEditUser: false
+                showEditUser: false,
+                isEditing: false
             }
 
         case CANCEL_EDIT_USER:
@@ -137,7 +138,8 @@ export default function reducer(state = initialState, action){
                 role: '',
                 authLevel: '',
                 email: '',
-                password: ''
+                password: '',
+                isEditing: false
             }
 
         case GETTING_USERS:
@@ -159,12 +161,12 @@ export default function reducer(state = initialState, action){
                 email: '',
                 password: ''
             }
-
-        case UPDATE_USER_FNAME:
-            return {
-                ...state,
-                firstName: action.firstName
-            }
+        //
+        // case UPDATE_USER_FNAME:
+        //     return {
+        //         ...state,
+        //         firstName: action.firstName
+        //     }
 
         case GET_USERS_FAILED:
             return {
@@ -189,12 +191,12 @@ export default function reducer(state = initialState, action){
     }
 }
 
-export function updateUserFname(firstName) {
-    return {
-        type: UPDATE_USER_FNAME,
-        firstName
-    }
-}
+// export function updateUserFname(firstName) {
+//     return {
+//         type: UPDATE_USER_FNAME,
+//         firstName
+//     }
+// }
 
 export function requestLogin() {
     return {
@@ -343,7 +345,7 @@ export function initiateAddUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(addingUser())
 
-        fetch("http://localhost:8080/api/users/create", {
+        fetch("http://localhost:8080/api/users/register", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -379,6 +381,7 @@ export function initiateEditUser(user) {
 //=======================
 export function submitEditUser(user){
     return function sideEffect(dispatch, getState) {
+        dispatch(startEditingUser(user))
 
     fetch("http://localhost:8080/api/users/edit", {
         method: "PUT",

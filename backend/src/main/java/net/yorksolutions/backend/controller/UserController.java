@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping("/create")
+    @PostMapping("/register")
     String registerUser(@RequestBody User newUser) {
         Optional<User> users = userRepo.findByEmail(newUser.getEmail());
         if (users.isPresent()) {
