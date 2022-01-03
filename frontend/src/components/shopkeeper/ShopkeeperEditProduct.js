@@ -14,7 +14,7 @@ import {
     updateDiscontinued,
     updatePicture,
     updateDateReceived,
-    updateUnitsReceived
+    updateUnitsReceived, updateCategories
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -39,6 +39,7 @@ function ShopkeeperEditProduct({
                                    initiateEditProduct,
                                    cancelEditProduct,
                                    updateProductName,
+    updateCategories,
                                    updateProductDescription,
                                    updateBrand,
                                    updateUnitPrice,
@@ -97,12 +98,12 @@ function ShopkeeperEditProduct({
             <Form.Control type='productName' value={productName}
                           onChange={event => updateProductName(event.target.value)}/>
             <Form.Label>Categories</Form.Label>
-            {/*<Form.Control type='categories' as='select' */}
-            {/*              onChange={event => updateProductName(event.target.value)}>*/}
-            {/*    <option value={10}>Video Games</option>*/}
-            {/*    <option value={3}>Electronics</option>*/}
-            {/*    <option value={2}>Entertainment</option>*/}
-            {/*</Form.Control>*/}
+            <Form.Control type='categories' as='select'
+                          onChange={event => updateCategories(event.target.value)}>
+                <option value={10}>Video Games</option>
+                <option value={3}>Electronics</option>
+                <option value={2}>Entertainment</option>
+            </Form.Control>
             <Form.Label>Product Description</Form.Label>
             <Form.Control type='productDescription' value={productDescription}
                           onChange={event => updateProductDescription(event.target.value)}/>

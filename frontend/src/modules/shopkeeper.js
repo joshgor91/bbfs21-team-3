@@ -407,10 +407,10 @@ export function initiateAddProduct(product) {
                 return dispatch(addProductFailed())
 
             response.text().then(text => {
-                if (text === 'success')
-                    // dispatch(initiateGetProducts())
+                if (text === 'success') {
+                    dispatch(initiateGetProducts())
                     alert('New Product Added Successfully')
-                else
+                } else
                     dispatch(addProductFailed())
             })
         }).catch(error => console.log(error))
