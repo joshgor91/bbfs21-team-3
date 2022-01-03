@@ -40,7 +40,7 @@ const cart = [
 ]
 
 const initialState = {
-    cartItems: [],
+    cartItems: cart,
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: ''
@@ -166,6 +166,7 @@ export function initiateGetCartItems(userId) {
 export function initiateAddCartItem(productToAdd) {
     return function addCartItemSideEffect(dispatch, getState) {
         dispatch(addingCartItem())
+
         addCartItemRequest(productToAdd).then(res => {
             if (res.data !== 'success') {
                 return dispatch(addCartItemFailure(`Error adding item to cart`));

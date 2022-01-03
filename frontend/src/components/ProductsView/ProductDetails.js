@@ -6,6 +6,18 @@ function ProductDetails({product, cartItems}) {
     const dispatch = useDispatch()
     console.log(cartItems)
 
+    function sendToCart(product) {
+        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+        console.log(cartStorage)
+        if (!cartStorage) {
+            cartStorage = [product]
+            window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+        } else {
+            cartStorage.push(product)
+            window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+        }
+    }
+
     return (
         <>
             <Container>
@@ -25,7 +37,7 @@ function ProductDetails({product, cartItems}) {
                                 {product.unitsInStock !== 0 ?
                                     <Card.Text>Available</Card.Text>
                                     : <Card.Text>Out of Stock</Card.Text>}
-                                <Button variant="primary" onClick={() => dispatch(testAddItem(product))}>Add to Cart</Button>
+                                <Button variant="primary" onClick={() => sendToCart(product)}>Add to Cart</Button>
                             </Card.Body>
                         </Card>
                     </Col>

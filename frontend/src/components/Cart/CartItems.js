@@ -1,8 +1,16 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
+import {loginFailure} from "../../modules/user";
 
 
 function CartItems({cartItem}) {
 
+    function handleRemoveFromCart(cartItem) {
+        console.log(cartItem)
+        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+        console.log(cartStorage)
+        const updatedCart = cartStorage.filter(item => item.id !== cartItem.id)
+        console.log(updatedCart)
+    }
     return <>
         <Card style={{marginBottom: '1.5rem', width: 'auto', height: '13.5rem'}}>
             <Row>
@@ -15,7 +23,7 @@ function CartItems({cartItem}) {
                         <Card.Text>{cartItem.size}</Card.Text>
                         <Card.Text>{cartItem.unitPrice}</Card.Text>
                         <Card.Text>{cartItem.productDescription}</Card.Text>
-                        <Button variant="warning">Remove from Cart</Button>
+                        <Button variant="warning" onClick={() => handleRemoveFromCart(cartItem)}>Remove from Cart</Button>
                     </Card.Body>
                 </Col>
             </Row>

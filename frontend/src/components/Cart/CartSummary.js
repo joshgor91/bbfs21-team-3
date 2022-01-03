@@ -2,7 +2,12 @@ import {Card, Col, Row} from "react-bootstrap";
 
 
 function CartSummary({cartItems}) {
-
+    let allItems = 0
+    for (let cartItem of cartItems) {
+        console.log(cartItem.unitPrice)
+        allItems += Number(cartItem.unitPrice)
+    }
+    console.log(allItems)
     // unit price will change to MSRP or Sell price - Full Price
     const originalPrice = cartItems.reduce((previousVal, currentVal) => previousVal.unitPrice + currentVal.unitPrice)
     // Sale Price will need to change to decimal
