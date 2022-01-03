@@ -1,10 +1,8 @@
-import {Accordion, Alert, Button, Col, Form} from "react-bootstrap";
+import { Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {initiateLogin, loginFailure} from "../modules/user";
-import AccordionHeader from "react-bootstrap/AccordionHeader";
-import AccordionBody from "react-bootstrap/AccordionBody";
 
 function LoginForm({error, initiateLogin}) {
 
@@ -18,14 +16,14 @@ function LoginForm({error, initiateLogin}) {
     }
 
     if (error) {
+        console.log(error)
 
         return <>
-                <Accordion>
                     <Form className="login-register-form" onSubmit={handleSubmit}>
-                        <AccordionHeader>
+
                             <h1> Login </h1>
-                        </AccordionHeader>
-                        <AccordionBody>
+
+
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control type="text" placeholder="Enter username"
@@ -41,10 +39,10 @@ function LoginForm({error, initiateLogin}) {
                             <Button variant="light" type="submit">
                                 Submit
                             </Button>
-                        </AccordionBody>
+
                     </Form>
                     <Alert variant="danger"> Incorrect username or password! </Alert>
-                </Accordion>
+
         </>
     } else {
 

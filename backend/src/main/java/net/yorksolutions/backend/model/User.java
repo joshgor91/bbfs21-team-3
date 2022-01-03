@@ -38,7 +38,7 @@ public class User {
     // 3-shopkeeper
     // 4- admin
 
-    public int authLevel = 1;
+    public int authLevel = 2;
 
     @JsonProperty
     public String address1;
@@ -53,7 +53,7 @@ public class User {
     public String state;
 
     @JsonProperty
-    public Integer zipcode;
+    public String zipcode;
 
 
     public User() {
@@ -81,7 +81,7 @@ public class User {
         this.authLevel= authLevel;
     }
 
-    public User(Long id, String firstName, String lastName, String role, String email, String password, int authLevel, String address1, String address2, String city, String state, Integer zipcode) {
+    public User(Long id, String firstName, String lastName, String role, String email, String password, int authLevel, String address1, String address2, String city, String state, String zipcode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -96,12 +96,11 @@ public class User {
         this.zipcode = zipcode;
     }
 
-    //login
-    // emeka says this is not needed so I commented it out
-//    public User(String email, String password) {
-//        this.email = email;
-//        this.password = password;
-//    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     // returns as user logs in
     // THE USEROUTPUT CLASS TOOK THE PLACE OF THIS CONSTRUCTOR.
