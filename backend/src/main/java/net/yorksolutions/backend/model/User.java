@@ -33,10 +33,9 @@ public class User {
     // 0-disabled
     //the reason we dont have an auth level for guest is because they ain't logged in, and they are guests, they checkout
     // but we dont save their infomration.
-    // 1-guest
-    // 2-customer
-    // 3-shopkeeper
-    // 4- admin
+    // 1-customer
+    // 2-shopkeeper
+    // 3- admin
 
     public int authLevel = 1;
 
@@ -53,7 +52,7 @@ public class User {
     public String state;
 
     @JsonProperty
-    public Integer zipcode;
+    public String zipcode;
 
 
     public User() {
@@ -68,7 +67,7 @@ public class User {
         this.password = password;
         // me and Emeka altered the constructor so that self registered users, are set as customers.
         // their authlevels will be intialized to 2.
-        this.authLevel = 2;
+        this.authLevel = 1;
     }
 
     //admin is registering a user to shopkeeper or admin.
@@ -81,7 +80,7 @@ public class User {
         this.authLevel= authLevel;
     }
 
-    public User(Long id, String firstName, String lastName, String role, String email, String password, int authLevel, String address1, String address2, String city, String state, Integer zipcode) {
+    public User(Long id, String firstName, String lastName, String role, String email, String password, int authLevel, String address1, String address2, String city, String state, String zipcode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -96,12 +95,11 @@ public class User {
         this.zipcode = zipcode;
     }
 
-    //login
-    // emeka says this is not needed so I commented it out
-//    public User(String email, String password) {
-//        this.email = email;
-//        this.password = password;
-//    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     // returns as user logs in
     // THE USEROUTPUT CLASS TOOK THE PLACE OF THIS CONSTRUCTOR.
