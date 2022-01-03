@@ -33,12 +33,11 @@ public class User {
     // 0-disabled
     //the reason we dont have an auth level for guest is because they ain't logged in, and they are guests, they checkout
     // but we dont save their infomration.
-    // 1-guest
-    // 2-customer
-    // 3-shopkeeper
-    // 4- admin
+    // 1-customer
+    // 2-shopkeeper
+    // 3- admin
 
-    public int authLevel = 2;
+    public int authLevel = 1;
 
     @JsonProperty
     public String address1;
@@ -68,7 +67,7 @@ public class User {
         this.password = password;
         // me and Emeka altered the constructor so that self registered users, are set as customers.
         // their authlevels will be intialized to 2.
-        this.authLevel = 2;
+        this.authLevel = 1;
     }
 
     //admin is registering a user to shopkeeper or admin.
