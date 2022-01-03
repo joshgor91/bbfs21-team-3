@@ -56,6 +56,12 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                 <Form.Group className='mb-3'>
                     <Form.Label>Product Name</Form.Label>
                     <Form.Control type='productName' placeholder='Product Name' id='productName'/>
+                    <Form.Label>Categories</Form.Label>
+                    <Form.Control type='categories' as='select' defaultValue='None' id='categories'>
+                        <option value={10}>Video Games</option>
+                        <option value={3}>Electronics</option>
+                        <option value={2}>Entertainment</option>
+                    </Form.Control>
                     <Form.Label>Product Description</Form.Label>
                     <Form.Control type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
