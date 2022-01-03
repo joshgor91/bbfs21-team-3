@@ -14,7 +14,7 @@ import {
     updateDiscontinued,
     updatePicture,
     updateDateReceived,
-    updateUnitsReceived, updateCategories
+    updateUnitsReceived, updateCategories, updateDiscountAvailable
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -52,9 +52,11 @@ function ShopkeeperEditProduct({
                                    updateDateReceived,
                                    updateUnitsReceived
                                }) {
+    console.log(unitPrice, 'unitPrice before submit')
 
     function handleSubmit(event) {
         event.preventDefault()
+        console.log(unitPrice, 'unitPrice')
 
         if (product)
             initiateEditProduct({
@@ -90,6 +92,7 @@ function ShopkeeperEditProduct({
                 dateReceived,
                 unitsReceived
             })
+        console.log(brand)
     }
 
     return <Modal show={show} onHide={cancelEditProduct}>
@@ -130,7 +133,7 @@ function ShopkeeperEditProduct({
             </Form.Control>
             <Form.Label>Discount Available</Form.Label>
             <Form.Control type='discountAvailable' as='select' defaultValue={false}
-                          onChange={event => updateDiscontinued(event.target.value)}>
+                          onChange={event => updateDiscountAvailable(event.target.value)}>
                 <option value={true}>True</option>
                 <option value={false}>False</option>
             </Form.Control>
@@ -143,7 +146,7 @@ function ShopkeeperEditProduct({
             <Form.Label>Units Received</Form.Label>
             <Form.Control type='int' value={unitsReceived}
                           onChange={event => updateUnitsReceived(event.target.value)}/>
-            <Button type='submit'>Apply</Button>
+            <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
         </Form>
     </Modal>
 }

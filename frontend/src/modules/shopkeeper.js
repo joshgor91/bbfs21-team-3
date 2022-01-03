@@ -72,16 +72,17 @@ export default function reducer(state = initialState, action) {
                 showEditProduct: true,
                 productToEdit: undefined
                 // productName: '',
+                // categories: [],
                 // productDescription: '',
                 // brand: '',
                 // unitPrice: 0.00,
                 // unitsInStock: 0,
                 // size: '',
                 // color: '',
-                // productAvailable: new Date(''),
+                // productAvailable: '',
                 // discontinued: false,
                 // picture: '',
-                // dateReceived: new Date(''),
+                // dateReceived: '',
                 // unitsReceived: 0
             }
 
