@@ -1,6 +1,5 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
-import {useEffect, useState} from "react";
 import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -21,15 +20,11 @@ function AdminCreateUser ({
                               show,
                               initiateAddUser,
                               initiateGetUsers,
-                              userToEdit,
-                              user,
                               cancelEditUser,
                               submitEditUser,
                               isEditing
 
-                              // role, authLevel, email, password
 }) {
-    // console.log({userToEdit})
 
     function handleSubmitCreateUser(e){
         e.preventDefault()

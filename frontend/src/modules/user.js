@@ -19,7 +19,6 @@ const DELETING_USER_FAILED = 'DELETING_USER_FAILED'
 const GETTING_USERS = 'GETTING_USERS'
 const GET_USERS_FAILED = 'GET_USERS_FAILED'
 
-// const UPDATE_USER_FNAME = 'UPDATE_USER_FNAME'
 const USERS_UPDATED = 'USERS_UPDATED'
 const UPDATE_USER = 'UPDATE_USER'
 
@@ -120,7 +119,6 @@ export default function reducer(state = initialState, action){
                 ...state,
                 showEditUser: true,
                 isEditing: true,
-/*                userToEdit: action.user,*/
             }
 
         case EDIT_USER_FAILED:
@@ -163,12 +161,6 @@ export default function reducer(state = initialState, action){
                 email: '',
                 password: ''
             }
-        //
-        // case UPDATE_USER_FNAME:
-        //     return {
-        //         ...state,
-        //         firstName: action.firstName
-        //     }
 
         case GET_USERS_FAILED:
             return {
@@ -193,12 +185,6 @@ export default function reducer(state = initialState, action){
     }
 }
 
-// export function updateUserFname(firstName) {
-//     return {
-//         type: UPDATE_USER_FNAME,
-//         firstName
-//     }
-// }
 
 export function requestLogin() {
     return {
