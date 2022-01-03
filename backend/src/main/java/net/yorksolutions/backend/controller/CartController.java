@@ -36,5 +36,12 @@ public class CartController {
         return cartItemRepo.findAllByCartId(cartid);
     }
 
+    @CrossOrigin
+    @DeleteMapping("/delete/{id}")
+    String deleteProductById(@PathVariable Long id) {
+        cartItemRepo.deleteById(id);
+        return "success";
+    }
+
 
 }
