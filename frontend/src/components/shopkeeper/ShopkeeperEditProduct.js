@@ -98,7 +98,7 @@ function ShopkeeperEditProduct({
             <Form.Control type='productName' value={productName}
                           onChange={event => updateProductName(event.target.value)}/>
             <Form.Label>Categories</Form.Label>
-            <Form.Control type='categories' as='select'
+            <Form.Control type='categories' as='select' value={categories}
                           onChange={event => updateCategories(event.target.value)}>
                 <option value={10}>Video Games</option>
                 <option value={3}>Electronics</option>

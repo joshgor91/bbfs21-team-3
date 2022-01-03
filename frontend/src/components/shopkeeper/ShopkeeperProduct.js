@@ -11,7 +11,7 @@ function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
             <Card.Subtitle text={'danger'}>Product Name</Card.Subtitle>
             <Card.Text>{product.productName}</Card.Text>
             <Card.Subtitle>Categories</Card.Subtitle>
-            <Card.Text>categories</Card.Text>
+            <Card.Text>{product.categories}</Card.Text>
         </Card.Header>
         <Card.Body>
             <Card.Subtitle>Product Description</Card.Subtitle>

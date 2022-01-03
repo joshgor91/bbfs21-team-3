@@ -90,6 +90,7 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 showEditProduct: true,
                 productToEdit: action.product,
+                categories: action.product.categories,
                 productName: action.product.productName,
                 productDescription: action.product.productDescription,
                 brand: action.product.brand,
@@ -459,11 +460,11 @@ export function initiateEditProduct(product) {
     }
 }
 
-export function initiateDeleteProduct(Id) {
+export function initiateDeleteProduct(id) {
     return function sideEffect(dispatch, getState) {
         dispatch(deleteProduct())
 
-        fetch('http://localhost:8080/api/products/delete/${Id}', {
+        fetch(`http://localhost:8080/api/products/delete/${id}`, {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok)
