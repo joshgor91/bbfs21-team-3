@@ -1,11 +1,13 @@
-import NavBar from "../components/NavBar";
 import Products from "../components/ProductsView/Products";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {initiateGetAllProducts, unsetProduct} from "../modules/products";
+import {connect} from "react-redux/";
 
-const Home = () => {
+const Home = ({user}) => {
     const dispatch = useDispatch()
+
+    console.log(user)
 
     useEffect(() => {
         dispatch(initiateGetAllProducts())
@@ -14,6 +16,7 @@ const Home = () => {
 
     return (
         <div>
+
             <h1>Home</h1>
             <Products/>
         </div>
@@ -22,4 +25,13 @@ const Home = () => {
 
 };
 
-export default Home;
+function mapStateToProps(state) {
+    console.log(state)
+    return {
+        product: state.productsReducer.productToView,
+        cartItems: state.cartReducer.cartItems,
+        user: state.userReducer
+    }
+}
+
+export default connect(mapStateToProps)(Home)
