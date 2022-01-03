@@ -39,7 +39,7 @@ function ShopkeeperEditProduct({
                                    initiateEditProduct,
                                    cancelEditProduct,
                                    updateProductName,
-    updateCategories,
+                                   updateCategories,
                                    updateProductDescription,
                                    updateBrand,
                                    updateUnitPrice,
@@ -143,7 +143,7 @@ function ShopkeeperEditProduct({
             <Form.Label>Units Received</Form.Label>
             <Form.Control type='int' value={unitsReceived}
                           onChange={event => updateUnitsReceived(event.target.value)}/>
-            <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
+            <Button type='submit'>Apply</Button>
         </Form>
     </Modal>
 }
@@ -166,6 +166,7 @@ function mapDispatchToProps(dispatch) {
         initiateEditProduct,
         cancelEditProduct,
         updateProductName,
+        updateCategories,
         updateProductDescription,
         updateBrand,
         updateUnitPrice,
