@@ -2,12 +2,11 @@ import Products from "../components/ProductsView/Products";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {initiateGetAllProducts, unsetProduct} from "../modules/products";
-import {connect} from "react-redux/";
 
-const Home = ({user}) => {
+
+const Home = () => {
     const dispatch = useDispatch()
 
-    console.log(user)
 
     useEffect(() => {
         dispatch(initiateGetAllProducts())
