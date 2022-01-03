@@ -44,10 +44,10 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
     );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state){
     return {
-        hide: state.userReducer.hideTable,
-        users: state.userReducer.users
+        hide: state.adminReducer.hideTable,
+        users: state.adminReducer.users
 
     }
 }

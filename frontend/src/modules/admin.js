@@ -1,7 +1,5 @@
 //Actions
-const CREATE_USER = 'CREATE_USER'
 const CREATE_USER_FAILED = 'CREATE_USER_FAILED'
-// const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS'
 const USERS_UPDATED = 'USERS_UPDATED'
 const GET_USERS_FAILED = 'GET_USERS_FAILED'
 
@@ -23,9 +21,7 @@ const DELETING_USER_FAILED = 'DELETING_USER_FAILED'
 //Reducer
 
 const initialState = {
-    // isLoggedIn: false,
     loginPending: false,
-    // loginErrorOccurred: false,
     users: [],
     loggedInUser: {},
     userForm:{},
@@ -47,20 +43,6 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-
-        case CREATE_USER:
-            return {
-                ...state,
-                showEditUser: false,
-                isEditing: false,
-                addingUser: true,
-                firstName: '',
-                lastName: '',
-                role: '',
-                authLevel: '',
-                email: '',
-                password: ''
-            }
 
         case ADDING_USER:
             return {
@@ -158,23 +140,6 @@ export default function reducer(state = initialState, action) {
     }
 }
 
-//Action Creators
-// function createUserSuccess() {
-//     return {
-//         type: CREATE_USER_SUCCESS
-//     }
-// }
-function createUser() {
-    return {
-        type: CREATE_USER
-    }
-}
-
-function createUserFailed() {
-    return {
-        type: CREATE_USER_FAILED
-    }
-}
 
 export function startAddingUser(){
     return {
@@ -219,9 +184,9 @@ function getUsersFailed() {
         type: GET_USERS_FAILED
     }
 }
-function updateUser(){
-    return{type: UPDATE_USER}
-}
+// function updateUser(){
+//     return{type: UPDATE_USER}
+// }
 function usersUpdated(users) {
     return {
         type: USERS_UPDATED,
@@ -243,36 +208,6 @@ function deleteUserFailed() {
 }
 
 //Side Effects
-
-// export function initiateCreateUser(credentials) {
-//     return function sideEffect(dispatch, getState) {
-//         dispatch(createUser())
-//
-//         fetch("http://localhost:8080/api/users/create", {
-//             method: "POST",
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(credentials)
-//         }).then(response => {
-//             console.log(credentials)
-//             if (!response.ok)
-//                 return dispatch(createUserFailed())
-//
-//             response.text().then(text => {
-//                 if (text === 'success')
-//                     dispatch(createUserSuccess(credentials.username))
-//                 // console.log("user registered")
-//
-//                 else {
-//                     console.log("did not hit success")
-//                     dispatch(createUserFailed())
-//                     alert("Signup is invalid! Please try again.")
-//                 }
-//             })
-//         }).catch(error => console.log(error))
-//     }
-// }
 
 export function initiateGetUsers() {
     console.log("inside initiateGetUsers")
