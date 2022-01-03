@@ -1,3 +1,5 @@
+import {initiateGetProducts} from "./shopkeeper";
+
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -318,6 +320,11 @@ export function initiateLogin(user) {
                     // dispatch(navigate(admin))
                 }
                 else if (user.authLevel === 2) {
+
+                    dispatch(loginSuccess())
+                    dispatch(setUserLoggedIn(user))
+                    //dispatch(navigate(home))
+                } else if (user.authLevel === 1) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     //dispatch(navigate(home))
