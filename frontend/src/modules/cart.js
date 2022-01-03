@@ -6,7 +6,6 @@ const GETTING_CART_ITEMS_FAILED = 'GETTING_CART_ITEMS_FAILED'
 const ADDING_CART_ITEM = 'ADD_CART_ITEM'
 const ADD_CART_ITEM_FAILURE = 'ADD_CART_ITEM_FAILURE'
 const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
-const TEST_ADD_ITEM = 'TEST_ADD_ITEM'
 
 const cart = [
     {
@@ -88,26 +87,12 @@ export default function reducer(state = initialState, action) {
                 errorMessage: action.payload
             }
 
-            //for testing local storage or useNavigate
-        case TEST_ADD_ITEM:
-            console.log(action.payload)
-            return {
-                ...state,
-                cartItems: [...state.cartItems, action.payload]
-            }
-
         default:
             return state
     }
 }
 
 //Action Creators
-export function testAddItem(testItem) {
-    return {
-        type: TEST_ADD_ITEM,
-        payload: testItem
-    }
-}
 
 function gettingCartItems() {
     return {
@@ -166,16 +151,27 @@ export function initiateGetCartItems(userId) {
 export function initiateAddCartItem(productToAdd) {
     return function addCartItemSideEffect(dispatch, getState) {
         dispatch(addingCartItem())
-
-        addCartItemRequest(productToAdd).then(res => {
-            if (res.data !== 'success') {
-                return dispatch(addCartItemFailure(`Error adding item to cart`));
+        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+        console.log(cartStorage)
+        if (!getState().userReducer.isLoggedIn) {
+            if (!cartStorage) {
+                cartStorage = [productToAdd]
+                window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
-                console.log(res.data)
-                dispatch(addCartItemSuccess());
-                dispatch(initiateGetCartItems(getState().userReducer.loggedInUser.id))
+                cartStorage.push(productToAdd)
+                window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             }
-        })
-            .catch(err => console.log(`Error in initiateAddCartItem = ${err}`));
+        } else {
+            addCartItemRequest(productToAdd).then(res => {
+                if (res.data !== 'success') {
+                    return dispatch(addCartItemFailure(`Error adding item to cart`));
+                } else {
+                    console.log(res.data)
+                    dispatch(addCartItemSuccess());
+                    dispatch(initiateGetCartItems(getState().userReducer.loggedInUser.id))
+                }
+            })
+                .catch(err => console.log(`Error in initiateAddCartItem = ${err}`));
+        }
     }
 }

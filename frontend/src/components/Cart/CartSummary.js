@@ -2,21 +2,24 @@ import {Card, Col, Row} from "react-bootstrap";
 
 
 function CartSummary({cartItems}) {
-    let allItems = 0
+    console.log(cartItems)
+    let originalPrice = 0
+    let totalSavings = 0
     for (let cartItem of cartItems) {
-        console.log(cartItem.unitPrice)
-        allItems += Number(cartItem.unitPrice)
+        originalPrice += Number(cartItem.unitPrice)
     }
-    console.log(allItems)
-    // unit price will change to MSRP or Sell price - Full Price
-    const originalPrice = cartItems.reduce((previousVal, currentVal) => previousVal.unitPrice + currentVal.unitPrice)
-    // Sale Price will need to change to decimal
-    const salesPrices = cartItems.map(item => {
-        let result = item.unitPrice * item.sale
-        return Number(result.toFixed(2))
-    })
-    const totalSavings = salesPrices.reduce((prevVal, currVal) => prevVal + currVal)
-    // shows total after savings
+    console.log(originalPrice)
+
+    if (cartItems.sale !== null) {
+        const salesPrices = cartItems.map(item => {
+            let result = item.unitPrice * item.sale
+            return Number(result.toFixed(2))
+        })
+        for (let sales of salesPrices) {
+            totalSavings += Number(sales)
+        }
+        console.log(totalSavings)
+    }
     const total = originalPrice - totalSavings
 
     return <>

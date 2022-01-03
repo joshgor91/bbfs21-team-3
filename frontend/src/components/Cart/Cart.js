@@ -5,21 +5,26 @@ import CartSummary from "./CartSummary";
 
 
 function Cart({cartItems, isLoggedIn}) {
-
     const cart = JSON.parse(window.localStorage.getItem('cartItems'))
 
     return <>
         <Container>
             <Row>
                 <Col xs={9}>
-                    {isLoggedIn ?
+                    {isLoggedIn && cartItems ?
                         cartItems.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}/>)
-                        : cart.map((cartItem, idx) =>
-                            <CartItems key={idx} cartItem={cartItem}/>)}
+                        : <h2>No Cart</h2>}
+
+                        {!isLoggedIn && cart ?
+                            cart.map((cartItem, idx) =>
+                            <CartItems key={idx} cartItem={cartItem}/>)
+                        : <h2>No Cart</h2>}
                 </Col>
                 <Col xs={3}>
-                    <CartSummary cartItems={cartItems}/>
+                    {isLoggedIn ?
+                        <CartSummary cartItems={cartItems}/>
+                    : <CartSummary cartItems={cart}/>}
                 </Col>
             </Row>
         </Container>
