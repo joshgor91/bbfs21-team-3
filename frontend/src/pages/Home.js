@@ -25,13 +25,4 @@ const Home = ({user}) => {
 
 };
 
-function mapStateToProps(state) {
-    console.log(state)
-    return {
-        product: state.productsReducer.productToView,
-        cartItems: state.cartReducer.cartItems,
-        user: state.userReducer
-    }
-}
-
-export default connect(mapStateToProps)(Home)
+export default Home;
