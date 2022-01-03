@@ -2,7 +2,7 @@ import {Accordion, Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
 import AccordionHeader from "react-bootstrap/AccordionHeader";
 import AccordionBody from "react-bootstrap/AccordionBody";
-import {initiateAddUser} from "../modules/user";
+import {initiateRegisterUser} from "../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import '../styles/register.css'
@@ -10,7 +10,7 @@ import '../styles/register.css'
 
 
 
-function RegisterForm({initiateAddUser, registerErrorOccurred}) {
+function RegisterForm({initiateRegisterUser, registerErrorOccurred}) {
 
 
     const [email, setEmail] = useState('')
@@ -22,7 +22,7 @@ function RegisterForm({initiateAddUser, registerErrorOccurred}) {
     function handleSubmitRegister(e) {
         e.preventDefault()
 
-        initiateAddUser({
+        initiateRegisterUser({
             firstName: fname,
             lastName: lname,
             email: email,
@@ -90,7 +90,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser}, dispatch)
+    return bindActionCreators({initiateRegisterUser}, dispatch)
 }
 
 

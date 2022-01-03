@@ -1,6 +1,6 @@
 
 import {Button, Form, Modal} from "react-bootstrap";
-import {initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser} from "../../modules/user";
+import {cancelEditUser, submitEditUser, initiateAddUser, initiateGetUsers} from "../../modules/admin"
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
@@ -119,23 +119,23 @@ function AdminCreateUser ({
 
 function mapStateToProps(state) {
     return {
-        show: state.userReducer.showEditUser,
-        user: state.userReducer.users,
-        firstName: state.userReducer.firstName,
-        lastName: state.userReducer.lastName,
-        role: state.userReducer.role,
-        authLevel: state.userReducer.authLevel,
-        email: state.userReducer.email,
-        password: state.userReducer.password,
-        userToEdit: state.userReducer.userToEdit,
-        isEditing: state.userReducer.isEditing
+        show: state.adminReducer.showEditUser,
+        user: state.adminReducer.users,
+        firstName: state.adminReducer.firstName,
+        lastName: state.adminReducer.lastName,
+        role: state.adminReducer.role,
+        authLevel: state.adminReducer.authLevel,
+        email: state.adminReducer.email,
+        password: state.adminReducer.password,
+        userToEdit: state.adminReducer.userToEdit,
+        isEditing: state.adminReducer.isEditing
 
 
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateAddUser, initiateEditUser, cancelEditUser, initiateGetUsers, submitEditUser}, dispatch)
+    return bindActionCreators({initiateAddUser, cancelEditUser, initiateGetUsers, submitEditUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateUser)
