@@ -397,7 +397,7 @@ export function initiateAddProduct(product) {
     return function sideEffect(dispatch, getState) {
         dispatch(addProduct())
 
-        fetch('http://localhost:8080/api/products/add', {
+        fetch(`http://localhost:8080/api/products/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
