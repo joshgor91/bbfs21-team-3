@@ -24,7 +24,9 @@ function AdminCreateUser ({
                               userToEdit,
                               user,
                               cancelEditUser,
-                              submitEditUser
+                              submitEditUser,
+                              isEditing
+
                               // role, authLevel, email, password
 }) {
 
@@ -32,7 +34,7 @@ function AdminCreateUser ({
         e.preventDefault()
         console.log("btn clicked")
         console.log(user)
-        if (userToEdit){
+        if (isEditing){
             submitEditUser({...userForm})
         }
         else {

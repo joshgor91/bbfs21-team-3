@@ -34,6 +34,7 @@ const initialState = {
     registerErrorOccurred: false,
     userToEdit: {},
     showEditUser: false,
+    isEditing: false,
     gettingUsers: false,
     id: '',
     firstName: '',
@@ -98,6 +99,7 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 showEditUser: true,
+                isEditing: false,
                 firstName: '',
                 lastName: '',
                 role: '',
@@ -115,6 +117,7 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 showEditUser: true,
+                isEditing: true,
 /*                userToEdit: action.user,*/
             }
 
@@ -340,7 +343,7 @@ export function initiateAddUser(user) {
     return function sideEffect(dispatch, getState) {
         dispatch(addingUser())
 
-        fetch("http://localhost:8080/api/users/register", {
+        fetch("http://localhost:8080/api/users/create", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
