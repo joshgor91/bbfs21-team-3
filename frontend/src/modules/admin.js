@@ -1,5 +1,7 @@
 //Actions
 const CREATE_USER = 'CREATE_USER'
+const CREATE_USER_FAILED = 'CREATE_USER_FAILED'
+const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS'
 const DELETE_USER = 'DELETE_USER'
 const EDIT_USER = 'EDIT_USER'
 const USERS_UPDATED = 'USERS_UPDATED'
@@ -12,15 +14,23 @@ const initialState = {
     isLoggedIn: false,
     loginPending: false,
     loginErrorOccurred: false,
-    loggedInUser: '',
-    registerErrorOccurred: false,
     users: [],
-    userToEdit: undefined,
+    loggedInUser: {},
+    userForm:{},
+    registerErrorOccurred: false,
+    userToEdit: {},
     showEditUser: false,
+    isEditing:false,
     gettingUsers: false,
-    addingUser: false,
-    deletingUser: false,
-    editingUser: false
+    id: '',
+    firstName: '',
+    lastName: '',
+    role: '',
+    authLevel: '',
+    email: '',
+    password: '',
+    hideTable: true,
+    addingUser: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -30,8 +40,31 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 showEditUser: false,
+                isEditing: false,
                 addingUser: true,
+                firstName: '',
+                lastName: '',
+                role: '',
+                authLevel: '',
+                email: '',
+                password: ''
             }
+        // case CREATE_USER:
+        //     return {
+        //         ...state,
+        //         newUsers: [...state.users,action.user]
+        //     }
+        // case START_ADDING_USER:
+        //     return {
+        //         ...state,
+        //         showEditUser: true,
+        //         firstName: '',
+        //         lastName: '',
+        //         role: '',
+        //         authLevel: '',
+        //         email: '',
+        //         password: ''
+        //     }
 
         case DELETE_USER:
             return {
@@ -62,6 +95,17 @@ export default function reducer(state = initialState, action) {
                 addingUser: false,
                 showEditUser: false
             }
+        case CREATE_USER_SUCCESS:
+            return {
+                ...state,
+                newLoginPending: false,
+                isNewLoggedIn: true
+            }
+        case CREATE_USER_FAILED:
+            return {
+                ...state,
+                newLoginPending: false,
+            }
 
         default:
             return state
@@ -69,17 +113,54 @@ export default function reducer(state = initialState, action) {
 }
 
 //Action Creators
+function createUserSuccess() {
+    return {
+        type: CREATE_USER_SUCCESS
+    }
+}
+function createUser() {
+    return {
+        type: CREATE_USER
+    }
+}
 
+function createUserFailed() {
+    return {
+        type: CREATE_USER_FAILED
+    }
+}
 
 
 //Side Effects
-export function initiateAddUser(user) {
+
+export function initiateCreateUser(credentials) {
     return function sideEffect(dispatch, getState) {
-        dispatch(addingUser())
+        dispatch(createUser())
 
-        fetch()
+        fetch("http://localhost:8080/api/users/create", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials)
+        }).then(response => {
+            console.log(credentials)
+            if (!response.ok)
+                return dispatch(createUserFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                    dispatch(createUserSuccess(credentials.username))
+                // console.log("user registered")
+
+                else {
+                    console.log("did not hit success")
+                    dispatch(createUserFailed())
+                    alert("Signup is invalid! Please try again.")
+                }
+            })
+        }).catch(error => console.log(error))
     }
-
 }
 
 

@@ -9,6 +9,7 @@ import {
 } from '../../modules/shopkeeper'
 import {useState} from "react";
 import ShopkeeperProductList from "./ShopkeeperProductList";
+import {logout} from "../../modules/user";
 
 
 
@@ -40,15 +41,16 @@ function ShopkeeperForm({products, dispatch}) {
                     handleAddProduct={handleCreateProduct}
                 />
                 <Dropdown as={ButtonGroup}>
-                    <Button variant='success'>Shopkeeper Ish</Button>
+                    <Button variant='primary'>Shopkeeper Ish</Button>
 
-                    <Dropdown.Toggle split variant='success' id='dropdown-split-basic'/>
+                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
 
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleShow}>Create</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
                         <Dropdown.Item onClick={handleHideProductList}>Hide Product List</Dropdown.Item>
-                    </Dropdown.Menu>
+                    </Dropdown.Menu><br/>
+                    <Col><Button variant="primary" style={{ marginLeft: "1000px"}} onClick={logout}>Logout</Button></Col>
                 </Dropdown>
             </Col>
         </Row>
@@ -61,7 +63,7 @@ function ShopkeeperForm({products, dispatch}) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateGetProducts}, dispatch)
+    return bindActionCreators({initiateGetProducts, logout}, dispatch)
 }
 
 export default connect(undefined, undefined)(ShopkeeperForm)

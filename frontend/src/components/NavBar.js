@@ -1,4 +1,4 @@
-import {Nav, Navbar} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, Nav, Navbar, Row} from "react-bootstrap";
 import { GiShoppingCart } from "react-icons/gi";
 
 
@@ -7,6 +7,7 @@ function NavBar() {
 
     return (
         <>
+
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
@@ -46,18 +47,33 @@ function NavBar() {
                                     Shopkeeper
                                 </Nav.Link>
                             </Nav.Item>
+                            <Nav.Item>
+                                <Form className="d-flex">
+                                    <FormControl
+                                        type="search"
+                                        placeholder="Search"
+                                        className="me-2"
+                                        aria-label="Search"
+                                    />
+                                    <Button variant="light">Search</Button>
+                                </Form>
+                            </Nav.Item>
 
                             <Nav.Item>
                                 <Nav.Link className='navitem' href='/cart' title='Cart'>
-                                    <GiShoppingCart style={{width: '2em', height: '2em'}}/>
+                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
                                 </Nav.Link>
                             </Nav.Item>
+
 
                         </Nav>
                     </Navbar.Collapse>
                 </>
 
+
             </Navbar>
+
+
         </>
     )
 
