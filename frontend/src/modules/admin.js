@@ -1,5 +1,4 @@
 //Actions
-const CREATE_USER_FAILED = 'CREATE_USER_FAILED'
 const USERS_UPDATED = 'USERS_UPDATED'
 const GET_USERS_FAILED = 'GET_USERS_FAILED'
 
@@ -184,9 +183,7 @@ function getUsersFailed() {
         type: GET_USERS_FAILED
     }
 }
-// function updateUser(){
-//     return{type: UPDATE_USER}
-// }
+
 function usersUpdated(users) {
     return {
         type: USERS_UPDATED,
