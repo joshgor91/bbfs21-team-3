@@ -20,13 +20,15 @@ function Admin() {
     return <>
     <h1>Welcome Admin
     {/* add conditional to this page that if user auth /= 3,
-    it redirects to home if a rando tried to access this endpoint*/}
+    it redirects to home if a random tried to access this endpoint*/}
 
     </h1>
 
         <AdminForm/>
         <AdminSeeUsers setUserForm={setUserForm}/>
         <AdminEditUsers userForm={userForm} setUserForm={setUserForm}/>
+
+
 
     </>
 }

@@ -1,19 +1,20 @@
 import {Button, ButtonGroup, Col, Dropdown} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {startAddingUser, initiateGetUsers} from "../../modules/user";
+import {startAddingUser, initiateGetUsers, logout} from "../../modules/user";
+import {initiateCreateUser} from "../../modules/admin";
 
 
 
-function AdminForm({startAddingUser, initiateGetUsers}){
+function AdminForm({startAddingUser, initiateGetUsers, logout, initiateCreateUser}){
 
 
     return <>
         <Col className={'m-5'}>
             <Dropdown as={ButtonGroup}>
-                <Button variant="success">Admin Stuff</Button>
+                <Button variant="primary">Admin Stuff</Button>
 
-                <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
                 <Dropdown.Menu>
                     <Dropdown.Item
@@ -23,17 +24,18 @@ function AdminForm({startAddingUser, initiateGetUsers}){
                         onClick={initiateGetUsers}
                     >View all Users</Dropdown.Item>
 
-                </Dropdown.Menu>
+                </Dropdown.Menu><br/>
+                <Col><Button variant="primary" style={{ marginLeft: "1000px"}} onClick={logout}>Logout</Button></Col>
             </Dropdown>
-                    {/*<Col><Button variant="dark" onClick={logout}>Logout</Button></Col>*/}
             </Col></>
+
 
 }
 
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({startAddingUser, initiateGetUsers}, dispatch)
+    return bindActionCreators({startAddingUser, initiateGetUsers, logout, initiateCreateUser}, dispatch)
 }
 
 export default connect(undefined, mapDispatchToProps)(AdminForm)
