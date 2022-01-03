@@ -1,4 +1,5 @@
 import {addCartItemRequest, getCartItemsRequest} from "../services/cartService";
+import {initiateGetUsers} from "./admin";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -7,6 +8,11 @@ const ADDING_CART_ITEM = 'ADD_CART_ITEM'
 const ADD_CART_ITEM_FAILURE = 'ADD_CART_ITEM_FAILURE'
 const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
 const TEST_ADD_ITEM = 'TEST_ADD_ITEM'
+
+//Delete
+const DELETING_ITEM = 'DELETING_ITEM'
+const DELETING_ITEM_FAILED = 'DELETING_ITEM_FAILED'
+
 
 const cart = [
     {
@@ -96,6 +102,11 @@ export default function reducer(state = initialState, action) {
         //         cartItems: [...state.cartItems, action.payload]
         //     }
 
+        case DELETING_ITEM:
+            return {
+                ...state
+            }
+
         default:
             return state
     }
@@ -148,11 +159,25 @@ function addCartItemSuccess() {
     }
 }
 
+function deletingItem() {
+    console.log("trying to delete")
+    return {
+        type: DELETING_ITEM
+    }
+}
+function deleteItemFailed(){
+    return {
+        type: DELETING_ITEM_FAILED
+    }
+}
 
 //sideEffects
 export function initiateGetCartItems(userId) {
     return function gettingCartItemsSideEffect(dispatch) {
         dispatch(gettingCartItems())
+        // fetch(`http://localhost:8080/api/cart/${user.id}`, {
+        // method: "GET"
+        // }).then()
         getCartItemsRequest(userId).then(res => {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
@@ -166,6 +191,13 @@ export function initiateGetCartItems(userId) {
 export function initiateAddCartItem(productToAdd) {
     return function addCartItemSideEffect(dispatch, getState) {
         dispatch(addingCartItem())
+        // fetch("http://localhost:8080/api/cart/add", {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(productToAdd)
+        // })
         addCartItemRequest(productToAdd).then(res => {
             if (res.data !== 'success') {
                 return dispatch(addCartItemFailure(`Error adding item to cart`));
@@ -176,5 +208,25 @@ export function initiateAddCartItem(productToAdd) {
             }
         })
             .catch(err => console.log(`Error in initiateAddCartItem = ${err}`));
+    }
+}
+
+export function initiateDeleteItem(id) {
+    console.log("deleting " + id)
+    return function sideEffect(dispatch) {
+        dispatch(deletingItem())
+        fetch(`http://localhost:8080/api/cart/delete/${id}`, {
+            method: 'DELETE'
+        }).then(response => {
+            if(!response.ok)
+                return dispatch(deleteItemFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                    dispatch(initiateGetCartItems())
+                else
+                    dispatch(deleteItemFailed())
+            })
+        }).catch(error => console.log(error))
     }
 }
