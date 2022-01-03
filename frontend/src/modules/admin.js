@@ -188,7 +188,7 @@ function addingUser() {
     }
 }
 
-export function startEditingUser(user) {
+function startEditingUser(user) {
     console.log("inside editingUser")
     return {
         type: EDITING_USER,
@@ -320,9 +320,17 @@ export function initiateAddUser(user) {
     }
 }
 
-export function submitEditUser(user){
+export function initiateEditUser(user) {
+    console.log("logging user from initiateEditUser" + user)
+    console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
     return function sideEffect(dispatch, getState) {
         dispatch(startEditingUser(user))
+
+    }
+}
+
+export function submitEditUser(user){
+    return function sideEffect(dispatch, getState) {
 
         fetch("http://localhost:8080/api/users/edit", {
             method: "PUT",

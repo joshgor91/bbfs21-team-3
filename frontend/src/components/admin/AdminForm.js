@@ -1,8 +1,8 @@
 import {Button, ButtonGroup, Col, Dropdown} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {startAddingUser, logout} from "../../modules/user";
-import initiateGetUsers from '../../modules/admin'
+import {logout} from "../../modules/user";
+import {initiateGetUsers, startAddingUser} from '../../modules/admin'
 
 
 
