@@ -10,9 +10,11 @@ function ShopkeeperForm({products, dispatch}) {
     const [show, setShow] = useState(false)
     const [showProductList, setShowProductList] = useState(false)
 
+
     const handleShow = () => setShow(true)
     function handleShowProductList() {
         setShowProductList(true)
+        dispatch(initiateGetProducts())
     }
     function handleHideProductList() {
         setShowProductList(false)
@@ -49,7 +51,7 @@ function ShopkeeperForm({products, dispatch}) {
         </Row>
             <Row>
                 <h4>Shopkeeper Product List</h4>
-                <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct} showProductList={handleHideProductList}/>
+                {showProductList ? <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/> : ''}
             </Row>
         </Container>
 
@@ -60,4 +62,11 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({initiateGetProducts}, dispatch)
 }
 
-export default connect(undefined, undefined)(ShopkeeperForm)
+function mapStateToProps(state) {
+    return {
+        products: state.shopkeeperReducer.products
+    }
+}
+
+
+export default connect(mapStateToProps, undefined)(ShopkeeperForm)
