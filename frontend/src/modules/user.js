@@ -1,5 +1,5 @@
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
-const LOGIN_ERROR = 'LOGIN_ERROR'
+const LOGIN_FAILURE = 'LOGIN_FAILURE'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGOUT = 'LOGOUT'
 
@@ -74,7 +74,7 @@ export default function reducer(state = initialState, action){
                 loginPending: false
             }
 
-        case LOGIN_ERROR:
+        case LOGIN_FAILURE:
             return {
                 ...state,
                 isLoggedIn: false,
@@ -203,7 +203,7 @@ export function requestLogin() {
 }
 
 export function loginFailure(errorMessage) {
-    return {type: LOGIN_ERROR,
+    return {type: LOGIN_FAILURE,
         payload: errorMessage}
 }
 
@@ -305,6 +305,7 @@ export function initiateLogin(user) {
             body: JSON.stringify(user)
 
         }).then(response => {
+            console.log(response.ok)
             if (!response.ok)
                 return dispatch(loginFailure())
 
@@ -324,6 +325,11 @@ export function initiateLogin(user) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
                     //dispatch(navigate(home))
+                }
+                else if (user.authLevel === 1) {
+                    dispatch(loginSuccess())
+                    dispatch(setUserLoggedIn(user))
+                    //dispatch(navigate(shopkeeper))
                 }
                 else
                     dispatch(loginFailure())

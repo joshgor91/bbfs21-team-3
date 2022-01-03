@@ -22,13 +22,13 @@ class UserOutput {
     public String address2;
     public String city;
     public String state;
-    public int zipcode;
+    public String zipcode;
 
 
 
     UserOutput(){};
 
-    public UserOutput(Long id, String firstName, String lastName, String role, String email, int authLevel, String address1, String address2, String city, String state, Integer zipcode) {
+    public UserOutput(Long id, String firstName, String lastName, String role, String email, int authLevel, String address1, String address2, String city, String state, String zipcode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

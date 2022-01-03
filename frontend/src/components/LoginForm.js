@@ -18,6 +18,7 @@ function LoginForm({error, initiateLogin}) {
     }
 
     if (error) {
+        console.log(error)
 
         return <>
                 <Accordion>
