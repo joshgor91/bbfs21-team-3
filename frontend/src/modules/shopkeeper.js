@@ -4,6 +4,7 @@ const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_FAILED = 'ADD_PRODUCT_FAILED'
 const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
+const START_EDIT_PRODUCT = 'START_EDIT_PRODUCT'
 const EDIT_PRODUCT_FAILED = 'EDIT_PRODUCT_FAILED'
 const CANCEL_EDIT_PRODUCT = 'CANCEL_EDIT_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
@@ -11,7 +12,7 @@ const DELETE_PRODUCT_FAILED = 'DELETE_PRODUCT_FAILED'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
-const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
+// const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
 const UPDATE_BRAND = 'UPDATE_BRAND'
@@ -35,7 +36,7 @@ const initialState = {
     addProduct: false,
     addErrorOccurred: false,
     editErrorOccurred: false,
-    categories: [],
+    // categories: [],
     productName: '',
     productDescription: '',
     brand: '',
@@ -44,7 +45,7 @@ const initialState = {
     size: '',
     color: '',
     productAvailable: '', // similar question for type date, also tried combining both for date
-    discontinued: '', // similar question for type boolean
+    discontinued: undefined, // similar question for type boolean
     discountAvailable: '',
     picture: '',
     dateReceived: '',
@@ -70,18 +71,19 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 showEditProduct: true,
-                productToEdit: undefined
-                // productName: '',
+                productToEdit: undefined,
+                productName: ''
+                // categories: [],
                 // productDescription: '',
                 // brand: '',
                 // unitPrice: 0.00,
                 // unitsInStock: 0,
                 // size: '',
                 // color: '',
-                // productAvailable: new Date(''),
+                // productAvailable: '',
                 // discontinued: false,
                 // picture: '',
-                // dateReceived: new Date(''),
+                // dateReceived: '',
                 // unitsReceived: 0
             }
 
@@ -90,7 +92,7 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 showEditProduct: true,
                 productToEdit: action.product,
-                categories: action.product.categories,
+                // categories: action.product.categories,
                 productName: action.product.productName,
                 productDescription: action.product.productDescription,
                 brand: action.product.brand,
@@ -100,6 +102,7 @@ export default function reducer(state = initialState, action) {
                 color: action.product.color,
                 productAvailable: action.product.productAvailable,
                 discontinued: action.product.discontinued,
+                discountAvailable: action.product.discountAvailable,
                 picture: action.product.picture,
                 dateReceived: action.product.dateReceived,
                 unitsReceived: action.product.unitsReceived
@@ -117,11 +120,11 @@ export default function reducer(state = initialState, action) {
                 editErrorOccurred: true
             }
 
-        case UPDATE_CATEGORIES:
-            return {
-                ...state,
-                categories: [...state.categories, action.categories]
-            }
+        // case UPDATE_CATEGORIES:
+        //     return {
+        //         ...state,
+        //         categories: [...state.categories, action.categories]
+        //     }
 
         case UPDATE_PRODUCT_NAME:
             return {
@@ -216,7 +219,9 @@ export default function reducer(state = initialState, action) {
         case PRODUCTS_UPDATED:
             return {
                 ...state,
-                products: action.products
+                products: action.products,
+                addProduct: false,
+                showEditProduct: false
             }
 
         default:
@@ -251,6 +256,12 @@ export function editProduct(product) {
     }
 }
 
+function startEditProduct() {
+    return {
+        type: START_EDIT_PRODUCT
+    }
+}
+
 function editProductFailed() {
     return {
         type: EDIT_PRODUCT_FAILED
@@ -276,14 +287,15 @@ export function deleteProductFailed() {
     }
 }
 
-export function updateCategories(categories) {
-    return {
-        type: UPDATE_CATEGORIES,
-        categories
-    }
-}
+// export function updateCategories(categories) {
+//     return {
+//         type: UPDATE_CATEGORIES,
+//         categories
+//     }
+// }
 
 export function updateProductName(productName) {
+    console.log(productName)
     return {
         type: UPDATE_PRODUCT_NAME,
         productName
@@ -340,6 +352,7 @@ export function updateProductAvailable(productAvailable) {
 }
 
 export function updateDiscontinued(discontinued) {
+    console.log(discontinued)
     return {
         type: UPDATE_DISCONTINUED,
         discontinued
@@ -347,6 +360,7 @@ export function updateDiscontinued(discontinued) {
 }
 
 export function updateDiscountAvailable(discountAvailable) {
+    console.log(discountAvailable)
     return {
         type: UPDATE_DISCOUNT_AVAILABLE,
         discountAvailable
@@ -397,7 +411,7 @@ export function initiateAddProduct(product) {
     return function sideEffect(dispatch, getState) {
         dispatch(addProduct())
 
-        fetch('http://localhost:8080/api/products/add', {
+        fetch(`http://localhost:8080/api/products/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -438,7 +452,7 @@ export function initiateGetProducts() {
 
 export function initiateEditProduct(product) {
     return function sideEffect(dispatch, getState) {
-        dispatch(editProduct())
+        dispatch(startEditProduct())
 
         fetch('http://localhost:8080/api/products/edit', {
             method: 'PUT',

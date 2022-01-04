@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Product {
@@ -29,6 +27,18 @@ public class Product {
     public void deleteCategory(Long id) {
         categories.removeIf(catId -> (catId.getId() == id));
     }
+
+
+    @OneToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            mappedBy = "product"
+    )
+    @JsonProperty
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    @JsonProperty
+    @ElementCollection
+    private List<ScheduledPrices> ScheduledPrices;
 
     @JsonProperty
     public String productName;
@@ -81,4 +91,5 @@ public class Product {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
 }
