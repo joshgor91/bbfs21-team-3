@@ -2,13 +2,13 @@ import {Card, Col, Row} from "react-bootstrap";
 
 
 function CartSummary({cartItems}) {
-    console.log(cartItems)
+    // console.log(cartItems)
     let originalPrice = 0
     let totalSavings = 0
     for (let cartItem of cartItems) {
         originalPrice += Number(cartItem.unitPrice)
     }
-    console.log(originalPrice)
+    // console.log(originalPrice)
 
     if (cartItems.sale !== null) {
         const salesPrices = cartItems.map(item => {
@@ -18,7 +18,7 @@ function CartSummary({cartItems}) {
         for (let sales of salesPrices) {
             totalSavings += Number(sales)
         }
-        console.log(totalSavings)
+        // console.log(totalSavings)
     }
     const total = originalPrice - totalSavings
 

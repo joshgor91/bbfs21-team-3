@@ -138,12 +138,13 @@ function addCartItemSuccess() {
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
         dispatch(gettingCartItems())
-
         getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
-            else
+            else {
+                console.log( res.data)
                 dispatch(setCartItems(res.data))
+            }
         })
             .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
     }

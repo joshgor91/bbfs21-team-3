@@ -4,7 +4,7 @@ import {initiateAddCartItem} from "../../modules/cart";
 
 function ProductDetails({product, cartItems}) {
     const dispatch = useDispatch()
-    console.log(cartItems)
+    // console.log(cartItems)
 
     return (
         <>
@@ -39,7 +39,7 @@ function ProductDetails({product, cartItems}) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
+    // console.log(state)
     return {
         product: state.productsReducer.productToView,
         cartItems: state.cartReducer.cartItems

@@ -6,7 +6,7 @@ import CartSummary from "./CartSummary";
 
 function Cart({cartItems, isLoggedIn}) {
     const cart = JSON.parse(window.localStorage.getItem('cartItems'))
-
+    console.log(cartItems)
     return <>
         <Container>
             <Row>
