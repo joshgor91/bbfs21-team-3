@@ -56,13 +56,16 @@ function ShopkeeperEditProduct({
                                    updateDateReceived,
                                    updateUnitsReceived
                                }) {
-    console.log(productName, 'productName before submit')
-    console.log(product)
+    // console.log(productName, 'productName before submit')
+    // console.log(product)
+    console.log(discontinued)
+    console.log(discountAvailable)
 
     function handleSubmit(event) {
         event.preventDefault()
         console.log(productName, 'productName')
         console.log(product)
+
 
         if (product)
             initiateEditProduct({
@@ -134,18 +137,18 @@ function ShopkeeperEditProduct({
             <Form.Control type='date' value={productAvailable}
                           onChange={event => updateProductAvailable(event.target.value)}/>
             <Form.Label>Discontinued</Form.Label>
-            <Form.Control type='discontinued' as='select'  value={discontinued}
+            <Form.Control type='discontinued' as='select' value={discontinued}
                           onChange={event => updateDiscontinued(event.target.value)}>
                 <option value=''>Undefined</option>
-                <option value='true'>True</option>
-                <option value='false'>False</option>
+                <option value={true}>True</option>
+                <option value={false}>False</option>
             </Form.Control>
             <Form.Label>Discount Available</Form.Label>
-            <Form.Control type='discountAvailable' as='select'  value={discountAvailable}
+            <Form.Control type='discountAvailable' as='select' value={discountAvailable}
                           onChange={event => updateDiscountAvailable(event.target.value)}>
                 <option value=''>Undefined</option>
-                <option value='true'>True</option>
-                <option value='false'>False</option>
+                <option value={true}>True</option>
+                <option value={false}>False</option>
             </Form.Control>
 
             <Form.Label>Picture</Form.Label>

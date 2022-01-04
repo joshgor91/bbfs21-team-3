@@ -8,6 +8,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         setShowNewProduct(false)
     }
 
+
     function handleSubmit(event) {
         event.preventDefault()
         handleClose()
@@ -48,6 +49,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         initiateAddProduct(newProduct)
         console.log('what up')
 
+
     }
 
     return <Modal show={showNewProduct} onHide={handleClose}>
@@ -83,14 +85,14 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Discontinued</Form.Label>
                     <Form.Control type='discontinued' as='select' id='discontinued'>
                         <option value=''>Undefined</option>
-                        <option value='true'>True</option>
-                        <option value='false'>False</option>
+                        <option value={true}>True</option>
+                        <option value={false}>False</option>
                     </Form.Control>
                     <Form.Label>Discount Available</Form.Label>
                     <Form.Control type='discountAvailable' as='select' id='discountAvailable'>
                         <option value=''>Undefined</option>
-                        <option value='true'>True</option>
-                        <option value='false'>False</option>
+                        <option value={true}>True</option>
+                        <option value={false}>False</option>
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
                     <Form.Control type='img' id='picture'/>
