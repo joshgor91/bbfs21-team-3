@@ -46,11 +46,11 @@ public class Product {
     public String brand;
 
     @JsonProperty
-    public String unitPrice;
+    public Float unitPrice;
 
     @JsonProperty
     @Column(name = "units_in_stock")
-    public String unitsInStock;
+    public int unitsInStock;
 
     @JsonProperty
     public String size;
@@ -60,25 +60,25 @@ public class Product {
 
     @JsonProperty
     @Column(name = "product_available")
-    public String productAvailable;
+    public Date productAvailable;
 
     @JsonProperty
-    public String discontinued;
+    public Boolean discontinued;
 
     @JsonProperty
     @Column(name = "discount_available")
-    public String discountAvailable;
+    public Boolean discountAvailable;
 
     @JsonProperty
     public String picture;
 
     @JsonProperty
     @Column(name = "date_received")
-    public String dateReceived;
+    public Date dateReceived;
 
     @JsonProperty
     @Column(name = "units_received")
-    public String unitsReceived;
+    public int unitsReceived;
 
     public Set<Category> getCategories() {
         return categories;

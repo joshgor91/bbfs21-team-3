@@ -14,7 +14,7 @@ function ShopkeeperProductList({products, deleteProduct}) {
 
 function mapStateToProps(state) {
     return {
-        products: state.shopkeeperReducer.products
+        products: state.productsReducer.products
     }
 }
 

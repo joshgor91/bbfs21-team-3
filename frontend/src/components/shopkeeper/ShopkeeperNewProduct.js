@@ -82,11 +82,13 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Control type='date' id='productAvailable'/>
                     <Form.Label>Discontinued</Form.Label>
                     <Form.Control type='discontinued' as='select' id='discontinued'>
+                        <option value=''>Undefined</option>
                         <option value='true'>True</option>
                         <option value='false'>False</option>
                     </Form.Control>
                     <Form.Label>Discount Available</Form.Label>
                     <Form.Control type='discountAvailable' as='select' id='discountAvailable'>
+                        <option value=''>Undefined</option>
                         <option value='true'>True</option>
                         <option value='false'>False</option>
                     </Form.Control>
