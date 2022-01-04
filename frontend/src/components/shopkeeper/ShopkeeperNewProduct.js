@@ -21,8 +21,8 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         const color = document.getElementById('color').value
         const productAvailable = document.getElementById('productAvailable').value
         const discontinued = document.getElementById('discontinued').value
-        // const discountAvailable = document.getElementById('discountAvailable').value
-        // const picture = document.getElementById('picture').value
+        const discountAvailable = document.getElementById('discountAvailable').value
+        const picture = document.getElementById('picture').value
         // const dateReceived = document.getElementById('dateReceived').value
         // const unitsReceived = document.getElementById('unitsReceived').value
 
@@ -38,8 +38,8 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             color,
             productAvailable,
             discontinued,
-            // discountAvailable,
-            // picture,
+            discountAvailable,
+            picture,
             // dateReceived,
             // unitsReceived
         }
@@ -81,17 +81,17 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Product Available</Form.Label>
                     <Form.Control type='date' id='productAvailable'/>
                     <Form.Label>Discontinued</Form.Label>
-                    <Form.Control type='discontinued' as='select' defaultValue={false} id='discontinued'>
-                        <option value={true}>True</option>
-                        <option value={false}>False</option>
+                    <Form.Control type='discontinued' as='select' id='discontinued'>
+                        <option value='true'>True</option>
+                        <option value='false'>False</option>
                     </Form.Control>
-                    {/*<Form.Label>Discount Available</Form.Label>*/}
-                    {/*<Form.Control type='discountAvailable' as='select' defaultValue={false} id='discountAvailable'>*/}
-                    {/*    <option value={true}>True</option>*/}
-                    {/*    <option value={false}>False</option>*/}
-                    {/*</Form.Control>*/}
-                    {/*<Form.Label>Picture</Form.Label>*/}
-                    {/*<Form.Control type='file' id='picture'/>*/}
+                    <Form.Label>Discount Available</Form.Label>
+                    <Form.Control type='discountAvailable' as='select' id='discountAvailable'>
+                        <option value='true'>True</option>
+                        <option value='false'>False</option>
+                    </Form.Control>
+                    <Form.Label>Picture</Form.Label>
+                    <Form.Control type='img' id='picture'/>
                     {/*<Form.Label>Date Received</Form.Label>*/}
                     {/*<Form.Control type='date'  id='dateReceived'/>*/}
                     {/*<Form.Label>Units Received</Form.Label>*/}

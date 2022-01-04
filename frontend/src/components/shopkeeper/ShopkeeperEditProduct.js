@@ -12,11 +12,11 @@ import {
     updateColor,
     updateProductAvailable,
     updateDiscontinued,
-    // updatePicture,
+    updatePicture,
     // updateDateReceived,
     // updateUnitsReceived,
     // updateCategories,
-    // updateDiscountAvailable
+    updateDiscountAvailable
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -34,8 +34,8 @@ function ShopkeeperEditProduct({
                                    color,
                                    productAvailable,
                                    discontinued,
-                                   // discountAvailable,
-                                   // picture,
+                                   discountAvailable,
+                                   picture,
                                    // dateReceived,
                                    // unitsReceived,
                                    initiateAddProduct,
@@ -51,8 +51,8 @@ function ShopkeeperEditProduct({
                                    updateColor,
                                    updateProductAvailable,
                                    updateDiscontinued,
-                                   // updateDiscountAvailable,
-                                   // updatePicture,
+                                   updateDiscountAvailable,
+                                   updatePicture,
                                    // updateDateReceived,
                                    // updateUnitsReceived
                                }) {
@@ -77,8 +77,8 @@ function ShopkeeperEditProduct({
                 color,
                 productAvailable,
                 discontinued,
-                // discountAvailable,
-                // picture,
+                discountAvailable,
+                picture,
                 // dateReceived,
                 // unitsReceived
             })
@@ -95,8 +95,8 @@ function ShopkeeperEditProduct({
                 color,
                 productAvailable,
                 discontinued,
-                // discountAvailable,
-                // picture,
+                discountAvailable,
+                picture,
                 // dateReceived,
                 // unitsReceived
             })
@@ -134,20 +134,22 @@ function ShopkeeperEditProduct({
             <Form.Control type='date' value={productAvailable}
                           onChange={event => updateProductAvailable(event.target.value)}/>
             <Form.Label>Discontinued</Form.Label>
-            <Form.Control type='discontinued' as='select' defaultValue={false}
+            <Form.Control type='discontinued' as='select'  value={discontinued}
                           onChange={event => updateDiscontinued(event.target.value)}>
-                <option value={true}>True</option>
-                <option value={false}>False</option>
+                <option value=''>Undefined</option>
+                <option value='true'>True</option>
+                <option value='false'>False</option>
             </Form.Control>
-            {/*<Form.Label>Discount Available</Form.Label>*/}
-            {/*<Form.Control type='discountAvailable' as='select' defaultValue={false}*/}
-            {/*              onChange={event => updateDiscountAvailable(event.target.value)}>*/}
-            {/*    <option value={true}>True</option>*/}
-            {/*    <option value={false}>False</option>*/}
-            {/*</Form.Control>*/}
+            <Form.Label>Discount Available</Form.Label>
+            <Form.Control type='discountAvailable' as='select'  value={discountAvailable}
+                          onChange={event => updateDiscountAvailable(event.target.value)}>
+                <option value=''>Undefined</option>
+                <option value='true'>True</option>
+                <option value='false'>False</option>
+            </Form.Control>
 
-            {/*<Form.Label>Picture</Form.Label>*/}
-            {/*<Form.Control type='file' value={picture} onChange={event => updatePicture(event.target.value)}/>*/}
+            <Form.Label>Picture</Form.Label>
+            <Form.Control type='img' value={picture} onChange={event => updatePicture(event.target.value)}/>
             {/*<Form.Label>Date Received</Form.Label>*/}
             {/*<Form.Control type='date' value={dateReceived}*/}
             {/*              onChange={event => updateDateReceived(event.target.value)}/>*/}
@@ -173,8 +175,8 @@ function mapStateToProps(state) {
         color: state.shopkeeperReducer.color,
         productAvailable: state.shopkeeperReducer.productAvailable,
         discontinued: state.shopkeeperReducer.discontinued,
-        // discountAvailable: state.shopkeeperReducer.discountAvailable,
-        // picture: state.shopkeeperReducer.picture,
+        discountAvailable: state.shopkeeperReducer.discountAvailable,
+        picture: state.shopkeeperReducer.picture,
         // dateReceived: state.shopkeeperReducer.dateReceived,
         // unitsReceived: state.shopkeeperReducer.unitsReceived
     }
@@ -195,8 +197,8 @@ function mapDispatchToProps(dispatch) {
         updateColor,
         updateProductAvailable,
         updateDiscontinued,
-        // updateDiscountAvailable,
-        // updatePicture,
+        updateDiscountAvailable,
+        updatePicture,
         // updateDateReceived,
         // updateUnitsReceived
     }, dispatch)

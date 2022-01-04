@@ -23,11 +23,11 @@ function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
             <Card.Subtitle>Product Available</Card.Subtitle>
             <Card.Text>{product.productAvailable?.toString()}</Card.Text>
             <Card.Subtitle>Discontinued</Card.Subtitle>
-            <Card.Text>{product.discontinued ? 'True' : 'False'}</Card.Text>
-            {/*<Card.Subtitle>Discount Available</Card.Subtitle>*/}
-            {/*<Card.Text>{product.discountAvailable ? 'True' : 'False'}</Card.Text>*/}
-            {/*<Card.Subtitle>Product Picture</Card.Subtitle>*/}
-            {/*<Card.Text>{product.picture}</Card.Text>*/}
+            <Card.Text>{product.discontinued}</Card.Text>
+            <Card.Subtitle>Discount Available</Card.Subtitle>
+            <Card.Text>{product.discountAvailable}</Card.Text>
+            <Card.Subtitle>Product Picture</Card.Subtitle>
+            <Card.Text>{product.picture}</Card.Text>
         </Card.Body>
         {/*<Card.Footer>*/}
         {/*    <Card.Subtitle>Unit Price</Card.Subtitle>*/}

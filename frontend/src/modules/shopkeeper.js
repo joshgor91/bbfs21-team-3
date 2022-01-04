@@ -22,8 +22,8 @@ const UPDATE_SIZE = 'UPDATE_SIZE'
 const UPDATE_COLOR = 'UPDATE_COLOR'
 const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
 const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
-// const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
-// const UPDATE_PICTURE = 'UPDATE_PICTURE'
+const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
+const UPDATE_PICTURE = 'UPDATE_PICTURE'
 // const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
 // const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
 
@@ -45,9 +45,9 @@ const initialState = {
     size: '',
     color: '',
     productAvailable: '', // similar question for type date, also tried combining both for date
-    discontinued: '', // similar question for type boolean
-    // discountAvailable: '',
-    // picture: '',
+    discontinued: undefined, // similar question for type boolean
+    discountAvailable: '',
+    picture: '',
     // dateReceived: '',
     // unitsReceived: ''
 }
@@ -102,7 +102,8 @@ export default function reducer(state = initialState, action) {
                 color: action.product.color,
                 productAvailable: action.product.productAvailable,
                 discontinued: action.product.discontinued,
-                // picture: action.product.picture,
+                discountAvailable: action.product.discountAvailable,
+                picture: action.product.picture,
                 // dateReceived: action.product.dateReceived,
                 // unitsReceived: action.product.unitsReceived
             }
@@ -179,17 +180,17 @@ export default function reducer(state = initialState, action) {
                 discontinued: action.discontinued
             }
 
-        // case UPDATE_DISCOUNT_AVAILABLE:
-        //     return {
-        //         ...state,
-        //         discountAvailable: action.discountAvailable
-        //     }
-        //
-        // case UPDATE_PICTURE:
-        //     return {
-        //         ...state,
-        //         picture: action.picture
-        //     }
+        case UPDATE_DISCOUNT_AVAILABLE:
+            return {
+                ...state,
+                discountAvailable: action.discountAvailable
+            }
+
+        case UPDATE_PICTURE:
+            return {
+                ...state,
+                picture: action.picture
+            }
 
         // case UPDATE_DATE_RECEIVED:
         //     return {
@@ -351,25 +352,27 @@ export function updateProductAvailable(productAvailable) {
 }
 
 export function updateDiscontinued(discontinued) {
+    console.log(discontinued)
     return {
         type: UPDATE_DISCONTINUED,
         discontinued
     }
 }
 
-// export function updateDiscountAvailable(discountAvailable) {
-//     return {
-//         type: UPDATE_DISCOUNT_AVAILABLE,
-//         discountAvailable
-//     }
-// }
-//
-// export function updatePicture(picture) {
-//     return {
-//         type: UPDATE_PICTURE,
-//         picture
-//     }
-// }
+export function updateDiscountAvailable(discountAvailable) {
+    console.log(discountAvailable)
+    return {
+        type: UPDATE_DISCOUNT_AVAILABLE,
+        discountAvailable
+    }
+}
+
+export function updatePicture(picture) {
+    return {
+        type: UPDATE_PICTURE,
+        picture
+    }
+}
 
 // export function updateDateReceived(dateReceived) {
 //     return {
