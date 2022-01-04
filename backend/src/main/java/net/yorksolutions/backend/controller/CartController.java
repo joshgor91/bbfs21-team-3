@@ -1,14 +1,50 @@
 package net.yorksolutions.backend.controller;
 
-import net.yorksolutions.backend.model.CartItem;
-import net.yorksolutions.backend.model.Product;
-import net.yorksolutions.backend.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import net.yorksolutions.backend.model.*;
 import net.yorksolutions.backend.repository.CartItemRepository;
 import net.yorksolutions.backend.repository.CartRepository;
 import net.yorksolutions.backend.repository.CategoryRepo;
 import net.yorksolutions.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EmbeddedId;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import java.util.Optional;
+
+class CartItemInput {
+
+    private Long productId;
+    private Long cartId;
+
+    public CartItemInput(Long productId, Long cartId) {
+        this.productId = productId;
+        this.cartId = cartId;
+    }
+
+    public CartItemInput() {
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
+    }
+}
 
 @RestController
 @RequestMapping("/api/cart")
@@ -19,13 +55,25 @@ public class CartController {
     @Autowired
     CartItemRepository cartItemRepo;
 
+    @Autowired
+    ProductRepository productRepo;
+
 
 
 
     @CrossOrigin
     @PostMapping("/add")
-    String addItemToCart(@RequestBody CartItem item) {
-        cartItemRepo.save(item);
+    String addItemToCart(@RequestBody CartItemInput input) {
+        System.out.println(input.getCartId());
+        System.out.println(input.getProductId());
+       Optional<Cart> response =  cartRepo.findById(input.getCartId());
+       Cart cart= response.get();
+       Optional<Product> productResponse= productRepo.findById(input.getProductId());
+//       CartItemId cartItemId = new CartItemId(input.getCartId(), input.getProductId());
+       CartItem cartItem= new CartItem( productResponse.get(), cart, 1);
+        cart.addCartItem(cartItem);
+        cartRepo.save(cart);
+
         return "success";
     }
 
