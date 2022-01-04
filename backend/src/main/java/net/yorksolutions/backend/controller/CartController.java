@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.yorksolutions.backend.model.CartItem;
 import net.yorksolutions.backend.model.Product;
+import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.CartItemRepository;
 import net.yorksolutions.backend.repository.CartRepository;
 import net.yorksolutions.backend.repository.CategoryRepo;
@@ -36,6 +37,7 @@ public class CartController {
     }
 
     ObjectMapper objectMapper = new ObjectMapper();
+
     @CrossOrigin
     @GetMapping("/viewCart/{userid}")
     String viewCart(@PathVariable Long userid) throws JsonProcessingException {
@@ -55,6 +57,8 @@ public class CartController {
                 }
             }
         }
+//        var cart = cartRepo.findByUserId(userid).get();
+//        return cart.viewCartItems();
         System.out.println(cartList);
         return objectMapper.writeValueAsString(cartList);
     }
@@ -65,6 +69,16 @@ public class CartController {
         cartItemRepo.deleteById(id);
         return "success";
     }
+
+//    @CrossOrigin
+//    @PutMapping("/edit")
+//        // returning string to notify the front end that the admin successfully edited the user.
+//    String editThree(@RequestBody User user) {
+//        cartItemRepo.findById(user.getId()).orElseThrow();
+////        cartItemRepo.save(user);
+//        return "success";
+//
+//    }
 
 
 }
