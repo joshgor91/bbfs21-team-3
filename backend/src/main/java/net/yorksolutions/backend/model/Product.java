@@ -37,6 +37,10 @@ public class Product {
     private List<CartItem> cartItems = new ArrayList<>();
 
     @JsonProperty
+    @ElementCollection
+    private List<ScheduledPrices> ScheduledPrices;
+
+    @JsonProperty
     public String productName;
 
     @JsonProperty
@@ -87,4 +91,5 @@ public class Product {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
 }

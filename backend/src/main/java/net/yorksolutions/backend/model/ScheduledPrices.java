@@ -2,7 +2,7 @@ package net.yorksolutions.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.Date;
 
 @Embeddable
