@@ -21,7 +21,7 @@ const UPDATE_BRAND = 'UPDATE_BRAND'
 const UPDATE_SIZE = 'UPDATE_SIZE'
 const UPDATE_COLOR = 'UPDATE_COLOR'
 const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
-// const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
+const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
 // const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
 // const UPDATE_PICTURE = 'UPDATE_PICTURE'
 // const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
@@ -45,7 +45,7 @@ const initialState = {
     size: '',
     color: '',
     productAvailable: '', // similar question for type date, also tried combining both for date
-    // discontinued: '', // similar question for type boolean
+    discontinued: '', // similar question for type boolean
     // discountAvailable: '',
     // picture: '',
     // dateReceived: '',
@@ -101,7 +101,7 @@ export default function reducer(state = initialState, action) {
                 size: action.product.size,
                 color: action.product.color,
                 productAvailable: action.product.productAvailable,
-                // discontinued: action.product.discontinued,
+                discontinued: action.product.discontinued,
                 // picture: action.product.picture,
                 // dateReceived: action.product.dateReceived,
                 // unitsReceived: action.product.unitsReceived
@@ -173,12 +173,12 @@ export default function reducer(state = initialState, action) {
                 productAvailable: action.productAvailable
             }
 
-        // case UPDATE_DISCONTINUED:
-        //     return {
-        //         ...state,
-        //         discontinued: action.discontinued
-        //     }
-        //
+        case UPDATE_DISCONTINUED:
+            return {
+                ...state,
+                discontinued: action.discontinued
+            }
+
         // case UPDATE_DISCOUNT_AVAILABLE:
         //     return {
         //         ...state,
@@ -350,13 +350,13 @@ export function updateProductAvailable(productAvailable) {
     }
 }
 
-// export function updateDiscontinued(discontinued) {
-//     return {
-//         type: UPDATE_DISCONTINUED,
-//         discontinued
-//     }
-// }
-//
+export function updateDiscontinued(discontinued) {
+    return {
+        type: UPDATE_DISCONTINUED,
+        discontinued
+    }
+}
+
 // export function updateDiscountAvailable(discountAvailable) {
 //     return {
 //         type: UPDATE_DISCOUNT_AVAILABLE,

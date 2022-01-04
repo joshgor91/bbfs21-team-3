@@ -20,7 +20,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         const size = document.getElementById('size').value
         const color = document.getElementById('color').value
         const productAvailable = document.getElementById('productAvailable').value
-        // const discontinued = document.getElementById('discontinued').value
+        const discontinued = document.getElementById('discontinued').value
         // const discountAvailable = document.getElementById('discountAvailable').value
         // const picture = document.getElementById('picture').value
         // const dateReceived = document.getElementById('dateReceived').value
@@ -37,7 +37,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             size,
             color,
             productAvailable,
-            // discontinued,
+            discontinued,
             // discountAvailable,
             // picture,
             // dateReceived,
@@ -80,11 +80,11 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Control type='color' placeholder='Color' id='color'/>
                     <Form.Label>Product Available</Form.Label>
                     <Form.Control type='date' id='productAvailable'/>
-                    {/*<Form.Label>Discontinued</Form.Label>*/}
-                    {/*<Form.Control type='discontinued' as='select' defaultValue={false} id='discontinued'>*/}
-                    {/*    <option value={true}>True</option>*/}
-                    {/*    <option value={false}>False</option>*/}
-                    {/*</Form.Control>*/}
+                    <Form.Label>Discontinued</Form.Label>
+                    <Form.Control type='discontinued' as='select' defaultValue={false} id='discontinued'>
+                        <option value={true}>True</option>
+                        <option value={false}>False</option>
+                    </Form.Control>
                     {/*<Form.Label>Discount Available</Form.Label>*/}
                     {/*<Form.Control type='discountAvailable' as='select' defaultValue={false} id='discountAvailable'>*/}
                     {/*    <option value={true}>True</option>*/}
