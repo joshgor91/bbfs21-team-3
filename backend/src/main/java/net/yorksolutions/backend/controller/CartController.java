@@ -2,6 +2,7 @@ package net.yorksolutions.backend.controller;
 
 import net.yorksolutions.backend.model.CartItem;
 import net.yorksolutions.backend.model.Product;
+import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.CartItemRepository;
 import net.yorksolutions.backend.repository.CartRepository;
 import net.yorksolutions.backend.repository.CategoryRepo;
@@ -28,12 +29,17 @@ public class CartController {
         return "success";
     }
 
+
+
     @CrossOrigin
     @GetMapping("/viewCart/{userid}")
     Iterable<CartItem> viewCart(@PathVariable Long userid) {
 
-        var cartid = cartRepo.findByUserId(userid).get().id;
-        return cartItemRepo.findAllByCartId(cartid);
+//        var cartid = cartRepo.findByUserId(userid).get().id;
+//        return cartItemRepo.findAllByCartId(cartid);
+//    }
+        var cart = cartRepo.findByUserId(userid).get();
+        return cart.viewCartItems();
     }
 
     @CrossOrigin
@@ -42,6 +48,16 @@ public class CartController {
         cartItemRepo.deleteById(id);
         return "success";
     }
+
+//    @CrossOrigin
+//    @PutMapping("/edit")
+//        // returning string to notify the front end that the admin successfully edited the user.
+//    String editThree(@RequestBody User user) {
+//        cartItemRepo.findById(user.getId()).orElseThrow();
+////        cartItemRepo.save(user);
+//        return "success";
+//
+//    }
 
 
 }
