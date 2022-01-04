@@ -16,7 +16,7 @@ const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
 const UPDATE_BRAND = 'UPDATE_BRAND'
-// const UPDATE_UNIT_PRICE = 'UPDATE_UNIT_PRICE'
+const UPDATE_UNIT_PRICE = 'UPDATE_UNIT_PRICE'
 // const UPDATE_UNITS_IN_STOCK = 'UPDATE_UNITS_IN_STOCK'
 const UPDATE_SIZE = 'UPDATE_SIZE'
 const UPDATE_COLOR = 'UPDATE_COLOR'
@@ -40,7 +40,7 @@ const initialState = {
     productName: '',
     productDescription: '',
     brand: '',
-    // unitPrice: '', // or should we still use '' ? unitPrice is listed as type Float in Product controller in Backend
+    unitPrice: '', // or should we still use '' ? unitPrice is listed as type Float in Product controller in Backend
     // unitsInStock: '',
     size: '',
     color: '',
@@ -96,7 +96,7 @@ export default function reducer(state = initialState, action) {
                 productName: action.product.productName,
                 productDescription: action.product.productDescription,
                 brand: action.product.brand,
-                // unitPrice: action.product.unitPrice,
+                unitPrice: action.product.unitPrice,
                 // unitsInStock: action.product.unitsInStock,
                 size: action.product.size,
                 color: action.product.color,
@@ -143,13 +143,13 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 brand: action.brand
             }
-        //
-        // case UPDATE_UNIT_PRICE:
-        //     return {
-        //         ...state,
-        //         unitPrice: action.unitPrice
-        //     }
-        //
+
+        case UPDATE_UNIT_PRICE:
+            return {
+                ...state,
+                unitPrice: action.unitPrice
+            }
+
         // case UPDATE_UNITS_IN_STOCK:
         //     return {
         //         ...state,
@@ -315,14 +315,14 @@ export function updateBrand(brand) {
         brand
     }
 }
-//
-// export function updateUnitPrice(unitPrice) {
-//     return {
-//         type: UPDATE_UNIT_PRICE,
-//         unitPrice
-//     }
-// }
-//
+
+export function updateUnitPrice(unitPrice) {
+    return {
+        type: UPDATE_UNIT_PRICE,
+        unitPrice
+    }
+}
+
 // export function updateUnitsInStock(unitsInStock) {
 //     return {
 //         type: UPDATE_UNITS_IN_STOCK,

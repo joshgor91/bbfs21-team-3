@@ -15,7 +15,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         // const categories = document.getElementById('categories').value
         const productDescription = document.getElementById('productDescription').value
         const brand = document.getElementById('brand').value
-        // const unitPrice = document.getElementById('unitPrice').value
+        const unitPrice = document.getElementById('unitPrice').value
         // const unitsInStock = document.getElementById('unitsInStock').value
         const size = document.getElementById('size').value
         const color = document.getElementById('color').value
@@ -32,7 +32,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             // categories,
             productDescription,
             brand,
-            // unitPrice,
+            unitPrice,
             // unitsInStock,
             size,
             color,
@@ -70,8 +70,8 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Control type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
                     <Form.Control type='brand' placeholder='Brand' id='brand'/>
-                    {/*<Form.Label>Unit Price</Form.Label>*/}
-                    {/*<Form.Control type='number' step='.01' placeholder='Unit Price' id='unitPrice'/>*/}
+                    <Form.Label>Unit Price</Form.Label>
+                    <Form.Control type='number' step='.01' placeholder='Unit Price' id='unitPrice'/>
                     {/*<Form.Label>Units In Stock</Form.Label>*/}
                     {/*<Form.Control type='number' placeholder='Units In Stock' id='unitsInStock'/>*/}
                     <Form.Label>Size</Form.Label>
