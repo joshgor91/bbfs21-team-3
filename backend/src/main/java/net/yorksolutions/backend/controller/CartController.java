@@ -40,27 +40,27 @@ public class CartController {
 
     @CrossOrigin
     @GetMapping("/viewCart/{userid}")
-    String viewCart(@PathVariable Long userid) throws JsonProcessingException {
-        Iterable<Product> cartItems = productRepository.findAll();
-        List<Object> cartList = new LinkedList<>();
-        var cartId = cartRepo.findByUserId(userid).get().id;
-        var cartItem = cartItemRepo.findAllByCartId(cartId);
+    Iterable<CartItem> viewCart(@PathVariable Long userid) throws JsonProcessingException {
+//        Iterable<Product> cartItems = productRepository.findAll();
+//        List<Object> cartList = new LinkedList<>();
+//        var cartId = cartRepo.findByUserId(userid).get().id;
+//        var cartItem = cartItemRepo.findAllByCartId(cartId);
 //        System.out.println(objectMapper.writeValueAsString(cartItem));
-        for (CartItem item : cartItem) {
-//            System.out.println(objectMapper.writeValueAsString(item));
-            for (Product pItem : cartItems ) {
-//                System.out.println(objectMapper.writeValueAsString(pItem));
-//                System.out.println(objectMapper.writeValueAsString(pItem.id.equals(item.productId)));
-                if (item.productId.equals(pItem.id)) {
-//                    System.out.println(pItem);
-                    cartList.add(pItem);
-                }
-            }
-        }
-//        var cart = cartRepo.findByUserId(userid).get();
-//        return cart.viewCartItems();
-        System.out.println(cartList);
-        return objectMapper.writeValueAsString(cartList);
+//        for (CartItem item : cartItem) {
+////            System.out.println(objectMapper.writeValueAsString(item));
+//            for (Product pItem : cartItems ) {
+////                System.out.println(objectMapper.writeValueAsString(pItem));
+////                System.out.println(objectMapper.writeValueAsString(pItem.id.equals(item.productId)));
+//                if (item.productId.equals(pItem.id)) {
+////                    System.out.println(pItem);
+//                    cartList.add(pItem);
+//                }
+//            }
+//        }
+        var cart = cartRepo.findByUserId(userid).get();
+        return cart.viewCartItems();
+//        System.out.println(cartList);
+//        return objectMapper.writeValueAsString(cartList);
     }
 
     @CrossOrigin

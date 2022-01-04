@@ -6,37 +6,7 @@ const GETTING_CART_ITEMS_FAILED = 'GETTING_CART_ITEMS_FAILED'
 const ADDING_CART_ITEM = 'ADD_CART_ITEM'
 const ADD_CART_ITEM_FAILURE = 'ADD_CART_ITEM_FAILURE'
 const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
-
-const cart = [
-    {
-        productName:"Bose - TV Speaker Bluetooth Soundbar",
-        productDescription: "TV Speaker Bluetooth Soundbar",
-        brand:"Bose",
-        unitPrice:279.99,
-        sale: 0.10,
-        size: null,
-        color:"black",
-        discontinued:false,
-        picture: "soundbar.jpeg",
-    },
-    {
-        brand: "Hisense",
-        color: "black",
-        dateReceived: "2021-12-25T00:00:00.000+00:00",
-        discontinued: false,
-        discountAvailable: false,
-        id: 1,
-        picture: "tv.jpeg",
-        productAvailable: "2022-01-10T00:00:00.000+00:00",
-        productDescription: "L9 Series",
-        productName: "Hisense TriChroma Laser TV with ALR Screen",
-        size: "100\"",
-        unitPrice: 5499.99,
-        sale: 0.15,
-        unitsInStock: 20,
-        unitsReceived: 20,
-    }
-]
+const CLEAR_CART = 'CLEAR_CART'
 
 const initialState = {
     cartItems: [],
@@ -55,7 +25,7 @@ export default function reducer(state = initialState, action) {
         case SET_CART_ITEMS:
             return {
                 ...state,
-                cartItems: action.payload,
+                cartItems: [...state.cartItems, action.payload],
                 gettingCartItems: false,
                 errorMessage: ''
             }
@@ -85,6 +55,12 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 gettingCartItems: false,
                 errorMessage: action.payload
+            }
+
+        case CLEAR_CART:
+            return {
+                ...state,
+                cartItems: []
             }
 
         default:
@@ -133,17 +109,28 @@ function addCartItemSuccess() {
     }
 }
 
+function clearCart() {
+    return {
+        type: CLEAR_CART
+    }
+}
+
 
 //sideEffects
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
         dispatch(gettingCartItems())
+
         getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
             else {
-                console.log( res.data)
-                dispatch(setCartItems(res.data))
+                console.log(res.data)
+                dispatch(clearCart())
+                for (let item of res.data) {
+                    console.log(item.product)
+                    dispatch(setCartItems(item.product))
+                }
             }
         })
             .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))

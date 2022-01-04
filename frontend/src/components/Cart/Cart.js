@@ -6,7 +6,7 @@ import CartSummary from "./CartSummary";
 
 function Cart({cartItems, isLoggedIn}) {
     const cart = JSON.parse(window.localStorage.getItem('cartItems'))
-    console.log(cartItems)
+
     return <>
         <Container>
             <Row>
@@ -32,7 +32,7 @@ function Cart({cartItems, isLoggedIn}) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
+    // console.log(state)
     return {
         cartItems: state.cartReducer.cartItems,
         isLoggedIn: state.userReducer.isLoggedIn

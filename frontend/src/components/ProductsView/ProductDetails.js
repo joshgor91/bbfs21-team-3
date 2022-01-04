@@ -4,7 +4,7 @@ import {initiateAddCartItem} from "../../modules/cart";
 
 function ProductDetails({product, cartItems}) {
     const dispatch = useDispatch()
-    // console.log(cartItems)
+    console.log(cartItems)
 
     return (
         <>
