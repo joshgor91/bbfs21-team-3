@@ -7,11 +7,10 @@ import {useNavigate} from "react-router";
 function Product({product}) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(product)
 
     function goToProductDetails(productId) {
         dispatch(initiateGetProductById(productId))
-        navigate(`../product/${productId}`)
+        navigate(`../product/${productId}`, {replace: true})
     }
 
     return (

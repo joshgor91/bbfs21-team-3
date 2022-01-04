@@ -87,11 +87,6 @@ public class UserController {
             UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
 
 
-            //create cart object
-            Cart cart = new Cart(foundUser.id);
-
-            if (cartRepo.findByUserId(foundUser.id).isEmpty())
-            cartRepo.save(cart);
             return foundUser;
         } else {
             return null;
@@ -105,6 +100,12 @@ public class UserController {
         if (users.isPresent()) {
             return "failure";
         }
+        //create cart object
+        Cart cart = new Cart(newUser.id);
+
+//        if (cartRepo.findByUserId(newUser.id).isEmpty())
+//        save cart
+        cartRepo.save(cart);
         userRepo.save(newUser);
         return "success";
     }

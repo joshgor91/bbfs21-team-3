@@ -1,6 +1,6 @@
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
-import {testAddItem} from "../../modules/cart";
+import {initiateAddCartItem} from "../../modules/cart";
 
 function ProductDetails({product, cartItems}) {
     const dispatch = useDispatch()
@@ -25,7 +25,10 @@ function ProductDetails({product, cartItems}) {
                                 {product.unitsInStock !== 0 ?
                                     <Card.Text>Available</Card.Text>
                                     : <Card.Text>Out of Stock</Card.Text>}
-                                <Button variant="primary" >Add to Cart</Button>
+                                <Button variant="primary" onClick={() => dispatch(initiateAddCartItem(product))}
+                                >
+                                    Add to Cart
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -36,6 +39,7 @@ function ProductDetails({product, cartItems}) {
 }
 
 function mapStateToProps(state) {
+    // console.log(state)
     return {
         product: state.productsReducer.productToView,
         cartItems: state.cartReducer.cartItems

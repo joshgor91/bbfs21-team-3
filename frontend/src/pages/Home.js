@@ -2,6 +2,7 @@ import Products from "../components/ProductsView/Products";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {initiateGetAllProducts, unsetProduct} from "../modules/products";
+import {connect}from "react-redux";
 
 
 const Home = () => {
@@ -24,4 +25,11 @@ const Home = () => {
 
 };
 
-export default Home;
+function mapStateToProps(state) {
+    return {
+        product: state.productsReducer.productToView,
+        cartItems: state.cartReducer.cartItems
+    }
+}
+
+export default connect(mapStateToProps)(Home);
