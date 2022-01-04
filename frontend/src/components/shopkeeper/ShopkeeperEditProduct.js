@@ -14,7 +14,9 @@ import {
     updateDiscontinued,
     updatePicture,
     updateDateReceived,
-    updateUnitsReceived, updateCategories, updateDiscountAvailable
+    updateUnitsReceived,
+    updateCategories,
+    updateDiscountAvailable
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -32,6 +34,7 @@ function ShopkeeperEditProduct({
                                    color,
                                    productAvailable,
                                    discontinued,
+                                   discountAvailable,
                                    picture,
                                    dateReceived,
                                    unitsReceived,
@@ -48,6 +51,7 @@ function ShopkeeperEditProduct({
                                    updateColor,
                                    updateProductAvailable,
                                    updateDiscontinued,
+                                   updateDiscountAvailable,
                                    updatePicture,
                                    updateDateReceived,
                                    updateUnitsReceived
@@ -71,6 +75,7 @@ function ShopkeeperEditProduct({
                 color,
                 productAvailable,
                 discontinued,
+                discountAvailable,
                 picture,
                 dateReceived,
                 unitsReceived
@@ -88,6 +93,7 @@ function ShopkeeperEditProduct({
                 color,
                 productAvailable,
                 discontinued,
+                discountAvailable,
                 picture,
                 dateReceived,
                 unitsReceived
@@ -158,8 +164,17 @@ function mapStateToProps(state) {
         productName: state.shopkeeperReducer.productName,
         productDescription: state.shopkeeperReducer.productDescription,
         brand: state.shopkeeperReducer.brand,
-        unitPrice: state.shopkeeperReducer.unit,
-        unitsInStock: state.shopkeeperReducer.productName,
+        unitPrice: state.shopkeeperReducer.unitPrice,
+        unitsInStock: state.shopkeeperReducer.unitsInStock,
+        categories: state.shopkeeperReducer.categories,
+        size: state.shopkeeperReducer.size,
+        color: state.shopkeeperReducer.color,
+        productAvailable: state.shopkeeperReducer.productAvailable,
+        discontinued: state.shopkeeperReducer.discontinued,
+        discountAvailable: state.shopkeeperReducer.discountAvailable,
+        picture: state.shopkeeperReducer.picture,
+        dateReceived: state.shopkeeperReducer.dateReceived,
+        unitsReceived: state.shopkeeperReducer.unitsReceived
     }
 }
 
@@ -178,6 +193,7 @@ function mapDispatchToProps(dispatch) {
         updateColor,
         updateProductAvailable,
         updateDiscontinued,
+        updateDiscountAvailable,
         updatePicture,
         updateDateReceived,
         updateUnitsReceived
