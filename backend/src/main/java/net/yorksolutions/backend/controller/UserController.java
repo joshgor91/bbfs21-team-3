@@ -91,7 +91,7 @@ public class UserController {
             cartRepo.save(cart);
 
 
-            return cart;
+            return foundUser;
         } else {
             return null;
         }
