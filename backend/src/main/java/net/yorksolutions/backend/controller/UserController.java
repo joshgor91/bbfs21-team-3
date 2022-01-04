@@ -1,6 +1,5 @@
 package net.yorksolutions.backend.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import net.yorksolutions.backend.model.Cart;
 import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.CartRepository;
@@ -8,7 +7,6 @@ import net.yorksolutions.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 class UserOutput {
@@ -86,8 +84,14 @@ public class UserController {
             // we dont want to send over the password.
             UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
 
+            //create cart object
+            Cart cart = new Cart(foundUser.id);
 
-            return foundUser;
+        if (cartRepo.findByUserId(foundUser.id).isEmpty())
+            cartRepo.save(cart);
+
+
+            return cart;
         } else {
             return null;
         }
@@ -95,17 +99,17 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping("/register")
-    String registerUser(@RequestBody User newUser) {
+    Object registerUser(@RequestBody User newUser) {
         Optional<User> users = userRepo.findByEmail(newUser.getEmail());
         if (users.isPresent()) {
             return "failure";
         }
-        //create cart object
-        Cart cart = new Cart(newUser.id);
-
-//        if (cartRepo.findByUserId(newUser.id).isEmpty())
-//        save cart
-        cartRepo.save(cart);
+//        //create cart object
+//        Cart cart = new Cart(newUser.id);
+//
+////        if (cartRepo.findByUserId(newUser.id).isEmpty())
+////        save cart
+//        cartRepo.save(cart);
         userRepo.save(newUser);
         return "success";
     }

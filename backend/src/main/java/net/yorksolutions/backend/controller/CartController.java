@@ -1,10 +1,11 @@
+
+
 package net.yorksolutions.backend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.yorksolutions.backend.model.CartItem;
 import net.yorksolutions.backend.model.Product;
-import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.CartItemRepository;
 import net.yorksolutions.backend.repository.CartRepository;
 import net.yorksolutions.backend.repository.CategoryRepo;
@@ -12,7 +13,6 @@ import net.yorksolutions.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +29,8 @@ public class CartController {
     ProductRepository productRepository;
 
 
+
+
     @CrossOrigin
     @PostMapping("/add")
     String addItemToCart(@RequestBody CartItem item) {
@@ -36,32 +38,40 @@ public class CartController {
         return "success";
     }
 
-    ObjectMapper objectMapper = new ObjectMapper();
+//    @CrossOrigin
+//    @GetMapping("/viewCart/{userid}")
+//    Iterable<CartItem> viewCart(@PathVariable Long userid) {
+//
+//        var cartid = cartRepo.findByUserId(userid).get().id;
+//        return cartItemRepo.findAllByCartId(cartid);
+//    }
 
+    ObjectMapper objectMapper = new ObjectMapper();
     @CrossOrigin
     @GetMapping("/viewCart/{userid}")
-    Iterable<CartItem> viewCart(@PathVariable Long userid) throws JsonProcessingException {
-//        Iterable<Product> cartItems = productRepository.findAll();
-//        List<Object> cartList = new LinkedList<>();
-//        var cartId = cartRepo.findByUserId(userid).get().id;
-//        var cartItem = cartItemRepo.findAllByCartId(cartId);
+    String viewCart(@PathVariable Long userid) throws JsonProcessingException {
+        Iterable<Product> cartItems = productRepository.findAll();
+        List<Object> cartList = new LinkedList<>();
+        var cartId = cartRepo.findByUserId(userid).get().id;
+        var cartItem = cartItemRepo.findAllByCartId(cartId);
 //        System.out.println(objectMapper.writeValueAsString(cartItem));
-//        for (CartItem item : cartItem) {
-////            System.out.println(objectMapper.writeValueAsString(item));
-//            for (Product pItem : cartItems ) {
-////                System.out.println(objectMapper.writeValueAsString(pItem));
-////                System.out.println(objectMapper.writeValueAsString(pItem.id.equals(item.productId)));
-//                if (item.productId.equals(pItem.id)) {
-////                    System.out.println(pItem);
-//                    cartList.add(pItem);
-//                }
-//            }
-//        }
-        var cart = cartRepo.findByUserId(userid).get();
-        return cart.viewCartItems();
-//        System.out.println(cartList);
-//        return objectMapper.writeValueAsString(cartList);
+        for (CartItem item : cartItem) {
+//            System.out.println(objectMapper.writeValueAsString(item));
+            for (Product pItem : cartItems ) {
+//                System.out.println(objectMapper.writeValueAsString(pItem));
+//                System.out.println(objectMapper.writeValueAsString(pItem.id.equals(item.productId)));
+                if (item.productId.equals(pItem.id)) {
+//                    System.out.println(pItem);
+                    cartList.add(pItem);
+                }
+            }
+        }
+        System.out.println(cartList);
+        return objectMapper.writeValueAsString(cartList);
     }
+
+
+
 
     @CrossOrigin
     @DeleteMapping("/delete/{id}")
