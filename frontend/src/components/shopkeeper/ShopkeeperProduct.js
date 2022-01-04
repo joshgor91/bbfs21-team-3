@@ -18,8 +18,8 @@ function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
             <Card.Text>{product.productDescription}</Card.Text>
             <Card.Subtitle>Size</Card.Subtitle>
             <Card.Text>{product.size}</Card.Text>
-            {/*<Card.Subtitle>Color</Card.Subtitle>*/}
-            {/*<Card.Text>{product.color}</Card.Text>*/}
+            <Card.Subtitle>Color</Card.Subtitle>
+            <Card.Text>{product.color}</Card.Text>
             {/*<Card.Subtitle>Product Available</Card.Subtitle>*/}
             {/*<Card.Text>{product.productAvailable?.toString()}</Card.Text>*/}
             {/*<Card.Subtitle>Discontinued</Card.Subtitle>*/}

@@ -18,7 +18,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         // const unitPrice = document.getElementById('unitPrice').value
         // const unitsInStock = document.getElementById('unitsInStock').value
         const size = document.getElementById('size').value
-        // const color = document.getElementById('color').value
+        const color = document.getElementById('color').value
         // const productAvailable = document.getElementById('productAvailable').value
         // const discontinued = document.getElementById('discontinued').value
         // const discountAvailable = document.getElementById('discountAvailable').value
@@ -35,7 +35,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             // unitPrice,
             // unitsInStock,
             size,
-            // color,
+            color,
             // productAvailable,
             // discontinued,
             // discountAvailable,
@@ -76,8 +76,8 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     {/*<Form.Control type='number' placeholder='Units In Stock' id='unitsInStock'/>*/}
                     <Form.Label>Size</Form.Label>
                     <Form.Control type='size' placeholder='Size' id='size'/>
-                    {/*<Form.Label>Color</Form.Label>*/}
-                    {/*<Form.Control type='color' placeholder='Color' id='color'/>*/}
+                    <Form.Label>Color</Form.Label>
+                    <Form.Control type='color' placeholder='Color' id='color'/>
                     {/*<Form.Label>Product Available</Form.Label>*/}
                     {/*<Form.Control type='date' id='productAvailable'/>*/}
                     {/*<Form.Label>Discontinued</Form.Label>*/}

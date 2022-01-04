@@ -19,7 +19,7 @@ const UPDATE_BRAND = 'UPDATE_BRAND'
 // const UPDATE_UNIT_PRICE = 'UPDATE_UNIT_PRICE'
 // const UPDATE_UNITS_IN_STOCK = 'UPDATE_UNITS_IN_STOCK'
 const UPDATE_SIZE = 'UPDATE_SIZE'
-// const UPDATE_COLOR = 'UPDATE_COLOR'
+const UPDATE_COLOR = 'UPDATE_COLOR'
 // const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
 // const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
 // const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
@@ -43,7 +43,7 @@ const initialState = {
     // unitPrice: '', // or should we still use '' ? unitPrice is listed as type Float in Product controller in Backend
     // unitsInStock: '',
     size: '',
-    // color: '',
+    color: '',
     // productAvailable: '', // similar question for type date, also tried combining both for date
     // discontinued: '', // similar question for type boolean
     // discountAvailable: '',
@@ -99,7 +99,7 @@ export default function reducer(state = initialState, action) {
                 // unitPrice: action.product.unitPrice,
                 // unitsInStock: action.product.unitsInStock,
                 size: action.product.size,
-                // color: action.product.color,
+                color: action.product.color,
                 // productAvailable: action.product.productAvailable,
                 // discontinued: action.product.discontinued,
                 // picture: action.product.picture,
@@ -161,11 +161,11 @@ export default function reducer(state = initialState, action) {
                 size: action.size
             }
 
-        // case UPDATE_COLOR:
-        //     return {
-        //         ...state,
-        //         color: action.color
-        //     }
+        case UPDATE_COLOR:
+            return {
+                ...state,
+                color: action.color
+            }
 
         // case UPDATE_PRODUCT_AVAILABLE:
         //     return {
@@ -335,13 +335,13 @@ export function updateSize(size) {
         size
     }
 }
-//
-// export function updateColor(color) {
-//     return {
-//         type: UPDATE_COLOR,
-//         color
-//     }
-// }
+
+export function updateColor(color) {
+    return {
+        type: UPDATE_COLOR,
+        color
+    }
+}
 
 // export function updateProductAvailable(productAvailable) {
 //     return {
