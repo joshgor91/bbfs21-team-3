@@ -32,12 +32,12 @@ function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
         <Card.Footer>
             <Card.Subtitle>Unit Price</Card.Subtitle>
             <Card.Text>{product.unitPrice}</Card.Text>
-        {/*    <Card.Subtitle>Units in Stock</Card.Subtitle>*/}
-        {/*    <Card.Text>{product.unitsInStock}</Card.Text>*/}
-            {/*<Card.Subtitle>Date Received</Card.Subtitle>*/}
-            {/*<Card.Text>{product.dateReceived?.toString()}</Card.Text>*/}
-        {/*    <Card.Subtitle>Units Received</Card.Subtitle>*/}
-        {/*    <Card.Text>{product.unitsReceived}</Card.Text>*/}
+            <Card.Subtitle>Units in Stock</Card.Subtitle>
+            <Card.Text>{product.unitsInStock}</Card.Text>
+            <Card.Subtitle>Date Received</Card.Subtitle>
+            <Card.Text>{product.dateReceived?.toString()}</Card.Text>
+            <Card.Subtitle>Units Received</Card.Subtitle>
+            <Card.Text>{product.unitsReceived}</Card.Text>
         </Card.Footer>
         <Row>
             <Col><Button variant='primary' onClick={() => editProduct(product)}>Edit Product</Button></Col>

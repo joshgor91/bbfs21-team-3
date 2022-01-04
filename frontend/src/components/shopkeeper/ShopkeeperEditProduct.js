@@ -7,14 +7,14 @@ import {
     updateProductDescription,
     updateBrand,
     updateUnitPrice,
-    // updateUnitsInStock,
+    updateUnitsInStock,
     updateSize,
     updateColor,
     updateProductAvailable,
     updateDiscontinued,
     updatePicture,
-    // updateDateReceived,
-    // updateUnitsReceived,
+    updateDateReceived,
+    updateUnitsReceived,
     // updateCategories,
     updateDiscountAvailable
 } from "../../modules/shopkeeper";
@@ -29,15 +29,15 @@ function ShopkeeperEditProduct({
                                    productDescription,
                                    brand,
                                    unitPrice,
-                                   // unitsInStock,
+                                   unitsInStock,
                                    size,
                                    color,
                                    productAvailable,
                                    discontinued,
                                    discountAvailable,
                                    picture,
-                                   // dateReceived,
-                                   // unitsReceived,
+                                   dateReceived,
+                                   unitsReceived,
                                    initiateAddProduct,
                                    initiateEditProduct,
                                    cancelEditProduct,
@@ -46,15 +46,15 @@ function ShopkeeperEditProduct({
                                    updateProductDescription,
                                    updateBrand,
                                    updateUnitPrice,
-                                   // updateUnitsInStock,
+                                   updateUnitsInStock,
                                    updateSize,
                                    updateColor,
                                    updateProductAvailable,
                                    updateDiscontinued,
                                    updateDiscountAvailable,
                                    updatePicture,
-                                   // updateDateReceived,
-                                   // updateUnitsReceived
+                                   updateDateReceived,
+                                   updateUnitsReceived
                                }) {
     console.log(productName, 'productName before submit')
     console.log(product)
@@ -72,15 +72,15 @@ function ShopkeeperEditProduct({
                 productDescription,
                 brand,
                 unitPrice,
-                // unitsInStock,
+                unitsInStock,
                 size,
                 color,
                 productAvailable,
                 discontinued,
                 discountAvailable,
                 picture,
-                // dateReceived,
-                // unitsReceived
+                dateReceived,
+                unitsReceived
             })
         else
             initiateAddProduct({
@@ -90,15 +90,15 @@ function ShopkeeperEditProduct({
                 productDescription,
                 brand,
                 unitPrice,
-                // unitsInStock,
+                unitsInStock,
                 size,
                 color,
                 productAvailable,
                 discontinued,
                 discountAvailable,
                 picture,
-                // dateReceived,
-                // unitsReceived
+                dateReceived,
+                unitsReceived
             })
 
     }
@@ -123,9 +123,9 @@ function ShopkeeperEditProduct({
             <Form.Label>Unit Price</Form.Label>
             <Form.Control type='number' step='.01' value={unitPrice}
                           onChange={event => updateUnitPrice(event.target.value)}/>
-            {/*<Form.Label>Units in Stock</Form.Label>*/}
-            {/*<Form.Control type='number' value={unitsInStock}*/}
-            {/*              onChange={event => updateUnitsInStock(event.target.value)}/>*/}
+            <Form.Label>Units in Stock</Form.Label>
+            <Form.Control type='number' value={unitsInStock}
+                          onChange={event => updateUnitsInStock(event.target.value)}/>
             <Form.Label>Size</Form.Label>
             <Form.Control type='size' value={size} onChange={event => updateSize(event.target.value)}/>
             <Form.Label>Color</Form.Label>
@@ -150,12 +150,12 @@ function ShopkeeperEditProduct({
 
             <Form.Label>Picture</Form.Label>
             <Form.Control type='img' value={picture} onChange={event => updatePicture(event.target.value)}/>
-            {/*<Form.Label>Date Received</Form.Label>*/}
-            {/*<Form.Control type='date' value={dateReceived}*/}
-            {/*              onChange={event => updateDateReceived(event.target.value)}/>*/}
-            {/*<Form.Label>Units Received</Form.Label>*/}
-            {/*<Form.Control type='int' value={unitsReceived}*/}
-            {/*              onChange={event => updateUnitsReceived(event.target.value)}/>*/}
+            <Form.Label>Date Received</Form.Label>
+            <Form.Control type='date' value={dateReceived}
+                          onChange={event => updateDateReceived(event.target.value)}/>
+            <Form.Label>Units Received</Form.Label>
+            <Form.Control type='int' value={unitsReceived}
+                          onChange={event => updateUnitsReceived(event.target.value)}/>
             <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
         </Form>
     </Modal>
@@ -169,7 +169,7 @@ function mapStateToProps(state) {
         productDescription: state.shopkeeperReducer.productDescription,
         brand: state.shopkeeperReducer.brand,
         unitPrice: state.shopkeeperReducer.unitPrice,
-        // unitsInStock: state.shopkeeperReducer.unitsInStock,
+        unitsInStock: state.shopkeeperReducer.unitsInStock,
         // categories: state.shopkeeperReducer.categories,
         size: state.shopkeeperReducer.size,
         color: state.shopkeeperReducer.color,
@@ -177,8 +177,8 @@ function mapStateToProps(state) {
         discontinued: state.shopkeeperReducer.discontinued,
         discountAvailable: state.shopkeeperReducer.discountAvailable,
         picture: state.shopkeeperReducer.picture,
-        // dateReceived: state.shopkeeperReducer.dateReceived,
-        // unitsReceived: state.shopkeeperReducer.unitsReceived
+        dateReceived: state.shopkeeperReducer.dateReceived,
+        unitsReceived: state.shopkeeperReducer.unitsReceived
     }
 }
 
@@ -192,15 +192,15 @@ function mapDispatchToProps(dispatch) {
         updateProductDescription,
         updateBrand,
         updateUnitPrice,
-        // updateUnitsInStock,
+        updateUnitsInStock,
         updateSize,
         updateColor,
         updateProductAvailable,
         updateDiscontinued,
         updateDiscountAvailable,
         updatePicture,
-        // updateDateReceived,
-        // updateUnitsReceived
+        updateDateReceived,
+        updateUnitsReceived
     }, dispatch)
 
 }

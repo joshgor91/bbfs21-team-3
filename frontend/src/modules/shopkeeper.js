@@ -17,15 +17,15 @@ const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
 const UPDATE_BRAND = 'UPDATE_BRAND'
 const UPDATE_UNIT_PRICE = 'UPDATE_UNIT_PRICE'
-// const UPDATE_UNITS_IN_STOCK = 'UPDATE_UNITS_IN_STOCK'
+const UPDATE_UNITS_IN_STOCK = 'UPDATE_UNITS_IN_STOCK'
 const UPDATE_SIZE = 'UPDATE_SIZE'
 const UPDATE_COLOR = 'UPDATE_COLOR'
 const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
 const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
 const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
 const UPDATE_PICTURE = 'UPDATE_PICTURE'
-// const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
-// const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
+const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
+const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
 
 
 const initialState = {
@@ -41,15 +41,15 @@ const initialState = {
     productDescription: '',
     brand: '',
     unitPrice: '', // or should we still use '' ? unitPrice is listed as type Float in Product controller in Backend
-    // unitsInStock: '',
+    unitsInStock: '',
     size: '',
     color: '',
     productAvailable: '', // similar question for type date, also tried combining both for date
     discontinued: undefined, // similar question for type boolean
     discountAvailable: '',
     picture: '',
-    // dateReceived: '',
-    // unitsReceived: ''
+    dateReceived: '',
+    unitsReceived: ''
 }
 
 export default function reducer(state = initialState, action) {
@@ -97,15 +97,15 @@ export default function reducer(state = initialState, action) {
                 productDescription: action.product.productDescription,
                 brand: action.product.brand,
                 unitPrice: action.product.unitPrice,
-                // unitsInStock: action.product.unitsInStock,
+                unitsInStock: action.product.unitsInStock,
                 size: action.product.size,
                 color: action.product.color,
                 productAvailable: action.product.productAvailable,
                 discontinued: action.product.discontinued,
                 discountAvailable: action.product.discountAvailable,
                 picture: action.product.picture,
-                // dateReceived: action.product.dateReceived,
-                // unitsReceived: action.product.unitsReceived
+                dateReceived: action.product.dateReceived,
+                unitsReceived: action.product.unitsReceived
             }
 
         case CANCEL_EDIT_PRODUCT:
@@ -150,12 +150,12 @@ export default function reducer(state = initialState, action) {
                 unitPrice: action.unitPrice
             }
 
-        // case UPDATE_UNITS_IN_STOCK:
-        //     return {
-        //         ...state,
-        //         unitsInStock: action.unitsInStock
-        //     }
-        //
+        case UPDATE_UNITS_IN_STOCK:
+            return {
+                ...state,
+                unitsInStock: action.unitsInStock
+            }
+
         case UPDATE_SIZE:
             return {
                 ...state,
@@ -192,17 +192,17 @@ export default function reducer(state = initialState, action) {
                 picture: action.picture
             }
 
-        // case UPDATE_DATE_RECEIVED:
-        //     return {
-        //         ...state,
-        //         dateReceived: action.dateReceived
-        //     }
+        case UPDATE_DATE_RECEIVED:
+            return {
+                ...state,
+                dateReceived: action.dateReceived
+            }
 
-        // case UPDATE_UNITS_RECEIVED:
-        //     return {
-        //         ...state,
-        //         unitsReceived: action.unitsReceived
-        //     }
+        case UPDATE_UNITS_RECEIVED:
+            return {
+                ...state,
+                unitsReceived: action.unitsReceived
+            }
 
         case GET_PRODUCTS:
             return {
@@ -323,13 +323,13 @@ export function updateUnitPrice(unitPrice) {
     }
 }
 
-// export function updateUnitsInStock(unitsInStock) {
-//     return {
-//         type: UPDATE_UNITS_IN_STOCK,
-//         unitsInStock
-//     }
-// }
-//
+export function updateUnitsInStock(unitsInStock) {
+    return {
+        type: UPDATE_UNITS_IN_STOCK,
+        unitsInStock
+    }
+}
+
 export function updateSize(size) {
     return {
         type: UPDATE_SIZE,
@@ -374,19 +374,19 @@ export function updatePicture(picture) {
     }
 }
 
-// export function updateDateReceived(dateReceived) {
-//     return {
-//         type: UPDATE_DATE_RECEIVED,
-//         dateReceived
-//     }
-// }
+export function updateDateReceived(dateReceived) {
+    return {
+        type: UPDATE_DATE_RECEIVED,
+        dateReceived
+    }
+}
 
-// export function updateUnitsReceived(unitsReceived) {
-//     return {
-//         type: UPDATE_UNITS_RECEIVED,
-//         unitsReceived
-//     }
-// }
+export function updateUnitsReceived(unitsReceived) {
+    return {
+        type: UPDATE_UNITS_RECEIVED,
+        unitsReceived
+    }
+}
 
 export function getProducts() {
     return {

@@ -16,15 +16,15 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         const productDescription = document.getElementById('productDescription').value
         const brand = document.getElementById('brand').value
         const unitPrice = document.getElementById('unitPrice').value
-        // const unitsInStock = document.getElementById('unitsInStock').value
+        const unitsInStock = document.getElementById('unitsInStock').value
         const size = document.getElementById('size').value
         const color = document.getElementById('color').value
         const productAvailable = document.getElementById('productAvailable').value
         const discontinued = document.getElementById('discontinued').value
         const discountAvailable = document.getElementById('discountAvailable').value
         const picture = document.getElementById('picture').value
-        // const dateReceived = document.getElementById('dateReceived').value
-        // const unitsReceived = document.getElementById('unitsReceived').value
+        const dateReceived = document.getElementById('dateReceived').value
+        const unitsReceived = document.getElementById('unitsReceived').value
 
         const newProduct = {
             id: Math.random() * 9999999 + 100,
@@ -33,15 +33,15 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             productDescription,
             brand,
             unitPrice,
-            // unitsInStock,
+            unitsInStock,
             size,
             color,
             productAvailable,
             discontinued,
             discountAvailable,
             picture,
-            // dateReceived,
-            // unitsReceived
+            dateReceived,
+            unitsReceived
         }
 
         handleAddProduct(newProduct)
@@ -72,8 +72,8 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Control type='brand' placeholder='Brand' id='brand'/>
                     <Form.Label>Unit Price</Form.Label>
                     <Form.Control type='number' step='.01' placeholder='Unit Price' id='unitPrice'/>
-                    {/*<Form.Label>Units In Stock</Form.Label>*/}
-                    {/*<Form.Control type='number' placeholder='Units In Stock' id='unitsInStock'/>*/}
+                    <Form.Label>Units In Stock</Form.Label>
+                    <Form.Control type='number' placeholder='Units In Stock' id='unitsInStock'/>
                     <Form.Label>Size</Form.Label>
                     <Form.Control type='size' placeholder='Size' id='size'/>
                     <Form.Label>Color</Form.Label>
@@ -92,10 +92,10 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
                     <Form.Control type='img' id='picture'/>
-                    {/*<Form.Label>Date Received</Form.Label>*/}
-                    {/*<Form.Control type='date'  id='dateReceived'/>*/}
-                    {/*<Form.Label>Units Received</Form.Label>*/}
-                    {/*<Form.Control type='number' placeholder='Units Received' id='unitsReceived'/>*/}
+                    <Form.Label>Date Received</Form.Label>
+                    <Form.Control type='date'  id='dateReceived'/>
+                    <Form.Label>Units Received</Form.Label>
+                    <Form.Control type='number' placeholder='Units Received' id='unitsReceived'/>
                 </Form.Group>
                 <Button variant='primary' type='submit'>Create</Button>
             </Form>
