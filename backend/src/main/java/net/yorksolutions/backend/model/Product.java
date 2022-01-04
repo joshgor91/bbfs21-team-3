@@ -29,13 +29,6 @@ public class Product {
     }
 
 
-    @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            mappedBy = "product"
-    )
-    @JsonProperty
-    private List<CartItem> cartItems = new ArrayList<>();
-
     @JsonProperty
     @ElementCollection
     private List<ScheduledPrices> ScheduledPrices;
