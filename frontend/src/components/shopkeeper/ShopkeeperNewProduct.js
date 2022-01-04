@@ -8,10 +8,12 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         setShowNewProduct(false)
     }
 
+
     function handleSubmit(event) {
         event.preventDefault()
         handleClose()
         const productName = document.getElementById('productName').value
+        // const categories = document.getElementById('categories').value
         const productDescription = document.getElementById('productDescription').value
         const brand = document.getElementById('brand').value
         const unitPrice = document.getElementById('unitPrice').value
@@ -20,6 +22,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         const color = document.getElementById('color').value
         const productAvailable = document.getElementById('productAvailable').value
         const discontinued = document.getElementById('discontinued').value
+        const discountAvailable = document.getElementById('discountAvailable').value
         const picture = document.getElementById('picture').value
         const dateReceived = document.getElementById('dateReceived').value
         const unitsReceived = document.getElementById('unitsReceived').value
@@ -27,6 +30,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         const newProduct = {
             id: Math.random() * 9999999 + 100,
             productName,
+            // categories,
             productDescription,
             brand,
             unitPrice,
@@ -35,6 +39,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             color,
             productAvailable,
             discontinued,
+            discountAvailable,
             picture,
             dateReceived,
             unitsReceived
@@ -43,6 +48,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         handleAddProduct(newProduct)
         initiateAddProduct(newProduct)
         console.log('what up')
+
 
     }
 
@@ -56,12 +62,12 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                 <Form.Group className='mb-3'>
                     <Form.Label>Product Name</Form.Label>
                     <Form.Control type='productName' placeholder='Product Name' id='productName'/>
-                    <Form.Label>Categories</Form.Label>
-                    <Form.Control type='categories' as='select' defaultValue='None' id='categories'>
-                        <option value={10}>Video Games</option>
-                        <option value={3}>Electronics</option>
-                        <option value={2}>Entertainment</option>
-                    </Form.Control>
+                    {/*<Form.Label>Categories</Form.Label>*/}
+                    {/*<Form.Control type='categories' as='select' id='categories'>*/}
+                    {/*    <option value={10}>Video Games</option>*/}
+                    {/*    <option value={3}>Electronics</option>*/}
+                    {/*    <option value={2}>Entertainment</option>*/}
+                    {/*</Form.Control>*/}
                     <Form.Label>Product Description</Form.Label>
                     <Form.Control type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
@@ -75,16 +81,23 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Color</Form.Label>
                     <Form.Control type='color' placeholder='Color' id='color'/>
                     <Form.Label>Product Available</Form.Label>
-                    <Form.Control type='date' placeholder='Product Available' id='productAvailable'/>
+                    <Form.Control type='date' id='productAvailable'/>
                     <Form.Label>Discontinued</Form.Label>
-                    <Form.Control type='discontinued' as='select' defaultValue={false} id='discontinued'>
+                    <Form.Control type='discontinued' as='select' id='discontinued'>
+                        <option value=''>Undefined</option>
+                        <option value={true}>True</option>
+                        <option value={false}>False</option>
+                    </Form.Control>
+                    <Form.Label>Discount Available</Form.Label>
+                    <Form.Control type='discountAvailable' as='select' id='discountAvailable'>
+                        <option value=''>Undefined</option>
                         <option value={true}>True</option>
                         <option value={false}>False</option>
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
-                    <Form.Control type='file' placeholder='Picture' id='picture'/>
+                    <Form.Control type='img' id='picture'/>
                     <Form.Label>Date Received</Form.Label>
-                    <Form.Control type='date' placeholder='Date Received' id='dateReceived'/>
+                    <Form.Control type='date'  id='dateReceived'/>
                     <Form.Label>Units Received</Form.Label>
                     <Form.Control type='number' placeholder='Units Received' id='unitsReceived'/>
                 </Form.Group>
