@@ -20,7 +20,7 @@ const UPDATE_BRAND = 'UPDATE_BRAND'
 // const UPDATE_UNITS_IN_STOCK = 'UPDATE_UNITS_IN_STOCK'
 const UPDATE_SIZE = 'UPDATE_SIZE'
 const UPDATE_COLOR = 'UPDATE_COLOR'
-// const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
+const UPDATE_PRODUCT_AVAILABLE = 'UPDATE_PRODUCT_AVAILABLE'
 // const UPDATE_DISCONTINUED = 'UPDATE_DISCONTINUED'
 // const UPDATE_DISCOUNT_AVAILABLE = 'UPDATE_DISCOUNT_AVAILABLE'
 // const UPDATE_PICTURE = 'UPDATE_PICTURE'
@@ -44,7 +44,7 @@ const initialState = {
     // unitsInStock: '',
     size: '',
     color: '',
-    // productAvailable: '', // similar question for type date, also tried combining both for date
+    productAvailable: '', // similar question for type date, also tried combining both for date
     // discontinued: '', // similar question for type boolean
     // discountAvailable: '',
     // picture: '',
@@ -100,7 +100,7 @@ export default function reducer(state = initialState, action) {
                 // unitsInStock: action.product.unitsInStock,
                 size: action.product.size,
                 color: action.product.color,
-                // productAvailable: action.product.productAvailable,
+                productAvailable: action.product.productAvailable,
                 // discontinued: action.product.discontinued,
                 // picture: action.product.picture,
                 // dateReceived: action.product.dateReceived,
@@ -167,11 +167,11 @@ export default function reducer(state = initialState, action) {
                 color: action.color
             }
 
-        // case UPDATE_PRODUCT_AVAILABLE:
-        //     return {
-        //         ...state,
-        //         productAvailable: action.productAvailable
-        //     }
+        case UPDATE_PRODUCT_AVAILABLE:
+            return {
+                ...state,
+                productAvailable: action.productAvailable
+            }
 
         // case UPDATE_DISCONTINUED:
         //     return {
@@ -343,12 +343,12 @@ export function updateColor(color) {
     }
 }
 
-// export function updateProductAvailable(productAvailable) {
-//     return {
-//         type: UPDATE_PRODUCT_AVAILABLE,
-//         productAvailable
-//     }
-// }
+export function updateProductAvailable(productAvailable) {
+    return {
+        type: UPDATE_PRODUCT_AVAILABLE,
+        productAvailable
+    }
+}
 
 // export function updateDiscontinued(discontinued) {
 //     return {

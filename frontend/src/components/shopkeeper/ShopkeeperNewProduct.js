@@ -19,7 +19,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         // const unitsInStock = document.getElementById('unitsInStock').value
         const size = document.getElementById('size').value
         const color = document.getElementById('color').value
-        // const productAvailable = document.getElementById('productAvailable').value
+        const productAvailable = document.getElementById('productAvailable').value
         // const discontinued = document.getElementById('discontinued').value
         // const discountAvailable = document.getElementById('discountAvailable').value
         // const picture = document.getElementById('picture').value
@@ -36,7 +36,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             // unitsInStock,
             size,
             color,
-            // productAvailable,
+            productAvailable,
             // discontinued,
             // discountAvailable,
             // picture,
@@ -78,8 +78,8 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Control type='size' placeholder='Size' id='size'/>
                     <Form.Label>Color</Form.Label>
                     <Form.Control type='color' placeholder='Color' id='color'/>
-                    {/*<Form.Label>Product Available</Form.Label>*/}
-                    {/*<Form.Control type='date' id='productAvailable'/>*/}
+                    <Form.Label>Product Available</Form.Label>
+                    <Form.Control type='date' id='productAvailable'/>
                     {/*<Form.Label>Discontinued</Form.Label>*/}
                     {/*<Form.Control type='discontinued' as='select' defaultValue={false} id='discontinued'>*/}
                     {/*    <option value={true}>True</option>*/}

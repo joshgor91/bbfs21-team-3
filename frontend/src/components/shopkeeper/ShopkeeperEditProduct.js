@@ -10,7 +10,7 @@ import {
     // updateUnitsInStock,
     updateSize,
     updateColor,
-    // updateProductAvailable,
+    updateProductAvailable,
     // updateDiscontinued,
     // updatePicture,
     // updateDateReceived,
@@ -32,7 +32,7 @@ function ShopkeeperEditProduct({
                                    // unitsInStock,
                                    size,
                                    color,
-                                   // productAvailable,
+                                   productAvailable,
                                    // discontinued,
                                    // discountAvailable,
                                    // picture,
@@ -49,7 +49,7 @@ function ShopkeeperEditProduct({
                                    // updateUnitsInStock,
                                    updateSize,
                                    updateColor,
-                                   // updateProductAvailable,
+                                   updateProductAvailable,
                                    // updateDiscontinued,
                                    // updateDiscountAvailable,
                                    // updatePicture,
@@ -75,7 +75,7 @@ function ShopkeeperEditProduct({
                 // unitsInStock,
                 size,
                 color,
-                // productAvailable,
+                productAvailable,
                 // discontinued,
                 // discountAvailable,
                 // picture,
@@ -93,7 +93,7 @@ function ShopkeeperEditProduct({
                 // unitsInStock,
                 size,
                 color,
-                // productAvailable,
+                productAvailable,
                 // discontinued,
                 // discountAvailable,
                 // picture,
@@ -130,9 +130,9 @@ function ShopkeeperEditProduct({
             <Form.Control type='size' value={size} onChange={event => updateSize(event.target.value)}/>
             <Form.Label>Color</Form.Label>
             <Form.Control type='color' value={color} onChange={event => updateColor(event.target.value)}/>
-            {/*<Form.Label>Product Available</Form.Label>*/}
-            {/*<Form.Control type='date' value={productAvailable}*/}
-            {/*              onChange={event => updateProductAvailable(event.target.value)}/>*/}
+            <Form.Label>Product Available</Form.Label>
+            <Form.Control type='date' value={productAvailable}
+                          onChange={event => updateProductAvailable(event.target.value)}/>
             {/*<Form.Label>Discontinued</Form.Label>*/}
             {/*<Form.Control type='discontinued' as='select' defaultValue={false}*/}
             {/*              onChange={event => updateDiscontinued(event.target.value)}>*/}
@@ -171,7 +171,7 @@ function mapStateToProps(state) {
         // categories: state.shopkeeperReducer.categories,
         size: state.shopkeeperReducer.size,
         color: state.shopkeeperReducer.color,
-        // productAvailable: state.shopkeeperReducer.productAvailable,
+        productAvailable: state.shopkeeperReducer.productAvailable,
         // discontinued: state.shopkeeperReducer.discontinued,
         // discountAvailable: state.shopkeeperReducer.discountAvailable,
         // picture: state.shopkeeperReducer.picture,
@@ -193,7 +193,7 @@ function mapDispatchToProps(dispatch) {
         // updateUnitsInStock,
         updateSize,
         updateColor,
-        // updateProductAvailable,
+        updateProductAvailable,
         // updateDiscontinued,
         // updateDiscountAvailable,
         // updatePicture,
