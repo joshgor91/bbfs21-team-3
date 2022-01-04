@@ -1,3 +1,4 @@
+import {initiateGetProducts} from "./shopkeeper";
 
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
