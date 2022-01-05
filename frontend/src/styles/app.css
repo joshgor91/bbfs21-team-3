@@ -32,3 +32,12 @@
     padding-bottom: 0px;
 }
 
+#navbar-logout{
+    float: right;
+}
+
+#checkout-button{
+    color:white;
+    text-decoration: none;
+}
+

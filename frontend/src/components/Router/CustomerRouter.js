@@ -1,50 +1,34 @@
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Admin from "./pages/Admin";
-import Shopkeeper from "./pages/Shopkeeper";
-import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
-import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
+import Home from "../../pages/Home";
+import ProductPage from "../../pages/ProductPage";
+import CartPage from "../../pages/CartPage";
+import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
+import LogoutBtn from "../LoginRegister/LogoutBtn";
+import Checkout from "../../pages/Checkout";
 
 
-function ReactRouter() {
 
-
+function CustomerRouter({cartQuantity}) {
     return (
 
         <Router>
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
-                    <Link to="/" id="logo" className="link-item" >Better Buy</Link>
+                    <Link to="/" id="logo" className="link-item">Better Buy</Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
-            menu
+            Menu
                 </span></Navbar.Toggle>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto pr-3 ">
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/">Home </Link>
+                                <Link className="link-item" to="/">Home </Link>
                             </Nav.Item>
 
-                            <Nav.Item>
-                                    <Link className="link-item" to="/login">Login </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                    <Link className="link-item" to="/register">Register </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                    <Link className="link-item" to="/admin">Admin </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                    <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
-                            </Nav.Item>
                             <Nav.Item>
                                 <Form className="d-flex">
                                     <FormControl
@@ -58,9 +42,13 @@ function ReactRouter() {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/cart">
-                                        <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    </Link>
+                                <Link className="link-item" to="/cart">
+                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                </Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <LogoutBtn/>
                             </Nav.Item>
 
                         </Nav>
@@ -76,16 +64,13 @@ function ReactRouter() {
                 <Route path='/' element={<Home/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
-                <Route path='/admin' element={<Admin/>}/>
-                <Route path='/shopkeeper' element={<Shopkeeper/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/cart/checkout' element={<Checkout/>}/>
             </Routes>
         </Router>
-
-
     )
 
-}
 
-export default ReactRouter;
+}
+export default CustomerRouter

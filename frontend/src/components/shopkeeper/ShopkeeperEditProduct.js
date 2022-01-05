@@ -58,13 +58,13 @@ function ShopkeeperEditProduct({
                                }) {
     // console.log(productName, 'productName before submit')
     // console.log(product)
-    console.log(discontinued)
-    console.log(discountAvailable)
+    // console.log(discontinued)
+    // console.log(discountAvailable)
 
     function handleSubmit(event) {
         event.preventDefault()
-        console.log(productName, 'productName')
-        console.log(product)
+        // console.log(productName, 'productName')
+        // console.log(product)
 
 
         if (product)
