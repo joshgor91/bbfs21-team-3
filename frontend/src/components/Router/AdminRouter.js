@@ -8,14 +8,10 @@ import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
-import {connect} from "react-redux";
 
 
 
-function AdminRouter({admin}) {
-
-
-if (admin) {
+function AdminRouter() {
     return (
 
         <Router>
@@ -86,19 +82,8 @@ if (admin) {
                 <Route path='/cart' element={<CartPage/>}/>
             </Routes>
         </Router>
-
-
     )
-}else {
-    return null
-}
 
 
 }
-function mapStateToProps(state) {
-    return {
-        admin: state.userReducer.userIsAdmin
-    }
-}
-
-export default connect(mapStateToProps)(AdminRouter)
+export default AdminRouter

@@ -23,7 +23,6 @@ const initialState = {
     userIsAdmin: false,
     userIsShopkeeper: false,
     userIsCustomer: false,
-    userIsGuest: true
 }
 
 
@@ -76,12 +75,14 @@ export default function reducer(state = initialState, action){
 
         case SET_USER_AS_ADMIN:
             return {
-                userIsAdmin: true
+                userIsAdmin: true,
+
             }
 
         case SET_USER_AS_SHOPKEEPER:
             return {
-                userIsShopkeeper: true
+                userIsShopkeeper: true,
+
             }
 
         default:
