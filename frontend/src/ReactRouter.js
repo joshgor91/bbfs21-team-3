@@ -14,8 +14,6 @@ import {useSelector} from "react-redux";
 
 function ReactRouter() {
     const cartQuantity = useSelector(state => state.cartReducer.quantity)
-    console.log(cartQuantity)
-
     return (
 
         <Router>
