@@ -2,7 +2,7 @@ import { Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {initiateLogin, loginFailure} from "../modules/user";
+import {initiateLogin, loginFailure} from "../../modules/user";
 
 function LoginForm({error, initiateLogin}) {
 

@@ -2,10 +2,10 @@ import {Accordion, Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
 import AccordionHeader from "react-bootstrap/AccordionHeader";
 import AccordionBody from "react-bootstrap/AccordionBody";
-import {initiateRegisterUser} from "../modules/user";
+import {initiateRegisterUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import '../styles/register.css'
+import '../../styles/register.css'
 
 
 

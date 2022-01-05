@@ -1,20 +1,20 @@
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Admin from "./pages/Admin";
-import Shopkeeper from "./pages/Shopkeeper";
-import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
+import Home from "../../pages/Home";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
+import Admin from "../../pages/Admin";
+import Shopkeeper from "../../pages/Shopkeeper";
+import ProductPage from "../../pages/ProductPage";
+import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
-import UserPage from "./pages/UserPage";
+import UserPage from "../../pages/UserPage";
 import {useSelector} from "react-redux";
+import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
-function ReactRouter() {
-    const cartQuantity = useSelector(state => state.cartReducer.quantity)
-    console.log(cartQuantity)
+
+function AdminRouter({cartQuantity}) {
 
     return (
 
@@ -22,27 +22,19 @@ function ReactRouter() {
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
-                    <Link to="/" id="logo" className="link-item" >Better Buy</Link>
+                    <Link to="/" id="logo" className="link-item">Better Buy</Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
-            menu
+            Menu
                 </span></Navbar.Toggle>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto pr-3 ">
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/">Home </Link>
+                                <Link className="link-item" to="/">Home </Link>
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/login">Login </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                    <Link className="link-item" to="/register">Register </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                    <Link className="link-item" to="/admin">Admin </Link>
+                                <Link className="link-item" to="/admin">Admin </Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -69,8 +61,14 @@ function ReactRouter() {
                                         <Badge pill bg="secondary">{cartQuantity}</Badge>
                                     </Link>
                             </Nav.Item>
-
                         </Nav>
+                            <Nav className='ms-auto'>
+                            <Nav.Item >
+                                <LogoutBtn/>
+                            </Nav.Item>
+                            </Nav>
+
+
                     </Navbar.Collapse>
                 </>
 
@@ -90,10 +88,8 @@ function ReactRouter() {
                 <Route path='/myaccount' element={<UserPage/>} />
             </Routes>
         </Router>
-
-
     )
 
-}
 
-export default ReactRouter;
+}
+export default AdminRouter
