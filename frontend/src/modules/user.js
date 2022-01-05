@@ -7,6 +7,7 @@ const LOGOUT = 'LOGOUT'
 const REGISTERING_USER = 'REGISTERING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
+const SET_USER_AS_ADMIN = 'SET_USER_AS_ADMIN'
 
 
 
@@ -17,7 +18,10 @@ const initialState = {
     users: [],
     loggedInUser: {},
     userForm:{},
-    registerErrorOccurred: false
+    registerErrorOccurred: false,
+    userIsAdmin: false,
+    userIsShopkeeper: false,
+    userIsCustomer: false
 }
 
 
@@ -68,6 +72,11 @@ export default function reducer(state = initialState, action){
                 addingUser: true
             }
 
+        case SET_USER_AS_ADMIN:
+            return {
+                userIsAdmin: true
+            }
+
         default:
             return state
     }
@@ -114,6 +123,15 @@ function setUserLoggedIn(user) {
     }
 }
 
+
+function setUserAsAdmin() {
+    return {
+        type: SET_USER_AS_ADMIN
+
+    }
+}
+
+
 export function initiateLogin(user) {
 
     return function sideEffect(dispatch, getState) {
@@ -136,8 +154,7 @@ export function initiateLogin(user) {
                 if (user.authLevel === 3) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
-                    // dispatch(initiateGetUsers())
-                    // dispatch(navigate(admin))
+                    dispatch(setUserAsAdmin())
                 }
                 else if (user.authLevel === 2) {
 
@@ -178,11 +195,9 @@ export function initiateRegisterUser(user) {
 
             response.text().then(text => {
                 if (text === 'success')
-                    // dispatch(initiateLogin(user))
-                    console.log("user registered")
+                    dispatch(initiateLogin(user))
 
                 else {
-                    console.log("did not hit success")
                     dispatch(addUserFailed())
                 }
             })

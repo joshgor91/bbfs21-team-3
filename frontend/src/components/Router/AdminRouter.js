@@ -1,25 +1,28 @@
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Admin from "./pages/Admin";
-import Shopkeeper from "./pages/Shopkeeper";
-import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
+import Home from "../../pages/Home";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
+import Admin from "../../pages/Admin";
+import Shopkeeper from "../../pages/Shopkeeper";
+import ProductPage from "../../pages/ProductPage";
+import CartPage from "../../pages/CartPage";
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
+import {connect} from "react-redux";
 
 
-function ReactRouter() {
+
+function AdminRouter({admin}) {
 
 
+if (admin) {
     return (
 
         <Router>
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
-                    <Link to="/" id="logo" className="link-item" >Better Buy</Link>
+                    <Link to="/" id="logo" className="link-item">Better Buy</Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
             menu
                 </span></Navbar.Toggle>
@@ -27,23 +30,24 @@ function ReactRouter() {
                         <Nav className="ml-auto pr-3 ">
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/">Home </Link>
+                                <Link className="link-item" to="/">Home </Link>
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/login">Login </Link>
+                                <Link className="link-item" to="/login">Login </Link>
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/register">Register </Link>
+                                <Link className="link-item" to="/register">Register </Link>
+                            </Nav.Item>
+
+
+                            <Nav.Item>
+                                <Link className="link-item" to="/admin">Admin </Link>
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/admin">Admin </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                    <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
+                                <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Form className="d-flex">
@@ -58,9 +62,9 @@ function ReactRouter() {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/cart">
-                                        <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    </Link>
+                                <Link className="link-item" to="/cart">
+                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                </Link>
                             </Nav.Item>
 
                         </Nav>
@@ -85,7 +89,14 @@ function ReactRouter() {
 
 
     )
-
 }
 
-export default ReactRouter;
+
+}
+function mapStateToProps(state) {
+    return {
+        admin: state.userReducer.userIsAdmin
+    }
+}
+
+export default connect(mapStateToProps)(AdminRouter)
