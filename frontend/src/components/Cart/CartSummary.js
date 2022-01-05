@@ -1,4 +1,5 @@
-import {Card, Col, Row} from "react-bootstrap";
+import {Button, Card, Col, Row} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 
 function CartSummary({cartItems}) {
@@ -49,6 +50,9 @@ function CartSummary({cartItems}) {
                         <Card.Text>{total}</Card.Text>
                     </Col>
                 </Row>
+                <Button>
+                <Link id="checkout-button" to="checkout/">Checkout </Link>
+                </Button>
             </Card.Body>
         </Card>
     </>

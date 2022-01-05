@@ -35,3 +35,8 @@
 #navbar-logout{
     float: right;
 }
+
+#checkout-button{
+    color:white;
+    text-decoration: none;
+}
