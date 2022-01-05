@@ -2,9 +2,7 @@ import LoginForm from "../components/LoginRegister/LoginForm";
 import {connect} from "react-redux";
 import Home from "./Home";
 
-const Login = ({isLoggedIn, loggedInUser}) => {
-    console.log(isLoggedIn)
-    console.log(loggedInUser)
+const Login = ({isLoggedIn}) => {
 
     if(isLoggedIn){
         return <>
@@ -24,8 +22,7 @@ const Login = ({isLoggedIn, loggedInUser}) => {
 
 function mapStateToProps(state) {
     return {
-        isLoggedIn: state.userReducer.isLoggedIn,
-        loggedInUser: state.userReducer.loggedInUser,
+        isLoggedIn: state.userReducer.isLoggedIn
     }
 }
 

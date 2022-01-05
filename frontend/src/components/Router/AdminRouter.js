@@ -8,6 +8,7 @@ import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
+import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
 
@@ -27,14 +28,6 @@ function AdminRouter() {
 
                             <Nav.Item>
                                 <Link className="link-item" to="/">Home </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/login">Login </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/register">Register </Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -61,11 +54,14 @@ function AdminRouter() {
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
                                 </Link>
                             </Nav.Item>
-                            {/*<Nav.Item>*/}
-                            {/*        <Button variant="light">Logout </Button>*/}
-                            {/*</Nav.Item>*/}
-
                         </Nav>
+                            <Nav className='ms-auto'>
+                            <Nav.Item >
+                                <LogoutBtn/>
+                            </Nav.Item>
+                            </Nav>
+
+
                     </Navbar.Collapse>
                 </>
 

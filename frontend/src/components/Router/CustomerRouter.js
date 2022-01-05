@@ -6,6 +6,7 @@ import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import Login from "../../pages/Login";
 import Register from "../../pages/Register";
+import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
 
@@ -44,9 +45,9 @@ function CustomerRouter() {
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
                                 </Link>
                             </Nav.Item>
-                            {/*<Nav.Item>*/}
-                            {/*        <Button variant="light">Logout </Button>*/}
-                            {/*</Nav.Item>*/}
+                            <Nav.Item>
+                                <LogoutBtn/>
+                            </Nav.Item>
 
                         </Nav>
                     </Navbar.Collapse>
