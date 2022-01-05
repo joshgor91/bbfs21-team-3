@@ -5,11 +5,14 @@ import {connect, useDispatch} from "react-redux";
 function CartItems({cartItem, isLoggedIn }) {
 
     const dispatch = useDispatch();
+    console.log(cartItem.productName + "cartitem")
+    console.log(cartItem.productId + "cartitem")
+
 
     function handleRemoveFromCart(cartItem) {
 
         if(isLoggedIn) {
-            dispatch(initiateDeleteCartItem(cartItem.id))
+            dispatch(initiateDeleteCartItem(cartItem.productId))
         }
         else {
             // console.log(cartItem)

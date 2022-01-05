@@ -31,7 +31,7 @@ export default function reducer(state = initialState, action) {
         case SET_CART_ITEMS:
             return {
                 ...state,
-                cartItems: [...state.cartItems, action.payload],
+                cartItems: action.payload,
                 gettingCartItems: false,
                 errorMessage: ''
             }
@@ -170,13 +170,8 @@ export function initiateGetCartItems() {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
             else {
-                let quantity = 0
-                dispatch(clearCart())
-                for (let item of res.data) {
-                    quantity += item.quantity
-                    dispatch(setCartItems(item.product))
-                }
-                dispatch(setQuantity(quantity))
+                dispatch(setCartItems(res.data))
+                dispatch(setQuantity(res.data.length))
             }
         })
             .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
@@ -218,8 +213,8 @@ export function initiateDeleteCartItem(id) {
         fetch(`http://localhost:8080/api/cart/delete`, {
             method: 'DELETE',
             headers: {
-            "cartId": "cartIdValue",
-            "productId": "productIdValue"
+            "cartId": 4,
+            "prodId": id
             },
         }).then(response => {
             if(!response.ok)
