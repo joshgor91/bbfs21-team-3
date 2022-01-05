@@ -8,6 +8,7 @@ import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
+import Checkout from "../../pages/Checkout";
 
 
 
@@ -71,6 +72,7 @@ function ShopkeeperRouter({cartQuantity}) {
                 <Route path='/shopkeeper' element={<Shopkeeper/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/cart/checkout' element={<Checkout/>}/>
             </Routes>
         </Router>
     )
