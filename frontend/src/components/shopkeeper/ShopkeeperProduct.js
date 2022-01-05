@@ -1,6 +1,6 @@
 import {Card, Col, Modal} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {cancelViewProductDetails, viewProductDetails} from "../../modules/shopkeeper";
+import {cancelViewProductDetails, initiateGetProducts, viewProductDetails} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
 
 function ShopkeeperProduct({show, product, cancelViewProductDetails}) {

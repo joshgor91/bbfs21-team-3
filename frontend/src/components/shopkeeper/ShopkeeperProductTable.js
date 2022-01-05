@@ -9,10 +9,15 @@ import ShopkeeperProduct from "./ShopkeeperProduct";
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
     const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
 
+    function handleViewDetails(product) {
+        viewProductDetails(product)
+
+    }
 
     return <>
             <ShopkeeperEditProduct/>
         <ShopkeeperProduct/>
+
 
         <Table striped bordered responsive hidden={hide}>
             <thead>
@@ -32,7 +37,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
                     <td >{product.productAvailable}</td>
-                    <td><Button onClick={() => viewProductDetails(product)}>Details</Button></td>
+                    <td><Button onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
                             <Button onClick={() => editProduct(product)}>edit</Button>
