@@ -1,11 +1,13 @@
-import {Button, Card, CloseButton, Col, Row} from "react-bootstrap";
+import {Button, Card, CloseButton, Col, Modal, Row} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {initiateDeleteProduct, editProduct} from "../../modules/shopkeeper";
+import {initiateDeleteProduct, editProduct, cancelViewProductDetails, initiateGetProducts, viewProductDetails} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
 
-function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
-    console.log(`logging product = ${product.categories}`)
-    return<Col><Card >
+function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDeleteProduct, editProduct}) {
+
+
+    return <Modal show={show} onHide={cancelViewProductDetails}>
+        <Col><Card >
         <Card.Header>
             <Card.Title>Brand</Card.Title>
             <Card.Text>{product.brand}</Card.Text>
@@ -45,10 +47,19 @@ function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
             <Col xs='auto'><CloseButton onClick={() => initiateDeleteProduct(product.id)}/></Col>
         </Row>
     </Card></Col>
+    </Modal>
+
+}
+
+function mapStateToProps(state) {
+    return {
+        show: state.shopkeeperReducer.showProductDetails,
+        product: state.shopkeeperReducer.productToView,
+    }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateDeleteProduct, editProduct}, dispatch)
+    return bindActionCreators({initiateDeleteProduct, editProduct, cancelViewProductDetails, viewProductDetails}, dispatch)
 }
 
-export default connect(undefined, mapDispatchToProps)(ShopkeeperProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperProduct)

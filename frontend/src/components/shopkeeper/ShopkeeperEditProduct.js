@@ -80,8 +80,6 @@ function ShopkeeperEditProduct({
 
     function handleSubmit(event) {
         event.preventDefault()
-        console.log(productName, 'productName')
-        console.log(product)
 
         initiateEditProduct({
             ...product,
@@ -188,7 +186,6 @@ function mapDispatchToProps(dispatch) {
         initiateEditProduct,
         cancelEditProduct,
         updateProductName,
-        // updateCategories,
         updateProductDescription,
         updateBrand,
         updateUnitPrice,

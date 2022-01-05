@@ -1,10 +1,10 @@
 import {Button, ButtonGroup, Col, Container, Dropdown, Row} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {connect, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import ShopkeeperNewProduct from "./ShopkeeperNewProduct";
 import {
-    createProduct,
-    deleteProduct, initiateGetCategories,
+    deleteProduct,
+    initiateGetCategories,
     initiateGetProducts
 } from '../../modules/shopkeeper'
 import {useEffect, useState} from "react";
@@ -12,7 +12,7 @@ import ShopkeeperProductList from "./ShopkeeperProductList";
 import {logout} from "../../modules/user";
 import ShopkeeperSeeCategories from "./ShopkeeperSeeCategories";
 import ShopkeeperCreateCategory from "./ShopkeeperCreateCategory";
-
+import ShopkeeperProductTable from "./ShopkeeperProductTable";
 
 
 function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, dispatch}) {
@@ -72,12 +72,13 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                         <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
                     </Dropdown.Menu><br/>
                     <Col><Button variant="primary" style={{ marginLeft: "1000px"}} onClick={logout}>Logout</Button></Col>
-                    {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}
+                    {/*{(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}*/}
                 </Dropdown>
             </Col>
         </Row>
             <Row>
-                {showProductList? <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/> : ''}
+                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
+                {/*{showProductList? <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/> : ''}*/}
             </Row>
         </Container>
 

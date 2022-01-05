@@ -37,7 +37,8 @@ const initialState = {
     email: '',
     password: '',
     hideTable: true,
-    addingUser: false
+    addingUser: false,
+    errorMessage: ''
 }
 
 export default function reducer(state = initialState, action) {
@@ -51,6 +52,7 @@ export default function reducer(state = initialState, action) {
             }
 
         case START_ADDING_USER:
+            console.log("starting to add user")
             return {
                 ...state,
                 showEditUser: true,
@@ -60,12 +62,14 @@ export default function reducer(state = initialState, action) {
                 role: '',
                 authLevel: '',
                 email: '',
-                password: ''
+                password: '',
+                registerErrorOccurred: false
             }
         case ADD_USER_FAILED:
             return {
                 ...state,
-                registerErrorOccurred: true
+                registerErrorOccurred: true,
+                errorMessage: action.payload
             }
         case EDITING_USER:
             console.log("inside editing_user " + action.user.id)
@@ -73,13 +77,16 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 showEditUser: true,
                 isEditing: true,
+                registerErrorOccurred: false
             }
 
         case EDIT_USER_FAILED:
             return {
                 ...state,
                 showEditUser: false,
-                isEditing: false
+                isEditing: false,
+                registerErrorOccurred: true,
+                errorMessage: action.payload
             }
 
         case CANCEL_EDIT_USER:
@@ -101,7 +108,8 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 gettingUsers: true,
                 showEditUser: false,
-                hideTable: false
+                hideTable: false,
+                registerErrorOccurred: false
             }
 
         case UPDATE_USER:
@@ -153,16 +161,23 @@ function addingUser() {
 }
 
 function startEditingUser(user) {
-    console.log("inside editingUser")
     return {
         type: EDITING_USER,
         user
     }
 }
 
-function addUserFailed() {
+function addUserFailed(errorMessage) {
     return {
-        type: ADD_USER_FAILED
+        type: ADD_USER_FAILED,
+        payload: errorMessage
+    }
+}
+
+function editUserFailed(errorMessage){
+    return {
+        type: EDIT_USER_FAILED,
+        payload: errorMessage
     }
 }
 
@@ -192,7 +207,6 @@ function usersUpdated(users) {
 }
 
 function deletingUser() {
-    console.log("trying to delete")
     return {
         type: DELETING_USER
     }
@@ -207,7 +221,6 @@ function deleteUserFailed() {
 //Side Effects
 
 export function initiateGetUsers() {
-    console.log("inside initiateGetUsers")
     return function sideEffect(dispatch, getState) {
         dispatch(gettingUsers())
 
@@ -245,7 +258,7 @@ export function initiateAddUser(user) {
 
                 else {
                     console.log("did not hit success")
-                    dispatch(addUserFailed())
+                    dispatch(addUserFailed("Unable to add user"))
                 }
             })
         }).catch(error => console.log(error))
@@ -272,17 +285,17 @@ export function submitEditUser(user){
             body: JSON.stringify(user)
         }).then(response => {
             if (!response.ok)
-                return dispatch(addUserFailed())
+                return dispatch(editUserFailed())
 
             response.text().then(text => {
                 if (text === 'success') {
                     dispatch(initiateGetUsers())
-                    console.log("user registered")
+                    console.log("user edited")
                 }
 
                 else {
                     console.log("did not hit success")
-                    dispatch(addUserFailed())
+                    dispatch(editUserFailed("Could not edit user"))
                 }
             })
         }).catch(error => console.log(error))
