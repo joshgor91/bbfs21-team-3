@@ -8,7 +8,7 @@ import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
-import UserPage from "./pages/UserPage";
+import UserPage from "../../pages/UserPage";
 import {useSelector} from "react-redux";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 
