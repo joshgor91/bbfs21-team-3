@@ -28,8 +28,6 @@ function AdminCreateUser ({
 
     function handleSubmitCreateUser(e){
         e.preventDefault()
-        console.log("btn clicked")
-        console.log(isEditing)
         if (isEditing){
             submitEditUser({...userForm})
         }
