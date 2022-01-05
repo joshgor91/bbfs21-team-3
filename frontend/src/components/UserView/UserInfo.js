@@ -1,6 +1,6 @@
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import {
-    clearUserInfo,
+    clearUserInfo, initiateEditUserInfo,
     updateAddress1,
     updateAddress2,
     updateCity,
@@ -15,9 +15,20 @@ function UserInfo({user, userInfo, address1, address2, city, state, zipcode}) {
     const dispatch = useDispatch()
     const [show, setShow] = useState(false)
 
-    function submitEdit(e) {
-        e.preventDefault()
-        dispatch(submitEditUser({
+    function submitEdit(event) {
+        event.preventDefault()
+        if (!address1)
+            address1 = userInfo.address1
+        if (!address2)
+            address2 = userInfo.address2
+        if (!city)
+            city = userInfo.city
+        if (!state)
+            state = userInfo.state
+        if (!zipcode)
+            zipcode = userInfo.zipcode
+
+        dispatch(initiateEditUserInfo({
             ...userInfo,
             address1,
             address2,
@@ -26,7 +37,7 @@ function UserInfo({user, userInfo, address1, address2, city, state, zipcode}) {
             zipcode
         }))
     }
-    console.log(userInfo)
+
     return <>
         <Card style={{width: '25rem'}}>
 
@@ -36,80 +47,92 @@ function UserInfo({user, userInfo, address1, address2, city, state, zipcode}) {
                         <Card.Text>{user.firstName} {user.lastName}</Card.Text>
                     </Col>
                     <Col xs='auto'>
-                        <Button size='sm' variant="outline-secondary" onClick={() => setShow(true)}>
+                        {show ?
+                            <Button size='sm' variant="outline-secondary" onClick={() => setShow(false)}>
+                                Cancel Edit
+                            </Button>
+                            :
+                            <Button size='sm' variant="outline-secondary" onClick={() => setShow(true)}>
                             Edit Info
-                        </Button>
+                            </Button>}
                     </Col>
                 </Row>
                 <Card.Text>{user.email}</Card.Text>
-                {!show ? <Card.Text>{user.address1}</Card.Text>
-                    :
-                    <Form onSubmit={submitEdit}>
+                <Form onSubmit={submitEdit}>
+                    <Row>
+                        {!show ? <Card.Text>{user.address1}</Card.Text>
+                            :
+
+                            <Form.Group className="mb-3">
+                                <Form.Control type="text"
+                                              placeholder={userInfo.address1 ? userInfo.address1 : "Address 1"}
+                                              value={address1}
+                                              name='address1'
+                                              onChange={event => dispatch(updateAddress1(event.target.value))}
+                                />
+                            </Form.Group>}
+                    </Row>
+                    <Row>
+                        {!show ? <Card.Text>{user.address2}</Card.Text>
+                            :
+                            <Form.Group className="mb-3">
+                                <Form.Control type="text"
+                                              placeholder={userInfo.address2 ? userInfo.address2 : "Address 2"}
+                                              name='address2'
+                                              value={address2}
+                                              onChange={event => dispatch(updateAddress2(event.target.value))}
+                                />
+                            </Form.Group>}
+                    </Row>
+                    <Row>
+                        {!show ? <Card.Text>{user.city} {user.state} {user.zipcode}</Card.Text>
+                            :
+                            <Form.Group className="mb-3">
+                                <Form.Control type="text"
+                                              placeholder={userInfo.city ? userInfo.city : "City"}
+                                              name='city'
+                                              value={city}
+                                              onChange={event => dispatch(updateCity(event.target.value))}
+                                />
+                            </Form.Group>}
+                    </Row>
+                    <Row>
+                        {show &&
                         <Form.Group className="mb-3">
                             <Form.Control type="text"
-                                          placeholder="Address 1"
-                                          value={address1}
-                                          name='address1'
-                                          onChange={event => dispatch(updateAddress1(event.target.value))}
-                            />
-                        </Form.Group>
-                    </Form>}
-                {!show ? <Card.Text>{user.address2}</Card.Text>
-                :
-                <Form>
-                    <Form.Group className="mb-3">
-                        <Form.Control type="text"
-                                      placeholder="Address 2"
-                                      name='address2'
-                                      value={address2}
-                                      onChange={event => dispatch(updateAddress2(event.target.value))}
-                        />
-                    </Form.Group>
-                </Form>}
-                {!show ? <Card.Text>{user.city}</Card.Text>
-                    :
-                    <Form>
-                        <Form.Group className="mb-3">
-                            <Form.Control type="text"
-                                          placeholder="City"
-                                          name='city'
-                                          value={city}
-                                          onChange={event => dispatch(updateCity(event.target.value))}
-                            />
-                        </Form.Group>
-                    </Form>}
-                {!show ? <Card.Text>{user.state}</Card.Text>
-                    :
-                    <Form>
-                        <Form.Group className="mb-3" >
-                            <Form.Control type="text"
-                                          placeholder="State"
+                                          placeholder={userInfo.state ? userInfo.state : "State"}
                                           name='state'
                                           value={state}
                                           onChange={event => dispatch(updateState(event.target.value))}
                             />
-                        </Form.Group>
-                    </Form>}
-                {!show ? <Card.Text>{user.zipcode}</Card.Text>
-                    :
-                    <Form>
-                        <Form.Group className="mb-3">
-                            <Form.Control type="text"
-                                          placeholder="Zipcode"
-                                          name='zipcode'
-                                          value={zipcode}
-                                          onChange={event => dispatch(updateZipcode(event.target.value))}
-                            />
-                        </Form.Group>
-                    </Form>}
-
+                        </Form.Group>}
+                    </Row>
+                    <Row>
+                        <Col>
+                            {show &&
+                            <Form.Group className="mb-3">
+                                <Form.Control type="text"
+                                              placeholder={userInfo.zipcode ? userInfo.zipcode : "Zipcode"}
+                                              name='zipcode'
+                                              value={zipcode}
+                                              onChange={event => dispatch(updateZipcode(event.target.value))}
+                                />
+                            </Form.Group>}
+                        </Col>
+                        <Col xs='auto'>
+                            {show &&
+                            <Button size='sm' variant="outline-warning" type="submit">
+                                Save Edit
+                            </Button>}
+                        </Col>
+                    </Row>
+                </Form>
             </Card.Body>
         </Card>
     </>
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         user: state.userReducer.loggedInUser,
         userInfo: state.userReducer.userInfo,

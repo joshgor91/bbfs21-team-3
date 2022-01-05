@@ -44,7 +44,6 @@ function UserView({user, showInfo}) {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         user: state.userReducer.loggedInUser,
         showInfo: state.userReducer.showInfo

@@ -14,7 +14,7 @@ const Home = () => {
         dispatch(initiateGetAllProducts())
         dispatch(unsetProduct())
         dispatch(initiateGetCartItems())
-    }, [dispatch])
+    }, [])
 
     return (
         <div>

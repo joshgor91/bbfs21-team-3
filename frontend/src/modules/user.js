@@ -1,4 +1,5 @@
 import {initiateGetProducts} from "./shopkeeper";
+import {editUserRequest} from "../services/userService";
 
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -14,6 +15,7 @@ const UPDATE_ADDRESS2 = 'UPDATE_ADDRESS2'
 const UPDATE_CITY = 'UPDATE_CITY'
 const UPDATE_STATE = 'UPDATE_STATE'
 const UPDATE_ZIPCODE = 'UPDATE_ZIPCODE'
+const EDIT_INFO_FAILED = 'EDIT_INFO_FAILED'
 
 const initialState = {
     isLoggedIn: false,
@@ -86,11 +88,31 @@ export default function reducer(state = initialState, action){
                 ...state,
                 showInfo: true,
                 userInfo: action.payload,
-                address1: action.payload.address1,
-                address2: action.payload.address2,
-                city: action.payload.city,
-                state: action.payload.state,
-                zipcode: action.payload.zipcode,
+            }
+        case UPDATE_ADDRESS1:
+            return {
+                ...state,
+                address1: action.payload
+            }
+        case UPDATE_ADDRESS2:
+            return {
+                ...state,
+                address2: action.payload
+            }
+        case UPDATE_CITY:
+            return {
+                ...state,
+                city: action.payload
+            }
+        case UPDATE_STATE:
+            return {
+                ...state,
+                state: action.payload
+            }
+        case UPDATE_ZIPCODE:
+            return {
+                ...state,
+                zipcode: action.payload
             }
 
         case CLEAR_USER_INFO:
@@ -110,27 +132,27 @@ export default function reducer(state = initialState, action){
     }
 }
 
-export function updateAddress1() {
-    return {type: UPDATE_ADDRESS1}
+export function updateAddress1(address1) {
+    return {type: UPDATE_ADDRESS1, payload: address1}
 }
 
-export function updateAddress2() {
-    return {type: UPDATE_ADDRESS2}
-
-}
-
-export function updateCity() {
-    return {type: UPDATE_CITY}
+export function updateAddress2(address2) {
+    return {type: UPDATE_ADDRESS2, payload: address2}
 
 }
 
-export function updateState() {
-    return {type: UPDATE_STATE}
+export function updateCity(city) {
+    return {type: UPDATE_CITY, payload: city}
 
 }
 
-export function updateZipcode() {
-    return {type: UPDATE_ZIPCODE}
+export function updateState(state) {
+    return {type: UPDATE_STATE, payload: state}
+
+}
+
+export function updateZipcode(zipcode) {
+    return {type: UPDATE_ZIPCODE, payload: zipcode}
 
 }
 
@@ -182,12 +204,14 @@ export function setUserInfo(user) {
     }
 }
 
-
-
 export function clearUserInfo() {
     return {
         type: CLEAR_USER_INFO
     }
+}
+
+function editUserRequestFailed() {
+    return {type: EDIT_INFO_FAILED}
 }
 
 export function initiateLogin(user) {
@@ -242,6 +266,24 @@ export function initiateRegisterUser(user) {
                 }
             })
         }).catch(error => console.log(error))
+    }
+}
+
+export function initiateEditUserInfo(userToEdit) {
+    return function userToEditSideEffect(dispatch) {
+        console.log(userToEdit)
+        editUserRequest(userToEdit).then(response => {
+            if (response.status !== 200) {
+                console.log('Missed')
+                // return dispatch(editUserRequestFailed('Edit Failed'))
+            }
+            else {
+                console.log(response.data)
+                console.log('hit')
+                // dispatch(setUserLoggedIn(userToEdit))
+            }
+        })
+            .catch(err => console.log('Error in Initiate edit user info', err))
     }
 }
 
