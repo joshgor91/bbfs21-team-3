@@ -10,12 +10,14 @@ const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const SET_USER_INFO = 'SET_USER_INFO'
 const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
+const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
 const UPDATE_ADDRESS1 = 'UPDATE_ADDRESS1'
 const UPDATE_ADDRESS2 = 'UPDATE_ADDRESS2'
 const UPDATE_CITY = 'UPDATE_CITY'
 const UPDATE_STATE = 'UPDATE_STATE'
 const UPDATE_ZIPCODE = 'UPDATE_ZIPCODE'
 const EDIT_INFO_FAILED = 'EDIT_INFO_FAILED'
+
 
 const initialState = {
     isLoggedIn: false,
@@ -27,6 +29,7 @@ const initialState = {
     registerErrorOccurred: false,
     showInfo: false,
     userInfo: {},
+    password: '',
     address1: '',
     address2: '',
     city: '',
@@ -89,6 +92,13 @@ export default function reducer(state = initialState, action){
                 showInfo: true,
                 userInfo: action.payload,
             }
+
+        case UPDATE_PASSWORD:
+            return {
+                ...state,
+                password: action.payload
+            }
+
         case UPDATE_ADDRESS1:
             return {
                 ...state,
@@ -132,6 +142,9 @@ export default function reducer(state = initialState, action){
     }
 }
 
+export function updatePassword(password) {
+    return {type: UPDATE_PASSWORD, payload: password}
+}
 export function updateAddress1(address1) {
     return {type: UPDATE_ADDRESS1, payload: address1}
 }
@@ -210,8 +223,8 @@ export function clearUserInfo() {
     }
 }
 
-function editUserRequestFailed() {
-    return {type: EDIT_INFO_FAILED}
+function editUserRequestFailed(errorMessage) {
+    return {type: EDIT_INFO_FAILED, errorMessage}
 }
 
 export function initiateLogin(user) {
@@ -274,13 +287,10 @@ export function initiateEditUserInfo(userToEdit) {
         console.log(userToEdit)
         editUserRequest(userToEdit).then(response => {
             if (response.status !== 200) {
-                console.log('Missed')
-                // return dispatch(editUserRequestFailed('Edit Failed'))
+                return dispatch(editUserRequestFailed('Edit Failed'))
             }
             else {
-                console.log(response.data)
-                console.log('hit')
-                // dispatch(setUserLoggedIn(userToEdit))
+                dispatch(setUserLoggedIn(userToEdit))
             }
         })
             .catch(err => console.log('Error in Initiate edit user info', err))

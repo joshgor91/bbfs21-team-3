@@ -11,12 +11,15 @@ import {useState} from "react";
 import {connect, useDispatch} from "react-redux";
 import {submitEditUser} from "../../modules/admin";
 
-function UserInfo({user, userInfo, address1, address2, city, state, zipcode}) {
+function UserInfo({user, userInfo, password, address1, address2, city, state, zipcode}) {
     const dispatch = useDispatch()
     const [show, setShow] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
 
     function submitEdit(event) {
         event.preventDefault()
+        if (!password)
+            password = userInfo.password
         if (!address1)
             address1 = userInfo.address1
         if (!address2)
@@ -36,6 +39,7 @@ function UserInfo({user, userInfo, address1, address2, city, state, zipcode}) {
             state,
             zipcode
         }))
+        setShow(false)
     }
 
     return <>
@@ -48,17 +52,35 @@ function UserInfo({user, userInfo, address1, address2, city, state, zipcode}) {
                     </Col>
                     <Col xs='auto'>
                         {show ?
-                            <Button size='sm' variant="outline-secondary" onClick={() => setShow(false)}>
+                            <Button size='sm' variant="outline-secondary" onClick={() => {
+                                setShow(false)
+                                setShowPassword(false)
+                            }}>
                                 Cancel Edit
                             </Button>
                             :
                             <Button size='sm' variant="outline-secondary" onClick={() => setShow(true)}>
-                            Edit Info
+                                Edit Info
                             </Button>}
                     </Col>
                 </Row>
                 <Card.Text>{user.email}</Card.Text>
                 <Form onSubmit={submitEdit}>
+                    <Row>
+                        {!show && <Card.Text>Password ************</Card.Text>}
+                        {show && <Card.Link href="#" onClick={() => setShowPassword(true)}>
+                            Change Password
+                        </Card.Link>}
+                        {showPassword &&
+                            <Form.Group className="mb-3">
+                                <Form.Control type="password"
+                                              placeholder='Enter new password'
+                                              value={password}
+                                              name='password'
+                                              onChange={event => dispatch(updateAddress1(event.target.value))}
+                                />
+                            </Form.Group>}
+                    </Row>
                     <Row>
                         {!show ? <Card.Text>{user.address1}</Card.Text>
                             :
@@ -136,6 +158,7 @@ function mapStateToProps(state) {
     return {
         user: state.userReducer.loggedInUser,
         userInfo: state.userReducer.userInfo,
+        password: state.userReducer.password,
         address1: state.userReducer.address1,
         address2: state.userReducer.address2,
         city: state.userReducer.city,
