@@ -85,7 +85,8 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 showEditUser: false,
                 isEditing: false,
-                registerErrorOccurred: true
+                registerErrorOccurred: true,
+                errorMessage: action.payload
             }
 
         case CANCEL_EDIT_USER:
@@ -174,9 +175,10 @@ function addUserFailed(errorMessage) {
     }
 }
 
-function editUserFailed(){
+function editUserFailed(errorMessage){
     return {
-        type: EDIT_USER_FAILED
+        type: EDIT_USER_FAILED,
+        payload: errorMessage
     }
 }
 
@@ -291,12 +293,12 @@ export function submitEditUser(user){
             response.text().then(text => {
                 if (text === 'success') {
                     dispatch(initiateGetUsers())
-                    console.log("user registered")
+                    console.log("user edited")
                 }
 
                 else {
                     console.log("did not hit success")
-                    dispatch(editUserFailed())
+                    dispatch(editUserFailed("Could not edit user"))
                 }
             })
         }).catch(error => console.log(error))
