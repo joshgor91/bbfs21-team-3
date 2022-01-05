@@ -59,7 +59,7 @@ function ShopkeeperForm({products, dispatch}) {
             </Col>
         </Row>
             <Row>
-                {showProductList ? <ShopkeeperProductTable products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
+                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
             </Row>
         </Container>
 
