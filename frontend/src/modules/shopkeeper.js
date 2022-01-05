@@ -1,5 +1,5 @@
 import {logout} from "./user";
-import {getCategoriesRequest, createCategoryRequest} from "../services/categoryService";
+import {getCategoriesRequest, createCategoryRequest, editCategoryRequest} from "../services/categoryService";
 
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_FAILED = 'ADD_PRODUCT_FAILED'
@@ -17,6 +17,7 @@ const GET_CATEGORIES = 'GET_CATEGORIES'
 const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE'
 const SET_CATEGORIES = 'SET_CATEGORIES'
 const CREATE_CATEGORY_FAILURE = 'CREATE_CATEGORY_FAILURE'
+const EDIT_CATEGORY_FAILURE = 'EDIT_CATEGORY_FAILURE'
 // const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
@@ -149,6 +150,12 @@ export default function reducer(state = initialState, action) {
             }
 
         case CREATE_CATEGORY_FAILURE:
+            return {
+                ...state,
+                errorMessage: action.payload
+            }
+
+        case EDIT_CATEGORY_FAILURE:
             return {
                 ...state,
                 errorMessage: action.payload
@@ -441,6 +448,13 @@ function getCategoriesFailure(message) {
     }
 }
 
+function editCategoryFailure(message) {
+    return {
+        type: EDIT_CATEGORY_FAILURE,
+        payload: message
+    }
+}
+
 function setCategories(categories) {
     return {
         type: SET_CATEGORIES,
@@ -531,6 +545,18 @@ export function initiateCreateCategory(newCategory) {
             console.log(res)
             if (res.status !== 200) {
                 dispatch(createCategoryFailure(`Error creating category`))
+            } else {
+                dispatch(initiateGetCategories())
+            }
+        })
+    }
+}
+
+export function initiateEditCategory(updatedCategory) {
+    return function sideEffect(dispatch) {
+        editCategoryRequest(updatedCategory).then(res => {
+            if (res.status !== 200) {
+                dispatch(editCategoryFailure(`Error editing category`))
             } else {
                 dispatch(initiateGetCategories())
             }

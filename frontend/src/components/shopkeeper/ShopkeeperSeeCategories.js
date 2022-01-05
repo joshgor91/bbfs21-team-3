@@ -1,10 +1,14 @@
 import {Button, Stack, Table} from "react-bootstrap";
-import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/admin";
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function ShopkeeperSeeCategories({ categories, hide, setHide}) {
-    const tHead = ["ID", "Category Name", "Edit/Delete"]
+function ShopkeeperSeeCategories({categories, hide, setCategoryId, setIsEditing}) {
+    const tHead = ["ID", "Category Name", "Edit"]
+
+    function handleEdit(id) {
+        console.log(`handleEdit log with id = ${id}`)
+        setIsEditing(true)
+        setCategoryId(id)
+    }
 
     return (
 
@@ -24,7 +28,7 @@ function ShopkeeperSeeCategories({ categories, hide, setHide}) {
                     <td >{category.categoryName}</td>
                     <td>
                         <Stack>
-                            <Button >edit</Button>
+                            <Button onClick={() => handleEdit(category.id)}>edit</Button>
                         </Stack>
                     </td>
                 </tr>

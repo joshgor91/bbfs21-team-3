@@ -20,6 +20,8 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
     const [showCreateCategory, setShowCreateCategory] = useState(false)
     const [show, setShow] = useState(false)
     const [showProductList, setShowProductList] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [categoryId, setCategoryId] = useState();
 
     useEffect(() => {
         initiateGetProducts()
@@ -55,8 +57,14 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                     setShowNewProduct={setShow}
                     handleAddProduct={handleCreateProduct}
                 />
-                <ShopkeeperCreateCategory showCreateCategory={showCreateCategory} setShowCreateCategory={setShowCreateCategory}/>
-                {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide}/>}
+                <ShopkeeperCreateCategory
+                    showCreateCategory={showCreateCategory}
+                    setShowCreateCategory={setShowCreateCategory}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    categoryId={categoryId}
+                />
+                {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
                 <Dropdown as={ButtonGroup}>
                     <Button variant='primary'>Shopkeeper Ish</Button>
 
