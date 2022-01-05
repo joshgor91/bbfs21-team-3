@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {initiateGetAllProducts, unsetProduct} from "../modules/products";
 import {connect}from "react-redux";
+import {initiateGetCartItems} from "../modules/cart";
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
     useEffect(() => {
         dispatch(initiateGetAllProducts())
         dispatch(unsetProduct())
+        dispatch(initiateGetCartItems())
     }, [dispatch])
 
     return (
