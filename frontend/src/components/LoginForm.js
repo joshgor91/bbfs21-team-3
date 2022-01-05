@@ -26,7 +26,7 @@ function LoginForm({error, initiateLogin}) {
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username"
+                                <Form.Control type="text" placeholder="Enter email"
                                               onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
@@ -53,7 +53,7 @@ function LoginForm({error, initiateLogin}) {
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username"
+                                <Form.Control type="text" placeholder="Enter email"
                                               onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
