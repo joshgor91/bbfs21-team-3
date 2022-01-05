@@ -9,7 +9,6 @@ import {initiateGetUsers, startAddingUser} from '../../modules/admin'
 
 function AdminForm({startAddingUser, initiateGetUsers, logout}){
 
-
     return <>
         <Col className={'m-5'}>
             <Dropdown as={ButtonGroup}>
