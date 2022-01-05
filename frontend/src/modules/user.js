@@ -8,6 +8,7 @@ const REGISTERING_USER = 'REGISTERING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const SET_USER_AS_ADMIN = 'SET_USER_AS_ADMIN'
+const SET_USER_AS_SHOPKEEPER = 'SET_USER_AS_SHOPKEEPER'
 
 
 
@@ -21,7 +22,8 @@ const initialState = {
     registerErrorOccurred: false,
     userIsAdmin: false,
     userIsShopkeeper: false,
-    userIsCustomer: false
+    userIsCustomer: false,
+    userIsGuest: true
 }
 
 
@@ -77,6 +79,11 @@ export default function reducer(state = initialState, action){
                 userIsAdmin: true
             }
 
+        case SET_USER_AS_SHOPKEEPER:
+            return {
+                userIsShopkeeper: true
+            }
+
         default:
             return state
     }
@@ -123,14 +130,17 @@ function setUserLoggedIn(user) {
     }
 }
 
-
 function setUserAsAdmin() {
     return {
         type: SET_USER_AS_ADMIN
-
     }
 }
 
+function setUserAsShopkeeper() {
+    return {
+        type: SET_USER_AS_SHOPKEEPER
+    }
+}
 
 export function initiateLogin(user) {
 
@@ -150,27 +160,18 @@ export function initiateLogin(user) {
                 return dispatch(loginFailure())
 
             response.json().then(user => {
-                console.log(user)
+                dispatch(loginSuccess())
+                dispatch(setUserLoggedIn(user))
                 if (user.authLevel === 3) {
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
                     dispatch(setUserAsAdmin())
                 }
                 else if (user.authLevel === 2) {
+                    dispatch(setUserAsShopkeeper())
 
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-                    //dispatch(navigate(home))
                 } else if (user.authLevel === 1) {
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-                    //dispatch(navigate(home))
+                    // dispatch(setUserAsCustomer())
                 }
-                else if (user.authLevel === 1) {
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-                    //dispatch(navigate(shopkeeper))
-                }
+
                 else
                     dispatch(loginFailure())
             })
