@@ -4,19 +4,21 @@ import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
 import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
 import ShopkeeperProduct from "./ShopkeeperProduct";
+import {useState} from "react";
 
 
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
     const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
+    const [showProductDetails, setShowProductDetails] = useState(false)
 
     function handleViewDetails(product) {
         viewProductDetails(product)
-
+        setShowProductDetails(true)
     }
 
     return <>
             <ShopkeeperEditProduct/>
-        <ShopkeeperProduct/>
+        {showProductDetails ? <ShopkeeperProduct/> : ''}
 
 
         <Table striped bordered responsive hidden={hide}>

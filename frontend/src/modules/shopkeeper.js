@@ -311,7 +311,7 @@ export function deleteProductFailed() {
 }
 
 export function viewProductDetails(product) {
-    console.log(product)
+    // console.log(product)
     return {
         type: VIEW_PRODUCT_DETAILS,
         product
