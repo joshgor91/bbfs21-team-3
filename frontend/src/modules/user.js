@@ -7,7 +7,8 @@ const LOGOUT = 'LOGOUT'
 const REGISTERING_USER = 'REGISTERING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
-
+const SET_USER_INFO = 'SET_USER_INFO'
+const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
 
 
 const initialState = {
@@ -17,7 +18,9 @@ const initialState = {
     users: [],
     loggedInUser: {},
     userForm:{},
-    registerErrorOccurred: false
+    registerErrorOccurred: false,
+    showInfo: false,
+    userInfo: {},
 }
 
 
@@ -68,6 +71,21 @@ export default function reducer(state = initialState, action){
                 addingUser: true
             }
 
+        case SET_USER_INFO:
+            console.log(action.payload)
+            return {
+                ...state,
+                showInfo: true,
+                userInfo: action.payload
+            }
+
+        case CLEAR_USER_INFO:
+            return {
+                ...state,
+                showInfo: false,
+                userInfo: {},
+            }
+
         default:
             return state
     }
@@ -111,6 +129,20 @@ function setUserLoggedIn(user) {
     return {
         type: SET_USER_LOGGED_IN,
         user
+    }
+}
+
+export function setUserInfo(user) {
+    console.log(user)
+    return {
+        type: SET_USER_INFO,
+        payload: user
+    }
+}
+
+export function clearUserInfo() {
+    return {
+        type: CLEAR_USER_INFO
     }
 }
 
