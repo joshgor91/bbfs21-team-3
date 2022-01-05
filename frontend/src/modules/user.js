@@ -1,5 +1,6 @@
 import {initiateGetProducts} from "./shopkeeper";
-import {editUserRequest} from "../services/userService";
+import {deleteUserRequest, editUserRequest} from "../services/userService";
+import {useNavigate} from "react-router";
 
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -17,6 +18,7 @@ const UPDATE_CITY = 'UPDATE_CITY'
 const UPDATE_STATE = 'UPDATE_STATE'
 const UPDATE_ZIPCODE = 'UPDATE_ZIPCODE'
 const EDIT_INFO_FAILED = 'EDIT_INFO_FAILED'
+const DELETE_REQUEST_FAILED = 'DELETE_REQUEST_FAILED'
 
 
 const initialState = {
@@ -27,6 +29,7 @@ const initialState = {
     loggedInUser: {},
     userForm:{},
     registerErrorOccurred: false,
+    errorMessage: '',
     showInfo: false,
     userInfo: {},
     password: '',
@@ -61,7 +64,9 @@ export default function reducer(state = initialState, action){
                 ...state,
                 isLoggedIn: false,
                 loginErrorOccurred: false,
-                loginPending: false
+                loginPending: false,
+                loggedInUser: {},
+                errorMessage: ''
             }
 
         case LOGIN_FAILURE:
@@ -227,6 +232,10 @@ function editUserRequestFailed(errorMessage) {
     return {type: EDIT_INFO_FAILED, errorMessage}
 }
 
+function deleteRequestFailed(errorMessage) {
+    return {type: DELETE_REQUEST_FAILED, payload: errorMessage}
+}
+
 export function initiateLogin(user) {
 
     return function sideEffect(dispatch, getState) {
@@ -284,7 +293,6 @@ export function initiateRegisterUser(user) {
 
 export function initiateEditUserInfo(userToEdit) {
     return function userToEditSideEffect(dispatch) {
-        console.log(userToEdit)
         editUserRequest(userToEdit).then(response => {
             if (response.status !== 200) {
                 return dispatch(editUserRequestFailed('Edit Failed'))
@@ -297,4 +305,21 @@ export function initiateEditUserInfo(userToEdit) {
     }
 }
 
+export function initiateDeleteUser(userId) {
+    return function userToDelete(dispatch, getState) {
+        console.log(userId)
+        console.log()
+        if (userId === getState().userReducer.loggedInUser.id) {
+            deleteUserRequest(userId).then(response => {
+                if (response.status !== 200)
+                    dispatch(deleteRequestFailed('Could not delete your profile'))
+                else
+                    dispatch(logout())
+
+            })
+                .catch(err => console.log('Error with deleting user', err))
+        } else
+            dispatch(deleteRequestFailed('You are not logged in'))
+    }
+}
 
