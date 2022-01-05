@@ -1,4 +1,5 @@
 import {logout} from "./user";
+import {getCategoriesRequest} from "../services/categoryService";
 
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_FAILED = 'ADD_PRODUCT_FAILED'
@@ -12,6 +13,9 @@ const DELETE_PRODUCT_FAILED = 'DELETE_PRODUCT_FAILED'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
+const GET_CATEGORIES = 'GET_CATEGORIES'
+const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE'
+const SET_CATEGORIES = 'SET_CATEGORIES'
 // const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
@@ -36,7 +40,9 @@ const initialState = {
     addProduct: false,
     addErrorOccurred: false,
     editErrorOccurred: false,
-    // categories: [],
+    categories: [],
+    gettingAllCategories: false,
+    errorMessage: '',
     productName: '',
     productDescription: '',
     brand: '',
@@ -118,6 +124,27 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 editErrorOccurred: true
+            }
+
+        case GET_CATEGORIES:
+            return {
+                ...state,
+                gettingAllCategories: true
+            }
+
+        case GET_CATEGORIES_FAILURE:
+            return {
+                ...state,
+                gettingAllCategories: false,
+                errorMessage: action.payload
+            }
+
+        case SET_CATEGORIES:
+            return {
+                ...state,
+                gettingAllCategories: false,
+                categories: action.payload,
+                errorMessage: ''
             }
 
         // case UPDATE_CATEGORIES:
@@ -394,6 +421,26 @@ export function getProducts() {
     }
 }
 
+function getCategories() {
+    return {
+        type: GET_CATEGORIES
+    }
+}
+
+function getCategoriesFailure(message) {
+    return {
+        type: GET_CATEGORIES_FAILURE,
+        payload: message
+    }
+}
+
+function setCategories(categories) {
+    return {
+        type: SET_CATEGORIES,
+        payload: categories
+    }
+}
+
 export function getProductsFailed() {
     return {
         type: GET_PRODUCTS_FAILED
@@ -447,6 +494,19 @@ export function initiateGetProducts() {
             })
         }).catch(error => console.log(error))
 
+    }
+}
+
+export function initiateGetCategories() {
+    return function sideEffect(dispatch) {
+        dispatch(getCategories())
+        getCategoriesRequest().then(res => {
+            if (res.status !== 200) {
+                dispatch(getCategoriesFailure(`Error getting categories`))
+            } else {
+                dispatch(setCategories(res.data))
+            }
+        })
     }
 }
 
