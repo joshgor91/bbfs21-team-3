@@ -6,13 +6,17 @@ import Admin from "../../pages/Admin";
 import Shopkeeper from "../../pages/Shopkeeper";
 import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
-import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
+import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
+import UserPage from "./pages/UserPage";
+import {useSelector} from "react-redux";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
 
 function AdminRouter() {
+    const cartQuantity = useSelector(state => state.cartReducer.quantity)
+    console.log(cartQuantity)
     return (
 
         <Router>
@@ -35,7 +39,10 @@ function AdminRouter() {
                             </Nav.Item>
 
                             <Nav.Item>
-                                <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
+                                    <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Link className="link-item" to="/myaccount">My Account</Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Form className="d-flex">
@@ -50,9 +57,10 @@ function AdminRouter() {
                             </Nav.Item>
 
                             <Nav.Item>
-                                <Link className="link-item" to="/cart">
-                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                </Link>
+                                    <Link className="link-item" to="/cart">
+                                        <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                    </Link>
                             </Nav.Item>
                         </Nav>
                             <Nav className='ms-auto'>
@@ -71,13 +79,14 @@ function AdminRouter() {
             <hr/>
 
             <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
-                <Route path='/admin' element={<Admin/>}/>
-                <Route path='/shopkeeper' element={<Shopkeeper/>}/>
-                <Route path='/product/:id' element={<ProductPage/>}/>
-                <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/' element={<Home/>} />
+                <Route path='/login' element={<Login/>} />
+                <Route path='/register' element={<Register/>} />
+                <Route path='/admin' element={<Admin/>} />
+                <Route path='/shopkeeper' element={<Shopkeeper/>} />
+                <Route path='/product/:id' element={<ProductPage/>} />
+                <Route path='/cart' element={<CartPage/>} />
+                <Route path='/myaccount' element={<UserPage/>} />
             </Routes>
         </Router>
     )

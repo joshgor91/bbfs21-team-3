@@ -1,6 +1,8 @@
 package net.yorksolutions.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.yorksolutions.backend.model.Cart;
 import net.yorksolutions.backend.model.User;
 import net.yorksolutions.backend.repository.CartRepository;
@@ -17,6 +19,7 @@ class UserOutput {
     public String lastName;
     public String role;
     public String email;
+    public String password;
     public int authLevel;
     public String address1;
     public String address2;
@@ -28,12 +31,13 @@ class UserOutput {
 
     UserOutput(){};
 
-    public UserOutput(Long id, String firstName, String lastName, String role, String email, int authLevel, String address1, String address2, String city, String state, String zipcode) {
+    public UserOutput(Long id, String firstName, String lastName, String role, String email, String password, int authLevel, String address1, String address2, String city, String state, String zipcode) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
         this.email = email;
+        this.password = password;
         this.authLevel = authLevel;
         this.address1 = address1;
         this.address2 = address2;
@@ -84,8 +88,7 @@ public class UserController {
             // now we are taking all the information from User that we got from the database, and copying this object information
             // to a new user Output object, that excludes the password.
             // we dont want to send over the password.
-            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
-
+            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.password, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
 
             return foundUser;
         } else {
@@ -137,10 +140,13 @@ public class UserController {
 //
 //    }
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
     @CrossOrigin
     @PutMapping("/edit")
     // returning string to notify the front end that the admin successfully edited the user.
-    String editThree(@RequestBody User user) {
+    String editThree(@RequestBody User user) throws JsonProcessingException {
+        System.out.println(objectMapper.writeValueAsString(user));
         userRepo.findById(user.getId()).orElseThrow();
         userRepo.save(user);
         return "success";

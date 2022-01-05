@@ -10,6 +10,10 @@ import {
 import {useState} from "react";
 import ShopkeeperProductList from "./ShopkeeperProductList";
 import {logout} from "../../modules/user";
+import ShopkeeperProductTable from "./ShopkeeperProductTable";
+
+
+
 
 
 
@@ -55,7 +59,7 @@ function ShopkeeperForm({products, dispatch}) {
             </Col>
         </Row>
             <Row>
-                {showProductList? <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/> : ''}
+                {showProductList ? <ShopkeeperProductTable products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
             </Row>
         </Container>
 

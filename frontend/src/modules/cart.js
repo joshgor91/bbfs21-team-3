@@ -6,10 +6,13 @@ const GETTING_CART_ITEMS_FAILED = 'GETTING_CART_ITEMS_FAILED'
 const ADDING_CART_ITEM = 'ADD_CART_ITEM'
 const ADD_CART_ITEM_FAILURE = 'ADD_CART_ITEM_FAILURE'
 const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
+const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
+const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
 
 const initialState = {
     cartItems: [],
+    quantity: 0,
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: ''
@@ -57,10 +60,23 @@ export default function reducer(state = initialState, action) {
                 errorMessage: action.payload
             }
 
+        case SET_QUANTITY:
+            console.log(action.payload)
+            return {
+                ...state,
+                quantity: action.payload
+            }
+
         case CLEAR_CART:
             return {
                 ...state,
                 cartItems: []
+            }
+
+        case CLEAR_QUANTITY:
+            return {
+                ...state,
+                quantity: 0
             }
 
         default:
@@ -109,9 +125,22 @@ function addCartItemSuccess() {
     }
 }
 
+function setQuantity(quantity) {
+    return {
+        type: SET_QUANTITY,
+        payload: quantity
+    }
+}
+
 function clearCart() {
     return {
         type: CLEAR_CART
+    }
+}
+
+function clearQuantity() {
+    return {
+        type: CLEAR_QUANTITY
     }
 }
 
@@ -125,12 +154,13 @@ export function initiateGetCartItems() {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
             else {
-                console.log(res.data)
+                let quantity = 0
                 dispatch(clearCart())
                 for (let item of res.data) {
-                    console.log(item.product)
+                    quantity += item.quantity
                     dispatch(setCartItems(item.product))
                 }
+                dispatch(setQuantity(quantity))
             }
         })
             .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
