@@ -255,6 +255,7 @@ function addProductFailed() {
 }
 
 export function editProduct(product) {
+    console.log(product)
     return {
         type: EDIT_PRODUCT,
         product

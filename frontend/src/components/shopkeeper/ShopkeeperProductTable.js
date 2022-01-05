@@ -1,18 +1,15 @@
 import {Button, Stack, Table} from "react-bootstrap";
-import {getProducts, initiateEditProduct, initiateDeleteProduct} from "../../modules/shopkeeper";
+import {editProduct, initiateDeleteProduct} from "../../modules/shopkeeper";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import ShopkeeperEditProduct from "./ShopkeeperEditProduct";
 
-function ShopkeeperProductTable({products, hide, initiateEditProduct, initiateDeleteProduct}) {
+function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct}) {
     const tHead = ["ID", "Product Name", "Brand", "Unit Price", "Units in Stock", "Units Received", "Product Available", "Edit/Delete"]
 
-    const handleEdit = product => event => {
-        event.preventDefault()
-        initiateEditProduct(product)
 
-    }
-    return (
-
+    return <>
+            <ShopkeeperEditProduct/>
         <Table striped bordered responsive hidden={hide}>
             <thead>
             <tr>
@@ -33,7 +30,7 @@ function ShopkeeperProductTable({products, hide, initiateEditProduct, initiateDe
                     <td >{product.productAvailable}</td>
                     <td>
                         <Stack>
-                            <Button onClick={handleEdit(product)}>edit</Button>
+                            <Button onClick={() => editProduct(product)}>edit</Button>
                             <Button onClick={() => initiateDeleteProduct(product.id)}>Delete</Button>
                         </Stack>
                     </td>
@@ -41,7 +38,8 @@ function ShopkeeperProductTable({products, hide, initiateEditProduct, initiateDe
             ))}
             </tbody>
         </Table>
-    );
+    </>
+
 }
 
 function mapStateToProps(state){
@@ -53,7 +51,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ getProducts, initiateEditProduct, initiateDeleteProduct}, dispatch)
+    return bindActionCreators({editProduct, initiateDeleteProduct}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperProductTable)
