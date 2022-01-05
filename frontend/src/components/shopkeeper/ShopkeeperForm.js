@@ -44,10 +44,6 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
         dispatch(deleteProduct(id))
     }
 
-    function handleCreateProduct(product) {
-        dispatch(createProduct(product))
-    }
-
     return<>
         <Container fluid>
             <Row>
@@ -55,7 +51,6 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                 <ShopkeeperNewProduct
                     showNewProduct={show}
                     setShowNewProduct={setShow}
-                    handleAddProduct={handleCreateProduct}
                 />
                 <ShopkeeperCreateCategory
                     showCreateCategory={showCreateCategory}
@@ -89,8 +84,14 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
     </>
 }
 
+function mapStateToProps(state) {
+    return {
+        products: state.shopkeeperReducer.products
+    }
+}
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({initiateGetProducts, initiateGetCategories, logout}, dispatch)
 }
 
-export default connect(undefined, mapDispatchToProps)(ShopkeeperForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperForm)

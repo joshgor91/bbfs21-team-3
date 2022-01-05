@@ -15,17 +15,17 @@ import {
     updatePicture,
     updateDateReceived,
     updateUnitsReceived,
-    // updateCategories,
     updateDiscountAvailable
 } from "../../modules/shopkeeper";
-import {Button, Form, Modal} from "react-bootstrap";
+import {Button, Form, Modal, Badge, ListGroup} from "react-bootstrap";
 import {connect} from "react-redux";
+import {useEffect, useState} from "react";
 
 function ShopkeeperEditProduct({
                                    show,
                                    product,
                                    productName,
-                                   // categories,
+                                   categories,
                                    productDescription,
                                    brand,
                                    unitPrice,
@@ -38,11 +38,9 @@ function ShopkeeperEditProduct({
                                    picture,
                                    dateReceived,
                                    unitsReceived,
-                                   initiateAddProduct,
                                    initiateEditProduct,
                                    cancelEditProduct,
                                    updateProductName,
-                                   // updateCategories,
                                    updateProductDescription,
                                    updateBrand,
                                    updateUnitPrice,
@@ -56,54 +54,52 @@ function ShopkeeperEditProduct({
                                    updateDateReceived,
                                    updateUnitsReceived
                                }) {
-    // console.log(productName, 'productName before submit')
-    // console.log(product)
-    console.log(discontinued)
-    console.log(discountAvailable)
+    const [productCategory, setProductCategory] = useState([])
+    const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
+
+    function onChange(e) {
+        console.log(`logging e.target = ${e.target}`)
+        const {value, selectedIndex} = e.target
+        console.log(`logging selectedIndex`)
+        const {id} = e.target.options[selectedIndex]
+        setCategorySelect({id: Number(id), categoryName: value})
+    }
+
+    useEffect(() => {
+        if (show)
+        setProductCategory(product.categories)
+    }, [show])
+
+    function handleAdd() {
+        setProductCategory([...productCategory, categorySelect])
+    }
+
+    function handleRemove() {
+        setProductCategory(productCategory.filter(id => categorySelect.id !== id.id))
+    }
 
     function handleSubmit(event) {
         event.preventDefault()
         console.log(productName, 'productName')
         console.log(product)
 
-
-        if (product)
-            initiateEditProduct({
-                ...product,
-                productName,
-                // categories,
-                productDescription,
-                brand,
-                unitPrice,
-                unitsInStock,
-                size,
-                color,
-                productAvailable,
-                discontinued,
-                discountAvailable,
-                picture,
-                dateReceived,
-                unitsReceived
-            })
-        else
-            initiateAddProduct({
-                id: Math.floor(Math.random() * 9999999),
-                productName,
-                // categories,
-                productDescription,
-                brand,
-                unitPrice,
-                unitsInStock,
-                size,
-                color,
-                productAvailable,
-                discontinued,
-                discountAvailable,
-                picture,
-                dateReceived,
-                unitsReceived
-            })
-
+        initiateEditProduct({
+            ...product,
+            productName,
+            categories: productCategory,
+            productDescription,
+            brand,
+            unitPrice,
+            unitsInStock,
+            size,
+            color,
+            productAvailable,
+            discontinued,
+            discountAvailable,
+            picture,
+            dateReceived,
+            unitsReceived
+        })
     }
 
     return <Modal show={show} onHide={cancelEditProduct}>
@@ -111,13 +107,14 @@ function ShopkeeperEditProduct({
             <Form.Label>Product Name</Form.Label>
             <Form.Control type='productName' value={productName}
                           onChange={event => updateProductName(event.target.value)}/>
-            {/*<Form.Label>Categories</Form.Label>*/}
-            {/*<Form.Control type='categories' as='select' value={10}*/}
-            {/*              onChange={event => updateCategories(event.target.value)}>*/}
-            {/*    <option value={10}>Video Games</option>*/}
-            {/*    <option value={3}>Electronics</option>*/}
-            {/*    <option value={2}>Entertainment</option>*/}
-            {/*</Form.Control>*/}
+            <Form.Label>Categories</Form.Label>
+            <div className='mb-3'>{productCategory.map(category => <Badge>{category.categoryName}</Badge>)}</div>
+            <Form.Control type='categories' as='select'
+                          onChange={onChange}>
+                <option selected disabled hidden>Select Category</option>
+                {categories.map(category => <option id={category.id} value={category.categoryName}>{category.categoryName}</option>)}
+            </Form.Control>
+            <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button size='sm' onClick={() => handleRemove()}>Remove</Button></div>
             <Form.Label>Product Description</Form.Label>
             <Form.Control type='productDescription' value={productDescription}
                           onChange={event => updateProductDescription(event.target.value)}/>
@@ -173,7 +170,7 @@ function mapStateToProps(state) {
         brand: state.shopkeeperReducer.brand,
         unitPrice: state.shopkeeperReducer.unitPrice,
         unitsInStock: state.shopkeeperReducer.unitsInStock,
-        // categories: state.shopkeeperReducer.categories,
+        categories: state.shopkeeperReducer.categories,
         size: state.shopkeeperReducer.size,
         color: state.shopkeeperReducer.color,
         productAvailable: state.shopkeeperReducer.productAvailable,

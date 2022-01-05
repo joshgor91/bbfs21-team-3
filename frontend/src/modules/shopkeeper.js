@@ -75,26 +75,6 @@ export default function reducer(state = initialState, action) {
                 addErrorOccurred: true
             }
 
-        case CREATE_PRODUCT:
-            return {
-                ...state,
-                showEditProduct: true,
-                productToEdit: undefined,
-                productName: ''
-                // categories: [],
-                // productDescription: '',
-                // brand: '',
-                // unitPrice: 0.00,
-                // unitsInStock: 0,
-                // size: '',
-                // color: '',
-                // productAvailable: '',
-                // discontinued: false,
-                // picture: '',
-                // dateReceived: '',
-                // unitsReceived: 0
-            }
-
         case EDIT_PRODUCT:
             return {
                 ...state,
@@ -270,13 +250,6 @@ export default function reducer(state = initialState, action) {
     }
 }
 
-
-export function createProduct(product) {
-    return {
-        type: CREATE_PRODUCT,
-        product
-    }
-}
 
 export function addProduct() {
     return {
@@ -483,7 +456,7 @@ function productsUpdated(products) {
 }
 
 export function initiateAddProduct(product) {
-    return function sideEffect(dispatch, getState) {
+    return function sideEffect(dispatch) {
         dispatch(addProduct())
 
         fetch(`http://localhost:8080/api/products/add`, {
@@ -565,7 +538,7 @@ export function initiateEditCategory(updatedCategory) {
 }
 
 export function initiateEditProduct(product) {
-    return function sideEffect(dispatch, getState) {
+    return function sideEffect(dispatch) {
         dispatch(startEditProduct())
 
         fetch('http://localhost:8080/api/products/edit', {

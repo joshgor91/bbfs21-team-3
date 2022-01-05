@@ -4,14 +4,15 @@ import {initiateDeleteProduct, editProduct} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
 
 function ShopkeeperProduct({product, initiateDeleteProduct, editProduct}) {
+    console.log(`logging product = ${product.categories}`)
     return<Col><Card >
         <Card.Header>
             <Card.Title>Brand</Card.Title>
             <Card.Text>{product.brand}</Card.Text>
             <Card.Subtitle>Product Name</Card.Subtitle>
             <Card.Text>{product.productName}</Card.Text>
-            {/*<Card.Subtitle>Categories</Card.Subtitle>*/}
-            {/*<Card.Text>{product.categories}</Card.Text>*/}
+            <Card.Subtitle>Categories</Card.Subtitle>
+            <Card.Text>{product.categories.map(category => <p>{category.categoryName}</p>)}</Card.Text>
         </Card.Header>
         <Card.Body>
             <Card.Subtitle>Product Description</Card.Subtitle>
