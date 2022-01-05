@@ -2,7 +2,7 @@ import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Home from "../../pages/Home";
 import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
-import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
+import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import Login from "../../pages/Login";
 import Register from "../../pages/Register";
@@ -10,7 +10,7 @@ import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
 
-function CustomerRouter() {
+function CustomerRouter({cartQuantity}) {
     return (
 
         <Router>
@@ -43,6 +43,7 @@ function CustomerRouter() {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
                                 </Link>
                             </Nav.Item>
                             <Nav.Item>

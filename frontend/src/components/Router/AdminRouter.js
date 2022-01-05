@@ -14,9 +14,8 @@ import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
 
-function AdminRouter() {
-    const cartQuantity = useSelector(state => state.cartReducer.quantity)
-    console.log(cartQuantity)
+function AdminRouter({cartQuantity}) {
+
     return (
 
         <Router>

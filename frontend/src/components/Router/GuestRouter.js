@@ -4,13 +4,13 @@ import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
-import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
+import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 
 
 
 
-function GuestRouter() {
+function GuestRouter({cartQuantity}) {
 
         return (
 
@@ -52,6 +52,7 @@ function GuestRouter() {
                                 <Nav.Item>
                                     <Link className="link-item" to="/cart">
                                         <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
                                     </Link>
                                 </Nav.Item>
 
