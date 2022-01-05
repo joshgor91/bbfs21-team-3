@@ -49,7 +49,8 @@ const initialState = {
     discountAvailable: '',
     picture: '',
     dateReceived: '',
-    unitsReceived: ''
+    unitsReceived: '',
+    hideTable: true,
 }
 
 export default function reducer(state = initialState, action) {
@@ -208,12 +209,16 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 getProducts: true,
+                showEditProduct: false,
+                hideTable: false
             }
 
         case GET_PRODUCTS_FAILED:
             return {
                 ...state,
-                getProducts: false
+                getProducts: false,
+                showEditProduct: false,
+                hideTable: false
             }
 
         case PRODUCTS_UPDATED:
