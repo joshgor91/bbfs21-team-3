@@ -1,17 +1,27 @@
 import {Toast, ToastContainer} from "react-bootstrap";
 import {connect} from "react-redux";
+import {useState, useEffect} from "react";
 
 
 function AdminErrorMessage ({showError, errorMessage}) {
+    const [show, setShow] = useState(showError)
+    useEffect(
+        () => {
+            if (showError)
+                setShow(true)
+        },
+        [showError]
+    )
+
     console.log(errorMessage)
-    console.log(showError)
     return (
         <ToastContainer position={'middle-center'}
         >
             <Toast bg={'danger'}
-                   show={showError}
+                   onClose={() => setShow(false)}
+                   show={show}
+                   autohide
                    delay={3000}
-                   autohide={() => showError=false}
             >
                 <Toast.Body className={"text-white"}>{errorMessage}</Toast.Body>
             </Toast>

@@ -15,8 +15,7 @@ const initialUserForm = {
     password: '',
 }
 
-function Admin() {
-
+function Admin({showError}) {
     const [userForm, setUserForm] = useState(initialUserForm);
 
     return <>
@@ -28,15 +27,14 @@ function Admin() {
         <AdminForm/>
         <AdminSeeUsers setUserForm={setUserForm}/>
         <AdminEditUsers userForm={userForm} setUserForm={setUserForm}/>
-        <AdminErrorMessage
-            // errorOccurred={showError}
-        />
+        <AdminErrorMessage show={showError}/>
 
     </>
 }
 
 function mapStateToProps(state){
     return{
+        showError: state.adminReducer.registerErrorOccurred
     }
 }
 
