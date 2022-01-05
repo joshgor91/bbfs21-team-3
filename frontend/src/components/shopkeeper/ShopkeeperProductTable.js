@@ -1,11 +1,13 @@
-import {Button, Stack, Table} from "react-bootstrap";
-import {editProduct, initiateDeleteProduct} from "../../modules/shopkeeper";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import ShopkeeperEditProduct from "./ShopkeeperEditProduct";
+import {Button, Stack, Table} from "react-bootstrap"
+import {editProduct, initiateDeleteProduct, viewProductDetails} from "../../modules/shopkeeper"
+import {bindActionCreators} from "redux"
+import {connect} from "react-redux"
+import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
+import ShopkeeperProduct from "./ShopkeeperProduct";
 
-function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct}) {
-    const tHead = ["ID", "Product Name", "Brand", "Unit Price", "Units in Stock", "Units Received", "Product Available", "Edit/Delete"]
+
+function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
+    const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
 
 
     return <>
