@@ -5,6 +5,8 @@ import {clearUserInfo, setUserInfo} from "../../modules/user";
 
 function UserView({user, showInfo}) {
     const dispatch = useDispatch()
+
+
     return <>
         <Container>
             <Row>

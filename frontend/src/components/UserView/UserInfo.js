@@ -9,12 +9,13 @@ import {
 } from "../../modules/user";
 import {useState} from "react";
 import {connect, useDispatch} from "react-redux";
-import {submitEditUser} from "../../modules/admin";
 
 function UserInfo({user, userInfo, password, address1, address2, city, state, zipcode}) {
     const dispatch = useDispatch()
     const [show, setShow] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
+
+
 
     function submitEdit(event) {
         event.preventDefault()
