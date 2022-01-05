@@ -6,79 +6,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
+@IdClass(CartItemId.class)
 public class CartItem {
-
-
-    @EmbeddedId
+    @Id
     @JsonProperty
-    private CartItemId id;
+    Long cartId;
 
-    @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(
-            name = "productId"
-    )
+    @Id
     @JsonProperty
-    @JsonIgnoreProperties("cartItems")
-    private Product product;
-
-    @ManyToOne
-    @MapsId("cartId")
-    @JoinColumn(
-            name = "cartId"
-    )
-    @JsonProperty
-    @JsonIgnoreProperties("cartItems")
-    private Cart cart;
+    Long productId;
 
     @JsonProperty
-    private Integer quantity;
+    int quantity;
 
-    public CartItem(CartItemId id, Product product, Cart cart, Integer quantity) {
-        this.id = id;
-        this.product = product;
-        this.cart = cart;
-        this.quantity = quantity;
+    public CartItem(){
     }
 
-    public CartItem() {
+    public Long getCartId() {
+        return cartId;
     }
 
-    public CartItem(Product product, Cart cart, Integer quantity) {
-        this.product = product;
-        this.cart = cart;
-        this.quantity = quantity;
+    public Long getProductId() {
+        return productId;
     }
 
-    public CartItemId getId() {
-        return id;
-    }
-
-    public void setId(CartItemId id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

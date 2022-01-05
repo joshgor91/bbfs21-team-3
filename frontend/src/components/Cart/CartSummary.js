@@ -5,12 +5,11 @@ function CartSummary({cartItems}) {
     // console.log(cartItems)
     let originalPrice = 0
     let totalSavings = 0
-    for (let cartItem of cartItems) {
-        originalPrice += Number(cartItem.unitPrice)
-    }
+    if (cartItems) {
+        for (let cartItem of cartItems) {
+            originalPrice += Number(cartItem.unitPrice)
+        }
     // console.log(originalPrice)
-
-    if (cartItems.sale !== null) {
         const salesPrices = cartItems.map(item => {
             let result = item.unitPrice * item.sale
             return Number(result.toFixed(2))
