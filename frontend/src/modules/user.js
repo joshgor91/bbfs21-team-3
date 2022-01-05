@@ -9,6 +9,7 @@ const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const SET_USER_AS_ADMIN = 'SET_USER_AS_ADMIN'
 const SET_USER_AS_SHOPKEEPER = 'SET_USER_AS_SHOPKEEPER'
+const SET_USER_AS_CUSTOMER = 'SET_USER_AS_CUSTOMER'
 
 
 
@@ -22,7 +23,7 @@ const initialState = {
     registerErrorOccurred: false,
     userIsAdmin: false,
     userIsShopkeeper: false,
-    userIsCustomer: false,
+    userIsCustomer: false
 }
 
 
@@ -76,13 +77,16 @@ export default function reducer(state = initialState, action){
         case SET_USER_AS_ADMIN:
             return {
                 userIsAdmin: true,
-
             }
 
         case SET_USER_AS_SHOPKEEPER:
             return {
                 userIsShopkeeper: true,
+            }
 
+        case SET_USER_AS_CUSTOMER:
+            return {
+                userIsCustomer: true,
             }
 
         default:
@@ -143,6 +147,12 @@ function setUserAsShopkeeper() {
     }
 }
 
+function setUserAsCustomer() {
+    return {
+        type: SET_USER_AS_CUSTOMER
+    }
+}
+
 export function initiateLogin(user) {
 
     return function sideEffect(dispatch, getState) {
@@ -165,15 +175,11 @@ export function initiateLogin(user) {
                 dispatch(setUserLoggedIn(user))
                 if (user.authLevel === 3) {
                     dispatch(setUserAsAdmin())
-                }
-                else if (user.authLevel === 2) {
+                } else if (user.authLevel === 2) {
                     dispatch(setUserAsShopkeeper())
-
                 } else if (user.authLevel === 1) {
-                    // dispatch(setUserAsCustomer())
-                }
-
-                else
+                    dispatch(setUserAsCustomer())
+                } else
                     dispatch(loginFailure())
             })
         }).catch(error => console.log(error))

@@ -1,9 +1,5 @@
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Home from "../../pages/Home";
-import Login from "../../pages/Login";
-import Register from "../../pages/Register";
-import Admin from "../../pages/Admin";
-import Shopkeeper from "../../pages/Shopkeeper";
 import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
@@ -11,7 +7,7 @@ import {GiShoppingCart} from "react-icons/gi";
 
 
 
-function AdminRouter() {
+function CustomerRouter() {
     return (
 
         <Router>
@@ -29,21 +25,6 @@ function AdminRouter() {
                                 <Link className="link-item" to="/">Home </Link>
                             </Nav.Item>
 
-                            <Nav.Item>
-                                <Link className="link-item" to="/login">Login </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/register">Register </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/admin">Admin </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
-                            </Nav.Item>
                             <Nav.Item>
                                 <Form className="d-flex">
                                     <FormControl
@@ -76,10 +57,6 @@ function AdminRouter() {
 
             <Routes>
                 <Route path='/' element={<Home/>}/>
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
-                <Route path='/admin' element={<Admin/>}/>
-                <Route path='/shopkeeper' element={<Shopkeeper/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
             </Routes>
@@ -88,4 +65,4 @@ function AdminRouter() {
 
 
 }
-export default AdminRouter
+export default CustomerRouter

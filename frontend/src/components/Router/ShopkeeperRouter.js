@@ -19,7 +19,7 @@ function ShopkeeperRouter() {
                 <>
                     <Link to="/" id="logo" className="link-item">Better Buy</Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
-            menu
+            Menu
                 </span></Navbar.Toggle>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto pr-3 ">

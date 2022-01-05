@@ -2,8 +2,6 @@ import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
 import Register from "../../pages/Register";
-import Admin from "../../pages/Admin";
-import Shopkeeper from "../../pages/Shopkeeper";
 import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
@@ -22,7 +20,7 @@ function GuestRouter() {
                     <>
                         <Link to="/" id="logo" className="link-item">Better Buy</Link>
                         <Navbar.Toggle aria-controls="navbar-nav"><span>
-            menu
+            Menu
                 </span></Navbar.Toggle>
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ml-auto pr-3 ">
