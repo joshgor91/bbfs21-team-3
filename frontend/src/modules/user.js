@@ -9,7 +9,11 @@ const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const SET_USER_INFO = 'SET_USER_INFO'
 const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
-
+const UPDATE_ADDRESS1 = 'UPDATE_ADDRESS1'
+const UPDATE_ADDRESS2 = 'UPDATE_ADDRESS2'
+const UPDATE_CITY = 'UPDATE_CITY'
+const UPDATE_STATE = 'UPDATE_STATE'
+const UPDATE_ZIPCODE = 'UPDATE_ZIPCODE'
 
 const initialState = {
     isLoggedIn: false,
@@ -21,6 +25,11 @@ const initialState = {
     registerErrorOccurred: false,
     showInfo: false,
     userInfo: {},
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipcode: '',
 }
 
 
@@ -76,7 +85,12 @@ export default function reducer(state = initialState, action){
             return {
                 ...state,
                 showInfo: true,
-                userInfo: action.payload
+                userInfo: action.payload,
+                address1: action.payload.address1,
+                address2: action.payload.address2,
+                city: action.payload.city,
+                state: action.payload.state,
+                zipcode: action.payload.zipcode,
             }
 
         case CLEAR_USER_INFO:
@@ -84,6 +98,11 @@ export default function reducer(state = initialState, action){
                 ...state,
                 showInfo: false,
                 userInfo: {},
+                address1: '',
+                address2: '',
+                city: '',
+                state: '',
+                zipcode: '',
             }
 
         default:
@@ -91,6 +110,29 @@ export default function reducer(state = initialState, action){
     }
 }
 
+export function updateAddress1() {
+    return {type: UPDATE_ADDRESS1}
+}
+
+export function updateAddress2() {
+    return {type: UPDATE_ADDRESS2}
+
+}
+
+export function updateCity() {
+    return {type: UPDATE_CITY}
+
+}
+
+export function updateState() {
+    return {type: UPDATE_STATE}
+
+}
+
+export function updateZipcode() {
+    return {type: UPDATE_ZIPCODE}
+
+}
 
 export function requestLogin() {
     return {
@@ -140,6 +182,8 @@ export function setUserInfo(user) {
     }
 }
 
+
+
 export function clearUserInfo() {
     return {
         type: CLEAR_USER_INFO
@@ -164,30 +208,9 @@ export function initiateLogin(user) {
                 return dispatch(loginFailure())
 
             response.json().then(user => {
-                console.log(user)
-                if (user.authLevel === 3) {
                     dispatch(loginSuccess())
                     dispatch(setUserLoggedIn(user))
-                    // dispatch(initiateGetUsers())
-                    // dispatch(navigate(admin))
-                }
-                else if (user.authLevel === 2) {
 
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-                    //dispatch(navigate(home))
-                } else if (user.authLevel === 1) {
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-                    //dispatch(navigate(home))
-                }
-                else if (user.authLevel === 1) {
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-                    //dispatch(navigate(shopkeeper))
-                }
-                else
-                    dispatch(loginFailure())
             })
         }).catch(error => console.log(error))
     }
