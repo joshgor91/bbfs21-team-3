@@ -22,17 +22,6 @@ public class Cart {
     @JsonProperty
     public Long userId;
 
-    @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            mappedBy = "cart"
-    )
-    @JsonProperty
-    private List<CartItem> cartItems = new ArrayList<>();
-
-
-
-
-
     public Cart(){};
 
     public Cart(Long userId) {
@@ -42,48 +31,4 @@ public class Cart {
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Float getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(Float totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public void addCartItem(CartItem cartItem){
-        if(!cartItems.contains(cartItem)){
-            cartItems.add(cartItem);
-        }
-    }
-
-    public void removeCartItem(CartItem cartItem){
-        cartItems.remove(cartItem);
-
-    }
-
-    public List<CartItem> viewCartItems(){
-        return cartItems;
-    }
-
 }

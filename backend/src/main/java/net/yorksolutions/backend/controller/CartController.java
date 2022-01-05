@@ -10,39 +10,68 @@ import net.yorksolutions.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import java.util.Optional;
+import javax.persistence.*;
+import java.util.*;
 
-class CartItemInput {
-
-    private Long productId;
+class CartItemOutput {
+    @JsonProperty
     private Long cartId;
+    @JsonProperty
+    private Set<Category> categories;
+    @JsonProperty
+    private Long productId;
+    @JsonProperty
+    private String productName;
+    @JsonProperty
+    private String productDescription;
+    @JsonProperty
+    private String brand;
+    @JsonProperty
+    private Float unitPrice;
+    @JsonProperty
+    private int unitsInStock;
+    @JsonProperty
+    private String size;
+    @JsonProperty
+    private String color;
+    @JsonProperty
+    private Date productAvailable;
+    @JsonProperty
+    private Boolean discontinued;
+    @JsonProperty
+    private Boolean discountAvailable;
+    @JsonProperty
+    private String picture;
+    @JsonProperty
+    private Date dateReceived;
+    @JsonProperty
+    private int unitsReceived;
+    @JsonProperty
+    private int quantity;
 
-    public CartItemInput(Long productId, Long cartId) {
-        this.productId = productId;
+    private CartItemOutput(){
+    }
+
+    public CartItemOutput(Long cartId, Set<Category> categories, Long productId, String productName, String productDescription, String brand, Float unitPrice,
+                          int unitsInStock, String size, String color, Date productAvailable, Boolean discontinued, Boolean discountAvailable,
+                          String picture, Date dateReceived, int unitsReceived, int quantity) {
         this.cartId = cartId;
-    }
-
-    public CartItemInput() {
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
+        this.categories = categories;
         this.productId = productId;
-    }
-
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.brand = brand;
+        this.unitPrice = unitPrice;
+        this.unitsInStock = unitsInStock;
+        this.size = size;
+        this.color = color;
+        this.productAvailable = productAvailable;
+        this.discontinued = discontinued;
+        this.discountAvailable = discountAvailable;
+        this.picture = picture;
+        this.dateReceived = dateReceived;
+        this.unitsReceived = unitsReceived;
+        this.quantity = quantity;
     }
 }
 
@@ -59,21 +88,15 @@ public class CartController {
     ProductRepository productRepo;
 
 
-
-
     @CrossOrigin
     @PostMapping("/add")
-    String addItemToCart(@RequestBody CartItemInput input) {
-        System.out.println(input.getCartId());
-        System.out.println(input.getProductId());
-       Optional<Cart> response =  cartRepo.findById(input.getCartId());
-       Cart cart= response.get();
-       Optional<Product> productResponse= productRepo.findById(input.getProductId());
-//       CartItemId cartItemId = new CartItemId(input.getCartId(), input.getProductId());
-       CartItem cartItem= new CartItem( productResponse.get(), cart, 1);
-        cart.addCartItem(cartItem);
-        cartRepo.save(cart);
+    String addItemToCart(@RequestBody CartItem item) {
+        cartRepo.findById(item.getCartId()).orElseThrow();
+        productRepo.findById(item.getProductId()).orElseThrow();
+        var existingCartItem = cartItemRepo.findByCartIdAndProductId(item.getCartId(), item.getProductId());
+        existingCartItem.ifPresent(cartItem -> item.setQuantity(cartItem.getQuantity() + item.getQuantity()));
 
+        cartItemRepo.save(item);
         return "success";
     }
 
@@ -81,31 +104,39 @@ public class CartController {
 
     @CrossOrigin
     @GetMapping("/viewCart/{userid}")
-    Iterable<CartItem> viewCart(@PathVariable Long userid) {
+    Iterable<CartItemOutput> viewCart(@PathVariable Long userid) {
+        var cart = cartRepo.findByUserId(userid).orElseThrow();
+        var cartId = cart.getId();
+        List<Object[]> cartItemDetails = cartItemRepo.findCartItemsByCartId(cartId);
+        ArrayList<CartItemOutput> cartItems = new ArrayList<>();
+        for (var itemDetail : cartItemDetails) {
+            Product p = (Product) itemDetail[0];
+            CartItem c = (CartItem) itemDetail[1];
+            var cartItem = new CartItemOutput(c.getCartId(), p.getCategories(), c.getProductId(), p.productName, p.productDescription,
+                    p.brand, p.unitPrice, p.unitsInStock, p.size, p.color, p.productAvailable, p.discontinued, p.discountAvailable,
+                    p.picture, p.dateReceived, p.unitsReceived, c.getQuantity());
+            cartItems.add(cartItem);
+        }
 
-//        var cartid = cartRepo.findByUserId(userid).get().id;
-//        return cartItemRepo.findAllByCartId(cartid);
-//    }
-        var cart = cartRepo.findByUserId(userid).get();
-        return cart.viewCartItems();
+        return cartItems;
     }
 
     @CrossOrigin
-    @DeleteMapping("/delete/{id}")
-    String deleteProductById(@PathVariable Long id) {
-        cartItemRepo.deleteById(id);
+    @DeleteMapping("/delete/{cartId}/{prodId}")
+    String deleteProductById(@PathVariable Long cartId, @PathVariable Long prodId) {
+        cartItemRepo.findByCartIdAndProductId(cartId, prodId).orElseThrow();
+        cartItemRepo.deleteByCartIdAndProductId(cartId, prodId);
         return "success";
     }
 
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//        // returning string to notify the front end that the admin successfully edited the user.
-//    String editThree(@RequestBody User user) {
-//        cartItemRepo.findById(user.getId()).orElseThrow();
-////        cartItemRepo.save(user);
-//        return "success";
-//
-//    }
-
-
+    @CrossOrigin
+    @PutMapping("/edit")
+    String editCartItem(@RequestBody CartItem item) {
+        cartItemRepo.findByCartIdAndProductId(item.getCartId(), item.getProductId()).orElseThrow();
+        if (item.getQuantity() == 0)
+            cartItemRepo.deleteByCartIdAndProductId(item.getCartId(), item.getProductId());
+        else
+            cartItemRepo.save(item);
+        return "success";
+    }
 }
