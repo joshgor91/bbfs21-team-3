@@ -12,6 +12,8 @@ const DELETE_PRODUCT_FAILED = 'DELETE_PRODUCT_FAILED'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
+const VIEW_PRODUCT_DETAILS = 'VIEW_PRODUCT_DETAILS'
+const CANCEL_VIEW_PRODUCT_DETAILS = 'CANCEL_VIEW_PRODUCT_DETAILS'
 // const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
@@ -51,6 +53,8 @@ const initialState = {
     dateReceived: '',
     unitsReceived: '',
     hideTable: true,
+    productToView: undefined,
+    showProductDetails: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -119,6 +123,19 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 editErrorOccurred: true
+            }
+
+        case VIEW_PRODUCT_DETAILS:
+            return {
+                ...state,
+                showProductDetails: true,
+                productToView: action.product
+            }
+
+        case CANCEL_VIEW_PRODUCT_DETAILS:
+            return {
+                ...state,
+                showProductDetails: false
             }
 
         // case UPDATE_CATEGORIES:
@@ -255,7 +272,7 @@ function addProductFailed() {
 }
 
 export function editProduct(product) {
-    console.log(product)
+    // console.log(product)
     return {
         type: EDIT_PRODUCT,
         product
@@ -293,6 +310,20 @@ export function deleteProductFailed() {
     }
 }
 
+export function viewProductDetails(product) {
+    console.log(product)
+    return {
+        type: VIEW_PRODUCT_DETAILS,
+        product
+    }
+}
+
+export function cancelViewProductDetails() {
+    return {
+        type: CANCEL_VIEW_PRODUCT_DETAILS
+    }
+}
+
 // export function updateCategories(categories) {
 //     return {
 //         type: UPDATE_CATEGORIES,
@@ -301,7 +332,7 @@ export function deleteProductFailed() {
 // }
 
 export function updateProductName(productName) {
-    console.log(productName)
+    // console.log(productName)
     return {
         type: UPDATE_PRODUCT_NAME,
         productName

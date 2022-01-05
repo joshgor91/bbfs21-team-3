@@ -10,6 +10,8 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
 
     return <>
             <ShopkeeperEditProduct/>
+        <ShopkeeperProduct/>
+
         <Table striped bordered responsive hidden={hide}>
             <thead>
             <tr>
@@ -28,6 +30,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
                     <td >{product.productAvailable}</td>
+                    <td><Button onClick={() => viewProductDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
                             <Button onClick={() => editProduct(product)}>edit</Button>
@@ -51,7 +54,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({editProduct, initiateDeleteProduct}, dispatch)
+    return bindActionCreators({viewProductDetails, editProduct, initiateDeleteProduct}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperProductTable)
