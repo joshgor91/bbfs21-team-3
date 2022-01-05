@@ -161,7 +161,6 @@ function addingUser() {
 }
 
 function startEditingUser(user) {
-    console.log("inside editingUser")
     return {
         type: EDITING_USER,
         user
@@ -208,7 +207,6 @@ function usersUpdated(users) {
 }
 
 function deletingUser() {
-    console.log("trying to delete")
     return {
         type: DELETING_USER
     }
@@ -223,7 +221,6 @@ function deleteUserFailed() {
 //Side Effects
 
 export function initiateGetUsers() {
-    console.log("inside initiateGetUsers")
     return function sideEffect(dispatch, getState) {
         dispatch(gettingUsers())
 
