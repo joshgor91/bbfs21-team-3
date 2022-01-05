@@ -35,7 +35,7 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred}) {
     if (registerErrorOccurred) {
 
         return <>
-                <Alert variant="danger"> Register error occured </Alert>
+                <Alert variant="danger"> Register error occurred </Alert>
         </>
     } else {
 

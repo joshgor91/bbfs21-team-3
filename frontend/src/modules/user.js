@@ -1,4 +1,3 @@
-import {initiateGetProducts} from "./shopkeeper";
 
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -107,7 +106,7 @@ function addUserFailed() {
     }
 }
 
-function setUserLoggedIn(user) {
+export function setUserLoggedIn(user) {
     return {
         type: SET_USER_LOGGED_IN,
         user

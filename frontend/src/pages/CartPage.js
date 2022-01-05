@@ -7,7 +7,7 @@ import {useEffect} from "react";
 const CartPage = () => {
     const dispatch = useDispatch()
 
-    useEffect(() => {dispatch(initiateGetCartItems())}, [])
+    useEffect(() => {dispatch(initiateGetCartItems())}, )
 
 
     return <>
