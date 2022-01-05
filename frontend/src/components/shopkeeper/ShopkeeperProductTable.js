@@ -1,15 +1,26 @@
-import {Button, Stack, Table} from "react-bootstrap";
-import {editProduct, initiateDeleteProduct} from "../../modules/shopkeeper";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import ShopkeeperEditProduct from "./ShopkeeperEditProduct";
+import {Button, Stack, Table} from "react-bootstrap"
+import {editProduct, initiateDeleteProduct, viewProductDetails} from "../../modules/shopkeeper"
+import {bindActionCreators} from "redux"
+import {connect} from "react-redux"
+import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
+import ShopkeeperProduct from "./ShopkeeperProduct";
+import {useState} from "react";
 
-function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct}) {
-    const tHead = ["ID", "Product Name", "Brand", "Unit Price", "Units in Stock", "Units Received", "Product Available", "Edit/Delete"]
 
+function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
+    const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
+    const [showProductDetails, setShowProductDetails] = useState(false)
+
+    function handleViewDetails(product) {
+        viewProductDetails(product)
+        setShowProductDetails(true)
+    }
 
     return <>
             <ShopkeeperEditProduct/>
+        {showProductDetails ? <ShopkeeperProduct/> : ''}
+
+
         <Table striped bordered responsive hidden={hide}>
             <thead>
             <tr>
@@ -28,6 +39,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
                     <td >{product.productAvailable}</td>
+                    <td><Button onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
                             <Button onClick={() => editProduct(product)}>edit</Button>
@@ -51,7 +63,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({editProduct, initiateDeleteProduct}, dispatch)
+    return bindActionCreators({viewProductDetails, editProduct, initiateDeleteProduct}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperProductTable)
