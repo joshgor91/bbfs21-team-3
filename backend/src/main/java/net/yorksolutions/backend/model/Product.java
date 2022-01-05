@@ -29,6 +29,10 @@ public class Product {
     }
 
     @JsonProperty
+    @ElementCollection
+    private List<ScheduledPrices> ScheduledPrices;
+
+    @JsonProperty
     public String productName;
 
     @JsonProperty
@@ -79,4 +83,5 @@ public class Product {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
 }
