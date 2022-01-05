@@ -1,6 +1,6 @@
 import {initiateGetProducts} from "./shopkeeper";
 import {deleteUserRequest, editUserRequest} from "../services/userService";
-import {useNavigate} from "react-router";
+
 
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -9,6 +9,9 @@ const LOGOUT = 'LOGOUT'
 const REGISTERING_USER = 'REGISTERING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
+const SET_USER_AS_ADMIN = 'SET_USER_AS_ADMIN'
+const SET_USER_AS_SHOPKEEPER = 'SET_USER_AS_SHOPKEEPER'
+const SET_USER_AS_CUSTOMER = 'SET_USER_AS_CUSTOMER'
 const SET_USER_INFO = 'SET_USER_INFO'
 const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
 const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
@@ -29,7 +32,10 @@ const initialState = {
     loggedInUser: {},
     userForm:{},
     registerErrorOccurred: false,
-    errorMessage: '',
+    userIsAdmin: false,
+    userIsShopkeeper: false,
+    userIsCustomer: false,
+    userForm:{},
     showInfo: false,
     userInfo: {},
     password: '',
@@ -48,15 +54,6 @@ export default function reducer(state = initialState, action){
                 ...state,
                 isLoggedIn: false,
                 loginErrorOccurred: false,
-                loginPending: true
-            }
-
-        case LOGIN_SUCCESS:
-            return {
-                ...state,
-                isLoggedIn: true,
-                loginErrorOccurred: false,
-                loginPending: false,
             }
 
         case LOGOUT:
@@ -77,10 +74,19 @@ export default function reducer(state = initialState, action){
                 loginPending: false
             }
 
-        case SET_USER_LOGGED_IN:
+
+        case SET_USER_AS_ADMIN:
             return {
-                ...state,
-                loggedInUser: action.user
+                userIsAdmin: true,
+                loggedInUser: action.user,
+                isLoggedIn: true,
+            }
+
+        case SET_USER_AS_SHOPKEEPER:
+            return {
+                userIsShopkeeper: true,
+                loggedInUser: action.user,
+                isLoggedIn: true,
             }
 
         case REGISTERING_USER:
@@ -88,6 +94,13 @@ export default function reducer(state = initialState, action){
                 ...state,
                 showEditUser: false,
                 addingUser: true
+            }
+
+        case SET_USER_AS_CUSTOMER:
+            return {
+                userIsCustomer: true,
+                loggedInUser: action.user,
+                isLoggedIn: true
             }
 
         case SET_USER_INFO:
@@ -194,7 +207,6 @@ export function logout() {
     return {type: LOGOUT}
 }
 
-
 function registeringUser() {
     return {
         type: REGISTERING_USER
@@ -207,9 +219,30 @@ function addUserFailed() {
     }
 }
 
+function setUserAsAdmin(user) {
+    return {
+        type: SET_USER_AS_ADMIN,
+        user
+    }
+}
+
+function setUserAsShopkeeper(user) {
+    return {
+        type: SET_USER_AS_SHOPKEEPER,
+        user
+    }
+}
+
 function setUserLoggedIn(user) {
     return {
         type: SET_USER_LOGGED_IN,
+        user
+    }
+}
+
+function setUserAsCustomer(user) {
+    return {
+        type: SET_USER_AS_CUSTOMER,
         user
     }
 }
@@ -249,14 +282,18 @@ export function initiateLogin(user) {
             body: JSON.stringify(user)
 
         }).then(response => {
-            console.log(response.ok)
             if (!response.ok)
                 return dispatch(loginFailure())
 
             response.json().then(user => {
-                    dispatch(loginSuccess())
-                    dispatch(setUserLoggedIn(user))
-
+                if (user.authLevel === 3) {
+                    dispatch(setUserAsAdmin(user))
+                } else if (user.authLevel === 2) {
+                    dispatch(setUserAsShopkeeper(user))
+                } else if (user.authLevel === 1) {
+                    dispatch(setUserAsCustomer(user))
+                } else
+                    dispatch(loginFailure())
             })
         }).catch(error => console.log(error))
     }
@@ -283,7 +320,6 @@ export function initiateRegisterUser(user) {
                     console.log("user registered")
 
                 else {
-                    console.log("did not hit success")
                     dispatch(addUserFailed())
                 }
             })

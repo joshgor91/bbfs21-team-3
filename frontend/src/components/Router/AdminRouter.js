@@ -12,23 +12,24 @@ import UserPage from "./pages/UserPage";
 import {useSelector} from "react-redux";
 
 
-function ReactRouter() {
-    const cartQuantity = useSelector(state => state.cartReducer.quantity)
+
+function AdminRouter({cartQuantity}) {
+
     return (
 
         <Router>
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
-                    <Link to="/" id="logo" className="link-item" >Better Buy</Link>
+                    <Link to="/" id="logo" className="link-item">Better Buy</Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
-            menu
+            Menu
                 </span></Navbar.Toggle>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto pr-3 ">
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/">Home </Link>
+                                <Link className="link-item" to="/">Home </Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -40,7 +41,7 @@ function ReactRouter() {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/admin">Admin </Link>
+                                <Link className="link-item" to="/admin">Admin </Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -67,8 +68,14 @@ function ReactRouter() {
                                         <Badge pill bg="secondary">{cartQuantity}</Badge>
                                     </Link>
                             </Nav.Item>
-
                         </Nav>
+                            <Nav className='ms-auto'>
+                            <Nav.Item >
+                                <LogoutBtn/>
+                            </Nav.Item>
+                            </Nav>
+
+
                     </Navbar.Collapse>
                 </>
 
@@ -88,10 +95,8 @@ function ReactRouter() {
                 <Route path='/myaccount' element={<UserPage/>} />
             </Routes>
         </Router>
-
-
     )
 
-}
 
-export default ReactRouter;
+}
+export default AdminRouter
