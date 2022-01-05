@@ -11,20 +11,24 @@ import {useEffect, useState} from "react";
 import ShopkeeperProductList from "./ShopkeeperProductList";
 import {logout} from "../../modules/user";
 import ShopkeeperSeeCategories from "./ShopkeeperSeeCategories";
+import ShopkeeperCreateCategory from "./ShopkeeperCreateCategory";
 
 
 
 function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, dispatch}) {
     const [hide, setHide] = useState(true)
+    const [showCreateCategory, setShowCreateCategory] = useState(false)
+    const [show, setShow] = useState(false)
+    const [showProductList, setShowProductList] = useState(false)
+
     useEffect(() => {
         initiateGetProducts()
         initiateGetCategories()
     }, [])
-    const [show, setShow] = useState(false)
-    const [showProductList, setShowProductList] = useState(false)
 
 
-    const handleShow = () => setShow(true)
+    const handleShowCreateProduct = () => setShow(true)
+    const handleShowCreateCategory = () => setShowCreateCategory(true)
 
     const handleShowProductList = () => setShowProductList(true)
 
@@ -51,6 +55,7 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                     setShowNewProduct={setShow}
                     handleAddProduct={handleCreateProduct}
                 />
+                <ShopkeeperCreateCategory showCreateCategory={showCreateCategory} setShowCreateCategory={setShowCreateCategory}/>
                 {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide}/>}
                 <Dropdown as={ButtonGroup}>
                     <Button variant='primary'>Shopkeeper Ish</Button>
@@ -58,7 +63,8 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                     <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleShow}>Create</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
                     </Dropdown.Menu><br/>

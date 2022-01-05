@@ -25,7 +25,6 @@ function ShopkeeperSeeCategories({ categories, hide, setHide}) {
                     <td>
                         <Stack>
                             <Button >edit</Button>
-                            <Button >Delete</Button>
                         </Stack>
                     </td>
                 </tr>
