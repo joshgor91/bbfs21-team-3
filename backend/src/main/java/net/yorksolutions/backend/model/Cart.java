@@ -22,35 +22,13 @@ public class Cart {
     @JsonProperty
     public Long userId;
 
-    @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            mappedBy = "cart"
-    )
-
-    @JsonProperty
-    private List<CartItem> cartItems = new ArrayList<>();
-
-
-
     public Cart(){};
 
     public Cart(Long userId) {
         this.userId = userId;
     }
 
-    public void addCartItem(CartItem cartItem){
-        if(!cartItems.contains(cartItem)){
-            cartItems.add(cartItem);
-        }
+    public Long getId() {
+        return id;
     }
-
-    public void removeCartItem(CartItem cartItem){
-        cartItems.remove(cartItem);
-
-    }
-
-    public List<CartItem> viewCartItems(){
-        return cartItems;
-    }
-
 }

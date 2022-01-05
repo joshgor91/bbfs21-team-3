@@ -14,7 +14,9 @@ import {
     updateDiscontinued,
     updatePicture,
     updateDateReceived,
-    updateUnitsReceived, updateCategories
+    updateUnitsReceived,
+    // updateCategories,
+    updateDiscountAvailable
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -23,7 +25,7 @@ function ShopkeeperEditProduct({
                                    show,
                                    product,
                                    productName,
-                                   categories,
+                                   // categories,
                                    productDescription,
                                    brand,
                                    unitPrice,
@@ -32,6 +34,7 @@ function ShopkeeperEditProduct({
                                    color,
                                    productAvailable,
                                    discontinued,
+                                   discountAvailable,
                                    picture,
                                    dateReceived,
                                    unitsReceived,
@@ -39,7 +42,7 @@ function ShopkeeperEditProduct({
                                    initiateEditProduct,
                                    cancelEditProduct,
                                    updateProductName,
-    updateCategories,
+                                   // updateCategories,
                                    updateProductDescription,
                                    updateBrand,
                                    updateUnitPrice,
@@ -48,19 +51,27 @@ function ShopkeeperEditProduct({
                                    updateColor,
                                    updateProductAvailable,
                                    updateDiscontinued,
+                                   updateDiscountAvailable,
                                    updatePicture,
                                    updateDateReceived,
                                    updateUnitsReceived
                                }) {
+    // console.log(productName, 'productName before submit')
+    // console.log(product)
+    console.log(discontinued)
+    console.log(discountAvailable)
 
     function handleSubmit(event) {
         event.preventDefault()
+        console.log(productName, 'productName')
+        console.log(product)
+
 
         if (product)
             initiateEditProduct({
                 ...product,
                 productName,
-                categories,
+                // categories,
                 productDescription,
                 brand,
                 unitPrice,
@@ -69,6 +80,7 @@ function ShopkeeperEditProduct({
                 color,
                 productAvailable,
                 discontinued,
+                discountAvailable,
                 picture,
                 dateReceived,
                 unitsReceived
@@ -77,7 +89,7 @@ function ShopkeeperEditProduct({
             initiateAddProduct({
                 id: Math.floor(Math.random() * 9999999),
                 productName,
-                categories,
+                // categories,
                 productDescription,
                 brand,
                 unitPrice,
@@ -86,10 +98,12 @@ function ShopkeeperEditProduct({
                 color,
                 productAvailable,
                 discontinued,
+                discountAvailable,
                 picture,
                 dateReceived,
                 unitsReceived
             })
+
     }
 
     return <Modal show={show} onHide={cancelEditProduct}>
@@ -97,13 +111,13 @@ function ShopkeeperEditProduct({
             <Form.Label>Product Name</Form.Label>
             <Form.Control type='productName' value={productName}
                           onChange={event => updateProductName(event.target.value)}/>
-            <Form.Label>Categories</Form.Label>
-            <Form.Control type='categories' as='select' value={categories}
-                          onChange={event => updateCategories(event.target.value)}>
-                <option value={10}>Video Games</option>
-                <option value={3}>Electronics</option>
-                <option value={2}>Entertainment</option>
-            </Form.Control>
+            {/*<Form.Label>Categories</Form.Label>*/}
+            {/*<Form.Control type='categories' as='select' value={10}*/}
+            {/*              onChange={event => updateCategories(event.target.value)}>*/}
+            {/*    <option value={10}>Video Games</option>*/}
+            {/*    <option value={3}>Electronics</option>*/}
+            {/*    <option value={2}>Entertainment</option>*/}
+            {/*</Form.Control>*/}
             <Form.Label>Product Description</Form.Label>
             <Form.Control type='productDescription' value={productDescription}
                           onChange={event => updateProductDescription(event.target.value)}/>
@@ -123,20 +137,22 @@ function ShopkeeperEditProduct({
             <Form.Control type='date' value={productAvailable}
                           onChange={event => updateProductAvailable(event.target.value)}/>
             <Form.Label>Discontinued</Form.Label>
-            <Form.Control type='discontinued' as='select' defaultValue={false}
+            <Form.Control type='discontinued' as='select' value={discontinued}
                           onChange={event => updateDiscontinued(event.target.value)}>
+                <option value=''>Undefined</option>
                 <option value={true}>True</option>
                 <option value={false}>False</option>
             </Form.Control>
             <Form.Label>Discount Available</Form.Label>
-            <Form.Control type='discountAvailable' as='select' defaultValue={false}
-                          onChange={event => updateDiscontinued(event.target.value)}>
+            <Form.Control type='discountAvailable' as='select' value={discountAvailable}
+                          onChange={event => updateDiscountAvailable(event.target.value)}>
+                <option value=''>Undefined</option>
                 <option value={true}>True</option>
                 <option value={false}>False</option>
             </Form.Control>
 
             <Form.Label>Picture</Form.Label>
-            <Form.Control type='file' value={picture} onChange={event => updatePicture(event.target.value)}/>
+            <Form.Control type='img' value={picture} onChange={event => updatePicture(event.target.value)}/>
             <Form.Label>Date Received</Form.Label>
             <Form.Control type='date' value={dateReceived}
                           onChange={event => updateDateReceived(event.target.value)}/>
@@ -151,12 +167,21 @@ function ShopkeeperEditProduct({
 function mapStateToProps(state) {
     return {
         show: state.shopkeeperReducer.showEditProduct,
-        productToEdit: state.shopkeeperReducer.productToEdit,
+        product: state.shopkeeperReducer.productToEdit,
         productName: state.shopkeeperReducer.productName,
         productDescription: state.shopkeeperReducer.productDescription,
         brand: state.shopkeeperReducer.brand,
-        unitPrice: state.shopkeeperReducer.unit,
-        unitsInStock: state.shopkeeperReducer.productName,
+        unitPrice: state.shopkeeperReducer.unitPrice,
+        unitsInStock: state.shopkeeperReducer.unitsInStock,
+        // categories: state.shopkeeperReducer.categories,
+        size: state.shopkeeperReducer.size,
+        color: state.shopkeeperReducer.color,
+        productAvailable: state.shopkeeperReducer.productAvailable,
+        discontinued: state.shopkeeperReducer.discontinued,
+        discountAvailable: state.shopkeeperReducer.discountAvailable,
+        picture: state.shopkeeperReducer.picture,
+        dateReceived: state.shopkeeperReducer.dateReceived,
+        unitsReceived: state.shopkeeperReducer.unitsReceived
     }
 }
 
@@ -166,6 +191,7 @@ function mapDispatchToProps(dispatch) {
         initiateEditProduct,
         cancelEditProduct,
         updateProductName,
+        // updateCategories,
         updateProductDescription,
         updateBrand,
         updateUnitPrice,
@@ -174,6 +200,7 @@ function mapDispatchToProps(dispatch) {
         updateColor,
         updateProductAvailable,
         updateDiscontinued,
+        updateDiscountAvailable,
         updatePicture,
         updateDateReceived,
         updateUnitsReceived

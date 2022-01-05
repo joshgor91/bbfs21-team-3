@@ -28,13 +28,9 @@ public class Product {
         categories.removeIf(catId -> (catId.getId() == id));
     }
 
-
-    @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            mappedBy = "product"
-    )
     @JsonProperty
-    private List<CartItem> cartItems = new ArrayList<>();
+    @ElementCollection
+    private List<ScheduledPrices> ScheduledPrices;
 
     @JsonProperty
     public String productName;
@@ -87,4 +83,5 @@ public class Product {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+
 }
