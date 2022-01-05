@@ -105,7 +105,8 @@ export function initiateGetAllProducts() {
 
 export function initiateGetProductById(productId) {
     return function gettingProductSideEffect(dispatch) {
-        getProductRequest(productId).then(response => {
+        getProductRequest(productId)
+            .then(response => {
             if (response.status !== 200)
                 return dispatch(gettingProductFailed())
             else

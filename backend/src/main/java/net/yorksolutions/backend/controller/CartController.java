@@ -122,8 +122,8 @@ public class CartController {
     }
 
     @CrossOrigin
-    @DeleteMapping("/delete")
-    String deleteProductById(@RequestHeader Long cartId, @RequestHeader Long prodId) {
+    @DeleteMapping("/delete/{cartId}/{prodId}")
+    String deleteProductById(@PathVariable Long cartId, @PathVariable Long prodId) {
         cartItemRepo.findByCartIdAndProductId(cartId, prodId).orElseThrow();
         cartItemRepo.deleteByCartIdAndProductId(cartId, prodId);
         return "success";

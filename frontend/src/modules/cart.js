@@ -1,4 +1,5 @@
 import {addCartItemRequest, getCartItemsRequest} from "../services/cartService";
+import {initiateGetUsers} from "./admin";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -9,13 +10,15 @@ const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
 const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
+const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
 
 const initialState = {
     cartItems: [],
     quantity: 0,
     gettingCartItems: false,
     addingCartItem: false,
-    errorMessage: ''
+    errorMessage: '',
+    cartFailedMessage: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -28,7 +31,7 @@ export default function reducer(state = initialState, action) {
         case SET_CART_ITEMS:
             return {
                 ...state,
-                cartItems: [...state.cartItems, action.payload],
+                cartItems: action.payload,
                 gettingCartItems: false,
                 errorMessage: ''
             }
@@ -77,6 +80,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 quantity: 0
+            }
+
+        case DELETE_CART_FAILED:
+            return {
+                ...state,
+                cartFailedMessage: action.payload
             }
 
         default:
@@ -144,6 +153,13 @@ function clearQuantity() {
     }
 }
 
+function deleteCartFailed(message) {
+    return {
+        type: DELETE_CART_FAILED,
+        payload: message
+    }
+}
+
 
 //sideEffects
 export function initiateGetCartItems() {
@@ -154,13 +170,8 @@ export function initiateGetCartItems() {
             if (res.status !== 200)
                 return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
             else {
-                let quantity = 0
-                dispatch(clearCart())
-                for (let item of res.data) {
-                    quantity += item.quantity
-                    dispatch(setCartItems(item.product))
-                }
-                dispatch(setQuantity(quantity))
+                dispatch(setCartItems(res.data))
+                dispatch(setQuantity(res.data.length))
             }
         })
             .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
@@ -194,3 +205,28 @@ export function initiateAddCartItem(productToAdd) {
         }
     }
 }
+
+export function initiateDeleteCartItem(id) {
+    console.log("deleting " + id)
+    return function sideEffect(dispatch) {
+        dispatch(clearCart())
+        fetch(`http://localhost:8080/api/cart/delete`, {
+            method: 'DELETE',
+            headers: {
+            "cartId": 4,
+            "prodId": id
+            },
+        }).then(response => {
+            if(!response.ok)
+                return dispatch(deleteCartFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                   console.log("cart deleted!")
+                else
+                    dispatch(deleteCartFailed())
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
