@@ -15,11 +15,8 @@ const SET_USER_AS_CUSTOMER = 'SET_USER_AS_CUSTOMER'
 
 const initialState = {
     isLoggedIn: false,
-    loginPending: false,
     loginErrorOccurred: false,
-    users: [],
     loggedInUser: {},
-    userForm:{},
     registerErrorOccurred: false,
     userIsAdmin: false,
     userIsShopkeeper: false,
@@ -34,59 +31,36 @@ export default function reducer(state = initialState, action){
                 ...state,
                 isLoggedIn: false,
                 loginErrorOccurred: false,
-                loginPending: true
             }
 
-        case LOGIN_SUCCESS:
-            return {
-                ...state,
-                isLoggedIn: true,
-                loginErrorOccurred: false,
-                loginPending: false,
-            }
-
-        case LOGOUT:
-            return {
-                ...state,
-                isLoggedIn: false,
-                loginErrorOccurred: false,
-                loginPending: false
-            }
 
         case LOGIN_FAILURE:
             return {
                 ...state,
                 isLoggedIn: false,
                 loginErrorOccurred: true,
-                loginPending: false
             }
 
-        case SET_USER_LOGGED_IN:
-            return {
-                ...state,
-                loggedInUser: action.user
-            }
-
-        case REGISTERING_USER:
-            return {
-                ...state,
-                showEditUser: false,
-                addingUser: true
-            }
 
         case SET_USER_AS_ADMIN:
             return {
                 userIsAdmin: true,
+                loggedInUser: action.user,
+                isLoggedIn: true,
             }
 
         case SET_USER_AS_SHOPKEEPER:
             return {
                 userIsShopkeeper: true,
+                loggedInUser: action.user,
+                isLoggedIn: true,
             }
 
         case SET_USER_AS_CUSTOMER:
             return {
                 userIsCustomer: true,
+                loggedInUser: action.user,
+                isLoggedIn: true
             }
 
         default:
@@ -106,15 +80,9 @@ export function loginFailure(errorMessage) {
         payload: errorMessage}
 }
 
-export function loginSuccess() {
-    return {type: LOGIN_SUCCESS,
-    }
-}
-
 export function logout() {
     return {type: LOGOUT}
 }
-
 
 function registeringUser() {
     return {
@@ -128,28 +96,24 @@ function addUserFailed() {
     }
 }
 
-function setUserLoggedIn(user) {
+function setUserAsAdmin(user) {
     return {
-        type: SET_USER_LOGGED_IN,
+        type: SET_USER_AS_ADMIN,
         user
     }
 }
 
-function setUserAsAdmin() {
+function setUserAsShopkeeper(user) {
     return {
-        type: SET_USER_AS_ADMIN
+        type: SET_USER_AS_SHOPKEEPER,
+        user
     }
 }
 
-function setUserAsShopkeeper() {
+function setUserAsCustomer(user) {
     return {
-        type: SET_USER_AS_SHOPKEEPER
-    }
-}
-
-function setUserAsCustomer() {
-    return {
-        type: SET_USER_AS_CUSTOMER
+        type: SET_USER_AS_CUSTOMER,
+        user
     }
 }
 
@@ -166,19 +130,16 @@ export function initiateLogin(user) {
             body: JSON.stringify(user)
 
         }).then(response => {
-            console.log(response.ok)
             if (!response.ok)
                 return dispatch(loginFailure())
 
             response.json().then(user => {
-                dispatch(loginSuccess())
-                dispatch(setUserLoggedIn(user))
                 if (user.authLevel === 3) {
-                    dispatch(setUserAsAdmin())
+                    dispatch(setUserAsAdmin(user))
                 } else if (user.authLevel === 2) {
-                    dispatch(setUserAsShopkeeper())
+                    dispatch(setUserAsShopkeeper(user))
                 } else if (user.authLevel === 1) {
-                    dispatch(setUserAsCustomer())
+                    dispatch(setUserAsCustomer(user))
                 } else
                     dispatch(loginFailure())
             })
@@ -203,7 +164,8 @@ export function initiateRegisterUser(user) {
 
             response.text().then(text => {
                 if (text === 'success')
-                    dispatch(initiateLogin(user))
+                    // dispatch(initiateLogin(user))
+                    console.log("user registered")
 
                 else {
                     dispatch(addUserFailed())

@@ -3,6 +3,7 @@ import AdminRouter from "./components/Router/AdminRouter";
 import GuestRouter from "./components/Router/GuestRouter";
 import {connect} from "react-redux";
 import ShopkeeperRouter from "./components/Router/ShopkeeperRouter";
+import CustomerRouter from "./components/Router/CustomerRouter";
 
 function App({userIsAdmin, userIsShopkeeper, userIsCustomer}) {
 
@@ -13,7 +14,7 @@ function App({userIsAdmin, userIsShopkeeper, userIsCustomer}) {
         return (<ShopkeeperRouter/>)
     }
     else if(userIsCustomer){
-        return (<ShopkeeperRouter/>)
+        return (<CustomerRouter/>)
     }
     else{
         return (<GuestRouter/>)

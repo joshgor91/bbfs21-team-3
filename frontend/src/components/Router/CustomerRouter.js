@@ -4,6 +4,8 @@ import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
 
 
 
@@ -57,6 +59,8 @@ function CustomerRouter() {
 
             <Routes>
                 <Route path='/' element={<Home/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/register' element={<Register/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
             </Routes>
