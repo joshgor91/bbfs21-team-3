@@ -3,7 +3,7 @@ import {
     clearUserInfo, initiateEditUserInfo,
     updateAddress1,
     updateAddress2,
-    updateCity,
+    updateCity, updatePassword,
     updateState,
     updateZipcode
 } from "../../modules/user";
@@ -78,7 +78,7 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
                                               placeholder='Enter new password'
                                               value={password}
                                               name='password'
-                                              onChange={event => dispatch(updateAddress1(event.target.value))}
+                                              onChange={event => dispatch(updatePassword(event.target.value))}
                                 />
                             </Form.Group>}
                     </Row>

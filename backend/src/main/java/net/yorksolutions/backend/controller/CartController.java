@@ -2,6 +2,8 @@ package net.yorksolutions.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.yorksolutions.backend.model.*;
 import net.yorksolutions.backend.repository.CartItemRepository;
 import net.yorksolutions.backend.repository.CartRepository;
@@ -87,10 +89,12 @@ public class CartController {
     @Autowired
     ProductRepository productRepo;
 
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @CrossOrigin
     @PostMapping("/add")
-    String addItemToCart(@RequestBody CartItem item) {
+    String addItemToCart(@RequestBody CartItem item) throws JsonProcessingException {
+        System.out.println(objectMapper.writeValueAsString(item));
         cartRepo.findById(item.getCartId()).orElseThrow();
         productRepo.findById(item.getProductId()).orElseThrow();
         var existingCartItem = cartItemRepo.findByCartIdAndProductId(item.getCartId(), item.getProductId());
@@ -98,6 +102,12 @@ public class CartController {
 
         cartItemRepo.save(item);
         return "success";
+    }
+
+    @CrossOrigin
+    @GetMapping("/usercart")
+    Optional<Cart> getUserCart(@RequestHeader Long userId) {
+        return cartRepo.findByUserId(userId);
     }
 
 

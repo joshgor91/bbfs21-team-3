@@ -9,10 +9,8 @@ import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import UserPage from "../../pages/UserPage";
-import {useSelector} from "react-redux";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 import Checkout from "../../pages/Checkout";
-
 
 
 function AdminRouter({cartQuantity}) {
@@ -39,7 +37,7 @@ function AdminRouter({cartQuantity}) {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
+                                <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Link className="link-item" to="/myaccount">My Account</Link>
@@ -57,18 +55,17 @@ function AdminRouter({cartQuantity}) {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/cart">
-                                        <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
-                                    </Link>
+                                <Link className="link-item" to="/cart">
+                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                </Link>
                             </Nav.Item>
                         </Nav>
-                            <Nav className='ms-auto'>
-                            <Nav.Item >
+                        <Nav className='ms-auto'>
+                            <Nav.Item>
                                 <LogoutBtn/>
                             </Nav.Item>
-                            </Nav>
-
+                        </Nav>
 
                     </Navbar.Collapse>
                 </>

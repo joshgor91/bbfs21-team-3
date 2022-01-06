@@ -12,6 +12,7 @@ import Checkout from "../../pages/Checkout";
 
 
 function GuestRouter({cartQuantity}) {
+    console.log('guest router')
 
         return (
 

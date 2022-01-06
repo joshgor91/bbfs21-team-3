@@ -106,7 +106,6 @@ public class UserController {
         userRepo.save(newUser);
         //create cart object
         Cart cart = new Cart(newUser.id);
-
 //        if (cartRepo.findByUserId(newUser.id).isEmpty())
 //        save cart
         cartRepo.save(cart);
