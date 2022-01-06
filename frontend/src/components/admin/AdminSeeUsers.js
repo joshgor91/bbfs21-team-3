@@ -3,7 +3,7 @@ import {gettingUsers, initiateDeleteUser, initiateEditUser} from "../../modules/
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setUserForm}) {
+function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setUserForm, loggedInUser, userToEdit}) {
     const tHead = ["ID", "First Name", "Last Name", "Role", "Email", "Auth Level", "Password", "Edit/Delete"]
 
     const handleEdit = user => event => {
@@ -35,7 +35,9 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
                         <td>
                             <Stack>
                             <Button onClick={handleEdit(user)}>edit</Button>
-                            <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
+                                {user.id !== loggedInUser.id ?
+                                    <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
+                                    : <></> }
                             </Stack>
                         </td>
                     </tr>
@@ -48,7 +50,9 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
 function mapStateToProps(state){
     return {
         hide: state.adminReducer.hideTable,
-        users: state.adminReducer.users
+        users: state.adminReducer.users,
+        loggedInUser: state.userReducer.loggedInUser,
+        userToEdit: state.adminReducer.userToEdit
 
     }
 }

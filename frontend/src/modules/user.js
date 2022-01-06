@@ -38,6 +38,7 @@ const initialState = {
     city: '',
     state: '',
     zipcode: '',
+
 }
 
 
