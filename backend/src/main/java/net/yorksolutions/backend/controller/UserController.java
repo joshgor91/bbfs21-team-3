@@ -64,19 +64,6 @@ public class UserController {
         return userRepo.findAll();
     }
 
-//    @CrossOrigin
-//    @PostMapping("/login")
-//    Object login(@RequestBody User user) {
-//        Optional<User> response = userRepo.findByEmail(user.getEmail());
-//
-//        if (response.isPresent() && response.get().getPassword().equals(user.password)) {
-//            User res = response.get();
-//            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.email, res.authLevel);
-//            return foundUser;
-//        } else {
-//            return null;
-//        }
-//    }
 
     @CrossOrigin
     @PostMapping("/login")
@@ -85,9 +72,6 @@ public class UserController {
 
         if (response.isPresent() && response.get().password.equals(user.password)) {
             User res = response.get();
-            // now we are taking all the information from User that we got from the database, and copying this object information
-            // to a new user Output object, that excludes the password.
-            // we dont want to send over the password.
             UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.password, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
 
             return foundUser;
