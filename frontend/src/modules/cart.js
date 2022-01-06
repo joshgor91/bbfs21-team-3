@@ -149,16 +149,17 @@ function clearQuantity() {
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
         dispatch(gettingCartItems())
-
-        getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
-            if (res.status !== 200)
-                return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
-            else {
-                dispatch(setCartItems(res.data))
-                dispatch(setQuantity(res.data.length))
-            }
-        })
-            .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
+        if (getState().userReducer.isLoggedIn) {
+            getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
+                if (res.status !== 200)
+                    return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
+                else {
+                    dispatch(setCartItems(res.data))
+                    dispatch(setQuantity(res.data.length))
+                }
+            })
+                .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
+        }
     }
 }
 

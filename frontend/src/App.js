@@ -5,11 +5,7 @@ import {connect, useSelector} from "react-redux";
 import ShopkeeperRouter from "./components/Router/ShopkeeperRouter";
 import CustomerRouter from "./components/Router/CustomerRouter";
 
-function App({userIsAdmin, userIsShopkeeper, userIsCustomer}) {
-
-    const cartQuantity = useSelector(state => state.cartReducer.quantity)
-    console.log(cartQuantity)
-
+function App({userIsAdmin, userIsShopkeeper, userIsCustomer, cartQuantity}) {
     if (userIsAdmin) {
         return (<AdminRouter cartquantity={cartQuantity}/>)
     }
@@ -19,7 +15,7 @@ function App({userIsAdmin, userIsShopkeeper, userIsCustomer}) {
     else if(userIsCustomer){
         return (<CustomerRouter cartquantity={cartQuantity}/>)
     }
-    else{
+    else {
         return (<GuestRouter cartquantity={cartQuantity}/>)
     }
 }
@@ -29,6 +25,8 @@ function mapStateToProps(state) {
         userIsAdmin: state.userReducer.userIsAdmin,
         userIsShopkeeper: state.userReducer.userIsShopkeeper,
         userIsCustomer: state.userReducer.userIsCustomer,
+        isLoggedIn: state.userReducer.isLoggedIn,
+        cartQuantity: state.cartReducer.quantity
     }
 }
 

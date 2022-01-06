@@ -2,9 +2,8 @@ import {Container, Row, Col, Card, Button} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
 import {initiateAddCartItem} from "../../modules/cart";
 
-function ProductDetails({product, cartItems}) {
+function ProductDetails({product}) {
     const dispatch = useDispatch()
-    console.log(cartItems)
 
     return (
         <>
@@ -39,7 +38,6 @@ function ProductDetails({product, cartItems}) {
 }
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         product: state.productsReducer.productToView,
         cartItems: state.cartReducer.cartItems

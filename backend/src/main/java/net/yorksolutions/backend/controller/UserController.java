@@ -103,13 +103,12 @@ public class UserController {
         if (users.isPresent()) {
             return "failure";
         }
+        userRepo.save(newUser);
         //create cart object
         Cart cart = new Cart(newUser.id);
-
 //        if (cartRepo.findByUserId(newUser.id).isEmpty())
 //        save cart
         cartRepo.save(cart);
-        userRepo.save(newUser);
         return "success";
     }
 

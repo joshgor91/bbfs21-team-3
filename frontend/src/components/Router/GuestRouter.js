@@ -11,6 +11,7 @@ import {GiShoppingCart} from "react-icons/gi";
 
 
 function GuestRouter({cartQuantity}) {
+    console.log('guest router')
 
         return (
 

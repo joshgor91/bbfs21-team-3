@@ -1,20 +1,19 @@
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Admin from "./pages/Admin";
-import Shopkeeper from "./pages/Shopkeeper";
-import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
+import Home from "../../pages/Home";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
+import Admin from "../../pages/Admin";
+import Shopkeeper from "../../pages/Shopkeeper";
+import ProductPage from "../../pages/ProductPage";
+import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
-import UserPage from "./pages/UserPage";
-import {useSelector} from "react-redux";
-
+import UserPage from "../../pages/UserPage";
+import LogoutBtn from "../LoginRegister/LogoutBtn";
 
 
 function AdminRouter({cartQuantity}) {
-
+    console.log(cartQuantity)
     return (
 
         <Router>
@@ -33,11 +32,11 @@ function AdminRouter({cartQuantity}) {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/login">Login </Link>
+                                <Link className="link-item" to="/login">Login </Link>
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/register">Register </Link>
+                                <Link className="link-item" to="/register">Register </Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -45,7 +44,7 @@ function AdminRouter({cartQuantity}) {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
+                                <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Link className="link-item" to="/myaccount">My Account</Link>
@@ -63,18 +62,17 @@ function AdminRouter({cartQuantity}) {
                             </Nav.Item>
 
                             <Nav.Item>
-                                    <Link className="link-item" to="/cart">
-                                        <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
-                                    </Link>
+                                <Link className="link-item" to="/cart">
+                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                </Link>
                             </Nav.Item>
                         </Nav>
-                            <Nav className='ms-auto'>
-                            <Nav.Item >
+                        <Nav className='ms-auto'>
+                            <Nav.Item>
                                 <LogoutBtn/>
                             </Nav.Item>
-                            </Nav>
-
+                        </Nav>
 
                     </Navbar.Collapse>
                 </>
@@ -85,18 +83,19 @@ function AdminRouter({cartQuantity}) {
             <hr/>
 
             <Routes>
-                <Route path='/' element={<Home/>} />
-                <Route path='/login' element={<Login/>} />
-                <Route path='/register' element={<Register/>} />
-                <Route path='/admin' element={<Admin/>} />
-                <Route path='/shopkeeper' element={<Shopkeeper/>} />
-                <Route path='/product/:id' element={<ProductPage/>} />
-                <Route path='/cart' element={<CartPage/>} />
-                <Route path='/myaccount' element={<UserPage/>} />
+                <Route path='/' element={<Home/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/register' element={<Register/>}/>
+                <Route path='/admin' element={<Admin/>}/>
+                <Route path='/shopkeeper' element={<Shopkeeper/>}/>
+                <Route path='/product/:id' element={<ProductPage/>}/>
+                <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/myaccount' element={<UserPage/>}/>
             </Routes>
         </Router>
     )
 
 
 }
+
 export default AdminRouter

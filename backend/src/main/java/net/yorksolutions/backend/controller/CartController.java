@@ -100,6 +100,12 @@ public class CartController {
         return "success";
     }
 
+    @CrossOrigin
+    @GetMapping("/usercart")
+    Optional<Cart> getUserCart(@RequestHeader Long userId) {
+        return cartRepo.findByUserId(userId);
+    }
+
 
 
     @CrossOrigin

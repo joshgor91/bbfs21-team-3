@@ -1,5 +1,6 @@
 import {initiateGetProducts} from "./shopkeeper";
 import {deleteUserRequest, editUserRequest} from "../services/userService";
+import {getUserCartRequest} from "../services/cartService";
 
 
 const REQUEST_LOGIN = 'REQUEST_LOGIN'
@@ -22,6 +23,7 @@ const UPDATE_STATE = 'UPDATE_STATE'
 const UPDATE_ZIPCODE = 'UPDATE_ZIPCODE'
 const EDIT_INFO_FAILED = 'EDIT_INFO_FAILED'
 const DELETE_REQUEST_FAILED = 'DELETE_REQUEST_FAILED'
+const SET_USER_CART = 'SET_USER_CART'
 
 
 const initialState = {
@@ -30,12 +32,12 @@ const initialState = {
     loginErrorOccurred: false,
     users: [],
     loggedInUser: {},
-    userForm:{},
+    userCart: {},
     registerErrorOccurred: false,
     userIsAdmin: false,
     userIsShopkeeper: false,
     userIsCustomer: false,
-    userForm:{},
+    userForm: {},
     showInfo: false,
     userInfo: {},
     password: '',
@@ -47,7 +49,7 @@ const initialState = {
 }
 
 
-export default function reducer(state = initialState, action){
+export default function reducer(state = initialState, action) {
     switch (action.type) {
         case REQUEST_LOGIN:
             return {
@@ -155,6 +157,12 @@ export default function reducer(state = initialState, action){
                 zipcode: '',
             }
 
+        case SET_USER_CART:
+            return {
+                ...state,
+                userCart: action.payload
+            }
+
         default:
             return state
     }
@@ -163,6 +171,7 @@ export default function reducer(state = initialState, action){
 export function updatePassword(password) {
     return {type: UPDATE_PASSWORD, payload: password}
 }
+
 export function updateAddress1(address1) {
     return {type: UPDATE_ADDRESS1, payload: address1}
 }
@@ -194,12 +203,15 @@ export function requestLogin() {
 }
 
 export function loginFailure(errorMessage) {
-    return {type: LOGIN_FAILURE,
-        payload: errorMessage}
+    return {
+        type: LOGIN_FAILURE,
+        payload: errorMessage
+    }
 }
 
 export function loginSuccess() {
-    return {type: LOGIN_SUCCESS,
+    return {
+        type: LOGIN_SUCCESS,
     }
 }
 
@@ -269,8 +281,14 @@ function deleteRequestFailed(errorMessage) {
     return {type: DELETE_REQUEST_FAILED, payload: errorMessage}
 }
 
-export function initiateLogin(user) {
+function setUserCart(cart) {
+    return {
+        type: SET_USER_CART,
+        payload: cart
+    }
+}
 
+export function initiateLogin(credentials) {
     return function sideEffect(dispatch, getState) {
         dispatch(requestLogin())
 
@@ -279,13 +297,19 @@ export function initiateLogin(user) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(user)
-
+            body: JSON.stringify(credentials)
         }).then(response => {
             if (!response.ok)
                 return dispatch(loginFailure())
-
             response.json().then(user => {
+                getUserCartRequest(user.id)
+                    .then(response => {
+                        if (response.status === 200)
+                            console.log(response.data)
+                        dispatch(setUserCart(response.data))
+                    })
+                    .catch(err => console.log('error with user cart request', err))
+
                 if (user.authLevel === 3) {
                     dispatch(setUserAsAdmin(user))
                 } else if (user.authLevel === 2) {
@@ -296,6 +320,7 @@ export function initiateLogin(user) {
                     dispatch(loginFailure())
             })
         }).catch(error => console.log(error))
+
     }
 }
 
@@ -332,8 +357,7 @@ export function initiateEditUserInfo(userToEdit) {
         editUserRequest(userToEdit).then(response => {
             if (response.status !== 200) {
                 return dispatch(editUserRequestFailed('Edit Failed'))
-            }
-            else {
+            } else {
                 dispatch(setUserLoggedIn(userToEdit))
             }
         })
