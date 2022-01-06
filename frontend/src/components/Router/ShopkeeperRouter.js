@@ -14,7 +14,7 @@ import OrderComplete from "../../pages/OrderComplete";
 
 
 
-function ShopkeeperRouter({cartQuantity}) {
+function ShopkeeperRouter({cartquantity}) {
     return (
 
         <Router>
@@ -54,7 +54,7 @@ function ShopkeeperRouter({cartQuantity}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                    <Badge pill bg="secondary">{cartquantity}</Badge>
                                 </Link>
                             </Nav.Item>
                             <Nav.Item>
