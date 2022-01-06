@@ -9,6 +9,7 @@ function ProductDetails({product}) {
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))
+        alert("Item successfully added to your cart!")
     }
 
     function handleQuantity(e) {

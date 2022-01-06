@@ -2,7 +2,7 @@ import {connect} from "react-redux"
 import CartItems from "./CartItems";
 import {Col, Container, Row} from "react-bootstrap";
 import CartSummary from "./CartSummary";
-import CheckOut from "./CheckOut";
+
 
 
 function Cart({cartItems, isLoggedIn}) {
