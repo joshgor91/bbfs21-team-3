@@ -13,7 +13,6 @@ const initialUserForm = {
     email: '',
     password: '',
 }
-
 function AdminCreateUser ({
                               userForm,
                               setUserForm,
@@ -27,6 +26,7 @@ function AdminCreateUser ({
 }) {
 
     function handleSubmitCreateUser(e){
+        console.log("calling userFrom " + {userForm})
         e.preventDefault()
         if (isEditing){
             submitEditUser({...userForm})
@@ -80,10 +80,14 @@ function AdminCreateUser ({
             </Form.Group>
             <Form.Group className="mb-3" controlId="authLevel">
                 <Form.Label>Auth Level</Form.Label>
-                <Form.Control type="text" placeholder="Enter their access level"
+                <Form.Select type="select"
                               value={userForm.authLevel}
                               name="authLevel"
-                              onChange={onChange}/>
+                             onChange={onChange}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </Form.Select>
                 <Form.Text className="text-muted">
                    '1' for Consumer, '2' for Business Owner, '3' for Admin.
                 </Form.Text>

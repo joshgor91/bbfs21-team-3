@@ -140,14 +140,18 @@ public class UserController {
 //
 //    }
 
-    ObjectMapper objectMapper = new ObjectMapper();
+//    ObjectMapper objectMapper = new ObjectMapper();
 
     @CrossOrigin
     @PutMapping("/edit")
     // returning string to notify the front end that the admin successfully edited the user.
     String editThree(@RequestBody User user) throws JsonProcessingException {
-        System.out.println(objectMapper.writeValueAsString(user));
+//        System.out.println(objectMapper.writeValueAsString(user));
         userRepo.findById(user.getId()).orElseThrow();
+        if (userRepo.findByEmail(user.email).isPresent())
+            return "email already exists";
+//        else if (user.authLevel > 3)
+//            return "authLevel doesn't exists";
         userRepo.save(user);
         return "success";
 

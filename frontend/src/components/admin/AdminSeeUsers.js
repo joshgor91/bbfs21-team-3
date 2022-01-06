@@ -9,6 +9,7 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
     const handleEdit = user => event => {
         event.preventDefault()
         initiateEditUser(user)
+        console.log(initiateEditUser(user))
         setUserForm(user)
     }
     return (
