@@ -11,6 +11,7 @@ function CartItems({cartItem, isLoggedIn }) {
 
     function handleRemoveFromCart(cartItem) {
 
+
         if(isLoggedIn) {
             dispatch(initiateDeleteCartItem(cartItem.productId))
         }
