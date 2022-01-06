@@ -8,6 +8,7 @@ import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import Checkout from "../../pages/Checkout";
 import UserPage from "../../pages/UserPage";
+import OrderComplete from "../../pages/OrderComplete";
 
 
 
@@ -78,6 +79,7 @@ function GuestRouter({cartQuantity}) {
                     <Route path='/cart' element={<CartPage/>}/>
                     <Route path='/myaccount' element={<Home/>} />
                     <Route path='/cart/checkout' element={<Checkout/>}/>
+                    <Route path='/cart/orderconfirmation' element={<OrderComplete/>}/>
                 </Routes>
             </Router>
 

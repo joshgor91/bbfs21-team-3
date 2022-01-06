@@ -9,6 +9,7 @@ import Register from "../../pages/Register";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 import Checkout from "../../pages/Checkout";
 import UserPage from "../../pages/UserPage";
+import OrderComplete from "../../pages/OrderComplete";
 
 
 
@@ -73,6 +74,7 @@ function CustomerRouter({cartQuantity}) {
                 <Route path='/cart' element={<CartPage/>}/>
                 <Route path='/myaccount' element={<UserPage/>} />
                 <Route path='/cart/checkout' element={<Checkout/>}/>
+                <Route path='/cart/orderconfirmation' element={<OrderComplete/>}/>
             </Routes>
         </Router>
     )
