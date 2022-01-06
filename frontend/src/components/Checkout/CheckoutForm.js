@@ -1,6 +1,6 @@
 import {Button, Col, Form} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {
     initiateEditUserInfo,
     updateAddress1,
@@ -9,9 +9,23 @@ import {
     updateState,
     updateZipcode
 } from "../../modules/user";
-import {initiateAddOrder} from "../../modules/order";
+import {clearReceipt, initiateAddOrder} from "../../modules/order";
+import {useNavigate} from "react-router";
+import {useEffect} from "react";
 
-function CheckoutForm({loggedInUser, address1,address2,city,state,zipcode,initiateEditUserInfo,updateAddress1,updateAddress2,updateCity,updateState,updateZipcode, initiateAddOrder}) {
+function CheckoutForm({loggedInUser, address1,address2,city,state,zipcode,initiateEditUserInfo,updateAddress1,updateAddress2,updateCity,updateState,updateZipcode, initiateAddOrder, goToReceipt}) {
+
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        if(goToReceipt){
+            navigate("/cart/orderconfirmation")
+        }
+    }, [goToReceipt]);
+
+
+
 
 
     function handleSubmit(event) {
@@ -28,6 +42,7 @@ function CheckoutForm({loggedInUser, address1,address2,city,state,zipcode,initia
         })
 
         initiateAddOrder()
+
     }
 
         return (
@@ -60,6 +75,7 @@ function mapStateToProps(state) {
         state: state.userReducer.state,
         zipcode: state.userReducer.zipcode,
         loggedInUser: state.userReducer.loggedInUser,
+        goToReceipt: state.orderReducer.goToReceipt,
     }
 }
 

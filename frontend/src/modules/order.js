@@ -1,10 +1,9 @@
-import {addCartItemRequest, getUserCartRequest} from "../services/cartService";
-import {initiateGetCartItems} from "./cart";
-import {loginFailure} from "./user";
+
 
 const ADDING_ORDER = 'ADDING_ORDER'
 const ADD_ORDER_FAILED = 'ADD_ORDER_FAILED'
 const GO_TO_RECEIPT = 'GO_TO_RECEIPT'
+const CLEAR_RECEIPT = 'CLEAR_RECEIPT'
 
 
 const initialState = {
@@ -36,6 +35,13 @@ export default function reducer(state = initialState, action) {
                 addOrderFailed: false
             }
 
+        case CLEAR_RECEIPT:
+            return {
+                ...state,
+                goToReceipt: false,
+                addOrderFailed: false
+            }
+
         default:
             return state
     }
@@ -51,6 +57,10 @@ export function addOrderFailed() {
 
 export function goToReceipt() {
     return {type: GO_TO_RECEIPT}
+}
+
+export function clearReceipt() {
+    return {type: CLEAR_RECEIPT}
 }
 
 
@@ -71,6 +81,7 @@ export function initiateAddOrder() {
                 if(text==="success"){
                     console.log("order placed")
                     dispatch(goToReceipt())
+                    // NavigationActions.navigate({ routeName: 'cart' });
                 }else{
                     dispatch(addOrderFailed())
                 }
