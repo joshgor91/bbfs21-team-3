@@ -59,7 +59,6 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                     setIsEditing={setIsEditing}
                     categoryId={categoryId}
                 />
-                {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
                 <Dropdown as={ButtonGroup}>
                     <Button variant='primary'>Shopkeeper Ish</Button>
 
@@ -71,14 +70,13 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                         <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
                     </Dropdown.Menu><br/>
-                    <Col><Button variant="primary" style={{ marginLeft: "1000px"}} onClick={logout}>Logout</Button></Col>
-                    {/*{(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}*/}
+                    {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}
                 </Dropdown>
+                {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
             </Col>
         </Row>
             <Row>
                 {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
-                {/*{showProductList? <ShopkeeperProductList products={products} deleteProduct={handleDeleteProduct}/> : ''}*/}
             </Row>
         </Container>
 

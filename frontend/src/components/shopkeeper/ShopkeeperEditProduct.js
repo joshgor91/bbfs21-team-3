@@ -71,7 +71,11 @@ function ShopkeeperEditProduct({
     }, [show])
 
     function handleAdd() {
-        setProductCategory([...productCategory, categorySelect])
+        if (categorySelect.categoryName === '') {
+            console.log(`logging empty string`)
+        } else {
+            setProductCategory([...productCategory, categorySelect])
+        }
     }
 
     function handleRemove() {

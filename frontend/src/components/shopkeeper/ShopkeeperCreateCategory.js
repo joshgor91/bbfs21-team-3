@@ -22,6 +22,7 @@ function ShopkeeperCreateCategory({showCreateCategory, setShowCreateCategory, ca
 
     function handleSubmit(e) {
         e.preventDefault()
+        console.log(`logging categoryName = ${categoryName}`)
         if (isEditing) {
             const updatedCategory = {
                 id: categoryId,
@@ -50,7 +51,7 @@ function ShopkeeperCreateCategory({showCreateCategory, setShowCreateCategory, ca
                 <Form onSubmit={handleSubmit}>
                     <Form.Label>Category Name</Form.Label>
                     <Form.Control type='text' placeholder='Category Name' value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
-                    <Button variant='primary' type='submit'>Create</Button>
+                    <Button variant='primary' type='submit'>{isEditing ? 'Apply' : 'Create'}</Button>
                 </Form>
             </Modal.Body>
         </Modal>

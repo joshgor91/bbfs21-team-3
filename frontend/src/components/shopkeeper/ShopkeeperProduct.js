@@ -3,11 +3,12 @@ import {bindActionCreators} from "redux";
 import {initiateDeleteProduct, editProduct, cancelViewProductDetails, initiateGetProducts, viewProductDetails} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
 
-function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDeleteProduct, editProduct}) {
+function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDeleteProduct}) {
 
 
     return <Modal show={show} onHide={cancelViewProductDetails}>
         <Col><Card >
+            <CloseButton onClick={() => cancelViewProductDetails()}/>
         <Card.Header>
             <Card.Title>Brand</Card.Title>
             <Card.Text>{product.brand}</Card.Text>
@@ -42,10 +43,6 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDel
             <Card.Subtitle>Units Received</Card.Subtitle>
             <Card.Text>{product.unitsReceived}</Card.Text>
         </Card.Footer>
-        <Row>
-            <Col><Button variant='primary' onClick={() => editProduct(product)}>Edit Product</Button></Col>
-            <Col xs='auto'><CloseButton onClick={() => initiateDeleteProduct(product.id)}/></Col>
-        </Row>
     </Card></Col>
     </Modal>
 

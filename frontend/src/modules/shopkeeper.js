@@ -568,6 +568,7 @@ export function initiateEditCategory(updatedCategory) {
                 dispatch(editCategoryFailure(`Error editing category`))
             } else {
                 dispatch(initiateGetCategories())
+                dispatch(initiateGetProducts())
             }
         })
     }
