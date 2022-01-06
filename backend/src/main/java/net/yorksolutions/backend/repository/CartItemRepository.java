@@ -20,9 +20,9 @@ public interface CartItemRepository extends CrudRepository<CartItem,Long> {
 
     Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId);
 
-    @Modifying
     @Transactional
     void deleteByCartIdAndProductId(Long cartId, Long prodId);
 
+    @Transactional
     void deleteAllByCartId(Long cartId);
 }
