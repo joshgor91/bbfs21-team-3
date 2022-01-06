@@ -7,11 +7,13 @@ import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import Checkout from "../../pages/Checkout";
+import UserPage from "../../pages/UserPage";
+import OrderComplete from "../../pages/OrderComplete";
 
 
 
 
-function GuestRouter({cartQuantity}) {
+function GuestRouter({cartquantity}) {
     console.log('guest router')
 
         return (
@@ -54,7 +56,7 @@ function GuestRouter({cartQuantity}) {
                                 <Nav.Item>
                                     <Link className="link-item" to="/cart">
                                         <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                        <Badge pill bg="secondary">{cartquantity}</Badge>
                                     </Link>
                                 </Nav.Item>
 
@@ -75,7 +77,9 @@ function GuestRouter({cartQuantity}) {
                     <Route path='/shopkeeper' element={<Home/>}/>
                     <Route path='/product/:id' element={<ProductPage/>}/>
                     <Route path='/cart' element={<CartPage/>}/>
+                    <Route path='/myaccount' element={<Home/>} />
                     <Route path='/cart/checkout' element={<Checkout/>}/>
+                    <Route path='/cart/orderconfirmation' element={<OrderComplete/>}/>
                 </Routes>
             </Router>
 

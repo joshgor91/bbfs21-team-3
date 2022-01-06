@@ -23,7 +23,7 @@ const initialState = {
     loginPending: false,
     users: [],
     loggedInUser: {},
-    userForm:{},
+    userForm: {},
     registerErrorOccurred: false,
     userToEdit: {},
     showEditUser: false,
@@ -77,7 +77,8 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 showEditUser: true,
                 isEditing: true,
-                registerErrorOccurred: false
+                registerErrorOccurred: false,
+                userToEdit: action.user
             }
 
         case EDIT_USER_FAILED:
@@ -86,7 +87,8 @@ export default function reducer(state = initialState, action) {
                 showEditUser: false,
                 isEditing: false,
                 registerErrorOccurred: true,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                userToEdit: null
             }
 
         case CANCEL_EDIT_USER:
@@ -100,7 +102,8 @@ export default function reducer(state = initialState, action) {
                 authLevel: '',
                 email: '',
                 password: '',
-                isEditing: false
+                isEditing: false,
+                userToEdit: null
             }
 
         case GETTING_USERS:
@@ -148,7 +151,7 @@ export default function reducer(state = initialState, action) {
 }
 
 
-export function startAddingUser(){
+export function startAddingUser() {
     return {
         type: START_ADDING_USER
     }
@@ -174,14 +177,14 @@ function addUserFailed(errorMessage) {
     }
 }
 
-function editUserFailed(errorMessage){
+function editUserFailed(errorMessage) {
     return {
         type: EDIT_USER_FAILED,
         payload: errorMessage
     }
 }
 
-export function cancelEditUser(){
+export function cancelEditUser() {
     return {
         type: CANCEL_EDIT_USER
     }
@@ -228,7 +231,7 @@ export function initiateGetUsers() {
             method: 'GET'
         }).then(response => {
             if (!response.ok)
-                return dispatch (getUsersFailed())
+                return dispatch(getUsersFailed())
 
             response.json().then(users => {
                 dispatch(usersUpdated(users))
@@ -270,11 +273,10 @@ export function initiateEditUser(user) {
     console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
     return function sideEffect(dispatch, getState) {
         dispatch(startEditingUser(user))
-
     }
 }
 
-export function submitEditUser(user){
+export function submitEditUser(user) {
     return function sideEffect(dispatch, getState) {
 
         fetch("http://localhost:8080/api/users/edit", {
@@ -292,14 +294,18 @@ export function submitEditUser(user){
                     dispatch(initiateGetUsers())
                     console.log("user edited")
                 }
-
+                else if (text === "email already exists")
+                    dispatch(editUserFailed("This email exists with another user."))
+                // else if (user.email === getState().user.email)
+                //     dispatch(editUserFailed("Please select an authorization level of 1 for customer, 2 for shopkeeper, or 3 for an admin."))
                 else {
                     console.log("did not hit success")
                     dispatch(editUserFailed("Could not edit user"))
                 }
             })
         }).catch(error => console.log(error))
-    }}
+    }
+}
 
 export function initiateDeleteUser(id) {
     console.log("deleting " + id)
@@ -308,7 +314,7 @@ export function initiateDeleteUser(id) {
         fetch(`http://localhost:8080/api/users/delete/${id}`, {
             method: 'DELETE'
         }).then(response => {
-            if(!response.ok)
+            if (!response.ok)
                 return dispatch(deleteUserFailed())
 
             response.text().then(text => {
