@@ -9,20 +9,22 @@ function CartSummary({cartItems}) {
     // console.log(cartItems)
     let originalPrice = 0
     let totalSavings = 0
-
+    let total
     let now = new Date()
     let currentPrice = 0
     if (cartItems) {
-        // cartItems.ScheduledPrices.map(prices => {
-        //     if (new Date(prices.effectiveDate) - now < 0) {
-        //         console.log(prices.price)
-        //     }
-        // })
+        cartItems.map(cartItem => {
+            console.log(cartItem.ScheduledPrices)
+            cartItem.ScheduledPrices.map(prices => {
+                if (new Date(prices.effectiveDate) - now < 0) {
+                    originalPrice += Number(prices.price)
+                }
+            })
+        })
+        console.log(Number(originalPrice.toFixed(2)))
         console.log(currentPrice)
-        for (let cartItem of cartItems) {
-            originalPrice += Number(cartItem.unitPrice)
-        }
-    // console.log(originalPrice)
+
+        // console.log(originalPrice)
         const salesPrices = cartItems.map(item => {
             let result = item.unitPrice * item.sale
             return Number(result.toFixed(2))
@@ -32,7 +34,9 @@ function CartSummary({cartItems}) {
         }
         // console.log(totalSavings)
     }
-    const total = originalPrice - totalSavings
+
+        total = originalPrice.toFixed(2)
+
 
     return <>
         <Card>
@@ -43,7 +47,7 @@ function CartSummary({cartItems}) {
                         <Card.Text>Original Price: </Card.Text>
                     </Col>
                     <Col xs={'auto'}>
-                        <Card.Text>{originalPrice}</Card.Text>
+                        <Card.Text>{originalPrice.toFixed(2)}</Card.Text>
                     </Col>
                 </Row>
                 <Row>
@@ -63,7 +67,7 @@ function CartSummary({cartItems}) {
                     </Col>
                 </Row>
                 <Button>
-                <Link id="checkout-button" to="checkout/">Checkout </Link>
+                    <Link id="checkout-button" to="checkout/">Checkout </Link>
                 </Button>
             </Card.Body>
         </Card>

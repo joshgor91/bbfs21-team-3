@@ -9,16 +9,16 @@ function App({userIsAdmin, userIsShopkeeper, userIsCustomer, cartQuantity}) {
 
 
     if (userIsAdmin) {
-        return (<AdminRouter cartquantity={cartQuantity}/>)
+        return (<AdminRouter cartQuantity={cartQuantity}/>)
     }
     else if(userIsShopkeeper){
-        return (<ShopkeeperRouter cartquantity={cartQuantity}/>)
+        return (<ShopkeeperRouter cartQuantity={cartQuantity}/>)
     }
     else if(userIsCustomer){
-        return (<CustomerRouter cartquantity={cartQuantity}/>)
+        return (<CustomerRouter cartQuantity={cartQuantity}/>)
     }
     else {
-        return (<GuestRouter cartquantity={cartQuantity}/>)
+        return (<GuestRouter cartQuantity={cartQuantity}/>)
     }
 }
 
