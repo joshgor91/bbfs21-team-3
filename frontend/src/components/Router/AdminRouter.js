@@ -11,6 +11,7 @@ import {GiShoppingCart} from "react-icons/gi";
 import UserPage from "../../pages/UserPage";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 import Checkout from "../../pages/Checkout";
+import OrderComplete from "../../pages/OrderComplete";
 
 
 function AdminRouter({cartQuantity}) {
@@ -85,6 +86,7 @@ function AdminRouter({cartQuantity}) {
                 <Route path='/cart' element={<CartPage/>} />
                 <Route path='/myaccount' element={<UserPage/>} />
                 <Route path='/cart/checkout' element={<Checkout/>}/>
+                <Route path='/cart/orderconfirmation' element={<OrderComplete/>}/>
             </Routes>
         </Router>
     )

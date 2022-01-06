@@ -1,8 +1,13 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {clearReceipt} from "../../modules/order";
 
 
 function CartSummary({cartItems}) {
+
+
     // console.log(cartItems)
     let originalPrice = 0
     let totalSavings = 0
