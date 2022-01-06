@@ -4,6 +4,7 @@ import {useEffect} from "react";
 import {initiateGetAllProducts, unsetProduct} from "../modules/products";
 import {connect}from "react-redux";
 import {initiateGetCartItems} from "../modules/cart";
+import {Badge} from "react-bootstrap";
 
 
 const Home = () => {
