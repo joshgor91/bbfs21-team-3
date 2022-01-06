@@ -121,24 +121,6 @@ public class UserController {
         return "success";
     }
 
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//    User edit(@RequestBody User user) {
-//      User response = userRepo.findById(user.getId()).orElseThrow();
-//        userRepo.save(user);
-//        return userRepo.findById(user.getId()).get();
-//
-//    }
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//    //returning user, for what?? why are we returning the user????
-//    User editTwo(@RequestBody User user) {
-//        userRepo.findById(user.getId()).orElseThrow();
-//        userRepo.save(user);
-//        // the user is already updated in the database, let just return this user from the database
-//        return user;
-//
-//    }
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -148,10 +130,10 @@ public class UserController {
     String editThree(@RequestBody User user) throws JsonProcessingException {
         System.out.println(objectMapper.writeValueAsString(user));
         userRepo.findById(user.getId()).orElseThrow();
-        if (userRepo.findByEmail(user.email).isPresent())
-            return "Sorry, this email already exists. Sad.";
-        else if (user.authLevel > 3)
-            return "No one man should have all that power.";
+//        if (userRepo.findByEmail(user.email).isPresent())
+//            return "Sorry, this email already exists. Sad.";
+//        else if (user.authLevel > 3)
+//            return "No one man should have all that power.";
 
         userRepo.save(user);
         return "success";
