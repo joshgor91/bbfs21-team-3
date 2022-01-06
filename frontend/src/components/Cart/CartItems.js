@@ -1,15 +1,28 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
+import {initiateDeleteCartItem} from "../../modules/cart";
+import {connect, useDispatch} from "react-redux";
 
-function CartItems({cartItem}) {
+function CartItems({cartItem, isLoggedIn }) {
+
+    const dispatch = useDispatch();
+    console.log(cartItem.productName + "cartitem")
+    console.log(cartItem.productId + "cartitem")
+
 
     function handleRemoveFromCart(cartItem) {
-        // console.log(cartItem)
-        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
-        // console.log(cartStorage)
-        const updatedCart = cartStorage.filter(item => item.id !== cartItem.id)
-        // console.log(updatedCart)
-        localStorage.setItem('cartItems', JSON.stringify(updatedCart))
-        window.location.reload(false)
+
+        if(isLoggedIn) {
+            dispatch(initiateDeleteCartItem(cartItem.productId))
+        }
+        else {
+            // console.log(cartItem)
+            let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+            // console.log(cartStorage)
+            const updatedCart = cartStorage.filter(item => item.id !== cartItem.id)
+            // console.log(updatedCart)
+            localStorage.setItem('cartItems', JSON.stringify(updatedCart))
+            window.location.reload(false)
+        }
     }
     return <>
         <Card style={{marginBottom: '1.5rem', width: 'auto', height: '13.5rem'}}>
@@ -31,4 +44,10 @@ function CartItems({cartItem}) {
     </>
 }
 
-export default CartItems
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: state.userReducer.isLoggedIn,
+    }
+}
+
+export default connect(mapStateToProps)(CartItems);
