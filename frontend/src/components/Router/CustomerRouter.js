@@ -8,6 +8,8 @@ import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 import Checkout from "../../pages/Checkout";
+import UserPage from "../../pages/UserPage";
+import OrderComplete from "../../pages/OrderComplete";
 
 
 
@@ -27,6 +29,10 @@ function CustomerRouter({cartQuantity}) {
 
                             <Nav.Item>
                                 <Link className="link-item" to="/">Home </Link>
+                            </Nav.Item>
+
+                            <Nav.Item>
+                                <Link className="link-item" to="/myaccount">My Account</Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -66,7 +72,9 @@ function CustomerRouter({cartQuantity}) {
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/myaccount' element={<UserPage/>} />
                 <Route path='/cart/checkout' element={<Checkout/>}/>
+                <Route path='/cart/orderconfirmation' element={<OrderComplete/>}/>
             </Routes>
         </Router>
     )

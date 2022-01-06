@@ -64,19 +64,6 @@ public class UserController {
         return userRepo.findAll();
     }
 
-//    @CrossOrigin
-//    @PostMapping("/login")
-//    Object login(@RequestBody User user) {
-//        Optional<User> response = userRepo.findByEmail(user.getEmail());
-//
-//        if (response.isPresent() && response.get().getPassword().equals(user.password)) {
-//            User res = response.get();
-//            UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.email, res.authLevel);
-//            return foundUser;
-//        } else {
-//            return null;
-//        }
-//    }
 
     @CrossOrigin
     @PostMapping("/login")
@@ -85,9 +72,6 @@ public class UserController {
 
         if (response.isPresent() && response.get().password.equals(user.password)) {
             User res = response.get();
-            // now we are taking all the information from User that we got from the database, and copying this object information
-            // to a new user Output object, that excludes the password.
-            // we dont want to send over the password.
             UserOutput foundUser = new UserOutput(res.id, res.firstName, res.lastName, res.role, res.email, res.password, res.authLevel,res.address1,res.address2,res.city,res.state, res.zipcode);
 
             return foundUser;
@@ -121,39 +105,18 @@ public class UserController {
         return "success";
     }
 
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//    User edit(@RequestBody User user) {
-//      User response = userRepo.findById(user.getId()).orElseThrow();
-//        userRepo.save(user);
-//        return userRepo.findById(user.getId()).get();
-//
-//    }
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//    //returning user, for what?? why are we returning the user????
-//    User editTwo(@RequestBody User user) {
-//        userRepo.findById(user.getId()).orElseThrow();
-//        userRepo.save(user);
-//        // the user is already updated in the database, let just return this user from the database
-//        return user;
-//
-//    }
 
-    ObjectMapper objectMapper = new ObjectMapper();
+//    ObjectMapper objectMapper = new ObjectMapper();
 
     @CrossOrigin
     @PutMapping("/edit")
     // returning string to notify the front end that the admin successfully edited the user.
-    String editThree(@RequestBody User user) throws JsonProcessingException {
-        System.out.println(objectMapper.writeValueAsString(user));
-        userRepo.findById(user.getId()).orElseThrow();
-        if (userRepo.findByEmail(user.email).isPresent())
-            return "Sorry, this email already exists. Sad.";
-        else if (user.authLevel > 3)
-            return "No one man should have all that power.";
-
-        userRepo.save(user);
+    String editThree(@RequestBody User userToEdit) throws JsonProcessingException {
+//        System.out.println(objectMapper.writeValueAsString(user));
+        var user = userRepo.findById(userToEdit.getId());
+        if (user.isPresent() && !user.get().email.equals(userToEdit.email))
+            return "email already exists";
+        userRepo.save(userToEdit);
         return "success";
 
     }
