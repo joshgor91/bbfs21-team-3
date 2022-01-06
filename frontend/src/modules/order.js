@@ -4,12 +4,21 @@ const ADDING_ORDER = 'ADDING_ORDER'
 const ADD_ORDER_FAILED = 'ADD_ORDER_FAILED'
 const GO_TO_RECEIPT = 'GO_TO_RECEIPT'
 const CLEAR_RECEIPT = 'CLEAR_RECEIPT'
+const GETTING_ORDER_HISTORY = 'GETTING_ORDER_HISTORY'
+const GET_ORDER_HISTORY_FAILED = 'GET_ORDER_HISTORY_FAILED'
+const GET_ORDER_HISTORY_SUCCESS = 'GET_ORDER_HISTORY_SUCCESS'
 
 
 const initialState = {
     addingOrder: false,
     addOrderFailed: false,
-    goToReceipt: false
+    goToReceipt: false,
+    gettingOrderHistory: false,
+    getOrderHistoryFailed: false,
+    errorMessage: '',
+    getOrderHistorySuccess: false,
+    orders: []
+
 
 }
 
@@ -42,6 +51,26 @@ export default function reducer(state = initialState, action) {
                 addOrderFailed: false
             }
 
+        case GETTING_ORDER_HISTORY:
+            return {
+                ...state,
+                gettingOrderHistory: true
+            }
+
+        case GET_ORDER_HISTORY_FAILED:
+            return {
+                ...state,
+                getOrderHistoryFailed: true,
+                errorMessage: action.payload
+            }
+
+        case GET_ORDER_HISTORY_SUCCESS:
+            return {
+                ...state,
+                getOrderHistorySuccess: true,
+                orders: action.payload
+            }
+
         default:
             return state
     }
@@ -62,6 +91,23 @@ export function goToReceipt() {
 export function clearReceipt() {
     return {type: CLEAR_RECEIPT}
 }
+
+function gettingOrderHistory() {
+    return {type: GETTING_ORDER_HISTORY}
+}
+
+function getOrderHistoryFailed(errorMessage) {
+    return {type: GET_ORDER_HISTORY_FAILED,
+    payload:errorMessage}
+}
+
+function getOrderHistorySuccess(orders) {
+    return {type: GET_ORDER_HISTORY_SUCCESS,
+        payload:orders}
+}
+
+
+
 
 
 export function initiateAddOrder() {
@@ -85,6 +131,26 @@ export function initiateAddOrder() {
                 }else{
                     dispatch(addOrderFailed())
                 }
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateGetOrderHistory() {
+    return function getOrderSideEffect(dispatch, getState) {
+        const userId = getState().userReducer.loggedInUser.id
+        dispatch(gettingOrderHistory())
+        fetch("http://localhost:8080/api/order/orderHistory", {
+            method: "GET",
+            headers: {
+                'userId': userId,
+            },
+        }).then(response => {
+            if (!response.ok)
+                return dispatch(getOrderHistoryFailed("Unable to get orders."))
+            response.json().then(orders => {
+                dispatch(getOrderHistorySuccess(orders))
+                console.log(orders)
             })
         }).catch(error => console.log(error))
     }
