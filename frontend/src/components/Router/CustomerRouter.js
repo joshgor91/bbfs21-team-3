@@ -7,6 +7,7 @@ import {GiShoppingCart} from "react-icons/gi";
 import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
+import Checkout from "../../pages/Checkout";
 
 
 
@@ -65,6 +66,7 @@ function CustomerRouter({cartQuantity}) {
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/cart/checkout' element={<Checkout/>}/>
             </Routes>
         </Router>
     )

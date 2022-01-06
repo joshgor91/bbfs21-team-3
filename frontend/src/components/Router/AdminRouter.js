@@ -10,10 +10,11 @@ import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import UserPage from "../../pages/UserPage";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
+import Checkout from "../../pages/Checkout";
 
 
 function AdminRouter({cartQuantity}) {
-    console.log(cartQuantity)
+
     return (
 
         <Router>
@@ -29,14 +30,6 @@ function AdminRouter({cartQuantity}) {
 
                             <Nav.Item>
                                 <Link className="link-item" to="/">Home </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/login">Login </Link>
-                            </Nav.Item>
-
-                            <Nav.Item>
-                                <Link className="link-item" to="/register">Register </Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -83,19 +76,19 @@ function AdminRouter({cartQuantity}) {
             <hr/>
 
             <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
-                <Route path='/admin' element={<Admin/>}/>
-                <Route path='/shopkeeper' element={<Shopkeeper/>}/>
-                <Route path='/product/:id' element={<ProductPage/>}/>
-                <Route path='/cart' element={<CartPage/>}/>
-                <Route path='/myaccount' element={<UserPage/>}/>
+                <Route path='/' element={<Home/>} />
+                <Route path='/login' element={<Login/>} />
+                <Route path='/register' element={<Register/>} />
+                <Route path='/admin' element={<Admin/>} />
+                <Route path='/shopkeeper' element={<Shopkeeper/>} />
+                <Route path='/product/:id' element={<ProductPage/>} />
+                <Route path='/cart' element={<CartPage/>} />
+                <Route path='/myaccount' element={<UserPage/>} />
+                <Route path='/cart/checkout' element={<Checkout/>}/>
             </Routes>
         </Router>
     )
 
 
 }
-
 export default AdminRouter

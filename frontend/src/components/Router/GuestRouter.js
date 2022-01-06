@@ -6,6 +6,7 @@ import ProductPage from "../../pages/ProductPage";
 import CartPage from "../../pages/CartPage";
 import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
+import Checkout from "../../pages/Checkout";
 
 
 
@@ -74,6 +75,7 @@ function GuestRouter({cartQuantity}) {
                     <Route path='/shopkeeper' element={<Home/>}/>
                     <Route path='/product/:id' element={<ProductPage/>}/>
                     <Route path='/cart' element={<CartPage/>}/>
+                    <Route path='/cart/checkout' element={<Checkout/>}/>
                 </Routes>
             </Router>
 

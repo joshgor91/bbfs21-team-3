@@ -9,13 +9,15 @@ const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
 const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
+const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
 
 const initialState = {
     cartItems: [],
     quantity: 0,
     gettingCartItems: false,
     addingCartItem: false,
-    errorMessage: ''
+    errorMessage: '',
+    cartFailedMessage: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -77,6 +79,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 quantity: 0
+            }
+
+        case DELETE_CART_FAILED:
+            return {
+                ...state,
+                cartFailedMessage: action.payload
             }
 
         default:
@@ -144,6 +152,13 @@ function clearQuantity() {
     }
 }
 
+function deleteCartFailed(message) {
+    return {
+        type: DELETE_CART_FAILED,
+        payload: message
+    }
+}
+
 
 //sideEffects
 export function initiateGetCartItems() {
@@ -190,3 +205,28 @@ export function initiateAddCartItem(productToAdd) {
         }
     }
 }
+
+export function initiateDeleteCartItem(id) {
+    console.log("deleting " + id)
+    return function sideEffect(dispatch) {
+        dispatch(clearCart())
+        fetch(`http://localhost:8080/api/cart/delete`, {
+            method: 'DELETE',
+            headers: {
+            "cartId": 4,
+            "prodId": id
+            },
+        }).then(response => {
+            if(!response.ok)
+                return dispatch(deleteCartFailed())
+
+            response.text().then(text => {
+                if (text === 'success')
+                   console.log("cart deleted!")
+                else
+                    dispatch(deleteCartFailed())
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
