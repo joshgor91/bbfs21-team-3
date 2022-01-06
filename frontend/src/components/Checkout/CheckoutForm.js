@@ -11,15 +11,15 @@ function CheckoutForm() {
             <Form className="login-register-form">
                 <Form.Group className="mb-3" controlId="formBasicAddress">
                     <Form.Label>Address</Form.Label>
-                    <Form.Control type="text required" placeholder="Address"/>
+                    <Form.Control type="text" placeholder="Address" required="true" />
                     <Form.Label>Address 2</Form.Label>
                     <Form.Control type="text" placeholder="Address 2"/>
                     <Form.Label>City</Form.Label>
-                    <Form.Control type="text required" placeholder="City"/>
+                    <Form.Control type="text" placeholder="City" required="true" />
                     <Form.Label>State</Form.Label>
-                    <Form.Control type="text required" placeholder="State"/>
+                    <Form.Control type="text" placeholder="State" required="true" />
                     <Form.Label>Zip Code</Form.Label>
-                    <Form.Control type="text required" placeholder="Zip Code"/>
+                    <Form.Control type="text"  placeholder="Zip Code" required="true" />
                 </Form.Group>
 
                 <Col><Button variant="warning" onSubmit="handleSubmit">Checkout</Button></Col>

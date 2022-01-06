@@ -10,6 +10,7 @@ function CartItems({cartItem, isLoggedIn }) {
 
 
     function handleRemoveFromCart(cartItem) {
+        alert("Item successfully removed!")
 
         if(isLoggedIn) {
             dispatch(initiateDeleteCartItem(cartItem.productId))
