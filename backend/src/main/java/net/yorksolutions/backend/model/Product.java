@@ -33,6 +33,14 @@ public class Product {
     private List<ScheduledPrices> ScheduledPrices;
 
     @JsonProperty
+    @ElementCollection
+    private List<MininumAdvertisedPrice> MininumAdvertisedPrice;
+
+    @JsonProperty
+    @ElementCollection
+    private List<Sales> Sales;
+
+    @JsonProperty
     public String productName;
 
     @JsonProperty
