@@ -3,10 +3,19 @@ import {Link} from "react-router-dom";
 
 
 function CartSummary({cartItems}) {
-    // console.log(cartItems)
+    console.log(cartItems)
     let originalPrice = 0
     let totalSavings = 0
+
+    let now = new Date()
+    let currentPrice = 0
     if (cartItems) {
+        // cartItems.ScheduledPrices.map(prices => {
+        //     if (new Date(prices.effectiveDate) - now < 0) {
+        //         console.log(prices.price)
+        //     }
+        // })
+        console.log(currentPrice)
         for (let cartItem of cartItems) {
             originalPrice += Number(cartItem.unitPrice)
         }

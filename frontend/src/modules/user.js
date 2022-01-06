@@ -52,6 +52,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case REQUEST_LOGIN:
+
             return {
                 ...state,
                 isLoggedIn: false,

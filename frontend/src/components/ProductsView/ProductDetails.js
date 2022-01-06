@@ -8,15 +8,15 @@ function ProductDetails({product}) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
 
-    let currentDate = moment(new Date()).format()
+    let now = new Date()
     let currentPrice = 0
-
     product.ScheduledPrices.map(prices => {
-        if (prices.effectiveDate <= currentDate)
+        if (new Date(prices.effectiveDate) - now < 0) {
             currentPrice = prices.price
+        }
     })
-
     console.log(currentPrice)
+
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))

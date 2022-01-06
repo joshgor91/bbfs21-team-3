@@ -149,6 +149,5 @@ public class UserController {
         userRepo.findById(user.getId()).orElseThrow();
         userRepo.save(user);
         return "success";
-
     }
 }

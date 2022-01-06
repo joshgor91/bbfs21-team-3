@@ -8,6 +8,7 @@ import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 import Checkout from "../../pages/Checkout";
+import UserPage from "../../pages/UserPage";
 
 
 
@@ -28,7 +29,9 @@ function CustomerRouter({cartQuantity}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/">Home </Link>
                             </Nav.Item>
-
+                            <Nav.Item>
+                                <Link className="link-item" to="/myaccount">My Account</Link>
+                            </Nav.Item>
                             <Nav.Item>
                                 <Form className="d-flex">
                                     <FormControl
@@ -65,6 +68,7 @@ function CustomerRouter({cartQuantity}) {
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
+                <Route path='/myaccount' element={<UserPage/>} />
                 <Route path='/cart' element={<CartPage/>}/>
                 <Route path='/cart/checkout' element={<Checkout/>}/>
             </Routes>

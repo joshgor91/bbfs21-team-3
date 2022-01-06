@@ -8,10 +8,10 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         setShowNewProduct(false)
     }
 
-
     function handleSubmit(event) {
         event.preventDefault()
         handleClose()
+
         const productName = document.getElementById('productName').value
         // const categories = document.getElementById('categories').value
         const productDescription = document.getElementById('productDescription').value
