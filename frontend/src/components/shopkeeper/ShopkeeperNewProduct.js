@@ -1,19 +1,35 @@
 import {initiateAddProduct} from "../../modules/shopkeeper";
-import {Button, Form, Modal} from "react-bootstrap";
+import {Badge, Button, Form, Modal} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {useState} from "react";
 
-function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddProduct, handleAddProduct}) {
+function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddProduct, categories}) {
+    const [productCategories, setProductCategories] = useState([])
+    const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
+
     function handleClose() {
         setShowNewProduct(false)
+    }
+
+    function onChange(e) {
+        const {value, selectedIndex} = e.target
+        const {id} = e.target.options[selectedIndex]
+        setCategorySelect({id: Number(id), categoryName: value})
+    }
+
+    function handleAdd() {
+        setProductCategories([...productCategories, categorySelect])
+    }
+
+    function handleRemove() {
+        setProductCategories(productCategories.filter(id => categorySelect.id !== id.id))
     }
 
     function handleSubmit(event) {
         event.preventDefault()
         handleClose()
-
         const productName = document.getElementById('productName').value
-        // const categories = document.getElementById('categories').value
         const productDescription = document.getElementById('productDescription').value
         const brand = document.getElementById('brand').value
         const unitPrice = document.getElementById('unitPrice').value
@@ -27,10 +43,11 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
         const dateReceived = document.getElementById('dateReceived').value
         const unitsReceived = document.getElementById('unitsReceived').value
 
+        const newCategories = productCategories.map(category => {return {id: category.id}})
+
         const newProduct = {
-            id: Math.random() * 9999999 + 100,
             productName,
-            // categories,
+            categories: newCategories,
             productDescription,
             brand,
             unitPrice,
@@ -45,11 +62,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             unitsReceived
         }
 
-        handleAddProduct(newProduct)
         initiateAddProduct(newProduct)
-        console.log('what up')
-
-
     }
 
     return <Modal show={showNewProduct} onHide={handleClose}>
@@ -62,12 +75,14 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                 <Form.Group className='mb-3'>
                     <Form.Label>Product Name</Form.Label>
                     <Form.Control type='productName' placeholder='Product Name' id='productName'/>
-                    {/*<Form.Label>Categories</Form.Label>*/}
-                    {/*<Form.Control type='categories' as='select' id='categories'>*/}
-                    {/*    <option value={10}>Video Games</option>*/}
-                    {/*    <option value={3}>Electronics</option>*/}
-                    {/*    <option value={2}>Entertainment</option>*/}
-                    {/*</Form.Control>*/}
+                    <Form.Label>Categories</Form.Label>
+                    <div className='mb-3'>{productCategories.map(category => <Badge>{category.categoryName}</Badge>)}</div>
+                    <Form.Control type='categories' as='select'
+                                  onChange={onChange}>
+                        <option selected disabled hidden>Select Category</option>
+                        {categories.map(category => <option id={category.id} value={category.categoryName}>{category.categoryName}</option>)}
+                    </Form.Control>
+                    <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button size='sm' onClick={() => handleRemove()}>Remove</Button></div>
                     <Form.Label>Product Description</Form.Label>
                     <Form.Control type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
@@ -108,8 +123,14 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
     </Modal>
 }
 
+function mapStateToProps(state) {
+    return {
+        categories: state.shopkeeperReducer.categories
+    }
+}
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({initiateAddProduct}, dispatch)
 }
 
-export default connect(undefined, mapDispatchToProps)(ShopkeeperNewProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperNewProduct)

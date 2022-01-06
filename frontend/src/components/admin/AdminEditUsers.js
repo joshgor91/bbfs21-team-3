@@ -13,7 +13,6 @@ const initialUserForm = {
     email: '',
     password: '',
 }
-
 function AdminCreateUser ({
                               userForm,
                               setUserForm,
@@ -22,11 +21,14 @@ function AdminCreateUser ({
                               initiateGetUsers,
                               cancelEditUser,
                               submitEditUser,
-                              isEditing
-
+                              isEditing,
+                              userToEdit,
+                              loggedInUser
 }) {
 
+
     function handleSubmitCreateUser(e){
+        console.log("calling userFrom " + {userForm})
         e.preventDefault()
         if (isEditing){
             submitEditUser({...userForm})
@@ -78,16 +80,20 @@ function AdminCreateUser ({
                               name="role"
                               onChange={onChange}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="authLevel">
+            {(userToEdit === null || userToEdit.id !== loggedInUser.id) ? <Form.Group className="mb-3" controlId="authLevel">
                 <Form.Label>Auth Level</Form.Label>
-                <Form.Control type="text" placeholder="Enter their access level"
+                <Form.Select type="select"
                               value={userForm.authLevel}
                               name="authLevel"
-                              onChange={onChange}/>
+                             onChange={onChange}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </Form.Select>
                 <Form.Text className="text-muted">
                    '1' for Consumer, '2' for Business Owner, '3' for Admin.
                 </Form.Text>
-            </Form.Group>
+            </Form.Group> : <></>}
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email"
@@ -126,9 +132,8 @@ function mapStateToProps(state) {
         email: state.adminReducer.email,
         password: state.adminReducer.password,
         userToEdit: state.adminReducer.userToEdit,
-        isEditing: state.adminReducer.isEditing
-
-
+        isEditing: state.adminReducer.isEditing,
+        loggedInUser: state.userReducer.loggedInUser
     }
 }
 

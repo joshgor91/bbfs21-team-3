@@ -46,6 +46,7 @@ const initialState = {
     city: '',
     state: '',
     zipcode: '',
+
 }
 
 
@@ -75,6 +76,13 @@ export default function reducer(state = initialState, action) {
                 isLoggedIn: false,
                 loginErrorOccurred: true,
                 loginPending: false
+            }
+
+
+        case SET_USER_LOGGED_IN:
+            return {
+                ...state,
+                loggedInUser: action.user
             }
 
 
@@ -121,6 +129,7 @@ export default function reducer(state = initialState, action) {
             }
 
         case UPDATE_ADDRESS1:
+            console.log(action.payload)
             return {
                 ...state,
                 address1: action.payload
@@ -354,6 +363,7 @@ export function initiateRegisterUser(user) {
 }
 
 export function initiateEditUserInfo(userToEdit) {
+    console.log(userToEdit)
     return function userToEditSideEffect(dispatch) {
         editUserRequest(userToEdit).then(response => {
             if (response.status !== 200) {

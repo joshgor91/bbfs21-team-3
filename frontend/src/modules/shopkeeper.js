@@ -1,4 +1,5 @@
 import {logout} from "./user";
+import {getCategoriesRequest, createCategoryRequest, editCategoryRequest} from "../services/categoryService";
 
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const ADD_PRODUCT_FAILED = 'ADD_PRODUCT_FAILED'
@@ -14,6 +15,11 @@ const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
 const PRODUCTS_UPDATED = 'PRODUCTS_UPDATED'
 const VIEW_PRODUCT_DETAILS = 'VIEW_PRODUCT_DETAILS'
 const CANCEL_VIEW_PRODUCT_DETAILS = 'CANCEL_VIEW_PRODUCT_DETAILS'
+const GET_CATEGORIES = 'GET_CATEGORIES'
+const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE'
+const SET_CATEGORIES = 'SET_CATEGORIES'
+const CREATE_CATEGORY_FAILURE = 'CREATE_CATEGORY_FAILURE'
+const EDIT_CATEGORY_FAILURE = 'EDIT_CATEGORY_FAILURE'
 // const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES'
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME'
 const UPDATE_PRODUCT_DESCRIPTION = 'UPDATE_PRODUCT_DESCRIPTION'
@@ -38,7 +44,9 @@ const initialState = {
     addProduct: false,
     addErrorOccurred: false,
     editErrorOccurred: false,
-    // categories: [],
+    categories: [],
+    gettingAllCategories: false,
+    errorMessage: '',
     productName: '',
     productDescription: '',
     brand: '',
@@ -70,26 +78,6 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 addErrorOccurred: true
-            }
-
-        case CREATE_PRODUCT:
-            return {
-                ...state,
-                showEditProduct: true,
-                productToEdit: undefined,
-                productName: ''
-                // categories: [],
-                // productDescription: '',
-                // brand: '',
-                // unitPrice: 0.00,
-                // unitsInStock: 0,
-                // size: '',
-                // color: '',
-                // productAvailable: '',
-                // discontinued: false,
-                // picture: '',
-                // dateReceived: '',
-                // unitsReceived: 0
             }
 
         case EDIT_PRODUCT:
@@ -136,6 +124,39 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 showProductDetails: false
+            }
+
+        case GET_CATEGORIES:
+            return {
+                ...state,
+                gettingAllCategories: true
+            }
+
+        case GET_CATEGORIES_FAILURE:
+            return {
+                ...state,
+                gettingAllCategories: false,
+                errorMessage: action.payload
+            }
+
+        case SET_CATEGORIES:
+            return {
+                ...state,
+                gettingAllCategories: false,
+                categories: action.payload,
+                errorMessage: ''
+            }
+
+        case CREATE_CATEGORY_FAILURE:
+            return {
+                ...state,
+                errorMessage: action.payload
+            }
+
+        case EDIT_CATEGORY_FAILURE:
+            return {
+                ...state,
+                errorMessage: action.payload
             }
 
         // case UPDATE_CATEGORIES:
@@ -252,13 +273,6 @@ export default function reducer(state = initialState, action) {
 }
 
 
-export function createProduct(product) {
-    return {
-        type: CREATE_PRODUCT,
-        product
-    }
-}
-
 export function addProduct() {
     return {
         type: ADD_PRODUCT
@@ -272,7 +286,6 @@ function addProductFailed() {
 }
 
 export function editProduct(product) {
-    // console.log(product)
     return {
         type: EDIT_PRODUCT,
         product
@@ -431,6 +444,40 @@ export function getProducts() {
     }
 }
 
+function getCategories() {
+    return {
+        type: GET_CATEGORIES
+    }
+}
+
+function getCategoriesFailure(message) {
+    return {
+        type: GET_CATEGORIES_FAILURE,
+        payload: message
+    }
+}
+
+function editCategoryFailure(message) {
+    return {
+        type: EDIT_CATEGORY_FAILURE,
+        payload: message
+    }
+}
+
+function setCategories(categories) {
+    return {
+        type: SET_CATEGORIES,
+        payload: categories
+    }
+}
+
+function createCategoryFailure(message) {
+    return {
+        type: CREATE_CATEGORY_FAILURE,
+        payload: message
+    }
+}
+
 export function getProductsFailed() {
     return {
         type: GET_PRODUCTS_FAILED
@@ -445,7 +492,7 @@ function productsUpdated(products) {
 }
 
 export function initiateAddProduct(product) {
-    return function sideEffect(dispatch, getState) {
+    return function sideEffect(dispatch) {
         dispatch(addProduct())
 
         fetch(`http://localhost:8080/api/products/add`, {
@@ -487,8 +534,48 @@ export function initiateGetProducts() {
     }
 }
 
+export function initiateGetCategories() {
+    return function sideEffect(dispatch) {
+        dispatch(getCategories())
+        getCategoriesRequest().then(res => {
+            if (res.status !== 200) {
+                dispatch(getCategoriesFailure(`Error getting categories`))
+            } else {
+                dispatch(setCategories(res.data))
+            }
+        })
+    }
+}
+
+export function initiateCreateCategory(newCategory) {
+    console.log(newCategory)
+    return function sideEffect(dispatch) {
+        createCategoryRequest(newCategory).then(res => {
+            console.log(res)
+            if (res.status !== 200) {
+                dispatch(createCategoryFailure(`Error creating category`))
+            } else {
+                dispatch(initiateGetCategories())
+            }
+        })
+    }
+}
+
+export function initiateEditCategory(updatedCategory) {
+    return function sideEffect(dispatch) {
+        editCategoryRequest(updatedCategory).then(res => {
+            if (res.status !== 200) {
+                dispatch(editCategoryFailure(`Error editing category`))
+            } else {
+                dispatch(initiateGetCategories())
+                dispatch(initiateGetProducts())
+            }
+        })
+    }
+}
+
 export function initiateEditProduct(product) {
-    return function sideEffect(dispatch, getState) {
+    return function sideEffect(dispatch) {
         dispatch(startEditProduct())
 
         fetch('http://localhost:8080/api/products/edit', {
