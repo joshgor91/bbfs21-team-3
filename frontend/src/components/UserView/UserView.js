@@ -1,7 +1,7 @@
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
 import UserInfo from "./UserInfo";
-import {clearUserInfo, setUserInfo} from "../../modules/user";
+import {clearUserInfo, initiateDeleteUser, setUserInfo} from "../../modules/user";
 
 function UserView({user, showInfo}) {
     const dispatch = useDispatch()
@@ -10,7 +10,6 @@ function UserView({user, showInfo}) {
     return <>
         <Container>
             <Row>
-
                 <Card style={{width: '25rem', padding: '1px'}}>
                     <Card.Body>
                         <Card.Header style={{marginBottom: '.5em'}}><h2>Welcome back, {user.firstName}!</h2>
@@ -29,7 +28,7 @@ function UserView({user, showInfo}) {
                                     </Button>}
                             </Col>
                             <Col xs='auto'>
-                                <Button size='sm' variant='outline-danger'>
+                                <Button size='sm' variant='outline-danger' onClick={() => dispatch(initiateDeleteUser(user.id))}>
                                     Delete My Account
                                 </Button>
                             </Col>

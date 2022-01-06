@@ -1,4 +1,4 @@
-import ShopkeeperForm from "../components/shopkeeper/ShopkeeperForm";
+import ShopkeeperForm from "../components/shopkeeper/ShopkeeperForm"
 
 
 const Shopkeeper = () => {
@@ -12,4 +12,4 @@ const Shopkeeper = () => {
 
 
 
-export default (Shopkeeper)
+export default Shopkeeper

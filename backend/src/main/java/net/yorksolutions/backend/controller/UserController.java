@@ -103,13 +103,13 @@ public class UserController {
         if (users.isPresent()) {
             return "failure";
         }
+        userRepo.save(newUser);
         //create cart object
         Cart cart = new Cart(newUser.id);
-
 //        if (cartRepo.findByUserId(newUser.id).isEmpty())
 //        save cart
         cartRepo.save(cart);
-        userRepo.save(newUser);
+
         return "success";
     }
 
@@ -121,24 +121,6 @@ public class UserController {
         return "success";
     }
 
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//    User edit(@RequestBody User user) {
-//      User response = userRepo.findById(user.getId()).orElseThrow();
-//        userRepo.save(user);
-//        return userRepo.findById(user.getId()).get();
-//
-//    }
-//    @CrossOrigin
-//    @PutMapping("/edit")
-//    //returning user, for what?? why are we returning the user????
-//    User editTwo(@RequestBody User user) {
-//        userRepo.findById(user.getId()).orElseThrow();
-//        userRepo.save(user);
-//        // the user is already updated in the database, let just return this user from the database
-//        return user;
-//
-//    }
 
 //    ObjectMapper objectMapper = new ObjectMapper();
 
