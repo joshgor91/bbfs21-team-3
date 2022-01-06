@@ -77,7 +77,8 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 showEditUser: true,
                 isEditing: true,
-                registerErrorOccurred: false
+                registerErrorOccurred: false,
+                userToEdit: action.user
             }
 
         case EDIT_USER_FAILED:
@@ -86,7 +87,8 @@ export default function reducer(state = initialState, action) {
                 showEditUser: false,
                 isEditing: false,
                 registerErrorOccurred: true,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                userToEdit: null
             }
 
         case CANCEL_EDIT_USER:
@@ -100,7 +102,8 @@ export default function reducer(state = initialState, action) {
                 authLevel: '',
                 email: '',
                 password: '',
-                isEditing: false
+                isEditing: false,
+                userToEdit: null
             }
 
         case GETTING_USERS:

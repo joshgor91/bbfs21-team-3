@@ -60,6 +60,13 @@ export default function reducer(state = initialState, action){
             }
 
 
+        case SET_USER_LOGGED_IN:
+            return {
+                ...state,
+                loggedInUser: action.user
+            }
+
+
         case SET_USER_AS_ADMIN:
             return {
                 userIsAdmin: true,

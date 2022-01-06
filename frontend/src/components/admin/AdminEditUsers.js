@@ -21,9 +21,11 @@ function AdminCreateUser ({
                               initiateGetUsers,
                               cancelEditUser,
                               submitEditUser,
-                              isEditing
-
+                              isEditing,
+                              userToEdit,
+                              loggedInUser
 }) {
+
 
     function handleSubmitCreateUser(e){
         console.log("calling userFrom " + {userForm})
@@ -78,7 +80,7 @@ function AdminCreateUser ({
                               name="role"
                               onChange={onChange}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="authLevel">
+            {(userToEdit === null || userToEdit.id !== loggedInUser.id) ? <Form.Group className="mb-3" controlId="authLevel">
                 <Form.Label>Auth Level</Form.Label>
                 <Form.Select type="select"
                               value={userForm.authLevel}
@@ -91,7 +93,7 @@ function AdminCreateUser ({
                 <Form.Text className="text-muted">
                    '1' for Consumer, '2' for Business Owner, '3' for Admin.
                 </Form.Text>
-            </Form.Group>
+            </Form.Group> : <></>}
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email"
@@ -130,9 +132,8 @@ function mapStateToProps(state) {
         email: state.adminReducer.email,
         password: state.adminReducer.password,
         userToEdit: state.adminReducer.userToEdit,
-        isEditing: state.adminReducer.isEditing
-
-
+        isEditing: state.adminReducer.isEditing,
+        loggedInUser: state.userReducer.loggedInUser
     }
 }
 
