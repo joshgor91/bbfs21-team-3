@@ -25,7 +25,7 @@ function CartItems({cartItem, isLoggedIn }) {
         }
     }
     return <>
-        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '13.5rem'}}>
+        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '16.5rem'}}>
             <Row>
                 <Col style={{margin: 'auto'}} >
                     <Card.Img variant="top" style={{ width: '8em', height: '8em'}} src="holder.js/100px180"/>

@@ -21,8 +21,12 @@ export async function getUserCartRequest(userId) {
     return res
 }
 
-export async function addCartItemRequest(productToAdd) {
-    const cartItemInfo = ''
-    let res = await axios.post(`http://localhost:8080/api/products/add`, productToAdd);
-    return res;
+export async function addCartItemRequest(productId, cartId, quantity) {
+    console.log('in add cart item request', productId, cartId, quantity)
+    let data = {
+        productId: productId,
+        cartId: cartId,
+        quantity: quantity,
+    }
+    return await axios.post(`http://localhost:8080/api/cart/add`, data);
 }

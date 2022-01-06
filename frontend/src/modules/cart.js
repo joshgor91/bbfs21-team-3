@@ -178,11 +178,12 @@ export function initiateGetCartItems() {
     }
 }
 
-export function initiateAddCartItem(productToAdd) {
+export function initiateAddCartItem(productToAdd, quantity) {
     return function addCartItemSideEffect(dispatch, getState) {
+        const userCartId = getState().userReducer.userCart.id
+        console.log(userCartId)
         dispatch(addingCartItem())
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
-        console.log(cartStorage)
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
                 cartStorage = [productToAdd]
@@ -192,7 +193,7 @@ export function initiateAddCartItem(productToAdd) {
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             }
         } else {
-            addCartItemRequest(productToAdd).then(res => {
+            addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
                 if (res.data !== 'success') {
                     return dispatch(addCartItemFailure(`Error adding item to cart`));
                 } else {
