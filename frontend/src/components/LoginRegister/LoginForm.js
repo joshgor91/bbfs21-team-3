@@ -2,7 +2,7 @@ import { Alert, Button, Col, Form} from "react-bootstrap";
 import {useState} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {initiateLogin, loginFailure} from "../modules/user";
+import {initiateLogin, loginFailure} from "../../modules/user";
 
 function LoginForm({error, initiateLogin}) {
 
@@ -26,7 +26,7 @@ function LoginForm({error, initiateLogin}) {
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username"
+                                <Form.Control type="text" placeholder="Enter email"
                                               onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
@@ -53,7 +53,7 @@ function LoginForm({error, initiateLogin}) {
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username"
+                                <Form.Control type="text" placeholder="Enter email"
                                               onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
