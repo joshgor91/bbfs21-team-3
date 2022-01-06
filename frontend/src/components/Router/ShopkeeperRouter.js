@@ -9,6 +9,7 @@ import {Badge, Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import {GiShoppingCart} from "react-icons/gi";
 import LogoutBtn from "../LoginRegister/LogoutBtn";
 import Checkout from "../../pages/Checkout";
+import UserPage from "../../pages/UserPage";
 
 
 
@@ -28,6 +29,10 @@ function ShopkeeperRouter({cartQuantity}) {
 
                             <Nav.Item>
                                 <Link className="link-item" to="/">Home </Link>
+                            </Nav.Item>
+
+                            <Nav.Item>
+                                <Link className="link-item" to="/myaccount">My Account</Link>
                             </Nav.Item>
 
                             <Nav.Item>
@@ -72,6 +77,7 @@ function ShopkeeperRouter({cartQuantity}) {
                 <Route path='/shopkeeper' element={<Shopkeeper/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
+                <Route path='/myaccount' element={<UserPage/>} />
                 <Route path='/cart/checkout' element={<Checkout/>}/>
             </Routes>
         </Router>

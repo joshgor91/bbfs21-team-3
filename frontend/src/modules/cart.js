@@ -207,23 +207,21 @@ export function initiateAddCartItem(productToAdd, quantity) {
     }
 }
 
-export function initiateDeleteCartItem(id) {
-    console.log("deleting " + id)
-    return function sideEffect(dispatch) {
+export function initiateDeleteCartItem(prodId) {
+    console.log("deleting " + prodId)
+    return function sideEffect(dispatch, getState) {
+        const cartId = getState().userReducer.userCart.id
         dispatch(clearCart())
-        fetch(`http://localhost:8080/api/cart/delete`, {
+        fetch(`http://localhost:8080/api/cart/delete/${cartId}/${prodId}`,
+       {
             method: 'DELETE',
-            headers: {
-            "cartId": 4,
-            "prodId": id
-            },
         }).then(response => {
             if(!response.ok)
                 return dispatch(deleteCartFailed())
 
             response.text().then(text => {
                 if (text === 'success')
-                   console.log("cart deleted!")
+                    dispatch(initiateGetCartItems())
                 else
                     dispatch(deleteCartFailed())
             })

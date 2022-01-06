@@ -43,6 +43,14 @@ public class ProductController {
     }
 
     @CrossOrigin
+    @PutMapping("/category/edit")
+    String editCategory(@RequestBody Category category) {
+        categoryRepo.findById(category.id).orElseThrow();
+        categoryRepo.save(category);
+        return "success";
+    }
+
+    @CrossOrigin
     @PutMapping("/edit")
     String editProduct(@RequestBody Product product) {
         productRepo.findById(product.id).orElseThrow();
