@@ -84,4 +84,23 @@ public class Product {
         this.categories = categories;
     }
 
+    public Product() {
+    }
+
+    public Product(Long id, String productName, String productDescription, String brand, Float unitPrice, int unitsInStock, String size, String color, Date productAvailable, Boolean discontinued, Boolean discountAvailable, String picture, Date dateReceived, int unitsReceived) {
+        this.id = id;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.brand = brand;
+        this.unitPrice = unitPrice;
+        this.unitsInStock = unitsInStock;
+        this.size = size;
+        this.color = color;
+        this.productAvailable = productAvailable;
+        this.discontinued = discontinued;
+        this.discountAvailable = discountAvailable;
+        this.picture = picture;
+        this.dateReceived = dateReceived;
+        this.unitsReceived = unitsReceived;
+    }
 }
