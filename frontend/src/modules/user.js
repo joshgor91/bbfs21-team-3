@@ -46,6 +46,7 @@ const initialState = {
     city: '',
     state: '',
     zipcode: '',
+
 }
 
 
@@ -74,6 +75,13 @@ export default function reducer(state = initialState, action) {
                 isLoggedIn: false,
                 loginErrorOccurred: true,
                 loginPending: false
+            }
+
+
+        case SET_USER_LOGGED_IN:
+            return {
+                ...state,
+                loggedInUser: action.user
             }
 
 
