@@ -100,13 +100,14 @@ public class UserController {
         if (users.isPresent()) {
             return "failure";
         }
+        userRepo.save(newUser);
         //create cart object
         Cart cart = new Cart(newUser.id);
 
 //        if (cartRepo.findByUserId(newUser.id).isEmpty())
 //        save cart
         cartRepo.save(cart);
-        userRepo.save(newUser);
+
         return "success";
     }
 
@@ -142,6 +143,11 @@ public class UserController {
     // returning string to notify the front end that the admin successfully edited the user.
     String editThree(@RequestBody User user) {
         userRepo.findById(user.getId()).orElseThrow();
+        if (userRepo.findByEmail(user.email).isPresent())
+            return "Sorry, this email already exists. Sad.";
+        else if (user.authLevel > 3)
+            return "No one man should have all that power.";
+
         userRepo.save(user);
         return "success";
 

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CartItemRepository extends CrudRepository<CartItem,Long> {
-    Iterable<CartItem>findAllByCartId(Long cartId);
+    Optional<List<CartItem>>findAllByCartId(Long cartId);
 
     @Query("select p, c from Product p inner join CartItem c on p.id = c.productId where c.cartId = :cartId")
     List<Object[]> findCartItemsByCartId(@Param("cartId") Long cartId);
@@ -19,4 +19,6 @@ public interface CartItemRepository extends CrudRepository<CartItem,Long> {
     Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId);
 
     void deleteByCartIdAndProductId(Long cartId, Long productId);
+
+    void deleteAllByCartId(Long cartId);
 }
