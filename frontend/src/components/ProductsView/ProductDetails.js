@@ -2,6 +2,7 @@ import {Container, Row, Col, Card, Button, Form} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
 import {initiateAddCartItem} from "../../modules/cart";
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 function ProductDetails({product}) {
     const dispatch = useDispatch()
@@ -9,6 +10,7 @@ function ProductDetails({product}) {
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))
+
     }
 
     function handleQuantity(e) {
@@ -54,6 +56,14 @@ function ProductDetails({product}) {
                                                 </option>)}
                                         </Form.Select>
                                     </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                    <Button variant="primary">
+                                        <Link className="link-item" to="/">Continue Shopping?</Link>
+                                    </Button>
+                                    </Col>
+
                                 </Row>
                             </Card.Body>
                         </Card>
