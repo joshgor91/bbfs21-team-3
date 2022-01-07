@@ -181,6 +181,7 @@ function updatedCartFailed(message) {
 //sideEffects
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
+        let newCartItemQuantity=0;
         dispatch(gettingCartItems())
         if (getState().userReducer.isLoggedIn) {
             getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
@@ -189,6 +190,10 @@ export function initiateGetCartItems() {
                 else {
                     dispatch(setCartItems(res.data))
                     dispatch(setQuantity(res.data.length))
+                    for (let product of res.data){
+                        newCartItemQuantity+=product.quantity
+                    }
+                    dispatch(setQuantity(newCartItemQuantity))
                 }
             })
                 .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
@@ -200,7 +205,6 @@ export function initiateAddCartItem(productToAdd, quantity) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
         let newCartItemQuantity = 0;
-        console.log(userCartId)
         dispatch(addingCartItem())
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
@@ -216,9 +220,7 @@ export function initiateAddCartItem(productToAdd, quantity) {
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 } else {
                     for (let product of cartStorage) {
-                        console.log(product)
                         if (Number(product.id) === productToAdd.id) {
-                            console.log(cartStorage, "update")
                             product.quantity += quantity
                         }
                     }
@@ -234,13 +236,8 @@ export function initiateAddCartItem(productToAdd, quantity) {
                 if (res.data !== 'success') {
                     return dispatch(addCartItemFailure(`Error adding item to cart`));
                 } else {
-                    console.log(res.data)
                     dispatch(addCartItemSuccess());
                     dispatch(initiateGetCartItems())
-                    for (let product of res.data){
-                        newCartItemQuantity+=product.quantity
-                    }
-                    dispatch(setQuantity(newCartItemQuantity))
                 }
             })
                 .catch(err => console.log(`Error in initiateAddCartItem = ${err}`));
@@ -252,14 +249,30 @@ export function initiateEditCart(quantity, productId) {
 
     return function sideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
-        editCartRequest(productId, cartId, quantity).then(res => {
-            if (res.status !== 200) {
-                dispatch(updatedCartFailed(`Error editing cart`))
-            } else {
-                dispatch(initiateGetCartItems())
+        let newCartItemQuantity = 0;
+        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+        if (!getState().userReducer.isLoggedIn) {
+            const updatedCart = cartStorage.map(item => {
+                if (item.id === productId) {
+                    item.quantity = quantity
+                }
+                return item
+            })
+            localStorage.setItem("cartItems", JSON.stringify(updatedCart))
+            for (let product of updatedCart) {
+                newCartItemQuantity += product.quantity
             }
-        })
-            .catch(err => console.log(`Error editing cart = ${err}`));
+            dispatch(setQuantity(newCartItemQuantity))
+        } else {
+            editCartRequest(productId, cartId, quantity).then(res => {
+                if (res.status !== 200) {
+                    dispatch(updatedCartFailed(`Error editing cart`))
+                } else {
+                    dispatch(initiateGetCartItems())
+                }
+            })
+                .catch(err => console.log(`Error editing cart = ${err}`));
+        }
     }
 }
 
