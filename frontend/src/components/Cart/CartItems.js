@@ -22,7 +22,7 @@ function CartItems({cartItem, isLoggedIn }) {
     }
 
     function handleRemoveFromCart(cartItem) {
-
+        // localStorage.clear()
 
         if(isLoggedIn) {
             dispatch(initiateDeleteCartItem(cartItem.productId))

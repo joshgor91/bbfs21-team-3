@@ -163,7 +163,6 @@ function clearQuantity() {
 }
 
 
-
 function deleteCartFailed(message) {
     return {
         type: DELETE_CART_FAILED,
@@ -177,7 +176,6 @@ function updatedCartFailed(message) {
         payload: message
     }
 }
-
 
 
 //sideEffects
@@ -206,11 +204,27 @@ export function initiateAddCartItem(productToAdd, quantity) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [productToAdd]
+                cartStorage = [{...productToAdd, quantity:quantity}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
-                cartStorage.push(productToAdd)
-                window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+
+
+
+                for (let product of cartStorage) {
+                    console.log(product)
+                    if (Number(product.id) !== productToAdd.id) {
+                        console.log(cartStorage, "before push")
+                        cartStorage.push({...productToAdd, quantity:quantity})
+                        console.log(cartStorage, "after push")
+                        window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+
+                    } else {
+                        console.log(cartStorage, "update")
+                         product.quantity += quantity
+                        window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+
+                    }
+                }
             }
         } else {
             addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
@@ -249,10 +263,10 @@ export function initiateDeleteCartItem(prodId) {
         const cartId = getState().userReducer.userCart.id
         dispatch(clearCart())
         fetch(`http://localhost:8080/api/cart/delete/${cartId}/${prodId}`,
-       {
-            method: 'DELETE',
-        }).then(response => {
-            if(!response.ok)
+            {
+                method: 'DELETE',
+            }).then(response => {
+            if (!response.ok)
                 return dispatch(deleteCartFailed())
 
             response.text().then(text => {
