@@ -14,7 +14,6 @@ import OrderComplete from "../../pages/OrderComplete";
 
 
 function GuestRouter({cartQuantity}) {
-    console.log('guest router')
 
         return (
 

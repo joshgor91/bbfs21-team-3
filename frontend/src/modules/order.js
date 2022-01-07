@@ -159,6 +159,7 @@ export function initiateGetOrderHistory() {
 export function initiateGuestOrder(email) {
 
     let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+    console.log(cartStorage)
     const filteredCartStorage = cartStorage.map(cartItem => {
         return {
                     "productId": cartItem.id,
@@ -166,6 +167,7 @@ export function initiateGuestOrder(email) {
         }
     })
     return function addGuestOrderSideEffect(dispatch, getState) {
+        console.log(filteredCartStorage)
         dispatch(addingOrder())
         fetch("http://localhost:8080/api/order/add2", {
             method: "POST",

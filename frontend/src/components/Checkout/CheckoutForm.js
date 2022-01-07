@@ -13,7 +13,7 @@ import {initiateAddOrder, initiateGuestOrder} from "../../modules/order";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 
-function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zipcode,initiateEditUserInfo,updateAddress1,updateAddress2,updateCity,updateState,updateZipcode, initiateAddOrder, goToReceipt}) {
+function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zipcode,initiateEditUserInfo,updateAddress1,updateAddress2,updateCity,updateState,updateZipcode, initiateAddOrder, goToReceipt,initiateGuestOrder}) {
 
     const navigate = useNavigate()
     const [email, setEmail] = useState()
@@ -29,7 +29,6 @@ function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zi
 
     function handleSubmit(event) {
         event.preventDefault()
-        console.log("got to handle submit")
         initiateEditUserInfo(
             {
             ...loggedInUser,
@@ -93,7 +92,8 @@ function mapDispatchToProps(dispatch) {
         updateCity,
         updateState,
         updateZipcode,
-        initiateAddOrder
+        initiateAddOrder,
+        initiateGuestOrder
     }, dispatch)
 
 }
