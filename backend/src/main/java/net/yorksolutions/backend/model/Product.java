@@ -34,11 +34,11 @@ public class Product {
 
     @JsonProperty
     @ElementCollection
-    private List<MininumAdvertisedPrice> MininumAdvertisedPrice;
+    public List<MininumAdvertisedPrice> MininumAdvertisedPrice;
 
     @JsonProperty
     @ElementCollection
-    private List<Sales> Sales;
+    public List<Sales> Sales;
 
     @JsonProperty
     public String productName;

@@ -7,7 +7,6 @@ import CustomerRouter from "./components/Router/CustomerRouter";
 
 function App({userIsAdmin, userIsShopkeeper, userIsCustomer, cartQuantity}) {
 
-
     if (userIsAdmin) {
         return (<AdminRouter cartQuantity={cartQuantity}/>)
     }
