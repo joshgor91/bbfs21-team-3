@@ -207,23 +207,21 @@ export function initiateAddCartItem(productToAdd, quantity) {
                 cartStorage = [{...productToAdd, quantity:quantity}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
-
-
-
-                for (let product of cartStorage) {
-                    console.log(product)
-                    if (Number(product.id) !== productToAdd.id) {
-                        console.log(cartStorage, "before push")
-                        cartStorage.push({...productToAdd, quantity:quantity})
-                        console.log(cartStorage, "after push")
-                        window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
-
-                    } else {
-                        console.log(cartStorage, "update")
-                         product.quantity += quantity
-                        window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
-
+                const productExists = cartStorage.some(product => {
+                    return Number(product.id) === productToAdd.id
+                })
+                if(!productExists) {
+                    cartStorage.push({...productToAdd, quantity:quantity})
+                    window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                } else {
+                    for (let product of cartStorage) {
+                        console.log(product)
+                        if (Number(product.id) === productToAdd.id) {
+                            console.log(cartStorage, "update")
+                            product.quantity += quantity
+                        }
                     }
+                    window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 }
             }
         } else {
