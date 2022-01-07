@@ -21,7 +21,9 @@ function Product({product}) {
 
     function goToProductDetails(productId) {
         dispatch(initiateGetProductById(productId))
-        navigate(`../product/${productId}`)
+        setTimeout(() => {
+            navigate(`../product/${productId}`)
+        }, 100)
     }
 
     return (
