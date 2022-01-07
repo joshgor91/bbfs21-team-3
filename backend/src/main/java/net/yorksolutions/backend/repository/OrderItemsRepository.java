@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface OrderItemsRepository extends CrudRepository<OrderItem,Long> {
-    @Query("select p, od, oi from Product p inner join OrderItem oi on p.id = oi.productId inner join OrderDetails od on od.orderDetailsId = oi.orderDetailsId where od.orderDetailsId = :orderId")
+    @Query("select p, oi from Product p inner join OrderItem oi on p.id = oi.productId where oi.orderDetailsId = :orderId")
     List<Object[]> findByOrderDetailsId(@Param("orderId") Long orderId);
 
     @Query("select p, od, oi from Product p inner join OrderItem oi on p.id = oi.productId inner join OrderDetails od on od.orderDetailsId = oi.orderDetailsId where od.userId = :userId")
