@@ -199,6 +199,7 @@ export function initiateGetCartItems() {
 export function initiateAddCartItem(productToAdd, quantity) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
+        let newCartItemQuantity = 0;
         console.log(userCartId)
         dispatch(addingCartItem())
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
@@ -224,6 +225,10 @@ export function initiateAddCartItem(productToAdd, quantity) {
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 }
             }
+                for (let product of cartStorage){
+                    newCartItemQuantity+=product.quantity
+                }
+                dispatch(setQuantity(newCartItemQuantity))
         } else {
             addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
                 if (res.data !== 'success') {
@@ -232,6 +237,10 @@ export function initiateAddCartItem(productToAdd, quantity) {
                     console.log(res.data)
                     dispatch(addCartItemSuccess());
                     dispatch(initiateGetCartItems())
+                    for (let product of res.data){
+                        newCartItemQuantity+=product.quantity
+                    }
+                    dispatch(setQuantity(newCartItemQuantity))
                 }
             })
                 .catch(err => console.log(`Error in initiateAddCartItem = ${err}`));
