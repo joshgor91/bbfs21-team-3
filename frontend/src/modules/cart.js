@@ -186,11 +186,25 @@ export function initiateAddCartItem(productToAdd, quantity) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [productToAdd]
+                cartStorage = [{...productToAdd, quantity: quantity}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
-                cartStorage.push(productToAdd)
-                window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                const productExists = cartStorage.some(product => {
+                    return Number(product.id) === productToAdd.id
+                })
+                if(!productExists) {
+                    cartStorage.push({...productToAdd, quantity:quantity})
+                    window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                } else {
+                    for (let product of cartStorage) {
+                        console.log(product)
+                        if (Number(product.id) === productToAdd.id) {
+                            // console.log(cartStorage, "update")
+                            product.quantity += quantity
+                        }
+                    }
+                    window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                }
             }
         } else {
             addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {

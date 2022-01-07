@@ -10,12 +10,13 @@ function ProductDetails({product}) {
 
     let now = new Date()
     let currentPrice = 0
+    let currentSale = 0
     product.ScheduledPrices.map(prices => {
         if (new Date(prices.effectiveDate) - now < 0) {
             currentPrice = prices.price
         }
     })
-    console.log(currentPrice)
+    // console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
