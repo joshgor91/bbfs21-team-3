@@ -8,7 +8,6 @@ import net.yorksolutions.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,22 +28,25 @@ public class OrderController {
     @Autowired
     CartItemRepository cartItemRepo;
 
-    class OrderDetailsOutput extends Product{
-        @JsonProperty
-        private Long orderDetailsId;
-        @JsonProperty
-        private Float total;
-        @JsonProperty
-        private LocalDateTime dateCreated;
+    class OrderItemsOutput extends Product{
         @JsonProperty
         private int quantity;
 
-        public OrderDetailsOutput(Long id, String productName, String productDescription, String brand, Float unitPrice, int unitsInStock, String size, String color, Date productAvailable, Boolean discontinued, Boolean discountAvailable, String picture, Date dateReceived, int unitsReceived, Long orderDetailsId, Float total, LocalDateTime dateCreated, int quantity) {
+        public OrderItemsOutput(Long id, String productName, String productDescription, String brand, Float unitPrice, int unitsInStock, String size, String color, Date productAvailable, Boolean discontinued, Boolean discountAvailable, String picture, Date dateReceived, int unitsReceived, int quantity) {
             super(id, productName, productDescription, brand, unitPrice, unitsInStock, size, color, productAvailable, discontinued, discountAvailable, picture, dateReceived, unitsReceived);
-            this.orderDetailsId = orderDetailsId;
-            this.total = total;
-            this.dateCreated = dateCreated;
             this.quantity = quantity;
+        }
+    }
+
+    class OrderHistoryOutput {
+        @JsonProperty
+        private List<OrderItemsOutput> orderItems;
+        @JsonProperty
+        private OrderDetails orderDetails;
+
+        public OrderHistoryOutput(List<OrderItemsOutput> orderItems, OrderDetails orderDetails) {
+            this.orderItems = orderItems;
+            this.orderDetails = orderDetails;
         }
     }
 
@@ -72,16 +74,15 @@ public class OrderController {
 
     @CrossOrigin
     @GetMapping("/viewOrder")
-    List<OrderDetailsOutput> viewOrder(@RequestHeader Long orderId){
+    List<OrderItemsOutput> viewOrder(@RequestHeader Long orderId){
         List<Object[]> orderItemDetails = orderItemsRepo.findByOrderDetailsId(orderId);
-        ArrayList<OrderDetailsOutput> orderInfo = new ArrayList<>();
+        ArrayList<OrderItemsOutput> orderInfo = new ArrayList<>();
         for (var itemDetail : orderItemDetails) {
             Product p = (Product) itemDetail[0];
             OrderDetails od = (OrderDetails) itemDetail[1];
             OrderItem oi = (OrderItem) itemDetail[2];
-            var orderDetails = new OrderDetailsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
-                    p.color, p.productAvailable, p.discontinued, p.discountAvailable, p.picture, p.dateReceived, p.unitsReceived,
-                    od.orderDetailsId, od.total, od.dateCreated, oi.getQuantity());
+            var orderDetails = new OrderItemsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
+                    p.color, p.productAvailable, p.discontinued, p.discountAvailable, p.picture, p.dateReceived, p.unitsReceived, oi.getQuantity());
             orderInfo.add(orderDetails);
         }
 
@@ -90,22 +91,20 @@ public class OrderController {
 
     @CrossOrigin
     @GetMapping("/orderHistory")
-    Iterable<ArrayList<OrderDetailsOutput>> viewOrders(@RequestHeader Long userId){
+    Iterable<OrderHistoryOutput> viewOrders(@RequestHeader Long userId){
         var orders = orderDetailsRepo.findAllByUserId(userId).get();
-        ArrayList<ArrayList<OrderDetailsOutput>> orderHistory = new ArrayList<>();
+        List<OrderHistoryOutput> orderHistory = new ArrayList<>();
         for (var order : orders) {
-            ArrayList<OrderDetailsOutput> orderInfo = new ArrayList<>();
+            List<OrderItemsOutput> orderInfo = new ArrayList<>();
             List<Object[]> orderHistoryDetails = orderItemsRepo.findByOrderDetailsId(order.orderDetailsId);
             for (var itemDetail : orderHistoryDetails) {
                 Product p = (Product) itemDetail[0];
-                OrderDetails od = (OrderDetails) itemDetail[1];
-                OrderItem oi = (OrderItem) itemDetail[2];
-                var orderDetails = new OrderDetailsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
-                        p.color, p.productAvailable, p.discontinued, p.discountAvailable, p.picture, p.dateReceived, p.unitsReceived,
-                        od.orderDetailsId, od.total, od.dateCreated, oi.getQuantity());
+                OrderItem oi = (OrderItem) itemDetail[1];
+                var orderDetails = new OrderItemsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
+                        p.color, p.productAvailable, p.discontinued, p.discountAvailable, p.picture, p.dateReceived, p.unitsReceived, oi.getQuantity());
                 orderInfo.add(orderDetails);
             }
-            orderHistory.add(orderInfo);
+            orderHistory.add(new OrderHistoryOutput(orderInfo, order));
         }
 
         return orderHistory;
