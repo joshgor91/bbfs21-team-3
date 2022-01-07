@@ -238,6 +238,23 @@ export function initiateAddCartItem(productToAdd, quantity) {
     }
 }
 
+
+export function initiateEditCart(quantity, productId) {
+
+    return function sideEffect(dispatch, getState) {
+        const cartId = getState().userReducer.userCart.id
+        editCartRequest(productId, cartId, quantity).then(res => {
+            if (res.status !== 200) {
+                dispatch(updatedCartFailed(`Error editing cart`))
+            } else {
+                dispatch(initiateGetCartItems())
+            }
+        })
+            .catch(err => console.log(`Error editing cart = ${err}`));
+    }
+}
+
+
 export function initiateDeleteCartItem(prodId) {
     console.log("deleting " + prodId)
     return function sideEffect(dispatch, getState) {

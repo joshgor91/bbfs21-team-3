@@ -25,15 +25,24 @@ function CartSummary({cartItems}) {
         console.log(currentPrice)
 
         // console.log(originalPrice)
-        const salesPrices = cartItems.map(item => {
-            let result = item.unitPrice * item.sale
-            return Number(result.toFixed(2))
-        })
+        // const salesPrices = cartItems.map(item => {
+        //     console.log(item.Sales)
+        //     // let result = item.unitPrice * item.sale
+        //     // return Number(result.toFixed(2))
+        // })
         for (let sales of salesPrices) {
             totalSavings += Number(sales)
         }
         // console.log(totalSavings)
     }
+    // product.Sales.map(sales => {
+    //     console.log(sales)
+    //     if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0) {
+    //         currentSale = Math.round(currentPrice) * sales.discount
+    //         console.log(currentSale)
+    //         saleAndPrice = currentPrice - currentSale
+    //     }
+    // })
 
         total = originalPrice.toFixed(2)
 
