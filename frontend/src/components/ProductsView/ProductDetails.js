@@ -1,12 +1,23 @@
 import {Container, Row, Col, Card, Button, Form} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
 import {initiateAddCartItem} from "../../modules/cart";
-import {useState} from "react";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import moment from "moment";
 
 function ProductDetails({product}) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
+
+    let now = new Date()
+    let currentPrice = 0
+    product.ScheduledPrices.map(prices => {
+        if (new Date(prices.effectiveDate) - now < 0) {
+            currentPrice = prices.price
+        }
+    })
+    console.log(currentPrice)
+
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))
@@ -16,7 +27,6 @@ function ProductDetails({product}) {
     function handleQuantity(e) {
         setQuantity(Number(e.target.value))
     }
-
 
     return (
         <>
@@ -30,7 +40,7 @@ function ProductDetails({product}) {
                     <Col>
                         <Card style={{width: '30rem', height: '30rem'}}>
                             <Card.Body>
-                                <Card.Title>{product.unitPrice}$</Card.Title>
+                                <Card.Title>{currentPrice}$</Card.Title>
                                 <Card.Title>{product.brand}</Card.Title>
                                 <Card.Header>{product.productName}</Card.Header>
                                 <Card.Text>{product.productDescription}</Card.Text>

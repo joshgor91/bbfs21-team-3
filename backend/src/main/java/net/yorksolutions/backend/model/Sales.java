@@ -18,12 +18,16 @@ public class Sales {
     @Column(precision=4, scale=4)
     public Float discount;
 
+    @JsonProperty
+    public String saleDescription;
+
     public Sales() {
     }
 
-    public Sales( LocalDateTime saleStartDate, LocalDateTime saleEndDate, Float discount) {
+    public Sales( LocalDateTime saleStartDate, LocalDateTime saleEndDate, Float discount, String saleDescription) {
         this.saleStartDate = saleStartDate;
         this.saleEndDate = saleEndDate;
         this.discount = discount;
+        this.saleDescription= saleDescription;
     }
 }

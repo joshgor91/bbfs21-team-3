@@ -118,6 +118,5 @@ public class UserController {
             return "email already exists";
         userRepo.save(userToEdit);
         return "success";
-
     }
 }
