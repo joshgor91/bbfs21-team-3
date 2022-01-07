@@ -16,7 +16,7 @@ function Cart({cartItems, isLoggedIn}) {
     }, []);
 
     const cart = JSON.parse(window.localStorage.getItem('cartItems'))
-
+    console.log(cart)
     return <>
         <Container>
             <Row>
