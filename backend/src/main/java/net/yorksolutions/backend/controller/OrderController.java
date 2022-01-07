@@ -74,30 +74,30 @@ public class OrderController {
 
     @CrossOrigin
     @GetMapping("/viewOrder")
-    List<OrderItemsOutput> viewOrder(@RequestHeader Long orderId){
+    OrderHistoryOutput viewOrder(@RequestHeader Long orderId){
+        var order = orderDetailsRepo.findById(orderId).orElseThrow();
         List<Object[]> orderItemDetails = orderItemsRepo.findByOrderDetailsId(orderId);
         ArrayList<OrderItemsOutput> orderInfo = new ArrayList<>();
         for (var itemDetail : orderItemDetails) {
             Product p = (Product) itemDetail[0];
-            OrderDetails od = (OrderDetails) itemDetail[1];
-            OrderItem oi = (OrderItem) itemDetail[2];
+            OrderItem oi = (OrderItem) itemDetail[1];
             var orderDetails = new OrderItemsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
                     p.color, p.productAvailable, p.discontinued, p.discountAvailable, p.picture, p.dateReceived, p.unitsReceived, oi.getQuantity());
             orderInfo.add(orderDetails);
         }
 
-        return orderInfo;
+        return new OrderHistoryOutput(orderInfo, order);
     }
 
     @CrossOrigin
     @GetMapping("/orderHistory")
     Iterable<OrderHistoryOutput> viewOrders(@RequestHeader Long userId){
-        var orders = orderDetailsRepo.findAllByUserId(userId).get();
+        var orders = orderDetailsRepo.findAllByUserId(userId).orElseThrow();
         List<OrderHistoryOutput> orderHistory = new ArrayList<>();
         for (var order : orders) {
             List<OrderItemsOutput> orderInfo = new ArrayList<>();
-            List<Object[]> orderHistoryDetails = orderItemsRepo.findByOrderDetailsId(order.orderDetailsId);
-            for (var itemDetail : orderHistoryDetails) {
+            List<Object[]> orderItemDetails = orderItemsRepo.findByOrderDetailsId(order.orderDetailsId);
+            for (var itemDetail : orderItemDetails) {
                 Product p = (Product) itemDetail[0];
                 OrderItem oi = (OrderItem) itemDetail[1];
                 var orderDetails = new OrderItemsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
