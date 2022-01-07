@@ -1,3 +1,5 @@
+import {editCategoryRequest} from "./categoryService";
+
 const axios = require('axios')
 
 export async function getCartItemsRequest(userId) {
@@ -29,4 +31,16 @@ export async function addCartItemRequest(productId, cartId, quantity) {
         quantity: quantity,
     }
     return await axios.post(`http://localhost:8080/api/cart/add`, data);
+
+}
+
+    export async function editCartRequest(productId, cartId, quantity) {
+        console.log('in edit cart item request', productId, cartId, quantity)
+        let data = {
+            productId: productId,
+            cartId: cartId,
+            quantity: quantity,
+        }
+        return await axios.put(`http://localhost:8080/api/cart/edit`, data);
+
 }

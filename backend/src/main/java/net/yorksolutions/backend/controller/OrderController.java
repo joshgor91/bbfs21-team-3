@@ -28,6 +28,9 @@ public class OrderController {
     @Autowired
     CartItemRepository cartItemRepo;
 
+    @Autowired
+    ProductRepository productRepo;
+
     class OrderItemsOutput extends Product{
         @JsonProperty
         private int quantity;
@@ -60,10 +63,22 @@ public class OrderController {
         orderDetailsRepo.save(order);
         var cartItems= cartItemRepo.findAllByCartId(cartId).orElseThrow();
         var orderItems = new ArrayList<OrderItem>();
+        var updatedProducts = new ArrayList<Product>();
         for(var item : cartItems){
-            var orderItem = new OrderItem(item.getProductId(), order.orderDetailsId, item.getQuantity());
-            orderItems.add(orderItem);
+            var prodId = item.getProductId();
+            var itemQty = item.getQuantity();
+            var product = productRepo.findById(prodId).get();
+            var unitsInStock = product.unitsInStock;
+            if (itemQty > unitsInStock)
+                return "Sorry, not enough units in stock for " + product.productName + ".";
+            else {
+                var orderItem = new OrderItem(prodId, order.orderDetailsId, itemQty);
+                orderItems.add(orderItem);
+                product.unitsInStock -= itemQty;
+                updatedProducts.add(product);
+            }
         }
+        productRepo.saveAll(updatedProducts);
         orderItemsRepo.saveAll(orderItems);
         cartItemRepo.deleteAllByCartId(cartId);
         cart.totalCost = 0F;
