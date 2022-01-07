@@ -14,7 +14,7 @@ import Checkout from "../../pages/Checkout";
 import OrderComplete from "../../pages/OrderComplete";
 
 
-function AdminRouter({cartQuantity}) {
+function AdminRouter({cartquantity}) {
 
     return (
 
@@ -58,7 +58,7 @@ function AdminRouter({cartQuantity}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                    <Badge pill bg="secondary">{cartquantity}</Badge>
                                 </Link>
                             </Nav.Item>
                         </Nav>

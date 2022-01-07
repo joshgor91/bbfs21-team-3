@@ -6,6 +6,7 @@ const GO_TO_RECEIPT = 'GO_TO_RECEIPT'
 const CLEAR_RECEIPT = 'CLEAR_RECEIPT'
 const GETTING_ORDER_HISTORY = 'GETTING_ORDER_HISTORY'
 const GET_ORDER_HISTORY_FAILED = 'GET_ORDER_HISTORY_FAILED'
+const GET_ORDER_HISTORY_SUCCESS = 'GET_ORDER_HISTORY_SUCCESS'
 
 
 const initialState = {
@@ -14,7 +15,9 @@ const initialState = {
     goToReceipt: false,
     gettingOrderHistory: false,
     getOrderHistoryFailed: false,
-    errorMessage: ''
+    errorMessage: '',
+    getOrderHistorySuccess: false,
+    orders: []
 
 
 }
@@ -61,6 +64,13 @@ export default function reducer(state = initialState, action) {
                 errorMessage: action.payload
             }
 
+        case GET_ORDER_HISTORY_SUCCESS:
+            return {
+                ...state,
+                getOrderHistorySuccess: true,
+                orders: action.payload
+            }
+
         default:
             return state
     }
@@ -90,6 +100,12 @@ function getOrderHistoryFailed(errorMessage) {
     return {type: GET_ORDER_HISTORY_FAILED,
     payload:errorMessage}
 }
+
+function getOrderHistorySuccess(orders) {
+    return {type: GET_ORDER_HISTORY_SUCCESS,
+        payload:orders}
+}
+
 
 
 
@@ -131,15 +147,10 @@ export function initiateGetOrderHistory() {
             },
         }).then(response => {
             if (!response.ok)
-                return dispatch(getOrderHistoryFailed(""))
-            response.text().then(text => {
-                if(text==="success"){
-                    console.log("order placed")
-                    dispatch(goToReceipt())
-                    // NavigationActions.navigate({ routeName: 'cart' });
-                }else{
-                    dispatch(addOrderFailed())
-                }
+                return dispatch(getOrderHistoryFailed("Unable to get orders."))
+            response.json().then(orders => {
+                dispatch(getOrderHistorySuccess(orders))
+                console.log(orders)
             })
         }).catch(error => console.log(error))
     }

@@ -30,15 +30,15 @@ public class Product {
 
     @JsonProperty
     @ElementCollection
-    private List<ScheduledPrices> ScheduledPrices;
+    public List<ScheduledPrices> ScheduledPrices;
 
     @JsonProperty
     @ElementCollection
-    private List<MininumAdvertisedPrice> MininumAdvertisedPrice;
+    public List<MininumAdvertisedPrice> MininumAdvertisedPrice;
 
     @JsonProperty
     @ElementCollection
-    private List<Sales> Sales;
+    public List<Sales> Sales;
 
     @JsonProperty
     public String productName;
@@ -111,4 +111,9 @@ public class Product {
         this.dateReceived = dateReceived;
         this.unitsReceived = unitsReceived;
     }
+
+    public List<net.yorksolutions.backend.model.ScheduledPrices> getScheduledPrices() {
+        return ScheduledPrices;
+    }
+
 }
