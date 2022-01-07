@@ -1,10 +1,15 @@
 .product-card {
     width: 18rem;
-    margin: auto;
+    margin: auto auto 50px;
+    cursor: pointer
 }
 
 .product-img {
     margin: auto;
     width: 12.75em;
     height: 12.75em;
+}
+
+.product-homepage-row{
+    margin-bottom: 30px;
 }

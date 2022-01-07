@@ -1,4 +1,6 @@
-import {addCartItemRequest, getCartItemsRequest} from "../services/cartService";
+import {addCartItemRequest, editCartRequest, getCartItemsRequest} from "../services/cartService";
+import {editCategoryRequest} from "../services/categoryService";
+import {initiateGetCategories, initiateGetProducts} from "./shopkeeper";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -10,6 +12,7 @@ const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
 const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
+const UPDATE_CART_FAILED = 'UPDATE_CART_FAILED'
 
 const initialState = {
     cartItems: [],
@@ -17,7 +20,8 @@ const initialState = {
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: '',
-    cartFailedMessage: false
+    cartFailedMessage: false,
+    updatedCartFailed: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -85,6 +89,12 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 cartFailedMessage: action.payload
+            }
+
+        case UPDATE_CART_FAILED:
+            return {
+                ...state,
+                updatedCartFailed: action.payload
             }
 
         default:
@@ -159,6 +169,13 @@ function deleteCartFailed(message) {
     }
 }
 
+function updatedCartFailed(message) {
+    return {
+        type: UPDATE_CART_FAILED,
+        payload: message
+    }
+}
+
 
 //sideEffects
 export function initiateGetCartItems() {
@@ -186,7 +203,7 @@ export function initiateAddCartItem(productToAdd, quantity) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [{...productToAdd, quantity: quantity}]
+                cartStorage = [{...productToAdd, quantity:quantity}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
                 const productExists = cartStorage.some(product => {
@@ -199,7 +216,7 @@ export function initiateAddCartItem(productToAdd, quantity) {
                     for (let product of cartStorage) {
                         console.log(product)
                         if (Number(product.id) === productToAdd.id) {
-                            // console.log(cartStorage, "update")
+                            console.log(cartStorage, "update")
                             product.quantity += quantity
                         }
                     }
