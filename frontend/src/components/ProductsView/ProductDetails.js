@@ -12,6 +12,7 @@ function ProductDetails({product}) {
     let now = new Date()
     let currentPrice = 0
     let currentSale = 0
+    console.log(product)
     product.ScheduledPrices.map(prices => {
         if (new Date(prices.effectiveDate) - now < 0) {
             currentPrice = prices.price

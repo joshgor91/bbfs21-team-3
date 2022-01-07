@@ -13,7 +13,7 @@ import OrderComplete from "../../pages/OrderComplete";
 
 
 
-function CustomerRouter({cartquantity}) {
+function CustomerRouter({cartQuantity}) {
     return (
 
         <Router>
@@ -50,7 +50,7 @@ function CustomerRouter({cartquantity}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartquantity}</Badge>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
                                 </Link>
                             </Nav.Item>
                             <Nav.Item>

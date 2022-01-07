@@ -13,7 +13,7 @@ import OrderComplete from "../../pages/OrderComplete";
 
 
 
-function GuestRouter({cartquantity}) {
+function GuestRouter({cartQuantity}) {
     console.log('guest router')
 
         return (
@@ -56,7 +56,7 @@ function GuestRouter({cartquantity}) {
                                 <Nav.Item>
                                     <Link className="link-item" to="/cart">
                                         <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                        <Badge pill bg="secondary">{cartquantity}</Badge>
+                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
                                     </Link>
                                 </Nav.Item>
 
