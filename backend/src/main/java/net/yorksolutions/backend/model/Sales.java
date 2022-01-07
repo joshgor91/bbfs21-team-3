@@ -7,10 +7,6 @@ import java.time.LocalDateTime;
 
 @Embeddable
 public class Sales {
-    @Id
-    @JsonProperty
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    public Long salesProductId;
 
     @JsonProperty
     public LocalDateTime saleStartDate;
@@ -25,8 +21,7 @@ public class Sales {
     public Sales() {
     }
 
-    public Sales(Long salesProductId, LocalDateTime saleStartDate, LocalDateTime saleEndDate, Float discount) {
-        this.salesProductId = salesProductId;
+    public Sales( LocalDateTime saleStartDate, LocalDateTime saleEndDate, Float discount) {
         this.saleStartDate = saleStartDate;
         this.saleEndDate = saleEndDate;
         this.discount = discount;
