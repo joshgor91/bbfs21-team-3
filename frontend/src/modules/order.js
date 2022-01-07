@@ -150,7 +150,6 @@ export function initiateGetOrderHistory() {
                 return dispatch(getOrderHistoryFailed("Unable to get orders."))
             response.json().then(orders => {
                 dispatch(getOrderHistorySuccess(orders))
-                console.log(orders)
             })
         }).catch(error => console.log(error))
     }
