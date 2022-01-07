@@ -1,4 +1,6 @@
-import {addCartItemRequest, getCartItemsRequest} from "../services/cartService";
+import {addCartItemRequest, editCartRequest, getCartItemsRequest} from "../services/cartService";
+import {editCategoryRequest} from "../services/categoryService";
+import {initiateGetCategories, initiateGetProducts} from "./shopkeeper";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -10,6 +12,7 @@ const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
 const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
+const UPDATE_CART_FAILED = 'UPDATE_CART_FAILED'
 
 const initialState = {
     cartItems: [],
@@ -17,7 +20,8 @@ const initialState = {
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: '',
-    cartFailedMessage: false
+    cartFailedMessage: false,
+    updatedCartFailed: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -87,6 +91,12 @@ export default function reducer(state = initialState, action) {
                 cartFailedMessage: action.payload
             }
 
+        case UPDATE_CART_FAILED:
+            return {
+                ...state,
+                updatedCartFailed: action.payload
+            }
+
         default:
             return state
     }
@@ -152,9 +162,17 @@ function clearQuantity() {
     }
 }
 
+
 function deleteCartFailed(message) {
     return {
         type: DELETE_CART_FAILED,
+        payload: message
+    }
+}
+
+function updatedCartFailed(message) {
+    return {
+        type: UPDATE_CART_FAILED,
         payload: message
     }
 }
@@ -186,11 +204,25 @@ export function initiateAddCartItem(productToAdd, quantity) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [productToAdd]
+                cartStorage = [{...productToAdd, quantity:quantity}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
-                cartStorage.push(productToAdd)
-                window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                const productExists = cartStorage.some(product => {
+                    return Number(product.id) === productToAdd.id
+                })
+                if(!productExists) {
+                    cartStorage.push({...productToAdd, quantity:quantity})
+                    window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                } else {
+                    for (let product of cartStorage) {
+                        console.log(product)
+                        if (Number(product.id) === productToAdd.id) {
+                            console.log(cartStorage, "update")
+                            product.quantity += quantity
+                        }
+                    }
+                    window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
+                }
             }
         } else {
             addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
@@ -207,16 +239,32 @@ export function initiateAddCartItem(productToAdd, quantity) {
     }
 }
 
+export function initiateEditCart(quantity, productId) {
+
+    return function sideEffect(dispatch, getState) {
+        const cartId = getState().userReducer.userCart.id
+        editCartRequest(productId, cartId, quantity).then(res => {
+            if (res.status !== 200) {
+                dispatch(updatedCartFailed(`Error editing cart`))
+            } else {
+                dispatch(initiateGetCartItems())
+            }
+        })
+            .catch(err => console.log(`Error editing cart = ${err}`));
+    }
+}
+
+
 export function initiateDeleteCartItem(prodId) {
     console.log("deleting " + prodId)
     return function sideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
         dispatch(clearCart())
         fetch(`http://localhost:8080/api/cart/delete/${cartId}/${prodId}`,
-       {
-            method: 'DELETE',
-        }).then(response => {
-            if(!response.ok)
+            {
+                method: 'DELETE',
+            }).then(response => {
+            if (!response.ok)
                 return dispatch(deleteCartFailed())
 
             response.text().then(text => {

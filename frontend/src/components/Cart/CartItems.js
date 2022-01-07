@@ -1,6 +1,7 @@
-import {Button, Card, Col, Row} from "react-bootstrap";
-import {initiateDeleteCartItem} from "../../modules/cart";
+import {Button, Card, Col, Form, Row} from "react-bootstrap";
+import {initiateDeleteCartItem, initiateEditCart} from "../../modules/cart";
 import {connect, useDispatch} from "react-redux";
+import {useState} from "react";
 
 function CartItems({cartItem, isLoggedIn }) {
 
@@ -8,9 +9,20 @@ function CartItems({cartItem, isLoggedIn }) {
     console.log(cartItem.productName + "cartitem")
     console.log(cartItem.productId + "cartitem")
 
+    const [quantity, setQuantity] = useState(cartItem.quantity)
+
+    function handleQuantity(e) {
+        setQuantity(Number(e.target.value))
+    }
+
+    function editCart(){
+        console.log(quantity, " quantity")
+        console.log(cartItem.productId)
+        dispatch(initiateEditCart(quantity, cartItem.productId))
+    }
 
     function handleRemoveFromCart(cartItem) {
-
+        // localStorage.clear()
 
         if(isLoggedIn) {
             dispatch(initiateDeleteCartItem(cartItem.productId))
@@ -37,7 +49,15 @@ function CartItems({cartItem, isLoggedIn }) {
                         <Card.Text>{cartItem.size}</Card.Text>
                         <Card.Text>{cartItem.unitPrice}</Card.Text>
                         <Card.Text>{cartItem.productDescription}</Card.Text>
-                        <Button variant="warning" onClick={() => handleRemoveFromCart(cartItem)}>Remove from Cart</Button>
+                        <Form.Select defaultValue={quantity} onChange={handleQuantity}>
+                            {[1, 2, 3, 4, 5].map((quant, index) =>
+                                <option key={index}
+                                        value={quant}>
+                                    {quant}
+                                </option>)}
+                        </Form.Select>
+                        <Button variant="primary" size="sm"  onClick={editCart}>Save</Button>
+                        <Button variant="warning" size="sm" onClick={() => handleRemoveFromCart(cartItem)}>Delete all</Button>
                     </Card.Body>
                 </Col>
             </Row>

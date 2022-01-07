@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Embeddable
 public class Sales {
 
-
     @JsonProperty
     public LocalDateTime saleStartDate;
 
