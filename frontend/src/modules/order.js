@@ -150,7 +150,43 @@ export function initiateGetOrderHistory() {
                 return dispatch(getOrderHistoryFailed("Unable to get orders."))
             response.json().then(orders => {
                 dispatch(getOrderHistorySuccess(orders))
-                console.log(orders)
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateGuestOrder(email) {
+
+    let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+    console.log(cartStorage)
+    const filteredCartStorage = cartStorage.map(cartItem => {
+        return {
+                    "productId": cartItem.id,
+                    "quantity": cartItem.quantity
+        }
+    })
+    return function addGuestOrderSideEffect(dispatch, getState) {
+        console.log(filteredCartStorage)
+        dispatch(addingOrder())
+        fetch("http://localhost:8080/api/order/add2", {
+            method: "POST",
+            headers: {
+                'email': email,
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(filteredCartStorage)
+
+        }).then(response => {
+            if (!response.ok)
+                return dispatch(addOrderFailed())
+            response.text().then(text => {
+                if(text==="success"){
+                    console.log("order placed")
+                    dispatch(goToReceipt())
+                    window.localStorage.clear()
+                }else{
+                    dispatch(addOrderFailed())
+                }
             })
         }).catch(error => console.log(error))
     }

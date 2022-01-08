@@ -1,6 +1,6 @@
 import {Button, Col, Form} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {connect, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import {
     initiateEditUserInfo,
     updateAddress1,
@@ -9,13 +9,14 @@ import {
     updateState,
     updateZipcode
 } from "../../modules/user";
-import {clearReceipt, initiateAddOrder} from "../../modules/order";
+import {initiateAddOrder, initiateGuestOrder} from "../../modules/order";
 import {useNavigate} from "react-router";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
-function CheckoutForm({loggedInUser, address1,address2,city,state,zipcode,initiateEditUserInfo,updateAddress1,updateAddress2,updateCity,updateState,updateZipcode, initiateAddOrder, goToReceipt}) {
+function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zipcode,initiateEditUserInfo,updateAddress1,updateAddress2,updateCity,updateState,updateZipcode, initiateAddOrder, goToReceipt,initiateGuestOrder}) {
 
     const navigate = useNavigate()
+    const [email, setEmail] = useState()
 
 
     useEffect(() => {
@@ -26,11 +27,8 @@ function CheckoutForm({loggedInUser, address1,address2,city,state,zipcode,initia
 
 
 
-
-
     function handleSubmit(event) {
         event.preventDefault()
-        console.log("got to handle submit")
         initiateEditUserInfo(
             {
             ...loggedInUser,
@@ -40,14 +38,20 @@ function CheckoutForm({loggedInUser, address1,address2,city,state,zipcode,initia
             state,
             zipcode
         })
-
-        initiateAddOrder()
+        if(!isLoggedIn){
+            initiateGuestOrder(email)
+        }else
+            initiateAddOrder()
 
     }
 
         return (
             <Form className="login-register-form" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicAddress">
+                    {!isLoggedIn && <>
+                    <Form.Label>Email</Form.Label>
+                        <Form.Control type="text required" placeholder="Email" value={email}  onChange={(event) => setEmail(event.target.value)}/>
+                    </>}
                     <Form.Label>Address</Form.Label>
                     <Form.Control type="text required" placeholder="Address" value={address1} defaultValue={loggedInUser.address1} onChange={event => updateAddress1(event.target.value)}/>
                     <Form.Label>Address 2</Form.Label>
@@ -76,6 +80,7 @@ function mapStateToProps(state) {
         zipcode: state.userReducer.zipcode,
         loggedInUser: state.userReducer.loggedInUser,
         goToReceipt: state.orderReducer.goToReceipt,
+        isLoggedIn: state.userReducer.isLoggedIn
     }
 }
 
@@ -87,7 +92,8 @@ function mapDispatchToProps(dispatch) {
         updateCity,
         updateState,
         updateZipcode,
-        initiateAddOrder
+        initiateAddOrder,
+        initiateGuestOrder
     }, dispatch)
 
 }
