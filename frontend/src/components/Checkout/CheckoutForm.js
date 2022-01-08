@@ -17,6 +17,7 @@ function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zi
 
     const navigate = useNavigate()
     const [email, setEmail] = useState()
+    const [total, setTotal] = useState(0)
 
 
     useEffect(() => {
@@ -29,19 +30,20 @@ function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zi
 
     function handleSubmit(event) {
         event.preventDefault()
-        initiateEditUserInfo(
-            {
-            ...loggedInUser,
-            address1,
-            address2,
-            city,
-            state,
-            zipcode
-        })
         if(!isLoggedIn){
-            initiateGuestOrder(email)
-        }else
+            initiateGuestOrder(email, total)
+        }else{
+            initiateEditUserInfo(
+                {
+                    ...loggedInUser,
+                    address1,
+                    address2,
+                    city,
+                    state,
+                    zipcode
+                })
             initiateAddOrder()
+        }
 
     }
 

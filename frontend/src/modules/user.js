@@ -9,6 +9,7 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGOUT = 'LOGOUT'
 const REGISTERING_USER = 'REGISTERING_USER'
 const ADD_USER_FAILED = 'ADD_USER_FAILED'
+const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
 const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN'
 const SET_USER_AS_ADMIN = 'SET_USER_AS_ADMIN'
 const SET_USER_AS_SHOPKEEPER = 'SET_USER_AS_SHOPKEEPER'
@@ -46,6 +47,7 @@ const initialState = {
     city: '',
     state: '',
     zipcode: '',
+    addUserSuccess: false
 
 }
 
@@ -76,6 +78,18 @@ export default function reducer(state = initialState, action) {
                 isLoggedIn: false,
                 loginErrorOccurred: true,
                 loginPending: false
+            }
+
+        case ADD_USER_FAILED:
+            return {
+                ...state,
+              registerErrorOccurred: true
+            }
+
+        case ADD_USER_SUCCESS:
+            return {
+                ...state,
+                addUserSuccess: true
             }
 
 
@@ -115,7 +129,6 @@ export default function reducer(state = initialState, action) {
             }
 
         case SET_USER_INFO:
-            console.log(action.payload)
             return {
                 ...state,
                 showInfo: true,
@@ -234,6 +247,12 @@ function registeringUser() {
     }
 }
 
+function addUserSuccess() {
+    return {
+        type: ADD_USER_SUCCESS
+    }
+}
+
 function addUserFailed() {
     return {
         type: ADD_USER_FAILED
@@ -313,6 +332,7 @@ export function initiateLogin(credentials) {
             response.json().then(user => {
                 getUserCartRequest(user.id)
                     .then(response => {
+                        console.log(response)
                         if (response.status === 200)
                             console.log(response.data)
                         dispatch(setUserCart(response.data))
@@ -349,10 +369,10 @@ export function initiateRegisterUser(user) {
                 return dispatch(addUserFailed())
 
             response.text().then(text => {
-                if (text === 'success')
-                    // dispatch(initiateLogin(user))
+                if (text === 'success') {
+                    dispatch(addUserSuccess())
                     console.log("user registered")
-
+                }
                 else {
                     dispatch(addUserFailed())
                 }

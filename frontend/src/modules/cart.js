@@ -1,6 +1,7 @@
 import {addCartItemRequest, editCartRequest, getCartItemsRequest} from "../services/cartService";
 import {editCategoryRequest} from "../services/categoryService";
 import {initiateGetCategories, initiateGetProducts} from "./shopkeeper";
+import {calculateGuestTotal} from "../utils/localStorageUtils";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -11,17 +12,21 @@ const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
 const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
+const SET_TOTAL_COST = 'SET_TOTAL_COST'
+const CLEAR_TOTAL_COST = 'CLEAR_TOTAL_COST'
 const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
 const UPDATE_CART_FAILED = 'UPDATE_CART_FAILED'
 
 const initialState = {
     cartItems: [],
     quantity: 0,
+    total:0,
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: '',
     cartFailedMessage: false,
-    updatedCartFailed: false
+    updatedCartFailed: false,
+    addCartItemSuccess: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -56,7 +61,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 addingCartItem: false,
-                errorMessage: ''
+                errorMessage: '',
+                addCartItemSuccess: true
             }
 
         case GETTING_CART_ITEMS_FAILED:
@@ -162,6 +168,17 @@ function clearQuantity() {
     }
 }
 
+function setTotalCost(){
+    return {
+        type:SET_TOTAL_COST
+    }
+}
+
+function clearTotalCost(){
+    return {
+        type:CLEAR_TOTAL_COST
+    }
+}
 
 function deleteCartFailed(message) {
     return {
@@ -201,7 +218,7 @@ export function initiateGetCartItems() {
     }
 }
 
-export function initiateAddCartItem(productToAdd, quantity) {
+export function initiateAddCartItem(productToAdd, quantity, regularPrice, salePrice) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
         let newCartItemQuantity = 0;
@@ -209,14 +226,14 @@ export function initiateAddCartItem(productToAdd, quantity) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [{...productToAdd, quantity:quantity}]
+                cartStorage = [{...productToAdd, quantity:quantity, regularPrice:regularPrice, salePrice:salePrice}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
                 const productExists = cartStorage.some(product => {
                     return Number(product.id) === productToAdd.id
                 })
                 if(!productExists) {
-                    cartStorage.push({...productToAdd, quantity:quantity})
+                    cartStorage.push({...productToAdd, quantity:quantity, regularPrice:regularPrice, salePrice:salePrice})
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 } else {
                     for (let product of cartStorage) {
@@ -230,9 +247,11 @@ export function initiateAddCartItem(productToAdd, quantity) {
                 for (let product of cartStorage){
                     newCartItemQuantity+=product.quantity
                 }
+                let cartTotal = calculateGuestTotal()
+                window.localStorage.setItem('cartTotal', cartTotal)
                 dispatch(setQuantity(newCartItemQuantity))
         } else {
-            addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
+            addCartItemRequest(productToAdd.id, userCartId, quantity, regularPrice, salePrice).then(res => {
                 if (res.data !== 'success') {
                     return dispatch(addCartItemFailure(`Error adding item to cart`));
                 } else {
