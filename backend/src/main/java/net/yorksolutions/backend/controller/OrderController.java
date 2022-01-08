@@ -100,7 +100,28 @@ public class OrderController {
     }
 
     @CrossOrigin
-    @GetMapping("/orderHistory")
+    @GetMapping("/shopkeeper/orderHistory/all")
+    Iterable<OrderHistoryOutput> shopKeeperViewAllOrders(){
+        var orders = orderDetailsRepo.findAll();
+        List<OrderHistoryOutput> orderHistory = new ArrayList<>();
+        for (var order : orders) {
+            List<OrderItemsOutput> orderInfo = new ArrayList<>();
+            List<Object[]> orderItemDetails = orderItemsRepo.findByOrderDetailsId(order.orderDetailsId);
+            for (var itemDetail : orderItemDetails) {
+                Product p = (Product) itemDetail[0];
+                OrderItem oi = (OrderItem) itemDetail[1];
+                var orderDetails = new OrderItemsOutput(p.id, p.productName, p.productDescription, p.brand, p.unitPrice, p.unitsInStock, p.size,
+                        p.color, p.productAvailable, p.discontinued, p.discountAvailable, p.picture, p.dateReceived, p.unitsReceived, oi.getQuantity());
+                orderInfo.add(orderDetails);
+            }
+            orderHistory.add(new OrderHistoryOutput(orderInfo, order));
+        }
+
+        return orderHistory;
+    }
+
+    @CrossOrigin
+    @GetMapping("/orderHistory/all")
     Iterable<OrderHistoryOutput> viewOrders(@RequestHeader Long userId){
         var orders = orderDetailsRepo.findAllByUserId(userId).orElseThrow();
         List<OrderHistoryOutput> orderHistory = new ArrayList<>();
