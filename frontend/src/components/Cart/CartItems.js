@@ -49,7 +49,7 @@ function CartItems({cartItem, isLoggedIn}) {
                         <Card.Text>{cartItem.unitPrice}</Card.Text>
                         <Card.Text>{cartItem.productDescription}</Card.Text>
                         <Form.Select defaultValue={quantity} onChange={handleQuantity}>
-                            {[1, 2, 3, 4, 5].map((quant, index) =>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((quant, index) =>
                                 <option key={index}
                                         value={quant}>
                                     {quant}
