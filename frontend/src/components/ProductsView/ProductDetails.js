@@ -1,4 +1,4 @@
-import {Container, Row, Col, Card, Button, Form} from "react-bootstrap";
+import {Container, Row, Col, Card, Button, Form, Alert, ToastContainer, Toast} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
 import {initiateAddCartItem} from "../../modules/cart";
 import {Link} from "react-router-dom";
@@ -8,19 +8,25 @@ import moment from "moment";
 function ProductDetails({product}) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleCloseTimed = setTimeout(() => {handleClose()}, 2000);
 
     let now = new Date()
     let currentPrice = 0
-    product.ScheduledPrices.map(prices => {
-        if (new Date(prices.effectiveDate) - now < 0) {
-            currentPrice = prices.price
-        }
-    })
+    // product.ScheduledPrices.map(prices => {
+    //     if (new Date(prices.effectiveDate) - now < 0) {
+    //         currentPrice = prices.price
+    //     }
+    // })
     console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))
+        handleShow()
+        handleCloseTimed()
 
     }
 
@@ -77,6 +83,13 @@ function ProductDetails({product}) {
                                 </Row>
                             </Card.Body>
                         </Card>
+
+                        {
+                            show && <Alert variant="success" onClick={handleClose}> Added to Cart</Alert>
+                        }
+
+
+
                     </Col>
                 </Row>
             </Container>
@@ -87,7 +100,8 @@ function ProductDetails({product}) {
 function mapStateToProps(state) {
     return {
         product: state.productsReducer.productToView,
-        cartItems: state.cartReducer.cartItems
+        cartItems: state.cartReducer.cartItems,
+        addCartItemSuccess: state.cartReducer.addCartItemSuccess,
     }
 }
 

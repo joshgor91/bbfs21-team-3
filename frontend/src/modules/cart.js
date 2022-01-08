@@ -21,7 +21,8 @@ const initialState = {
     addingCartItem: false,
     errorMessage: '',
     cartFailedMessage: false,
-    updatedCartFailed: false
+    updatedCartFailed: false,
+    addCartItemSuccess: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -56,7 +57,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 addingCartItem: false,
-                errorMessage: ''
+                errorMessage: '',
+                addCartItemSuccess: true
             }
 
         case GETTING_CART_ITEMS_FAILED:
