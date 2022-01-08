@@ -54,20 +54,16 @@ function ProductDetails({product}) {
                                 {product.unitsInStock !== 0 ?
                                     <Card.Text>Available</Card.Text>
                                     : <Card.Text>Out of Stock</Card.Text>}
-
                                 <Row>
                                     <Col>
-                                        <Button variant="primary"
-                                                onClick={() => addToCart(product)}
-                                        >
+                                        <Button variant="primary" size="sm" onClick={() => addToCart(product)}>
                                             Add to Cart
                                         </Button>
                                     </Col>
                                     <Col>
                                         <Form.Select defaultValue={quantity} onChange={handleQuantity}>
-                                            {[1, 2, 3, 4, 5].map((quant, index) =>
-                                                <option key={index}
-                                                        value={quant}>
+                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((quant, index) =>
+                                                <option key={index} value={quant}>
                                                     {quant}
                                                 </option>)}
                                         </Form.Select>
@@ -75,21 +71,14 @@ function ProductDetails({product}) {
                                 </Row>
                                 <Row>
                                     <Col>
-                                    <Button variant="primary">
+                                    <Button variant="secondary" size="sm" id="cont-shopping-btn">
                                         <Link className="link-item" to="/">Continue Shopping?</Link>
                                     </Button>
                                     </Col>
-
                                 </Row>
                             </Card.Body>
                         </Card>
-
-                        {
-                            show && <Alert variant="success" onClick={handleClose}> Added to Cart</Alert>
-                        }
-
-
-
+                        {show && <Alert variant="success" onClick={handleClose}> Added to Cart</Alert>}
                     </Col>
                 </Row>
             </Container>
