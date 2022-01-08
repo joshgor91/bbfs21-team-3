@@ -1,6 +1,7 @@
 import {addCartItemRequest, editCartRequest, getCartItemsRequest} from "../services/cartService";
 import {editCategoryRequest} from "../services/categoryService";
 import {initiateGetCategories, initiateGetProducts} from "./shopkeeper";
+import {calculateGuestTotal} from "../utils/localStorageUtils";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -11,12 +12,15 @@ const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
 const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
+const SET_TOTAL_COST = 'SET_TOTAL_COST'
+const CLEAR_TOTAL_COST = 'CLEAR_TOTAL_COST'
 const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
 const UPDATE_CART_FAILED = 'UPDATE_CART_FAILED'
 
 const initialState = {
     cartItems: [],
     quantity: 0,
+    total:0,
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: '',
@@ -162,6 +166,17 @@ function clearQuantity() {
     }
 }
 
+function setTotalCost(){
+    return {
+        type:SET_TOTAL_COST
+    }
+}
+
+function clearTotalCost(){
+    return {
+        type:CLEAR_TOTAL_COST
+    }
+}
 
 function deleteCartFailed(message) {
     return {
@@ -230,6 +245,8 @@ export function initiateAddCartItem(productToAdd, quantity, regularPrice, salePr
                 for (let product of cartStorage){
                     newCartItemQuantity+=product.quantity
                 }
+                let cartTotal = calculateGuestTotal()
+                window.localStorage.setItem('cartTotal', cartTotal)
                 dispatch(setQuantity(newCartItemQuantity))
         } else {
             addCartItemRequest(productToAdd.id, userCartId, quantity, regularPrice, salePrice).then(res => {
