@@ -2,6 +2,18 @@ import {editCategoryRequest} from "./categoryService";
 
 const axios = require('axios')
 
+export async function addGuestOrderRequest(cartArray, email, total) {
+    const config = {
+        method:'POST',
+        url: 'http://localhost:8080/api/order/addGuestOrder',
+        body: cartArray,
+        headers: {
+            'email': email,
+            'total':total,
+        }
+    }
+}
+
 export async function getCartItemsRequest(userId) {
     const config = {
         method: 'GET',
@@ -23,12 +35,14 @@ export async function getUserCartRequest(userId) {
     return res
 }
 
-export async function addCartItemRequest(productId, cartId, quantity) {
+export async function addCartItemRequest(productId, cartId, quantity, regularPrice, salePrice) {
     console.log('in add cart item request', productId, cartId, quantity)
     let data = {
         productId: productId,
         cartId: cartId,
         quantity: quantity,
+        regularPrice:regularPrice,
+        salePrice:salePrice
     }
     return await axios.post(`http://localhost:8080/api/cart/add`, data);
 

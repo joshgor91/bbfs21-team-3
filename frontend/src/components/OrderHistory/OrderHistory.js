@@ -35,7 +35,7 @@ function OrderHistory({initiateGetOrderHistory, orderlist}) {
                                     {product.productDescription}
                                 </Card.Text>
                                 <Card.Text>
-                                    {product.unitPrice}
+                                    {product.salePrice}
                                 </Card.Text>
 
                             </Card.Body>
