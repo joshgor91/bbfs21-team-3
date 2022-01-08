@@ -20,6 +20,12 @@ public class OrderItem {
     @JsonProperty
      int quantity;
 
+    @JsonProperty
+    Float regularPrice;
+
+    @JsonProperty
+    Float salePrice;
+
     public OrderItem() {
     }
 

@@ -19,6 +19,9 @@ public class OrderDetails {
     public Long userId;
 
     @JsonProperty
+    public String email;
+
+    @JsonProperty
     public Float total;
 
     @JsonProperty
@@ -29,6 +32,12 @@ public class OrderDetails {
 
     public OrderDetails(Long userid, Float total) {
         this.userId = userid;
+        this.total = total;
+        this.dateCreated = LocalDateTime.now();
+    }
+
+    public OrderDetails(String email, Float total) {
+        this.email = email;
         this.total = total;
         this.dateCreated = LocalDateTime.now();
     }
