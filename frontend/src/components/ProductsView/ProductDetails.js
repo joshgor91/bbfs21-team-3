@@ -13,15 +13,32 @@ function ProductDetails({product}) {
     const handleClose = () => setShow(false);
     const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
     const [currentPrice, setCurrentPrice] = useState(0)
+    const [salePrice, setSalePrice] = useState(0)
 
     useEffect(() => {
         let now = new Date()
+        let regularPrice = 0
         product.scheduledPrices?.map(prices => {
             let tempDate = new Date(prices.effectiveDate)
             if (new Date(prices.effectiveDate) - now < 0) {
+                regularPrice = prices.price
                 setCurrentPrice(prices.price)
             }
         })
+
+        // sales is currently capitalized in redux
+        // if there isn't any sales set, saleprice is regular price
+        // still need logic for in between sales
+        if (product.Sales.length > 0) {
+            product.Sales?.map(sale => {
+                let tempDate = new Date(sale.effectiveDate)
+                if (new Date(sale.effectiveDate) - now < 0) {
+                    setSalePrice(sale.price)
+                }}
+
+        )} else {
+                setSalePrice(regularPrice)
+        }
     },[])
 
     console.log(currentPrice)
@@ -30,7 +47,7 @@ function ProductDetails({product}) {
     function addToCart(productToAdd) {
         handleShow()
         handleCloseTimed()
-        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, currentPrice))
+        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, salePrice))
     }
 
     function handleQuantity(e) {
@@ -50,6 +67,7 @@ function ProductDetails({product}) {
                         <Card style={{width: '30rem', height: '30rem'}}>
                             <Card.Body>
                                 <Card.Title>{currentPrice}$</Card.Title>
+                                {salePrice !== currentPrice && <Card.Title>{salePrice}</Card.Title>}
                                 <Card.Title>{product.brand}</Card.Title>
                                 <Card.Header>{product.productName}</Card.Header>
                                 <Card.Text>{product.productDescription}</Card.Text>
