@@ -25,7 +25,8 @@ function ProductDetails({product}) {
 
 
     function addToCart(productToAdd) {
-        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice))
+        // needs to change
+        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, currentPrice))
 
     }
 

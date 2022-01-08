@@ -51,4 +51,11 @@ public class OrderItem {
         return quantity;
     }
 
+    public Float getRegularPrice() {
+        return regularPrice;
+    }
+
+    public Float getSalePrice() {
+        return salePrice;
+    }
 }

@@ -201,7 +201,7 @@ export function initiateGetCartItems() {
     }
 }
 
-export function initiateAddCartItem(productToAdd, quantity, currentPrice) {
+export function initiateAddCartItem(productToAdd, quantity, regularPrice, salePrice) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
         let newCartItemQuantity = 0;
@@ -209,14 +209,14 @@ export function initiateAddCartItem(productToAdd, quantity, currentPrice) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [{...productToAdd, quantity:quantity, price:currentPrice}]
+                cartStorage = [{...productToAdd, quantity:quantity, regularPrice:regularPrice, salePrice:salePrice}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
                 const productExists = cartStorage.some(product => {
                     return Number(product.id) === productToAdd.id
                 })
                 if(!productExists) {
-                    cartStorage.push({...productToAdd, quantity:quantity, price:currentPrice})
+                    cartStorage.push({...productToAdd, quantity:quantity, regularPrice:regularPrice, salePrice:salePrice})
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 } else {
                     for (let product of cartStorage) {
@@ -232,7 +232,7 @@ export function initiateAddCartItem(productToAdd, quantity, currentPrice) {
                 }
                 dispatch(setQuantity(newCartItemQuantity))
         } else {
-            addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
+            addCartItemRequest(productToAdd.id, userCartId, quantity, regularPrice, salePrice).then(res => {
                 if (res.data !== 'success') {
                     return dispatch(addCartItemFailure(`Error adding item to cart`));
                 } else {
