@@ -11,7 +11,7 @@ function ProductDetails({product}) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const handleCloseTimed = setTimeout(() => {handleClose()}, 2000);
+    const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
 
     let now = new Date()
     let currentPrice = 0
