@@ -1,6 +1,7 @@
 package net.yorksolutions.backend.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import net.yorksolutions.backend.model.CartItem;
 import net.yorksolutions.backend.model.OrderDetails;
 import net.yorksolutions.backend.model.OrderItem;
 import net.yorksolutions.backend.model.Product;
@@ -59,31 +60,25 @@ public class OrderController {
         var cart = cartRepo.findById(cartId).get();
         var userId = cart.userId;
         var total = cart.totalCost;
-        var order = new OrderDetails(userId, total);
-        orderDetailsRepo.save(order);
         var cartItems= cartItemRepo.findAllByCartId(cartId).orElseThrow();
-        var orderItems = new ArrayList<OrderItem>();
-        var updatedProducts = new ArrayList<Product>();
-        for(var item : cartItems){
-            var prodId = item.getProductId();
-            var itemQty = item.getQuantity();
-            var product = productRepo.findById(prodId).get();
-            var unitsInStock = product.unitsInStock;
-            if (itemQty > unitsInStock)
-                return "Sorry, not enough units in stock for " + product.productName + ".";
-            else {
-                var orderItem = new OrderItem(prodId, order.orderDetailsId, itemQty);
-                orderItems.add(orderItem);
-                product.unitsInStock -= itemQty;
-                updatedProducts.add(product);
-            }
-        }
-        productRepo.saveAll(updatedProducts);
-        orderItemsRepo.saveAll(orderItems);
+        var order = new OrderDetails(userId, total);
+        var orderStatus = createOrder(cartItems, order);
+        if (!orderStatus.equals("success"))
+            return orderStatus;
         cartItemRepo.deleteAllByCartId(cartId);
         cart.totalCost = 0F;
         cartRepo.save(cart);
 
+        return "success";
+    }
+
+    @CrossOrigin
+    @PostMapping("/addGuestOrder")
+    String createGuestOrder (@RequestBody List<CartItem> cartItems, @RequestHeader String email, @RequestHeader Float total) {
+        var order = new OrderDetails(email, total);
+        var orderStatus = createOrder(cartItems, order);
+        if (!orderStatus.equals("success"))
+            return orderStatus;
         return "success";
     }
 
@@ -123,5 +118,33 @@ public class OrderController {
         }
 
         return orderHistory;
+    }
+
+    String createOrder(List<CartItem> cartItems, OrderDetails order) {
+        orderDetailsRepo.save(order);
+        var orderItems = new ArrayList<OrderItem>();
+        var updatedProducts = new ArrayList<Product>();
+        for(var item : cartItems){
+            var prodId = item.getProductId();
+            var itemQty = item.getQuantity();
+            var product = productRepo.findById(prodId).get();
+            //AYE YO FRONTEND!!! WE MIGHT BE ABLE TO CALCULATE CURRENT REGULAR AND SALE PRICES IN THE BACKEND
+            //JAVA HAS METHODS FOR COMPARING DATES
+//            var isBefore = product.scheduledPrices.get(0).getEffectiveDate().before(new Date());
+//            var regPrice = product.scheduledPrices.get(0).getPrice();
+            var unitsInStock = product.unitsInStock;
+            if (itemQty > unitsInStock)
+                return "Sorry, not enough units in stock for " + product.productName + ".";
+            else {
+                var orderItem = new OrderItem(prodId, order.orderDetailsId, itemQty);
+                orderItems.add(orderItem);
+                product.unitsInStock -= itemQty;
+                updatedProducts.add(product);
+            }
+        }
+        productRepo.saveAll(updatedProducts);
+        orderItemsRepo.saveAll(orderItems);
+
+        return "success";
     }
 }

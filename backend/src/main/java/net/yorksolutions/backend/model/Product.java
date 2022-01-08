@@ -30,11 +30,11 @@ public class Product {
 
     @JsonProperty
     @ElementCollection
-    public List<ScheduledPrices> ScheduledPrices;
+    public List<ScheduledPrices> scheduledPrices;
 
     @JsonProperty
     @ElementCollection
-    public List<MininumAdvertisedPrice> MininumAdvertisedPrice;
+    public List<MininumAdvertisedPrice> mininumAdvertisedPrices;
 
     @JsonProperty
     @ElementCollection
@@ -113,7 +113,7 @@ public class Product {
     }
 
     public List<net.yorksolutions.backend.model.ScheduledPrices> getScheduledPrices() {
-        return ScheduledPrices;
+        return scheduledPrices;
     }
 
 }
