@@ -29,7 +29,7 @@ function ProductDetails({product}) {
         // sales is currently capitalized in redux
         // if there isn't any sales set, saleprice is regular price
         // still need logic for in between sales
-        if (product.Sales.length > 0) {
+        if (product.Sales?.length > 0) {
             product.Sales?.map(sale => {
                 let tempDate = new Date(sale.effectiveDate)
                 if (new Date(sale.effectiveDate) - now < 0) {
