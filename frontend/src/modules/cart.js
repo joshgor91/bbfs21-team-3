@@ -201,7 +201,7 @@ export function initiateGetCartItems() {
     }
 }
 
-export function initiateAddCartItem(productToAdd, quantity) {
+export function initiateAddCartItem(productToAdd, quantity, currentPrice) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
         let newCartItemQuantity = 0;
@@ -209,14 +209,14 @@ export function initiateAddCartItem(productToAdd, quantity) {
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [{...productToAdd, quantity:quantity}]
+                cartStorage = [{...productToAdd, quantity:quantity, price:currentPrice}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
                 const productExists = cartStorage.some(product => {
                     return Number(product.id) === productToAdd.id
                 })
                 if(!productExists) {
-                    cartStorage.push({...productToAdd, quantity:quantity})
+                    cartStorage.push({...productToAdd, quantity:quantity, price:currentPrice})
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 } else {
                     for (let product of cartStorage) {

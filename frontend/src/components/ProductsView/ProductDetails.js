@@ -8,19 +8,24 @@ import moment from "moment";
 function ProductDetails({product}) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
+    const [currentPrice, setCurrentPrice] = useState(0)
 
-    let now = new Date()
-    let currentPrice = 0
-    product.ScheduledPrices.map(prices => {
-        if (new Date(prices.effectiveDate) - now < 0) {
-            currentPrice = prices.price
-        }
-    })
+
+    useEffect(() => {
+        let now = new Date()
+        product.scheduledPrices?.map(prices => {
+            let tempDate = new Date(prices.effectiveDate)
+            if (new Date(prices.effectiveDate) - now < 0) {
+                setCurrentPrice(prices.price)
+            }
+        })
+    },[])
+
     console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
-        dispatch(initiateAddCartItem(productToAdd, quantity))
+        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice))
 
     }
 
