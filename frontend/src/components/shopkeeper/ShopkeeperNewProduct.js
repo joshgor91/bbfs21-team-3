@@ -76,11 +76,11 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Product Name</Form.Label>
                     <Form.Control type='productName' placeholder='Product Name' id='productName'/>
                     <Form.Label>Categories</Form.Label>
-                    <div className='mb-3'>{productCategories.map(category => <Badge>{category.categoryName}</Badge>)}</div>
+                    <div className='mb-3'>{productCategories.map(category => <Badge key={category.id}>{category.categoryName}</Badge>)}</div>
                     <Form.Control type='categories' as='select'
                                   onChange={onChange}>
                         <option selected disabled hidden>Select Category</option>
-                        {categories.map(category => <option id={category.id} value={category.categoryName}>{category.categoryName}</option>)}
+                        {categories.map(category => <option key={category.id} id={category.id} value={category.categoryName}>{category.categoryName}</option>)}
                     </Form.Control>
                     <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button size='sm' onClick={() => handleRemove()}>Remove</Button></div>
                     <Form.Label>Product Description</Form.Label>
