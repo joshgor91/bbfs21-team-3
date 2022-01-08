@@ -1,7 +1,5 @@
-import {Accordion, Alert, Button, Col, Form} from "react-bootstrap";
-import {useState} from "react";
-import AccordionHeader from "react-bootstrap/AccordionHeader";
-import AccordionBody from "react-bootstrap/AccordionBody";
+import {Alert, Button, Col, Form, Toast, ToastContainer} from "react-bootstrap";
+import {useEffect, useState} from "react";
 import {initiateRegisterUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -10,7 +8,7 @@ import '../../styles/register.css'
 
 
 
-function RegisterForm({initiateRegisterUser, registerErrorOccurred}) {
+function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSuccess}) {
 
 
     const [email, setEmail] = useState('')
@@ -28,16 +26,8 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred}) {
             email: email,
             password: password
         })
-        const registered = document.getElementById("registered")
-        registered.classList.remove("hide")
     }
 
-    if (registerErrorOccurred) {
-
-        return <>
-                <Alert variant="danger"> Register error occured </Alert>
-        </>
-    } else {
 
         return <>
             <Col>
@@ -76,16 +66,22 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred}) {
 
 
                     </Form>
+                {registerErrorOccurred &&
+                <Alert variant="warning"> Register error occurred </Alert>
+                }
+                {addUserSuccess &&
+                <Alert variant="success"> You are registered! </Alert>
+                }
 
-                <Alert className="hide" id="registered" variant="success"> You are registered! </Alert>
             </Col>
         </>
-    }
+
 }
 function mapStateToProps(state){
     return {
         users: state.userReducer.users,
-        registerErrorOccurred: state.userReducer.registerErrorOccurred
+        registerErrorOccurred: state.userReducer.registerErrorOccurred,
+        addUserSuccess: state.userReducer.addUserSuccess,
     }
 }
 
