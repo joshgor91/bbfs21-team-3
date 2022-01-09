@@ -1,6 +1,4 @@
 import {addCartItemRequest, editCartRequest, getCartItemsRequest} from "../services/cartService";
-import {editCategoryRequest} from "../services/categoryService";
-import {initiateGetCategories, initiateGetProducts} from "./shopkeeper";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -13,6 +11,8 @@ const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
 const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
 const UPDATE_CART_FAILED = 'UPDATE_CART_FAILED'
+const SET_SALE = 'SET_SALE'
+const SET_CART_PRICES = 'SET_CART_PRICES'
 
 const initialState = {
     cartItems: [],
@@ -21,7 +21,10 @@ const initialState = {
     addingCartItem: false,
     errorMessage: '',
     cartFailedMessage: false,
-    updatedCartFailed: false
+    updatedCartFailed: false,
+    totalSales: 0,
+    originalTotal: 0,
+    total: 0,
 }
 
 export default function reducer(state = initialState, action) {
@@ -83,6 +86,14 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 quantity: 0
+            }
+
+        case SET_CART_PRICES:
+            return {
+                ...state,
+                originalTotal: state.originalTotal += action.payload.originalTotal,
+                totalSales: state.totalSales += action.payload.totalSales,
+                total: state.total = action.payload.originalTotal - action.payload.totalSales,
             }
 
         case DELETE_CART_FAILED:
@@ -159,6 +170,27 @@ function clearCart() {
 function clearQuantity() {
     return {
         type: CLEAR_QUANTITY
+    }
+}
+
+export function setCartPrices(itemPrice) {
+    return {
+        type: SET_CART_PRICES,
+        payload: itemPrice
+    }
+}
+
+export function setCartSale(sale) {
+    return {
+        type: SET_SALE,
+        payload: sale
+    }
+}
+
+export function setCartTotal(sale) {
+    return {
+        type: SET_SALE,
+        payload: sale
     }
 }
 

@@ -14,25 +14,30 @@ function CartSummary({cartItems}) {
     let currentPrice = 0
     if (cartItems) {
         cartItems.map(cartItem => {
-            console.log(cartItem.ScheduledPrices)
+            // console.log(cartItem.ScheduledPrices)
             cartItem.ScheduledPrices.map(prices => {
                 if (new Date(prices.effectiveDate) - now < 0) {
                     originalPrice += Number(prices.price)
                 }
             })
         })
-        console.log(Number(originalPrice.toFixed(2)))
-        console.log(currentPrice)
+        // console.log(Number(originalPrice.toFixed(2)))
+        // console.log(currentPrice)
 
         // console.log(originalPrice)
         // const salesPrices = cartItems.map(item => {
         //     console.log(item.Sales)
+        //     item.map(saleAmount => {
+        //         if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0)
+        //             let result = saleAmount.discount * originalPrice.toFixed(2)
+        //
+        //     })
         //     // let result = item.unitPrice * item.sale
         //     // return Number(result.toFixed(2))
         // })
-        for (let sales of salesPrices) {
-            totalSavings += Number(sales)
-        }
+        // for (let sales of salesPrices) {
+        //     totalSavings += Number(sales)
+        // }
         // console.log(totalSavings)
     }
     // product.Sales.map(sales => {

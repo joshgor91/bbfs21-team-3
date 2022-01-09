@@ -1,40 +1,27 @@
 import {Container, Row, Col, Card, Button, Form} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
-import {initiateAddCartItem} from "../../modules/cart";
+import {initiateAddCartItem, setCartPrices, setCartSale} from "../../modules/cart";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import moment from "moment";
 import {useNavigate} from "react-router";
+import {discountPrice, salePrice} from "../../utils/priceUtils";
 
 function ProductDetails({product}) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [quantity, setQuantity] = useState(1)
 
-    let now = new Date()
-    let currentPrice = 0
-    let currentSale = 0
-    let saleAndPrice = 0
-    console.log(product)
+    console.log(discountPrice(product)[0])
 
-    product.ScheduledPrices.map(prices => {
-        if (new Date(prices.effectiveDate) - now < 0) {
-            currentPrice = prices.price
-        }
-    })
-    // console.log(currentPrice)
-    product.Sales.map(sales => {
-        console.log(sales)
-        if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0) {
-            currentSale = Math.round(currentPrice) * sales.discount
-            console.log(currentSale)
-            saleAndPrice = currentPrice - currentSale
-        }
-    })
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))
-
+        // dispatch(setCartPrices({
+        //     originalTotal: currentPrice,
+        //     totalSales: currentSale,
+        //     total: saleAndPrice
+        // }))
     }
 
     function handleQuantity(e) {
@@ -54,26 +41,26 @@ function ProductDetails({product}) {
                         <Card style={{width: '30rem', height: '30rem'}}>
                             <Card.Body>
                                 <Row>
-                                    {!currentSale > 0 ?
+                                    {!discountPrice(product).currentSale > 0 ?
                                         <Col>
-                                            <Card.Title>{currentPrice}$</Card.Title>
+                                            <Card.Title>{salePrice(product)}$</Card.Title>
                                         </Col>
                                         :
                                         <Col>
-                                            <Card.Title>{saleAndPrice}$</Card.Title>
+                                            <Card.Title>{discountPrice(product).discountedPrice}$</Card.Title>
                                         </Col>
                                     }
                                 </Row>
                                 <Row>
 
                                     <Col>
-                                        {currentSale > 0 &&
-                                        <Card.Title style={{color: 'red'}}>Sale Amount ${currentSale}!</Card.Title>}
+                                        {discountPrice(product).currentSale > 0 &&
+                                        <Card.Title style={{color: 'red'}}>Sale ${discountPrice(product).currentSale}!</Card.Title>}
                                     </Col>
                                     <Col xs='auto'>
-                                        {currentSale > 0 &&
+                                        {discountPrice(product).currentSale > 0 &&
                                         <Card.Title style={{textDecoration: 'line-through', color: 'red'}}>
-                                            {currentPrice}
+                                            {salePrice(product)}
                                         </Card.Title>}
                                     </Col>
                                 </Row>
@@ -95,7 +82,7 @@ function ProductDetails({product}) {
                                     </Col>
                                     <Col>
                                         <Form.Select defaultValue={quantity} onChange={handleQuantity}>
-                                            {[1, 2, 3, 4, 5].map((quant, index) =>
+                                            {Array.from(Array(15), (_, i) => i + 1).map((quant, index) =>
                                                 <option key={index}
                                                         value={quant}>
                                                     {quant}
