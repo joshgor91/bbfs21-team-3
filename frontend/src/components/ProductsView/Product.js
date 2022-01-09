@@ -33,7 +33,7 @@ function Product({product}) {
                 <Card.Img className='product-img' variant="top" src={product.picture} />
                 <Card.Body>
                     <Card.Title>{product.brand}</Card.Title>
-                    <Card.Header>{product.productName}</Card.Header>
+                    <Card.Subtitle className="mb-2 text-muted">{product.productName}</Card.Subtitle>
                     <Card.Text>{product.productDescription}</Card.Text>
                 </Card.Body>
             </Card>

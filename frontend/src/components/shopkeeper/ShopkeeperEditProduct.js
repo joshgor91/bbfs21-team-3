@@ -17,7 +17,7 @@ import {
     updateUnitsReceived,
     updateDiscountAvailable
 } from "../../modules/shopkeeper";
-import {Button, Form, Modal, Badge, ListGroup} from "react-bootstrap";
+import {Button, Form, Modal, Badge, ListGroup, FormControl} from "react-bootstrap";
 import {connect} from "react-redux";
 import {useEffect, useState} from "react";
 
@@ -105,6 +105,9 @@ function ShopkeeperEditProduct({
     }
 
     return <Modal show={show} onHide={cancelEditProduct}>
+        <Modal.Header closeButton>
+            <Modal.Title>Edit Product</Modal.Title>
+        </Modal.Header>
         <Form onSubmit={handleSubmit}>
             <Form.Label>Product Name</Form.Label>
             <Form.Control type='productName' value={productName}
@@ -131,7 +134,18 @@ function ShopkeeperEditProduct({
             <Form.Label>Size</Form.Label>
             <Form.Control type='size' value={size} onChange={event => updateSize(event.target.value)}/>
             <Form.Label>Color</Form.Label>
-            <Form.Control type='color' value={color} onChange={event => updateColor(event.target.value)}/>
+            <Form.Control type='text' as='select' selected value={color} onChange={event => updateColor(event.target.value)}>
+                    <option value="white" >White</option>
+                    <option value="grey">Grey</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Red</option>
+                    <option value="purple">Purple</option>
+                    <option value="gold">Gold</option>
+                    <option value="silver">Silver</option>
+                </Form.Control>
             <Form.Label>Product Available</Form.Label>
             <Form.Control type='date' value={productAvailable}
                           onChange={event => updateProductAvailable(event.target.value)}/>
@@ -145,7 +159,6 @@ function ShopkeeperEditProduct({
             <Form.Label>Discount Available</Form.Label>
             <Form.Control type='discountAvailable' as='select' value={discountAvailable}
                           onChange={event => updateDiscountAvailable(event.target.value)}>
-                <option value=''>Undefined</option>
                 <option value={true}>True</option>
                 <option value={false}>False</option>
             </Form.Control>

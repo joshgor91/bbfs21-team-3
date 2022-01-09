@@ -60,9 +60,8 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
                     categoryId={categoryId}
                 />
                 <Dropdown as={ButtonGroup}>
-                    <Button variant='primary'>Shopkeeper Ish</Button>
-
-                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
+                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'> Shopkeeper Ish
+                    </Dropdown.Toggle>
 
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
