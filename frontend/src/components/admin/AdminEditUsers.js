@@ -56,6 +56,9 @@ function AdminCreateUser ({
 
     return (
         <Modal show={show} onHide={onHide}>
+            <Modal.Header closeButton>
+                <Modal.Title>Edit User </Modal.Title>
+            </Modal.Header>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>

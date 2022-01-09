@@ -1,4 +1,7 @@
 import {addCartItemRequest, editCartRequest, getCartItemsRequest} from "../services/cartService";
+import {editCategoryRequest} from "../services/categoryService";
+import {initiateGetCategories, initiateGetProducts} from "./shopkeeper";
+import {calculateGuestTotal} from "../utils/localStorageUtils";
 
 const GETTING_CART_ITEMS = 'GETTING_CART_ITEMS'
 const SET_CART_ITEMS = 'SET_CART_ITEMS'
@@ -9,22 +12,21 @@ const ADD_CART_ITEM_SUCCESS = 'ADD_CART_ITEM_SUCCESS'
 const SET_QUANTITY = 'SET_QUANTITY'
 const CLEAR_CART = 'CLEAR_CART'
 const CLEAR_QUANTITY = 'CLEAR_QUANTITY'
+const SET_TOTAL_COST = 'SET_TOTAL_COST'
+const CLEAR_TOTAL_COST = 'CLEAR_TOTAL_COST'
 const DELETE_CART_FAILED = 'DELETE_CART_FAILED'
 const UPDATE_CART_FAILED = 'UPDATE_CART_FAILED'
-const SET_SALE = 'SET_SALE'
-const SET_CART_PRICES = 'SET_CART_PRICES'
 
 const initialState = {
     cartItems: [],
     quantity: 0,
+    total:0,
     gettingCartItems: false,
     addingCartItem: false,
     errorMessage: '',
     cartFailedMessage: false,
     updatedCartFailed: false,
-    totalSales: 0,
-    originalTotal: 0,
-    total: 0,
+    addCartItemSuccess: false
 }
 
 export default function reducer(state = initialState, action) {
@@ -59,7 +61,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 addingCartItem: false,
-                errorMessage: ''
+                errorMessage: '',
+                addCartItemSuccess: true
             }
 
         case GETTING_CART_ITEMS_FAILED:
@@ -86,14 +89,6 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 quantity: 0
-            }
-
-        case SET_CART_PRICES:
-            return {
-                ...state,
-                originalTotal: state.originalTotal += action.payload.originalTotal,
-                totalSales: state.totalSales += action.payload.totalSales,
-                total: state.total = action.payload.originalTotal - action.payload.totalSales,
             }
 
         case DELETE_CART_FAILED:
@@ -173,24 +168,15 @@ function clearQuantity() {
     }
 }
 
-export function setCartPrices(itemPrice) {
+function setTotalCost(){
     return {
-        type: SET_CART_PRICES,
-        payload: itemPrice
+        type:SET_TOTAL_COST
     }
 }
 
-export function setCartSale(sale) {
+function clearTotalCost(){
     return {
-        type: SET_SALE,
-        payload: sale
-    }
-}
-
-export function setCartTotal(sale) {
-    return {
-        type: SET_SALE,
-        payload: sale
+        type:CLEAR_TOTAL_COST
     }
 }
 
@@ -212,6 +198,7 @@ function updatedCartFailed(message) {
 //sideEffects
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
+        let newCartItemQuantity=0;
         dispatch(gettingCartItems())
         if (getState().userReducer.isLoggedIn) {
             getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
@@ -220,6 +207,10 @@ export function initiateGetCartItems() {
                 else {
                     dispatch(setCartItems(res.data))
                     dispatch(setQuantity(res.data.length))
+                    for (let product of res.data){
+                        newCartItemQuantity+=product.quantity
+                    }
+                    dispatch(setQuantity(newCartItemQuantity))
                 }
             })
                 .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
@@ -227,39 +218,43 @@ export function initiateGetCartItems() {
     }
 }
 
-export function initiateAddCartItem(productToAdd, quantity) {
+export function initiateAddCartItem(productToAdd, quantity, regularPrice, salePrice) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
+        let newCartItemQuantity = 0;
         dispatch(addingCartItem())
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
             if (!cartStorage) {
-                cartStorage = [{...productToAdd, quantity:quantity}]
+                cartStorage = [{...productToAdd, quantity:quantity, regularPrice:regularPrice, salePrice:salePrice}]
                 window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
             } else {
                 const productExists = cartStorage.some(product => {
                     return Number(product.id) === productToAdd.id
                 })
                 if(!productExists) {
-                    cartStorage.push({...productToAdd, quantity:quantity})
+                    cartStorage.push({...productToAdd, quantity:quantity, regularPrice:regularPrice, salePrice:salePrice})
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 } else {
                     for (let product of cartStorage) {
-                        console.log(product)
                         if (Number(product.id) === productToAdd.id) {
-                            console.log(cartStorage, "update")
                             product.quantity += quantity
                         }
                     }
                     window.localStorage.setItem('cartItems', JSON.stringify(cartStorage))
                 }
             }
+                for (let product of cartStorage){
+                    newCartItemQuantity+=product.quantity
+                }
+                let cartTotal = calculateGuestTotal()
+                window.localStorage.setItem('cartTotal', cartTotal)
+                dispatch(setQuantity(newCartItemQuantity))
         } else {
-            addCartItemRequest(productToAdd.id, userCartId, quantity).then(res => {
+            addCartItemRequest(productToAdd.id, userCartId, quantity, regularPrice, salePrice).then(res => {
                 if (res.data !== 'success') {
                     return dispatch(addCartItemFailure(`Error adding item to cart`));
                 } else {
-                    console.log(res.data)
                     dispatch(addCartItemSuccess());
                     dispatch(initiateGetCartItems())
                 }
@@ -269,19 +264,34 @@ export function initiateAddCartItem(productToAdd, quantity) {
     }
 }
 
-
 export function initiateEditCart(quantity, productId) {
 
     return function sideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
-        editCartRequest(productId, cartId, quantity).then(res => {
-            if (res.status !== 200) {
-                dispatch(updatedCartFailed(`Error editing cart`))
-            } else {
-                dispatch(initiateGetCartItems())
+        let newCartItemQuantity = 0;
+        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+        if (!getState().userReducer.isLoggedIn) {
+            const updatedCart = cartStorage.map(item => {
+                if (item.id === productId) {
+                    item.quantity = quantity
+                }
+                return item
+            })
+            localStorage.setItem("cartItems", JSON.stringify(updatedCart))
+            for (let product of updatedCart) {
+                newCartItemQuantity += product.quantity
             }
-        })
-            .catch(err => console.log(`Error editing cart = ${err}`));
+            dispatch(setQuantity(newCartItemQuantity))
+        } else {
+            editCartRequest(productId, cartId, quantity).then(res => {
+                if (res.status !== 200) {
+                    dispatch(updatedCartFailed(`Error editing cart`))
+                } else {
+                    dispatch(initiateGetCartItems())
+                }
+            })
+                .catch(err => console.log(`Error editing cart = ${err}`));
+        }
     }
 }
 

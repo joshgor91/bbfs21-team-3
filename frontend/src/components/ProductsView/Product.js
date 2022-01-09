@@ -12,11 +12,11 @@ function Product({product}) {
     let currentPrice = 0
     // console.log(product.ScheduledPrices)
 
-   for (let prices of product.ScheduledPrices) {
-       // console.log(prices)
-       if (prices.effectiveDate <= currentDate)
-           currentPrice = prices.price
-   }
+   // for (let prices of product.ScheduledPrices) {
+   //     // console.log(prices)
+   //     if (prices.effectiveDate <= currentDate)
+   //         currentPrice = prices.price
+   // }
     // console.log(currentPrice)
 
     function goToProductDetails(productId) {
@@ -33,7 +33,7 @@ function Product({product}) {
                 <Card.Img className='product-img' variant="top" src={product.picture} />
                 <Card.Body>
                     <Card.Title>{product.brand}</Card.Title>
-                    <Card.Header>{product.productName}</Card.Header>
+                    <Card.Subtitle className="mb-2 text-muted">{product.productName}</Card.Subtitle>
                     <Card.Text>{product.productDescription}</Card.Text>
                 </Card.Body>
             </Card>

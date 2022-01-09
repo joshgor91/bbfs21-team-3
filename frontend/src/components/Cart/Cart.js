@@ -19,7 +19,7 @@ function Cart({cartItems, isLoggedIn, quantity}) {
         <Container>
             <Row>
                 <Col xs={9}>
-                    {isLoggedIn && cartItems ?
+                    {isLoggedIn && cartItems.length > 0 ?
                         cartItems.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
                                        salePrice={salePrice(cartItem)}

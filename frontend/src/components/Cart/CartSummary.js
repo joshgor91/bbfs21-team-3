@@ -39,6 +39,14 @@ function CartSummary({cartItems}) {
         //     totalSavings += Number(sales)
         // }
         // console.log(totalSavings)
+        const salesPrices = cartItems.map(item => {
+            let result = item.unitPrice * item.sale
+            return Number(result.toFixed(2))
+        })
+        for (let sales of salesPrices) {
+            totalSavings += Number(sales)
+        }
+        // console.log(totalSavings)
     }
     // product.Sales.map(sales => {
     //     console.log(sales)

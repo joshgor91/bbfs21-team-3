@@ -1,7 +1,7 @@
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import {initiateDeleteCartItem, initiateEditCart} from "../../modules/cart";
 import {connect, useDispatch} from "react-redux";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}) {
     console.log(currentSale, discountPrice, salePrice)
@@ -12,8 +12,13 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}
         setQuantity(Number(e.target.value))
     }
 
+
     function editCart() {
-        dispatch(initiateEditCart(quantity, cartItem.productId))
+        if (isLoggedIn) {
+            dispatch(initiateEditCart(quantity, cartItem.productId))
+        } else {
+            dispatch(initiateEditCart(quantity, cartItem.id))
+        }
     }
 
     function handleRemoveFromCart(cartItem) {
@@ -92,9 +97,6 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}
 function mapStateToProps(state) {
     return {
         isLoggedIn: state.userReducer.isLoggedIn,
-        // total: state.cartReducer.total,
-        // totalSales:
-        // originalTotal
     }
 }
 
