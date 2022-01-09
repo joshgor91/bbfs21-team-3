@@ -43,5 +43,7 @@ export const GlobalStyles = createGlobalStyle`
  color: ${({ theme }) => theme.formLabel};
  }
  
-
+.d-block{
+ background ${({ theme }) => theme.modalTitle};
+}
   `
