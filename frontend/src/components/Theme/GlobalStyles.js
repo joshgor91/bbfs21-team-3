@@ -43,6 +43,5 @@ export const GlobalStyles = createGlobalStyle`
  color: ${({ theme }) => theme.formLabel};
  }
  
- .form
-  background: ${({ theme }) => theme.formBackground};
+
   `

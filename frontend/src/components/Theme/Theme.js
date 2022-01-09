@@ -18,6 +18,6 @@ export const darkTheme = {
     cardBorder: 'thin solid white',
     modalTitle: 'white',
     modalTitleBackground: '#282828',
-    formLabel: '#282828',
-    formBackground: 'lightgrey'
+    formLabel: 'grey',
+
 }
