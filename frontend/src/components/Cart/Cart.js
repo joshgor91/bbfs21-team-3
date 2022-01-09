@@ -21,15 +21,13 @@ function Cart({cartItems, isLoggedIn}) {
         <Container>
             <Row>
                 <Col xs={9}>
-                    {isLoggedIn && cartItems ?
+                    {isLoggedIn && cartItems.length > 0 ?
                         cartItems.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}/>)
-                        : <h2>No Cart</h2>}
-
-                        {!isLoggedIn && cart ?
+                        : !isLoggedIn && cart ?
                             cart.map((cartItem, idx) =>
-                            <CartItems key={idx} cartItem={cartItem}/>)
-                        : <h2>No Cart</h2>}
+                                <CartItems key={idx} cartItem={cartItem}/>)
+                            : <h2>No Cart</h2>}
                 </Col>
                 <Col xs={3}>
                     {isLoggedIn ?

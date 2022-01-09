@@ -6,16 +6,15 @@ function Products({inventory}) {
 
     return (
         <>
+
             <Container fluid>
-                <div className='container-fluid' >
-                    <div className="row">
-                        <div className="col-sm-6">
+             <Row>
+                        <div className="col-sm-12">
                             <h3>Today's featured deals</h3>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                <Carousel fade variant="dark" >
+                 </Row>
+                 <Row>
+                <Carousel fade variant="dark" id="carousel">
 
                     <Carousel.Item>
                         <img
@@ -24,8 +23,8 @@ function Products({inventory}) {
                             alt="First slide"
                         />
                         <Carousel.Caption>
-                            <h3>MacBook Air</h3>
-                            <p> Save up to 50%
+                            <h3 className="carousel-text">MacBook Air</h3>
+                            <p className="carousel-text"> Save up to 50%
                                 on clearance and open-box items.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
@@ -67,14 +66,9 @@ function Products({inventory}) {
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>
-                        </div>
-                    </div>
-                </div>
-                <Row>
-                    <Col md={'auto'}>Current Deals here?</Col>
-                </Row>
-                <Row>
+                    </Row>
 
+                <Row>
                         {inventory && inventory.map((product, idx) =>
                             <Product key={idx} product={product}/>
                         )}

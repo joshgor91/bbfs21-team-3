@@ -19,6 +19,12 @@ public class CartItem {
     @JsonProperty
     int quantity;
 
+    @JsonProperty
+    Float regularPrice;
+
+    @JsonProperty
+    Float salePrice;
+
     public CartItem(){
     }
 
@@ -36,5 +42,21 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Float getRegularPrice() {
+        return regularPrice;
+    }
+
+    public void setRegularPrice(Float regularPrice) {
+        this.regularPrice = regularPrice;
+    }
+
+    public Float getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(Float salePrice) {
+        this.salePrice = salePrice;
     }
 }

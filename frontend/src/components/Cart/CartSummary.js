@@ -15,7 +15,7 @@ function CartSummary({cartItems}) {
     if (cartItems) {
         cartItems.map(cartItem => {
             console.log(cartItem.ScheduledPrices)
-            cartItem.ScheduledPrices.map(prices => {
+            cartItem.ScheduledPrices?.map(prices => {
                 if (new Date(prices.effectiveDate) - now < 0) {
                     originalPrice += Number(prices.price)
                 }

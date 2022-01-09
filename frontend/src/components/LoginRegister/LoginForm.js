@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {initiateLogin, loginFailure} from "../../modules/user";
 
-function LoginForm({error, initiateLogin}) {
+function LoginForm({loginErrorOccurred, initiateLogin}) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -15,40 +15,10 @@ function LoginForm({error, initiateLogin}) {
         initiateLogin({email, password})
     }
 
-    if (error) {
-        console.log(error)
 
         return <>
-                    <Form className="login-register-form" onSubmit={handleSubmit}>
+                    <Form className="general-form" onSubmit={handleSubmit}>
 
-                            <h1> Login </h1>
-
-
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter email"
-                                              onChange={event => setEmail(event.target.value)}/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password"
-                                              onChange={event => setPassword(event.target.value)}/>
-                            </Form.Group>
-
-                            <Button variant="light" type="submit">
-                                Submit
-                            </Button>
-
-                    </Form>
-                    <Alert variant="danger"> Incorrect username or password! </Alert>
-
-        </>
-    } else {
-
-        return <>
-            <Col>
-                    <Form className="login-register-form" onSubmit={handleSubmit}>
                             <h1> Login </h1>
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -64,20 +34,22 @@ function LoginForm({error, initiateLogin}) {
                             </Form.Group>
 
                             <Button className="login-register-button" type="submit">
-                                Login
+                                Submit
                             </Button>
 
                     </Form>
-
-            </Col>
+            {loginErrorOccurred &&
+            <Alert variant="danger"> Incorrect username or password! </Alert>
+            }
         </>
-    }
+
+
 }
 
 
 function mapStateToProps(state) {
     return {
-        error: state.userReducer.loginErrorOccurred,
+        loginErrorOccurred: state.userReducer.loginErrorOccurred,
     }
 }
 
