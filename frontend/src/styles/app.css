@@ -22,7 +22,7 @@
 }
 
 .carousel-item img {
-    background-color: white;
+    /*background-color: white;*/
 }
 
 .general-form{
@@ -31,7 +31,7 @@
     padding: 25px;
     border-radius: 5px;
     border: thin solid lightgrey;
-    background-color: white;
+    /*background-color: white;*/
 }
 
 .link-item{
@@ -68,10 +68,10 @@
     text-decoration: none;
 }
 
-#root{
-    background-color: rgb(229,233,237);
-    padding-bottom: 500px;
-}
+/*#root{*/
+/*    background-color: rgb(229,233,237);*/
+/*    padding-bottom: 500px;*/
+/*}*/
 
 #welcome-message{
     display: flex;

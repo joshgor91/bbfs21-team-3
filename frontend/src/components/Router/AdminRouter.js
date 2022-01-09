@@ -14,7 +14,7 @@ import Checkout from "../../pages/Checkout";
 import OrderComplete from "../../pages/OrderComplete";
 
 
-function AdminRouter({cartQuantity}) {
+function AdminRouter({cartQuantity, themeToggler}) {
 
     return (
 
@@ -64,6 +64,9 @@ function AdminRouter({cartQuantity}) {
                             </Nav.Item>
                         </Nav>
                         <Nav className='ms-auto'>
+                            <Nav.Item>
+                                <Button onClick={themeToggler}>Switch Theme</Button>
+                            </Nav.Item>
                             <Nav.Item>
                                 <LogoutBtn/>
                             </Nav.Item>
