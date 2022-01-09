@@ -48,7 +48,7 @@ function ProductDetails({product}) {
                             <Card.Body>
                                 <Card.Title>{currentPrice}$</Card.Title>
                                 <Card.Title>{product.brand}</Card.Title>
-                                <Card.Header>{product.productName}</Card.Header>
+                                <Card.Subtitle>{product.productName}</Card.Subtitle>
                                 <Card.Text>{product.productDescription}</Card.Text>
                                 <Card.Text>{product.discontinued && 'Discontinued'}</Card.Text>
                                 {product.unitsInStock !== 0 ?

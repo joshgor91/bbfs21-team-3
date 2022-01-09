@@ -58,15 +58,34 @@
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
+.order-complete{
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom:30px;
+}
 
-#navbar-logout{
-    float: right;
+.order-complete-logo{
+    width: 110px;
+    height: 55px;
+    justify-content: center;
+    margin-left: 10px;
 }
 
 #checkout-button{
     color:white;
     text-decoration: none;
 }
+#my-account-link{
+    text-decoration: none;
+    color: white;
+}
+
+#navbar-logout{
+    float: right;
+}
+
+
 
 /*#root{*/
 /*    background-color: rgb(229,233,237);*/
