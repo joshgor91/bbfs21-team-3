@@ -16,6 +16,16 @@
     padding-bottom: 500px;
 }
 
+
+.general-form{
+    margin:auto;
+    width:50%;
+    padding: 25px;
+    border-radius: 5px;
+    border: thin solid lightgrey;
+    background-color: white;
+}
+
 .link-item{
     color: white;
     margin: 5px 5px 0px 5px;
@@ -41,4 +51,32 @@
     text-decoration: none;
 }
 
+.carousel-fade .carousel-item img  {
+    min-height: 200px;
+    min-width: 300px;
+}
 
+.carousel-caption{
+    background-color: #f4f8ff;
+    opacity: 60%;
+    border-radius: 20px;
+}
+
+.carousel-text{
+    opacity: 500%;
+    color: black;
+}
+
+.carousel-item img {
+    background-color: white;
+}
+
+@media only screen and (max-width: 600px){
+    .carousel-fade .carousel-item {
+        width:350px;
+        margin-left:10%;
+    }
+    .carousel-item img {
+        width:300px;
+    }
+}

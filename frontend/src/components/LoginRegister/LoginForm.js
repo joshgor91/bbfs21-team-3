@@ -17,10 +17,9 @@ function LoginForm({loginErrorOccurred, initiateLogin}) {
 
 
         return <>
-                    <Form className="login-register-form" onSubmit={handleSubmit}>
+                    <Form className="general-form" onSubmit={handleSubmit}>
 
                             <h1> Login </h1>
-
 
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
@@ -34,7 +33,7 @@ function LoginForm({loginErrorOccurred, initiateLogin}) {
                                               onChange={event => setPassword(event.target.value)}/>
                             </Form.Group>
 
-                            <Button variant="light" type="submit">
+                            <Button className="login-register-button" type="submit">
                                 Submit
                             </Button>
 
