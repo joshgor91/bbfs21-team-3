@@ -1,44 +1,16 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {useEffect} from "react";
 import {clearReceipt} from "../../modules/order";
 
 
-function CartSummary({cartItems}) {
+function CartSummary({cartItems, cartSummery}) {
     // console.log(cartItems)
-    let originalPrice = 0
+    let originalPrice = cartSummery.originalPrice
     let totalSavings = 0
     let total
     let now = new Date()
     let currentPrice = 0
     if (cartItems) {
-        cartItems.map(cartItem => {
-            // console.log(cartItem.ScheduledPrices)
-            cartItem.ScheduledPrices.map(prices => {
-                if (new Date(prices.effectiveDate) - now < 0) {
-                    originalPrice += Number(prices.price)
-                }
-            })
-        })
-        // console.log(Number(originalPrice.toFixed(2)))
-        // console.log(currentPrice)
-
-        // console.log(originalPrice)
-        // const salesPrices = cartItems.map(item => {
-        //     console.log(item.Sales)
-        //     item.map(saleAmount => {
-        //         if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0)
-        //             let result = saleAmount.discount * originalPrice.toFixed(2)
-        //
-        //     })
-        //     // let result = item.unitPrice * item.sale
-        //     // return Number(result.toFixed(2))
-        // })
-        // for (let sales of salesPrices) {
-        //     totalSavings += Number(sales)
-        // }
-        // console.log(totalSavings)
         const salesPrices = cartItems.map(item => {
             let result = item.unitPrice * item.sale
             return Number(result.toFixed(2))

@@ -4,7 +4,6 @@ import {connect, useDispatch} from "react-redux";
 import {useState} from "react";
 
 function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}) {
-    console.log(currentSale, discountPrice, salePrice)
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(cartItem.quantity)
 
@@ -34,7 +33,7 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}
     }
 
     return <>
-        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '16.5rem'}}>
+        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '12.5rem'}}>
             <Row>
                 <Col xs='3' style={{margin: 'auto'}}>
                     <Card.Img variant="top" style={{width: '8em', height: '8em'}} src="holder.js/100px180"/>
@@ -74,7 +73,7 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}
                             {currentSale &&
                             <Col>
                                 <Card.Text style={{color: 'red'}}>
-                                   Sale Price ${currentSale}
+                                   Savings ${currentSale}
                                 </Card.Text>
                             </Col>}
                         </Row>

@@ -4,7 +4,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import CartSummary from "./CartSummary";
 import {useEffect} from "react";
 import {clearReceipt} from "../../modules/order";
-import {cartSummery, discountPrice, salePrice} from "../../utils/priceUtils";
+import {cartSummery, discountPrice, sellPrice} from "../../utils/priceUtils";
 
 
 function Cart({cartItems, isLoggedIn, quantity}) {
@@ -22,29 +22,28 @@ function Cart({cartItems, isLoggedIn, quantity}) {
                     {isLoggedIn && cartItems.length > 0 ?
                         cartItems.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
-                                       salePrice={salePrice(cartItem)}
+                                       sellPrice={sellPrice(cartItem)}
                                        currentSale={discountPrice(cartItem).currentSale}
                                        discountPrice={discountPrice(cartItem).discountPrice}
                             />)
-                        : <h2>No Cart</h2>}
+                        : ''}
 
                         {!isLoggedIn && cart ?
                             cart.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
-                                       salePrice={salePrice(cartItem)}
+                                       sellPrice={sellPrice(cartItem)}
                                        currentSale={discountPrice(cartItem).currentSale}
                                        discountPrice={discountPrice(cartItem).discountPrice}
                             />)
-                        : <h2>No Cart</h2>}
+                        : ''}
                 </Col>
                 <Col xs={3}>
                     {isLoggedIn ?
                         <CartSummary cartItems={cartItems}
-                                     cartSummery={cartSummery(cartItems, quantity)}
+                                     cartSummery={cartSummery(cartItems)}
                         />
                     : <CartSummary cartItems={cart}
-
-                        />}
+                                   cartSummery={cartSummery(cart)}/>}
                 </Col>
             </Row>
         </Container>

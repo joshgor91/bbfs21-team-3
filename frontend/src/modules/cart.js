@@ -198,7 +198,7 @@ function updatedCartFailed(message) {
 //sideEffects
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
-        let newCartItemQuantity=0;
+        let newCartItemQuantity = 0;
         dispatch(gettingCartItems())
         if (getState().userReducer.isLoggedIn) {
             getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
@@ -206,7 +206,6 @@ export function initiateGetCartItems() {
                     return dispatch(getCartItemsRequestFailed(`Error getting cart items`))
                 else {
                     dispatch(setCartItems(res.data))
-                    dispatch(setQuantity(res.data.length))
                     for (let product of res.data){
                         newCartItemQuantity+=product.quantity
                     }

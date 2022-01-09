@@ -1,55 +1,63 @@
 import {Container, Row, Col, Card, Button, Form, Alert, ToastContainer, Toast} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
-import {initiateAddCartItem, setCartPrices, setCartSale} from "../../modules/cart";
+import {initiateAddCartItem} from "../../modules/cart";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import moment from "moment";
-import {useNavigate} from "react-router";
-import {discountPrice, salePrice} from "../../utils/priceUtils";
+import {discountPrice, sellPrice} from "../../utils/priceUtils";
 
 function ProductDetails({product}) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
-    // const [show, setShow] = useState(false);
-    // const handleShow = () => setShow(true);
-    // const handleClose = () => setShow(false);
-    // const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
-    // const [currentPrice, setCurrentPrice] = useState(0)
-    // const [salePrice, setSalePrice] = useState(0)
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
+    const [currentPrice, setCurrentPrice] = useState(0)
+    const [salePrice, setSalePrice] = useState(0)
+    const [sellingPrice, setSellingPrice] = useState(0)
+    const [theDiscountPrice, setTheDiscountPrice] = useState(0)
+    const [currentSale, setCurrentSale] = useState(0)
+    console.log(currentSale, theDiscountPrice, sellingPrice)
 
-    // useEffect(() => {
-    //     let now = new Date()
-    //     let regularPrice = 0
-    //     product.scheduledPrices?.map(prices => {
-    //         let tempDate = new Date(prices.effectiveDate)
-    //         if (new Date(prices.effectiveDate) - now < 0) {
-    //             regularPrice = prices.price
-    //             setCurrentPrice(prices.price)
-    //         }
-    //     })
-    //
-    //     // sales is currently capitalized in redux
-    //     // if there isn't any sales set, saleprice is regular price
-    //     // still need logic for in between sales
-    //     if (product.Sales?.length > 0) {
-    //         product.Sales?.map(sale => {
-    //             let tempDate = new Date(sale.effectiveDate)
-    //             if (new Date(sale.effectiveDate) - now < 0) {
-    //                 setSalePrice(sale.price)
-    //             }}
-    //
-    //     )} else {
-    //             setSalePrice(regularPrice)
-    //     }
-    // },[])
+    useEffect(() => {
+        let now = new Date()
+        let regularPrice = 0
+        setSellingPrice(sellPrice(product))
+        setTheDiscountPrice(discountPrice(product).discountPrice)
+        setCurrentSale(discountPrice(product).currentSale)
 
-    console.log(currentPrice)
+        product.scheduledPrices?.map(prices => {
+            let tempDate = new Date(prices.effectiveDate)
+            if (new Date(prices.effectiveDate) - now < 0) {
+                regularPrice = prices.price
+                setCurrentPrice(prices.price)
+            }
+        })
+
+        // sales is currently capitalized in redux
+        // if there isn't any sales set, saleprice is regular price
+        // still need logic for in between sales
+        if (product.Sales?.length > 0) {
+            product.Sales?.map(sale => {
+                let tempDate = new Date(sale.effectiveDate)
+                if (new Date(sale.effectiveDate) - now < 0) {
+                    setSalePrice(sale.price)
+                }}
+
+        )} else {
+                setSalePrice(regularPrice)
+        }
+    },[])
+
+    // console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
         handleShow()
         handleCloseTimed()
         dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, salePrice))
+
     }
 
     function handleQuantity(e) {
@@ -69,26 +77,26 @@ function ProductDetails({product}) {
                         <Card style={{width: '30rem', height: '30rem'}}>
                             <Card.Body>
                                 <Row>
-                                    {!discountPrice(product).currentSale > 0 ?
+                                    {!currentSale > 0 ?
                                         <Col>
-                                            <Card.Title>{salePrice(product)}$</Card.Title>
+                                            <Card.Title>{sellingPrice}$</Card.Title>
                                         </Col>
                                         :
                                         <Col>
-                                            <Card.Title>{discountPrice(product).discountPrice}$</Card.Title>
+                                            <Card.Title>{theDiscountPrice}$</Card.Title>
                                         </Col>
                                     }
                                 </Row>
                                 <Row>
 
                                     <Col>
-                                        {discountPrice(product).currentSale > 0 &&
-                                        <Card.Title style={{color: 'red'}}>Sale ${discountPrice(product).currentSale}!</Card.Title>}
+                                        {currentSale > 0 &&
+                                        <Card.Title style={{color: 'red'}}>Sale ${currentSale}!</Card.Title>}
                                     </Col>
                                     <Col xs='auto'>
-                                        {discountPrice(product).currentSale > 0 &&
+                                        {currentSale > 0 &&
                                         <Card.Title style={{textDecoration: 'line-through', color: 'red'}}>
-                                            {salePrice(product)}
+                                            {sellingPrice}
                                         </Card.Title>}
                                     </Col>
                                 </Row>
