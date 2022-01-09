@@ -39,8 +39,23 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
+    public OrderItem(Long productId, Long orderDetailsId, int quantity, Float regularPrice, Float salePrice) {
+        this.productId = productId;
+        this.orderDetailsId = orderDetailsId;
+        this.quantity = quantity;
+        this.regularPrice = regularPrice;
+        this.salePrice = salePrice;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
+    public Float getRegularPrice() {
+        return regularPrice;
+    }
+
+    public Float getSalePrice() {
+        return salePrice;
+    }
 }

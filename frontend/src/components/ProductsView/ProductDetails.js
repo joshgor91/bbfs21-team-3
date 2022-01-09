@@ -12,22 +12,42 @@ function ProductDetails({product}) {
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
     const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
+    const [currentPrice, setCurrentPrice] = useState(0)
+    const [salePrice, setSalePrice] = useState(0)
 
-    let now = new Date()
-    let currentPrice = 0
-    // product.ScheduledPrices.map(prices => {
-    //     if (new Date(prices.effectiveDate) - now < 0) {
-    //         currentPrice = prices.price
-    //     }
-    // })
+    useEffect(() => {
+        let now = new Date()
+        let regularPrice = 0
+        product.scheduledPrices?.map(prices => {
+            let tempDate = new Date(prices.effectiveDate)
+            if (new Date(prices.effectiveDate) - now < 0) {
+                regularPrice = prices.price
+                setCurrentPrice(prices.price)
+            }
+        })
+
+        // sales is currently capitalized in redux
+        // if there isn't any sales set, saleprice is regular price
+        // still need logic for in between sales
+        if (product.Sales?.length > 0) {
+            product.Sales?.map(sale => {
+                let tempDate = new Date(sale.effectiveDate)
+                if (new Date(sale.effectiveDate) - now < 0) {
+                    setSalePrice(sale.price)
+                }}
+
+        )} else {
+                setSalePrice(regularPrice)
+        }
+    },[])
+
     console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
-        dispatch(initiateAddCartItem(productToAdd, quantity))
         handleShow()
         handleCloseTimed()
-
+        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, salePrice))
     }
 
     function handleQuantity(e) {
@@ -47,6 +67,7 @@ function ProductDetails({product}) {
                         <Card style={{width: '30rem', height: '30rem'}}>
                             <Card.Body>
                                 <Card.Title>{currentPrice}$</Card.Title>
+                                {salePrice !== currentPrice && <Card.Title>{salePrice}</Card.Title>}
                                 <Card.Title>{product.brand}</Card.Title>
                                 <Card.Subtitle>{product.productName}</Card.Subtitle>
                                 <Card.Text>{product.productDescription}</Card.Text>

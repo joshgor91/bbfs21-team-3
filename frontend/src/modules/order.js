@@ -155,24 +155,28 @@ export function initiateGetOrderHistory() {
     }
 }
 
-export function initiateGuestOrder(email) {
+export function initiateGuestOrder(email, total) {
 
     let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
     console.log(cartStorage)
     const filteredCartStorage = cartStorage.map(cartItem => {
         return {
                     "productId": cartItem.id,
-                    "quantity": cartItem.quantity
+                    "quantity": cartItem.quantity,
+                    "regularPrice":parseFloat(cartItem.regularPrice),
+                    "salePrice":parseFloat(cartItem.salePrice)
         }
     })
+    console.log(filteredCartStorage)
     return function addGuestOrderSideEffect(dispatch, getState) {
-        console.log(filteredCartStorage)
+        console.log(typeof filteredCartStorage[0].regularPrice)
         dispatch(addingOrder())
-        fetch("http://localhost:8080/api/order/add2", {
+        fetch("http://localhost:8080/api/order/addGuestOrder", {
             method: "POST",
             headers: {
                 'email': email,
-                'Content-type': 'application/json'
+                'total':total,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(filteredCartStorage)
 
