@@ -7,10 +7,10 @@ import {initiateGetCartItems} from "../modules/cart";
 import {Badge} from "react-bootstrap";
 
 
-const Home = () => {
+const Home = ({loggedInUser, isLoggedIn}) => {
     const dispatch = useDispatch()
 
-
+    console.log(loggedInUser)
     useEffect(() => {
         dispatch(initiateGetAllProducts())
         dispatch(unsetProduct())
@@ -19,6 +19,9 @@ const Home = () => {
 
     return (
         <div>
+            {isLoggedIn &&
+            <h1 id="welcome-message"> Welcome, {loggedInUser.firstName}!</h1>
+            }
             <Products/>
         </div>
 
@@ -29,7 +32,10 @@ const Home = () => {
 function mapStateToProps(state) {
     return {
         product: state.productsReducer.productToView,
-        cartItems: state.cartReducer.cartItems
+        cartItems: state.cartReducer.cartItems,
+        loggedInUser: state.userReducer.loggedInUser,
+        isLoggedIn: state.userReducer.isLoggedIn
+
     }
 }
 

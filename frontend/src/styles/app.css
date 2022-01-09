@@ -76,6 +76,12 @@
     padding-bottom: 500px;
 }
 
+#welcome-message{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
 
 
 
