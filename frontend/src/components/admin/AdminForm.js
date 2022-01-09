@@ -12,10 +12,10 @@ function AdminForm({startAddingUser, initiateGetUsers, logout}){
     return <>
         <Col className={'m-5'}>
             <Dropdown as={ButtonGroup}>
-                <Button variant="primary">Admin Stuff</Button>
 
-                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
-
+                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic">
+                    Admin Stuff
+                </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item
                         onClick={startAddingUser}
@@ -23,9 +23,7 @@ function AdminForm({startAddingUser, initiateGetUsers, logout}){
                     <Dropdown.Item
                         onClick={initiateGetUsers}
                     >View all Users</Dropdown.Item>
-
                 </Dropdown.Menu><br/>
-                <Col><Button variant="primary" style={{ marginLeft: "1000px"}} onClick={logout}>Logout</Button></Col>
             </Dropdown>
             </Col></>
 

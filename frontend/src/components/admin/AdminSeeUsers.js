@@ -15,6 +15,7 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
     return (
 
         <Table striped bordered responsive hidden={hide}>
+
             <thead>
             <tr>
                 {tHead.map((tHead, index) => (
