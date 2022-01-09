@@ -2,11 +2,9 @@ import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import {initiateDeleteCartItem, initiateEditCart} from "../../modules/cart";
 import {connect, useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
-import {discountPrice, salePrice} from "../../utils/priceUtils";
 
-function CartItems({cartItem, isLoggedIn, currentSale, salePrice}) {
-    console.log(currentSale, salePrice)
-    console.log(discountPrice(cartItem))
+function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}) {
+    console.log(currentSale, discountPrice, salePrice)
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(cartItem.quantity)
 
@@ -62,12 +60,18 @@ function CartItems({cartItem, isLoggedIn, currentSale, salePrice}) {
                             </Col>
                         </Row>
                         <Row>
-                            {/*<Col>*/}
-                            {/*    {discountPrice(cartItem).currentSale > 0 ?*/}
-                            {/*        <Card.Text>${discountPrice(cartItem).discountedPrice}</Card.Text>*/}
-                            {/*        :*/}
-                            {/*        <Card.Text>${salePrice}</Card.Text>}*/}
-                            {/*</Col>*/}
+                            <Col>
+                                {currentSale > 0 ?
+                                    <Card.Text>${discountPrice}</Card.Text>
+                                    :
+                                    <Card.Text>${salePrice}</Card.Text>}
+                            </Col>
+                            {currentSale &&
+                            <Col>
+                                <Card.Text style={{color: 'red'}}>
+                                   Sale Price ${currentSale}
+                                </Card.Text>
+                            </Col>}
                         </Row>
                         <Card.Text>{cartItem.productDescription}</Card.Text>
                         <Row>

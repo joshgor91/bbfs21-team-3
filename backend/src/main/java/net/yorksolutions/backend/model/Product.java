@@ -116,4 +116,7 @@ public class Product {
         return ScheduledPrices;
     }
 
+    public List<net.yorksolutions.backend.model.Sales> getSales() {
+        return Sales;
+    }
 }

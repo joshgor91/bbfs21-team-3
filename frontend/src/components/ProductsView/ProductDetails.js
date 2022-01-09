@@ -47,7 +47,7 @@ function ProductDetails({product}) {
                                         </Col>
                                         :
                                         <Col>
-                                            <Card.Title>{discountPrice(product).discountedPrice}$</Card.Title>
+                                            <Card.Title>{discountPrice(product).discountPrice}$</Card.Title>
                                         </Col>
                                     }
                                 </Row>

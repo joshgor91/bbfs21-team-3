@@ -25,6 +25,8 @@ class CartItemOutput {
     @JsonProperty
     private List<ScheduledPrices> ScheduledPrices;
     @JsonProperty
+    private List<Sales> Sales;
+    @JsonProperty
     private String productName;
     @JsonProperty
     private String productDescription;
@@ -56,13 +58,16 @@ class CartItemOutput {
     private CartItemOutput(){
     }
 
-    public CartItemOutput(Long cartId, Set<Category> categories, Long productId, List<ScheduledPrices> ScheduledPrices, String productName, String productDescription, String brand, Float unitPrice,
-                          int unitsInStock, String size, String color, Date productAvailable, Boolean discontinued, Boolean discountAvailable,
+    public CartItemOutput(Long cartId, Set<Category> categories, Long productId, List<ScheduledPrices> ScheduledPrices, List<Sales> Sales, String productName,
+                          String productDescription, String brand,
+                          Float unitPrice, int unitsInStock, String size, String color, Date productAvailable,
+                          Boolean discontinued, Boolean discountAvailable,
                           String picture, Date dateReceived, int unitsReceived, int quantity) {
         this.cartId = cartId;
         this.categories = categories;
         this.productId = productId;
         this.ScheduledPrices = ScheduledPrices;
+        this.Sales = Sales;
         this.productName = productName;
         this.productDescription = productDescription;
         this.brand = brand;
@@ -125,7 +130,7 @@ public class CartController {
         for (var itemDetail : cartItemDetails) {
             Product p = (Product) itemDetail[0];
             CartItem c = (CartItem) itemDetail[1];
-            var cartItem = new CartItemOutput(c.getCartId(), p.getCategories(), c.getProductId(), p.getScheduledPrices(), p.productName, p.productDescription,
+            var cartItem = new CartItemOutput(c.getCartId(), p.getCategories(), c.getProductId(), p.getScheduledPrices(), p.getSales(), p.productName, p.productDescription,
                     p.brand, p.unitPrice, p.unitsInStock, p.size, p.color, p.productAvailable, p.discontinued, p.discountAvailable,
                     p.picture, p.dateReceived, p.unitsReceived, c.getQuantity());
             cartItems.add(cartItem);

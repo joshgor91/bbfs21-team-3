@@ -4,10 +4,10 @@ import {Col, Container, Row} from "react-bootstrap";
 import CartSummary from "./CartSummary";
 import {useEffect} from "react";
 import {clearReceipt} from "../../modules/order";
-import {discountPrice, salePrice} from "../../utils/priceUtils";
+import {cartSummery, discountPrice, salePrice} from "../../utils/priceUtils";
 
 
-function Cart({cartItems, isLoggedIn}) {
+function Cart({cartItems, isLoggedIn, quantity}) {
     const dispatch = useDispatch()
     const cart = JSON.parse(window.localStorage.getItem('cartItems'))
 
@@ -23,8 +23,8 @@ function Cart({cartItems, isLoggedIn}) {
                         cartItems.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
                                        salePrice={salePrice(cartItem)}
-                                       // currentSale={discountPrice(cartItem).currentSale}
-                                       // discountPrice={discountPrice(cartItem).discountedPrice}
+                                       currentSale={discountPrice(cartItem).currentSale}
+                                       discountPrice={discountPrice(cartItem).discountPrice}
                             />)
                         : <h2>No Cart</h2>}
 
@@ -32,13 +32,19 @@ function Cart({cartItems, isLoggedIn}) {
                             cart.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
                                        salePrice={salePrice(cartItem)}
+                                       currentSale={discountPrice(cartItem).currentSale}
+                                       discountPrice={discountPrice(cartItem).discountPrice}
                             />)
                         : <h2>No Cart</h2>}
                 </Col>
                 <Col xs={3}>
                     {isLoggedIn ?
-                        <CartSummary cartItems={cartItems}/>
-                    : <CartSummary cartItems={cart}/>}
+                        <CartSummary cartItems={cartItems}
+                                     cartSummery={cartSummery(cartItems, quantity)}
+                        />
+                    : <CartSummary cartItems={cart}
+
+                        />}
                 </Col>
             </Row>
         </Container>
@@ -50,7 +56,7 @@ function mapStateToProps(state) {
     return {
         cartItems: state.cartReducer.cartItems,
         isLoggedIn: state.userReducer.isLoggedIn,
-        goToReceipt: state.orderReducer.goToReceipt
+        quantity: state.cartReducer.quantity
     }
 }
 

@@ -21,5 +21,11 @@ export function discountPrice(product) {
             console.log(saleAndPrice, currentSale)
         }
     })
-    return {currentSale: currentSale, discountedPrice: saleAndPrice}
+    return {currentSale: currentSale, discountPrice: saleAndPrice}
+}
+
+export function cartSummery(cart, quantity) {
+    console.log(cart)
+
+
 }

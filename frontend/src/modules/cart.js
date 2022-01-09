@@ -230,7 +230,6 @@ export function initiateGetCartItems() {
 export function initiateAddCartItem(productToAdd, quantity) {
     return function addCartItemSideEffect(dispatch, getState) {
         const userCartId = getState().userReducer.userCart.id
-        console.log(userCartId)
         dispatch(addingCartItem())
         let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         if (!getState().userReducer.isLoggedIn) {
