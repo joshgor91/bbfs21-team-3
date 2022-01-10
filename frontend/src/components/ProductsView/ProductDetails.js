@@ -7,10 +7,14 @@ import moment from "moment";
 function ProductDetails({product}) {
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
 
     let now = new Date()
     let currentPrice = 0
-    product.ScheduledPrices.map(prices => {
+    product.scheduledPrices.map(prices => {
         if (new Date(prices.effectiveDate) - now < 0) {
             currentPrice = prices.price
         }
@@ -20,6 +24,9 @@ function ProductDetails({product}) {
 
     function addToCart(productToAdd) {
         dispatch(initiateAddCartItem(productToAdd, quantity))
+        handleShow()
+        handleCloseTimed()
+
     }
 
     function handleQuantity(e) {
@@ -77,7 +84,8 @@ function ProductDetails({product}) {
 function mapStateToProps(state) {
     return {
         product: state.productsReducer.productToView,
-        cartItems: state.cartReducer.cartItems
+        cartItems: state.cartReducer.cartItems,
+        addCartItemSuccess: state.cartReducer.addCartItemSuccess,
     }
 }
 

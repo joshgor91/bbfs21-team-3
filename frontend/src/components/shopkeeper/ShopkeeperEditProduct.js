@@ -15,11 +15,18 @@ import {
     updatePicture,
     updateDateReceived,
     updateUnitsReceived,
-    updateDiscountAvailable
+    updateDiscountAvailable,
+    scheduledSalesPrice, scheduledSalesEffectiveDate
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal, Badge, ListGroup} from "react-bootstrap";
 import {connect} from "react-redux";
 import {useEffect, useState} from "react";
+
+
+const initialSalePriceForm = {
+    effectiveDate: '',
+    price: ''
+}
 
 function ShopkeeperEditProduct({
                                    show,
@@ -52,10 +59,18 @@ function ShopkeeperEditProduct({
                                    updateDiscountAvailable,
                                    updatePicture,
                                    updateDateReceived,
-                                   updateUnitsReceived
+                                   updateUnitsReceived,
+                                   salePrice,
+                                   setSalePrice
                                }) {
+
+    const newDate = new Date().toLocaleDateString()
+    console.log(newDate)
+
+    console.log(salePrice)
     const [productCategory, setProductCategory] = useState([])
     const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
+
 
     function onChange(e) {
         console.log(`logging e.target = ${e.target}`)
@@ -67,7 +82,7 @@ function ShopkeeperEditProduct({
 
     useEffect(() => {
         if (show)
-        setProductCategory(product.categories)
+            setProductCategory(product.categories)
     }, [show])
 
     function handleAdd() {
@@ -100,12 +115,15 @@ function ShopkeeperEditProduct({
             discountAvailable,
             picture,
             dateReceived,
-            unitsReceived
+            unitsReceived,
+            scheduledPrices: {salePrice, setSalePrice}
         })
+        console.log(setSalePrice({initialSalePriceForm}))
+        setSalePrice(initialSalePriceForm)
     }
 
     return <Modal show={show} onHide={cancelEditProduct}>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className={"m-2"}>
             <Form.Label>Product Name</Form.Label>
             <Form.Control type='productName' value={productName}
                           onChange={event => updateProductName(event.target.value)}/>
@@ -114,9 +132,12 @@ function ShopkeeperEditProduct({
             <Form.Control type='categories' as='select'
                           onChange={onChange}>
                 <option selected disabled hidden>Select Category</option>
-                {categories.map(category => <option id={category.id} value={category.categoryName}>{category.categoryName}</option>)}
+                {categories.map(category => <option id={category.id}
+                                                    value={category.categoryName}>{category.categoryName}</option>)}
             </Form.Control>
-            <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button size='sm' onClick={() => handleRemove()}>Remove</Button></div>
+            <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button
+                size='sm' onClick={() => handleRemove()}>Remove</Button>
+            </div>
             <Form.Label>Product Description</Form.Label>
             <Form.Control type='productDescription' value={productDescription}
                           onChange={event => updateProductDescription(event.target.value)}/>
@@ -158,6 +179,14 @@ function ShopkeeperEditProduct({
             <Form.Label>Units Received</Form.Label>
             <Form.Control type='int' value={unitsReceived}
                           onChange={event => updateUnitsReceived(event.target.value)}/>
+            <hr/>
+            <Form.Label>Effective Sales Date</Form.Label>
+            <Form.Control type={"date"} value={setSalePrice.effectiveDate}
+                          onChange={event => scheduledSalesEffectiveDate(event.target.value)}/>
+            <Form.Label>Effective Sales Price</Form.Label>
+            <Form.Control type={'int'} value={setSalePrice.price}
+                          onChange={event => scheduledSalesPrice(event.target.value)}/>
+
             <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
         </Form>
     </Modal>
@@ -201,7 +230,9 @@ function mapDispatchToProps(dispatch) {
         updateDiscountAvailable,
         updatePicture,
         updateDateReceived,
-        updateUnitsReceived
+        updateUnitsReceived,
+        scheduledSalesPrice,
+        scheduledSalesEffectiveDate
     }, dispatch)
 
 }

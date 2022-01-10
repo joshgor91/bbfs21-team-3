@@ -44,39 +44,41 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
         dispatch(deleteProduct(id))
     }
 
-    return<>
+    return <>
         <Container fluid>
             <Row>
-            <Col>
-                <ShopkeeperNewProduct
-                    showNewProduct={show}
-                    setShowNewProduct={setShow}
-                />
-                <ShopkeeperCreateCategory
-                    showCreateCategory={showCreateCategory}
-                    setShowCreateCategory={setShowCreateCategory}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    categoryId={categoryId}
-                />
-                <Dropdown as={ButtonGroup}>
-                    <Button variant='primary'>Shopkeeper Ish</Button>
+                <Col>
+                    <ShopkeeperNewProduct
+                        showNewProduct={show}
+                        setShowNewProduct={setShow}
+                    />
+                    <ShopkeeperCreateCategory
+                        showCreateCategory={showCreateCategory}
+                        setShowCreateCategory={setShowCreateCategory}
+                        isEditing={isEditing}
+                        setIsEditing={setIsEditing}
+                        categoryId={categoryId}
+                    />
+                    <Dropdown as={ButtonGroup}>
+                        <Button variant='primary'>Shopkeeper Ish</Button>
 
-                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
+                        <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
-                        <Dropdown.Item onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
-                        <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
-                        <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
-                    </Dropdown.Menu><br/>
-                    {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}
-                </Dropdown>
-                {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
-            </Col>
-        </Row>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
+                            <Dropdown.Item onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
+                            <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
+                            <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
+                        </Dropdown.Menu><br/>
+                        {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}
+                    </Dropdown>
+                    {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing}
+                                                       setCategoryId={setCategoryId}/>}
+                </Col>
+            </Row>
             <Row>
-                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
+                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products}
+                                                           initiateDeleteProduct={handleDeleteProduct}/> : <></>}
             </Row>
         </Container>
 

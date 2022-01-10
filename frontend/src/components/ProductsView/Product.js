@@ -12,7 +12,8 @@ function Product({product}) {
     let currentPrice = 0
     // console.log(product.ScheduledPrices)
 
-   for (let prices of product.ScheduledPrices) {
+    console.log(product)
+   for (let prices of product.scheduledPrices) {
        // console.log(prices)
        if (prices.effectiveDate <= currentDate)
            currentPrice = prices.price

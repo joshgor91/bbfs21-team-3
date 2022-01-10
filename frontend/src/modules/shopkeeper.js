@@ -35,6 +35,9 @@ const UPDATE_PICTURE = 'UPDATE_PICTURE'
 const UPDATE_DATE_RECEIVED = 'UPDATE_DATE_RECEIVED'
 const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
 
+const SCHEDULED_SALES_PRICE = 'SCHEDULED_SALES_PRICE'
+const SCHEDULED_SALES_EFFECTIVE_DATE = 'SCHEDULED_SALES_EFFECTIVE_DATE'
+
 
 const initialState = {
     products: [],
@@ -62,11 +65,26 @@ const initialState = {
     unitsReceived: '',
     hideTable: true,
     productToView: undefined,
-    showProductDetails: false
+    showProductDetails: false,
+    price:'',
+    effectiveDate:''
 }
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+
+        case SCHEDULED_SALES_PRICE:
+            return {
+                ...state,
+                price: action.price
+            }
+
+        case SCHEDULED_SALES_EFFECTIVE_DATE:
+            return {
+                ...state,
+                effectiveDate: action.effectiveDate
+            }
+
         case ADD_PRODUCT:
             return {
                 ...state,
@@ -272,6 +290,22 @@ export default function reducer(state = initialState, action) {
     }
 }
 
+export function scheduledSalesPrice(price){
+    console.log("scheduledSales' price is "+ price)
+    return{
+        type: SCHEDULED_SALES_PRICE,
+        price
+
+    }
+}
+
+export function scheduledSalesEffectiveDate(effectiveDate){
+    console.log('effectiveDate is ' + effectiveDate)
+    return{
+        type: SCHEDULED_SALES_EFFECTIVE_DATE,
+        effectiveDate
+    }
+}
 
 export function addProduct() {
     return {

@@ -6,10 +6,15 @@ import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
 import ShopkeeperProduct from "./ShopkeeperProduct";
 import {useState} from "react";
 
+const initialSalePriceForm = {
+    price: '',
+    effectiveDate: ''
+}
 
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
     const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
     const [showProductDetails, setShowProductDetails] = useState(false)
+    const [salePrice, setSalePrice] = useState(initialSalePriceForm)
 
     function handleViewDetails(product) {
         viewProductDetails(product)
@@ -17,8 +22,8 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
     }
 
     return <>
-            <ShopkeeperEditProduct/>
-        {showProductDetails ? <ShopkeeperProduct/> : ''}
+            <ShopkeeperEditProduct salePrice={salePrice} setSalePrice={setSalePrice}/>
+        {showProductDetails ? <ShopkeeperProduct/> : <></>}
 
 
         <Table striped bordered responsive hidden={hide}>
