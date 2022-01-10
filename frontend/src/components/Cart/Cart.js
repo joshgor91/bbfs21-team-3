@@ -16,9 +16,9 @@ function Cart({cartItems, isLoggedIn, quantity}) {
     }, []);
 
     return <>
-        <Container>
-            <Row>
-                <Col xs={9}>
+        <Container >
+            <Row className="checkout-cart-summary">
+                <Col lg={9}>
                     {isLoggedIn && cartItems.length > 0 ?
                         cartItems.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
@@ -37,14 +37,14 @@ function Cart({cartItems, isLoggedIn, quantity}) {
                             />)
                         : ''}
                 </Col>
-                <Col xs={3}>
-                    {isLoggedIn ?
-                        <CartSummary cartItems={cartItems}
-                                     cartSummery={cartSummery(cartItems)}
-                        />
+            <Col lg={3}>
+                {isLoggedIn ?
+                    <CartSummary cartItems={cartItems}
+                                 cartSummery={cartSummery(cartItems)}
+                    />
                     : <CartSummary cartItems={cart}
                                    cartSummery={cartSummery(cart)}/>}
-                </Col>
+            </Col>
             </Row>
         </Container>
     </>

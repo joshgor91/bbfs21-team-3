@@ -109,3 +109,19 @@
         width:300px;
     }
 }
+
+@media only screen and (max-width: 600px){
+    .carousel-fade .carousel-item {
+        width:350px;
+        margin-left:10%;
+    }
+    .carousel-item img {
+        width:300px;
+    }
+
+    .card-in-cart {
+        width: 6em
+    }
+}
+
+

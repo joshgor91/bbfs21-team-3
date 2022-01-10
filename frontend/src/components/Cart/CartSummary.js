@@ -6,14 +6,14 @@ import {clearReceipt} from "../../modules/order";
 
 
 function CartSummary({cartItems, cartSummery}) {
-
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
 
 
+
     return <>
-        <Card>
+        <Card className="d-flex flex-row flex-wrap">
             <Card.Body>
                 <Card.Title>Order Summary</Card.Title>
                 <Row>
