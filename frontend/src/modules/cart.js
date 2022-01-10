@@ -73,7 +73,7 @@ export default function reducer(state = initialState, action) {
             }
 
         case SET_QUANTITY:
-            console.log(action.payload)
+            // console.log(action.payload)
             return {
                 ...state,
                 quantity: action.payload
