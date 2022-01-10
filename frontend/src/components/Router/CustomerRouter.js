@@ -73,7 +73,7 @@ function CustomerRouter({cartQuantity, themeToggler}) {
             <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
+                <Route path='/register' element={<Home/>}/>
                 <Route path='/product/:id' element={<ProductPage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
                 <Route path='/myaccount' element={<UserPage/>} />

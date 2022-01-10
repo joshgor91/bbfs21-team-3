@@ -333,9 +333,6 @@ export function initiateLogin(credentials) {
             }
             response.json().then(user => {
 
-                // if(user===null){
-                //     return dispatch(loginFailure())
-                // }
                 getUserCartRequest(user.id)
                     .then(response => {
                         console.log(response, "response")
@@ -378,6 +375,7 @@ export function initiateRegisterUser(user) {
             response.text().then(text => {
                 if (text === 'success') {
                     dispatch(addUserSuccess())
+                    dispatch(initiateLogin(user))
                     console.log("user registered")
                 }
                 else {

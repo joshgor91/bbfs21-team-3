@@ -83,7 +83,7 @@ function AdminRouter({cartQuantity, themeToggler}) {
             <Routes>
                 <Route path='/' element={<Home/>} />
                 <Route path='/login' element={<Login/>} />
-                <Route path='/register' element={<Register/>} />
+                <Route path='/register' element={<Home/>}/>
                 <Route path='/admin' element={<Admin/>} />
                 <Route path='/shopkeeper' element={<Shopkeeper/>} />
                 <Route path='/product/:id' element={<ProductPage/>} />
