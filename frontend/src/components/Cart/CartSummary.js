@@ -17,11 +17,8 @@ function CartSummary({cartItems, cartSummery}) {
         total = originalPrice.toFixed(2)
 
 
-
-
-
     return <>
-        <Card>
+        <Card className="d-flex flex-row flex-wrap">
             <Card.Body>
                 <Card.Title>Order Summary</Card.Title>
                 <Row>
