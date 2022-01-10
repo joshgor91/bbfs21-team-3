@@ -86,8 +86,6 @@ public class OrderController {
         return "success";
     }
 
-
-
     @CrossOrigin
     @PostMapping("/addGuestOrder")
     String createGuestOrder (@RequestBody List<CartItem> cartItems, @RequestHeader String email,
@@ -117,8 +115,8 @@ public class OrderController {
     }
 
     @CrossOrigin
-    @GetMapping("/all")
-    Iterable<OrderHistoryOutput> viewAllOrders(){
+    @GetMapping("/shopkeeper/orderHistory/all")
+    Iterable<OrderHistoryOutput> shopKeeperViewAllOrders(){
         var orders = orderDetailsRepo.findAll();
         List<OrderHistoryOutput> orderHistory = new ArrayList<>();
         for (var order : orders) {
@@ -139,7 +137,7 @@ public class OrderController {
 
     @CrossOrigin
     @GetMapping("/orderHistory")
-    Iterable<OrderHistoryOutput> viewOrders(@RequestHeader Long userId){
+    Iterable<OrderHistoryOutput> viewOrdersByUserId(@RequestHeader Long userId){
         var orders = orderDetailsRepo.findAllByUserId(userId).orElseThrow();
         List<OrderHistoryOutput> orderHistory = new ArrayList<>();
         for (var order : orders) {

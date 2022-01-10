@@ -9,6 +9,7 @@ import {GiShoppingCart} from "react-icons/gi";
 import Checkout from "../../pages/Checkout";
 import UserPage from "../../pages/UserPage";
 import OrderComplete from "../../pages/OrderComplete";
+import ProductDetails from "../ProductsView/ProductDetails";
 
 
 

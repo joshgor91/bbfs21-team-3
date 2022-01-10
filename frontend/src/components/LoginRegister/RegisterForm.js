@@ -38,7 +38,7 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Group className="mb-3">
                                     <Form.Label>First name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter first name"
+                                    <Form.Control required type="text" placeholder="Enter first name"
                                                   onChange={event => setFName(event.target.value)}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
@@ -56,7 +56,7 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
 
                             <Form.Group className="mb-3" controlId="formBasicPassword1">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password"
+                                <Form.Control required type="password" placeholder="Password"
                                               onChange={event => setPassword(event.target.value)}/>
                             </Form.Group>
 
