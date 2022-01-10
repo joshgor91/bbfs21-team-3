@@ -6,16 +6,10 @@ import {clearReceipt} from "../../modules/order";
 
 
 function CartSummary({cartItems, cartSummery}) {
-    // console.log(cartItems)
+
     let originalPrice = cartSummery.originalPrice
-    let totalSavings = 0
-    let total
-    let now = new Date()
-    let currentPrice = 0
-
-
-        total = originalPrice.toFixed(2)
-
+    let totalSavings = cartSummery.totalSavings
+    let total = cartSummery.total
 
 
 
@@ -29,7 +23,7 @@ function CartSummary({cartItems, cartSummery}) {
                         <Card.Text>Original Price: </Card.Text>
                     </Col>
                     <Col xs={'auto'}>
-                        <Card.Text>{originalPrice.toFixed(2)}</Card.Text>
+                        <Card.Text>${originalPrice.toFixed(2)}</Card.Text>
                     </Col>
                 </Row>
                 <Row>
@@ -37,7 +31,7 @@ function CartSummary({cartItems, cartSummery}) {
                         <Card.Text>Total Savings: </Card.Text>
                     </Col>
                     <Col xs={'auto'}>
-                        <Card.Text>{totalSavings}</Card.Text>
+                        <Card.Text>${totalSavings}</Card.Text>
                     </Col>
                 </Row>
                 <Row>
@@ -45,7 +39,7 @@ function CartSummary({cartItems, cartSummery}) {
                         <Card.Text>Total: </Card.Text>
                     </Col>
                     <Col xs={'auto'}>
-                        <Card.Text>{total}</Card.Text>
+                        <Card.Text>${total}</Card.Text>
                     </Col>
                 </Row>
                 <Row>
