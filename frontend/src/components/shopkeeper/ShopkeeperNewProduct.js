@@ -94,7 +94,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Size</Form.Label>
                     <Form.Control type='size' placeholder='Size' id='size'/>
                     <Form.Label>Color</Form.Label>
-                    <Form.Control type='text' as='select' id='size'>
+                    <Form.Control type='text' as='select' id='color'>
                         <option value="white" selected>White</option>
                         <option value="grey">Grey</option>
                         <option value="blue">Blue</option>

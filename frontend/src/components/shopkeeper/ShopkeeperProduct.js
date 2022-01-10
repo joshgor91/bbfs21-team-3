@@ -1,6 +1,6 @@
 import {Badge, Button, Card, CloseButton, Col, Modal, Row} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {initiateDeleteProduct, editProduct, cancelViewProductDetails, initiateGetProducts, viewProductDetails} from "../../modules/shopkeeper";
+import {editProduct, cancelViewProductDetails, viewProductDetails} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
 
 function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDeleteProduct}) {
@@ -34,8 +34,7 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDel
             <Card.Text>{product.discountAvailable ? 'True' : 'False'}</Card.Text>
             <Card.Subtitle>Product Picture</Card.Subtitle>
             <Card.Text>{product.picture}</Card.Text>
-        </Card.Body>
-        <Card.Footer>
+
             <Card.Subtitle>Unit Price</Card.Subtitle>
             <Card.Text>{product.unitPrice}</Card.Text>
             <Card.Subtitle>Units in Stock</Card.Subtitle>
@@ -44,7 +43,14 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDel
             <Card.Text>{product.dateReceived?.toString()}</Card.Text>
             <Card.Subtitle>Units Received</Card.Subtitle>
             <Card.Text>{product.unitsReceived}</Card.Text>
-        </Card.Footer>
+
+
+            <Card.Subtitle>Effective Sales Date</Card.Subtitle>
+            <Card.Text>{product.scheduledPrices.effectiveDate}</Card.Text> {/*product.scheduledPrices.effectiveDate*/}
+            <Card.Subtitle>Sales Price</Card.Subtitle>
+            <Card.Text>{product.scheduledPrices.price}</Card.Text> {/*product.scheduledPrices.price*/}
+
+        </Card.Body>
     </Card></Col>
     </Modal>
 
@@ -58,7 +64,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateDeleteProduct, editProduct, cancelViewProductDetails, viewProductDetails}, dispatch)
+    return bindActionCreators({ editProduct, cancelViewProductDetails, viewProductDetails}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperProduct)
