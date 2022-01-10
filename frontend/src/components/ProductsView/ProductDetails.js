@@ -1,4 +1,4 @@
-import {Container, Row, Col, Card, Button, Form, Alert, ToastContainer, Toast} from "react-bootstrap";
+import {Container, Row, Col, Card, Button, Form, Alert, ToastContainer, Toast, Badge} from "react-bootstrap";
 import {connect, useDispatch} from "react-redux";
 import {initiateAddCartItem} from "../../modules/cart";
 import {Link} from "react-router-dom";
@@ -65,11 +65,11 @@ function ProductDetails({product}) {
                                 <Row>
                                     {!currentSale > 0 ?
                                         <Col>
-                                            <Card.Title>{sellingPrice}$</Card.Title>
+                                            <Card.Title>${sellingPrice}</Card.Title>
                                         </Col>
                                         :
                                         <Col>
-                                            <Card.Title>{theDiscountPrice}$</Card.Title>
+                                            <Card.Title>${theDiscountPrice}</Card.Title>
                                         </Col>
                                     }
                                 </Row>
@@ -89,6 +89,7 @@ function ProductDetails({product}) {
                                 <Card.Title>{product.brand}</Card.Title>
                                 <Card.Subtitle>{product.productName}</Card.Subtitle>
                                 <Card.Text>{product.productDescription}</Card.Text>
+                                {product.categories.map(category => <Badge>{category.categoryName}</Badge>)}
                                 <Card.Text>{product.discontinued && 'Discontinued'}</Card.Text>
                                 {product.unitsInStock !== 0 ?
                                     <>

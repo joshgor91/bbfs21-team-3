@@ -39,24 +39,26 @@ function ShopkeeperRouter({cartQuantity, themeToggler}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/shopkeeper">Shopkeeper</Link>
                             </Nav.Item>
-                            <Nav.Item>
-                                <Form className="d-flex">
-                                    <FormControl
-                                        type="search"
-                                        placeholder="Search"
-                                        className="me-2"
-                                        aria-label="Search"
-                                    />
-                                    <Button variant="light">Search</Button>
-                                </Form>
-                            </Nav.Item>
+                            {/*<Nav.Item>*/}
+                            {/*    <Form className="d-flex">*/}
+                            {/*        <FormControl*/}
+                            {/*            type="search"*/}
+                            {/*            placeholder="Search"*/}
+                            {/*            className="me-2"*/}
+                            {/*            aria-label="Search"*/}
+                            {/*        />*/}
+                            {/*        <Button variant="light">Search</Button>*/}
+                            {/*    </Form>*/}
+                            {/*</Nav.Item>*/}
 
-                            <Nav.Item>
-                                <Link className="link-item" to="/cart">
-                                    <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
-                                </Link>
-                            </Nav.Item>
+                        </Nav>
+                            <Nav className='ms-auto'>
+                                <Nav.Item>
+                                    <Link className="link-item" to="/cart">
+                                        <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
+                                        <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                    </Link>
+                                </Nav.Item>
                             <Nav.Item>
                                 <Button onClick={themeToggler}>Switch Theme</Button>
                             </Nav.Item>

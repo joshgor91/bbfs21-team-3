@@ -36,18 +36,19 @@ function CustomerRouter({cartQuantity, themeToggler}) {
                                 <Link className="link-item" to="/myaccount">My Account</Link>
                             </Nav.Item>
 
-                            <Nav.Item>
-                                <Form className="d-flex">
-                                    <FormControl
-                                        type="search"
-                                        placeholder="Search"
-                                        className="me-2"
-                                        aria-label="Search"
-                                    />
-                                    <Button variant="light">Search</Button>
-                                </Form>
-                            </Nav.Item>
-
+                            {/*<Nav.Item>*/}
+                            {/*    <Form className="d-flex">*/}
+                            {/*        <FormControl*/}
+                            {/*            type="search"*/}
+                            {/*            placeholder="Search"*/}
+                            {/*            className="me-2"*/}
+                            {/*            aria-label="Search"*/}
+                            {/*        />*/}
+                            {/*        <Button variant="light">Search</Button>*/}
+                            {/*    </Form>*/}
+                            {/*</Nav.Item>*/}
+                        </Nav>
+                        <Nav className='ms-auto'>
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
