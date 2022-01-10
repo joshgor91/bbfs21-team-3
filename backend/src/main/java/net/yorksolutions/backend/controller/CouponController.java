@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -85,8 +86,13 @@ public class CouponController {
             return "Sorry this coupon has reached its use limit.";
 
         if (coupon.startDate != null && coupon.endDate != null) {
-            var currentDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
-            if (currentDate.before(coupon.startDate) || currentDate.after(coupon.endDate))
+            var currentDate = LocalDateTime.now();
+            var startDate = coupon.startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            var endDate = coupon.endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            startDate = startDate.plusHours(6);
+            endDate =  endDate.plusDays(1).plusHours(6).plusSeconds(-1);
+
+            if (currentDate.isBefore(startDate) || currentDate.isAfter(endDate))
                 return "Sorry, this coupon isn't currently eligible for redemption.";
         }
 
