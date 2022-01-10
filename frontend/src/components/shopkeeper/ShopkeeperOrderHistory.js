@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 import {Button,Modal,Table} from "react-bootstrap";
 import moment from "moment";
 import {useState} from "react";
+import ShopkeeperOrderDetails from "./ShopkeeperOrderDetails";
 
 function ShopkeeperOrderHistory({orderList, hide, setHide}) {
     const [showOrderDetails, setShowOrderDetails] = useState(false)
@@ -37,10 +38,7 @@ function ShopkeeperOrderHistory({orderList, hide, setHide}) {
             </tbody>
         </Table>
         <Button onClick={() => setHide(true)}>Close Table</Button>
-            {Object.keys(order).length > 0 &&
-                <Modal size='xl' show={showOrderDetails} onHide={() => setShowOrderDetails(false)}>
-                    <Modal.Header closeButton></Modal.Header>
-                </Modal>}
+            {Object.keys(order).length > 0 && <ShopkeeperOrderDetails order={order} showOrderDetails={showOrderDetails} setShowOrderDetails={setShowOrderDetails} />}
         </>
     );
 
