@@ -291,7 +291,7 @@ export default function reducer(state = initialState, action) {
 }
 
 export function scheduledSalesPrice(price){
-    console.log("scheduledSales' price is "+ price)
+    // console.log("scheduledSales' price is "+ price)
     return{
         type: SCHEDULED_SALES_PRICE,
         price
@@ -300,7 +300,7 @@ export function scheduledSalesPrice(price){
 }
 
 export function scheduledSalesEffectiveDate(effectiveDate){
-    console.log('effectiveDate is ' + effectiveDate)
+    // console.log('effectiveDate is ' + effectiveDate)
     return{
         type: SCHEDULED_SALES_EFFECTIVE_DATE,
         effectiveDate
