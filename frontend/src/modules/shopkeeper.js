@@ -68,11 +68,10 @@ const initialState = {
     showProductDetails: false,
     price:'',
     effectiveDate:'',
-    effectiveSaleStartDate:'',
-    effectiveSaleEndDate:'',
+    saleStartDate:'',
+    saleEndDate:'',
     discount: '',
-    description:''
-    // salesDate:''
+    saleDescription:''
 }
 
 export default function reducer(state = initialState, action) {
@@ -89,6 +88,8 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 effectiveDate: action.effectiveDate
             }
+
+            // case SCHEDULED_
 
         case ADD_PRODUCT:
             return {

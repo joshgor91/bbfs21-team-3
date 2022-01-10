@@ -30,10 +30,10 @@ const initialSalePriceForm = {
 
 const initialSalesForm = {
     salesPrice: '',
-    effectiveSaleStartDate: '',
-    effectiveSaleEndDate: '',
+    saleStartDate: '',
+    saleEndDate: '',
     discount: '',
-    description: ''
+    saleDescription: ''
 }
 
 function ShopkeeperEditProduct({
@@ -82,6 +82,9 @@ function ShopkeeperEditProduct({
     const [scheduledPricesArray, setScheduledPricesArray] = useState([])
     const [scheduledSalesArray, setScheduledSalesArray] = useState([])
 
+    console.log(product)
+    // console.log(product.scheduledPrices)
+
     function onChange(e) {
         console.log(`logging e.target = ${e.target}`)
         const {value, selectedIndex} = e.target
@@ -111,7 +114,8 @@ function ShopkeeperEditProduct({
     useEffect(() => {
         if (show) {
             setProductCategory(product.categories)
-            setScheduledPricesArray(product.sales)
+            setScheduledSalesArray(product.sales)
+            setScheduledPricesArray(product.scheduledPrices)
         }
     }, [show])
 
@@ -168,16 +172,21 @@ function ShopkeeperEditProduct({
 
     function handleAddSalesPrice() {
         const exists = scheduledSalesArray?.some((scheduledSales) => {
-            const newDate = new Date(scheduledSales.effectiveDate)
-            const newDate2 = new Date(newSales.effectiveDate)
-            return newDate.getTime() === newDate2.getTime()
+            const startDate = new Date(scheduledSales.saleStartDate)
+            const endDate = new Date(scheduledSales.saleEndDate)
+            const startDate2 = new Date(newSales.saleStartDate)
+            const endDate2 = new Date(newSales.saleEndDate)
+            return startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()
+
         })
         console.log("sales price " + exists)
         if (exists) {
             setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
-                const newDate = new Date(scheduledSales.effectiveDate)
-                const newDate2 = new Date(newSales.effectiveDate)
-                if (newDate.getTime() === newDate2.getTime()) {
+                const startDate = new Date(scheduledSales.saleStartDate)
+                const endDate = new Date(scheduledSales.saleEndDate)
+                const startDate2 = new Date(newSales.saleStartDate)
+                const endDate2 = new Date(newSales.saleEndDate)
+                if (startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()) {
                     console.log(newSales)
                     return newSales
                 }
@@ -221,8 +230,8 @@ function ShopkeeperEditProduct({
     // console.log(product.scheduledSales)
 
     console.log(newSales)
-    console.log(newSales.effectiveSaleStartDate)
-    console.log(newSales.discount)
+    console.log(newSales.saleStartDate)
+    console.log(scheduledPricesArray)
 
     return <Modal show={show} onHide={cancelEditProduct}>
         <Modal.Header closeButton>
@@ -299,7 +308,7 @@ function ShopkeeperEditProduct({
 
             {/*==========*/}
             <Form.Label>Scheduled Prices</Form.Label>
-            <div className='mb-3'>{scheduledPricesArray?.map(scheduledPrice => <Badge>price={scheduledPrice.price}
+            <div className='mb-3'>{scheduledPricesArray?.map(scheduledPrice => <Badge>price={scheduledPrice.price}<br/>
                 effective date={scheduledPrice.effectiveDate}</Badge>)}</div>
 
             <Form.Label>Effective scheduled price date</Form.Label>
@@ -318,30 +327,26 @@ function ShopkeeperEditProduct({
             <div className='mb-3'>{scheduledSalesArray?.map(scheduledSale =>
                 <Badge>
                     {/*price={scheduledSale.salesPrice}*/}
-                    effective start date={scheduledSale.effectiveSaleStartDate}
+                    effective start date={scheduledSale.saleStartDate}
                     <br/>
-                    effective end date={scheduledSale.effectiveSaleEndDate}<br/>
+                    effective end date={scheduledSale.saleEndDate}<br/>
                     discount={scheduledSale.discount}<br/>
-                    description of discount={scheduledSale.description}
+                    description of discount={scheduledSale.saleDescription}
                 </Badge>
             )}</div>
 
             <Form.Label>Effective scheduled price start date</Form.Label>
-            <Form.Control type={"date"} name="effectiveSaleStartDate" value={newSales.effectiveSaleStartDate}
+            <Form.Control type={"date"} name="saleStartDate" value={newSales.saleStartDate}
                           onChange={onSalesPricesChange}/>
             <Form.Label>Effective scheduled price end date</Form.Label>
-            <Form.Control type={"date"} name="effectiveSaleEndDate" value={newSales.effectiveSaleEndDate}
+            <Form.Control type={"date"} name="saleEndDate" value={newSales.saleEndDate}
                           onChange={onSalesPricesChange}/>
-            {/*<Form.Label>Effective scheduled sales price</Form.Label>*/}
-            {/*<Form.Control type={'int'} name="salesPrice" value={newSales.salesPrice}*/}
-            {/*              onChange={onScheduledPricesChange}/>*/}
-
 
             <Form.Label>Scheduled sales discount</Form.Label>
             <Form.Control type={'float'} name="discount" value={newSales.discount}
                           onChange={onSalesPricesChange}/>
             <Form.Label>Scheduled sales description</Form.Label>
-            <Form.Control type={'text'} name="description" value={newSales.description}
+            <Form.Control type={'text'} name="saleDescription" value={newSales.saleDescription}
                           onChange={onSalesPricesChange}/>
 
             <div><Button size='sm' onClick={() => handleAddSalesPrice()}>Add</Button><Button
@@ -374,10 +379,10 @@ function mapStateToProps(state) {
         unitsReceived: state.shopkeeperReducer.unitsReceived,
         price: state.shopkeeperReducer.price,
         effectiveDate: state.shopkeeperReducer.effectiveDate,
-        effectiveSaleStartDate: state.shopkeeperReducer.effectiveSaleStartDate,
-        effectiveSaleEndDate: state.shopkeeperReducer.effectiveSaleEndDate,
+        saleStartDate: state.shopkeeperReducer.saleStartDate,
+        saleEndDate: state.shopkeeperReducer.saleEndDate,
         discount: state.shopkeeperReducer.discount,
-        description: state.shopkeeperReducer.description
+        saleDescription: state.shopkeeperReducer.saleDescription
     }
 }
 

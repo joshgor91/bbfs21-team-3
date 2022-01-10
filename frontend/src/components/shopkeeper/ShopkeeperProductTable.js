@@ -13,10 +13,10 @@ const initialSalePriceForm = {
 
 const initialSalesForm = {
     salesPrice: '',
-    effectiveSaleStartDate:'',
-    effectiveSaleEndDate:'',
+    saleStartDate: '',
+    saleEndDate: '',
     discount: '',
-    description:''
+    saleDescription: ''
 }
 
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
