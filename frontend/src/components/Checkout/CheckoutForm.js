@@ -48,7 +48,7 @@ function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zi
     }
 
         return (
-            <Form className="login-register-form" onSubmit={handleSubmit}>
+            <Form className="general-form" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicAddress">
                     {!isLoggedIn && <>
                     <Form.Label>Email</Form.Label>

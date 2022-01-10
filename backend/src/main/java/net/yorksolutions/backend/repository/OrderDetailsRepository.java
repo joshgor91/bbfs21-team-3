@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface OrderDetailsRepository extends CrudRepository<OrderDetails,Long> {
     Optional<List<OrderDetails>> findAllByUserId(Long userId);
+    List<OrderDetails> findAllByEmail(String email);
 }

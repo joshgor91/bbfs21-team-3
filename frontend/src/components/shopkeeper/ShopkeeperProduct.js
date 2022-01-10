@@ -1,4 +1,4 @@
-import {Button, Card, CloseButton, Col, Modal, Row} from "react-bootstrap";
+import {Badge, Button, Card, CloseButton, Col, Modal, Row} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {initiateDeleteProduct, editProduct, cancelViewProductDetails, initiateGetProducts, viewProductDetails} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
@@ -7,15 +7,17 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDel
 
 
     return <Modal show={show} onHide={cancelViewProductDetails}>
+        <Modal.Header closeButton>
+            <Modal.Title>View Product</Modal.Title>
+        </Modal.Header>
         <Col><Card >
-            <CloseButton onClick={() => cancelViewProductDetails()}/>
         <Card.Header>
             <Card.Title>Brand</Card.Title>
             <Card.Text>{product.brand}</Card.Text>
             <Card.Subtitle>Product Name</Card.Subtitle>
             <Card.Text>{product.productName}</Card.Text>
             <Card.Subtitle>Categories</Card.Subtitle>
-            <Card.Text>{product.categories.map(category => <p>{category.categoryName}</p>)}</Card.Text>
+            <Card.Text>{product.categories.map((category, idx) => <Badge key="idx">{category.categoryName}</Badge>)}</Card.Text>
         </Card.Header>
         <Card.Body>
             <Card.Subtitle>Product Description</Card.Subtitle>

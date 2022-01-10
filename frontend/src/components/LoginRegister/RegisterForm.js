@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {initiateRegisterUser} from "../../modules/user";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import '../../styles/register.css'
+import './register.css'
 
 
 
@@ -31,7 +31,7 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
 
         return <>
             <Col>
-                <Form className="login-register-form" onSubmit={handleSubmitRegister}>
+                <Form className="general-form" onSubmit={handleSubmitRegister}>
 
                             <h1>Register</h1>
 

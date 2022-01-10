@@ -3,14 +3,9 @@ import {initiateDeleteCartItem, initiateEditCart} from "../../modules/cart";
 import {connect, useDispatch} from "react-redux";
 import {useState} from "react";
 
-function CartItems({cartItem, isLoggedIn}) {
-
+function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, sellPrice}) {
     const dispatch = useDispatch();
-    console.log(cartItem.productName + "cartitem")
-    console.log(cartItem.productId + "cartitem")
-
     const [quantity, setQuantity] = useState(cartItem.quantity)
-
     function handleQuantity(e) {
         setQuantity(Number(e.target.value))
     }
@@ -37,27 +32,59 @@ function CartItems({cartItem, isLoggedIn}) {
     }
 
     return <>
-        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '16.5rem'}}>
+        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '12.5rem'}}>
             <Row>
-                <Col style={{margin: 'auto'}}>
+                <Col xs='3' style={{margin: 'auto'}}>
                     <Card.Img variant="top" style={{width: '8em', height: '8em'}} src="holder.js/100px180"/>
                 </Col>
                 <Col>
                     <Card.Body>
-                        <Card.Title>{cartItem.productName}</Card.Title>
-                        <Card.Text>{cartItem.size}</Card.Text>
-                        <Card.Text>{cartItem.unitPrice}</Card.Text>
+                        <Row>
+                            <Col>
+                                <Card.Title>{cartItem.productName}</Card.Title>
+                            </Col>
+                            <Col xs='auto'>
+                                <Form.Select size='sm' style={{width: '4em'}} defaultValue={quantity}
+                                             onChange={handleQuantity}>
+                                    {Array.from(Array(15), (_, i) => i + 1).map((quant, index) =>
+                                        <option key={index}
+                                                value={quant}>
+                                            {quant}
+                                        </option>)}
+                                </Form.Select>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Card.Text>{cartItem.size}</Card.Text>
+                            </Col>
+                            <Col xs='auto' style={{marginTop: '.2em', width: 'auto'}}>
+                                <Button variant="primary" size="sm" onClick={editCart}>Save</Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {currentSale > 0 ?
+                                    <Card.Text>${discountPrice}</Card.Text>
+                                    :
+                                    <Card.Text>${sellPrice}</Card.Text>}
+                            </Col>
+                            {currentSale > 0 &&
+                            <Col>
+                                <Card.Text style={{color: 'red'}}>
+                                   Savings ${currentSale}
+                                </Card.Text>
+                            </Col>}
+                        </Row>
                         <Card.Text>{cartItem.productDescription}</Card.Text>
-                        <Form.Select defaultValue={quantity} onChange={handleQuantity}>
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((quant, index) =>
-                                <option key={index}
-                                        value={quant}>
-                                    {quant}
-                                </option>)}
-                        </Form.Select>
-                        <Button variant="primary" size="sm" onClick={editCart}>Save</Button>
-                        <Button variant="warning" size="sm" onClick={() => handleRemoveFromCart(cartItem)}>Delete
-                            all</Button>
+                        <Row>
+                            <Col></Col>
+                            <Col xs='auto'>
+                                <Button variant="warning" size="sm" onClick={() => handleRemoveFromCart(cartItem)}>
+                                    Delete all
+                                </Button>
+                            </Col>
+                        </Row>
                     </Card.Body>
                 </Col>
             </Row>

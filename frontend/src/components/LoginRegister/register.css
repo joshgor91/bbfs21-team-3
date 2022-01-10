@@ -1,0 +1,9 @@
+
+.login-register-button{
+    display:block;
+    width:100%;
+}
+
+#logout-button{
+    margin-right: 10px;
+}

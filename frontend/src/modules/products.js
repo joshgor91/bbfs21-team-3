@@ -110,7 +110,6 @@ export function initiateGetProductById(productId) {
             if (response.status !== 200)
                 return dispatch(gettingProductFailed())
             else
-                console.log(response.data)
                 dispatch(setProduct(response.data))
         })
             .catch(error => console.log('Error in initiate get product by id', error))

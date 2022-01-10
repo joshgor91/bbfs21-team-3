@@ -2,38 +2,31 @@ import {Card, Col} from "react-bootstrap";
 import './Product.css'
 import {initiateGetProductById} from "../../modules/products";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router";
-import moment from "moment";
+import {useNavigate, useParams} from "react-router";
+import {discountPrice, sellPrice} from "../../utils/priceUtils";
 
 function Product({product}) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    let currentDate = moment(new Date()).format()
-    let currentPrice = 0
-    // console.log(product.ScheduledPrices)
 
-   // for (let prices of product.ScheduledPrices) {
-   //     // console.log(prices)
-   //     if (prices.effectiveDate <= currentDate)
-   //         currentPrice = prices.price
-   // }
-    // console.log(currentPrice)
 
-    function goToProductDetails(productId) {
+    function goToProductDetails(productId, product) {
         dispatch(initiateGetProductById(productId))
+        sellPrice(product)
+        discountPrice(product)
         setTimeout(() => {
-            navigate(`../product/${productId}`)
-        }, 100)
+            navigate(`/product/${productId}`)
+        }, 50)
     }
 
     return (
         <>
             <Col>
-            <Card className='product-card' onClick={() => goToProductDetails(product.id)} >
+            <Card className='product-card' onClick={() => goToProductDetails(product.id, product)} >
                 <Card.Img className='product-img' variant="top" src={product.picture} />
                 <Card.Body>
                     <Card.Title>{product.brand}</Card.Title>
-                    <Card.Header>{product.productName}</Card.Header>
+                    <Card.Subtitle className="mb-2 text-muted">{product.productName}</Card.Subtitle>
                     <Card.Text>{product.productDescription}</Card.Text>
                 </Card.Body>
             </Card>

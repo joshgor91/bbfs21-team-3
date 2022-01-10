@@ -94,20 +94,29 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Size</Form.Label>
                     <Form.Control type='size' placeholder='Size' id='size'/>
                     <Form.Label>Color</Form.Label>
-                    <Form.Control type='color' placeholder='Color' id='color'/>
+                    <Form.Control type='text' as='select' id='size'>
+                        <option value="white" selected>White</option>
+                        <option value="grey">Grey</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="orange">Orange</option>
+                        <option value="red">Red</option>
+                        <option value="purple">Purple</option>
+                        <option value="gold">Gold</option>
+                        <option value="silver">Silver</option>
+                    </Form.Control>
                     <Form.Label>Product Available</Form.Label>
                     <Form.Control type='date' id='productAvailable'/>
                     <Form.Label>Discontinued</Form.Label>
                     <Form.Control type='discontinued' as='select' id='discontinued'>
-                        <option value=''>Undefined</option>
                         <option value={true}>True</option>
-                        <option value={false}>False</option>
+                        <option value={false} selected>False</option>
                     </Form.Control>
                     <Form.Label>Discount Available</Form.Label>
                     <Form.Control type='discountAvailable' as='select' id='discountAvailable'>
-                        <option value=''>Undefined</option>
                         <option value={true}>True</option>
-                        <option value={false}>False</option>
+                        <option value={false} selected>False</option>
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
                     <Form.Control type='img' id='picture'/>

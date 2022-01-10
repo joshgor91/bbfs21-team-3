@@ -4,34 +4,46 @@ import {Col, Container, Row} from "react-bootstrap";
 import CartSummary from "./CartSummary";
 import {useEffect} from "react";
 import {clearReceipt} from "../../modules/order";
+import {cartSummery, discountPrice, sellPrice} from "../../utils/priceUtils";
 
 
-function Cart({cartItems, isLoggedIn}) {
-
+function Cart({cartItems, isLoggedIn, quantity}) {
     const dispatch = useDispatch()
+    const cart = JSON.parse(window.localStorage.getItem('cartItems'))
 
     useEffect(() => {
         dispatch(clearReceipt())
     }, []);
 
-    const cart = JSON.parse(window.localStorage.getItem('cartItems'))
-    console.log(cart)
     return <>
         <Container>
             <Row>
                 <Col xs={9}>
                     {isLoggedIn && cartItems.length > 0 ?
                         cartItems.map((cartItem, idx) =>
-                            <CartItems key={idx} cartItem={cartItem}/>)
-                        : !isLoggedIn && cart ?
+                            <CartItems key={idx} cartItem={cartItem}
+                                       sellPrice={sellPrice(cartItem)}
+                                       currentSale={discountPrice(cartItem).currentSale}
+                                       discountPrice={discountPrice(cartItem).discountPrice}
+                            />)
+                        : ''}
+
+                        {!isLoggedIn && cart ?
                             cart.map((cartItem, idx) =>
-                                <CartItems key={idx} cartItem={cartItem}/>)
-                            : <h2>No Cart</h2>}
+                            <CartItems key={idx} cartItem={cartItem}
+                                       sellPrice={sellPrice(cartItem)}
+                                       currentSale={discountPrice(cartItem).currentSale}
+                                       discountPrice={discountPrice(cartItem).discountPrice}
+                            />)
+                        : ''}
                 </Col>
                 <Col xs={3}>
                     {isLoggedIn ?
-                        <CartSummary cartItems={cartItems}/>
-                    : <CartSummary cartItems={cart}/>}
+                        <CartSummary cartItems={cartItems}
+                                     cartSummery={cartSummery(cartItems)}
+                        />
+                    : <CartSummary cartItems={cart}
+                                   cartSummery={cartSummery(cart)}/>}
                 </Col>
             </Row>
         </Container>
@@ -39,11 +51,10 @@ function Cart({cartItems, isLoggedIn}) {
 }
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         cartItems: state.cartReducer.cartItems,
         isLoggedIn: state.userReducer.isLoggedIn,
-        goToReceipt: state.orderReducer.goToReceipt
+        quantity: state.cartReducer.quantity
     }
 }
 

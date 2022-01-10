@@ -9,11 +9,12 @@ import {GiShoppingCart} from "react-icons/gi";
 import Checkout from "../../pages/Checkout";
 import UserPage from "../../pages/UserPage";
 import OrderComplete from "../../pages/OrderComplete";
+import ProductDetails from "../ProductsView/ProductDetails";
 
 
 
 
-function GuestRouter({cartQuantity}) {
+function GuestRouter({cartQuantity, themeToggler}) {
 
         return (
 
@@ -21,7 +22,7 @@ function GuestRouter({cartQuantity}) {
                 <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                     <>
-                        <Link to="/" id="logo" className="link-item">Better Buy</Link>
+                        <Link to="/"> <img className="logo" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></Link>
                         <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>
@@ -59,6 +60,11 @@ function GuestRouter({cartQuantity}) {
                                     </Link>
                                 </Nav.Item>
 
+                            </Nav>
+                            <Nav className='ms-auto'>
+                                <Nav.Item>
+                                    <Button onClick={themeToggler}>Switch Theme</Button>
+                                </Nav.Item>
                             </Nav>
                         </Navbar.Collapse>
                     </>

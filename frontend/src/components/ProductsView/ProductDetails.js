@@ -4,6 +4,7 @@ import {initiateAddCartItem} from "../../modules/cart";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import moment from "moment";
+import {discountPrice, sellPrice} from "../../utils/priceUtils";
 
 function ProductDetails({product}) {
     const dispatch = useDispatch()
@@ -11,13 +12,25 @@ function ProductDetails({product}) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
+    const handleCloseTimed = () => setTimeout(() => {
+        handleClose()
+    }, 2000);
     const [currentPrice, setCurrentPrice] = useState(0)
     const [salePrice, setSalePrice] = useState(0)
+    const [sellingPrice, setSellingPrice] = useState(0)
+    const [theDiscountPrice, setTheDiscountPrice] = useState(0)
+    const [currentSale, setCurrentSale] = useState(0)
+    console.log(currentSale, theDiscountPrice, sellingPrice)
+
 
     useEffect(() => {
         let now = new Date()
         let regularPrice = 0
+        setSellingPrice(sellPrice(product))
+        setTheDiscountPrice(discountPrice(product).discountPrice)
+        setCurrentSale(discountPrice(product).currentSale)
+
+
         product.scheduledPrices?.map(prices => {
             let tempDate = new Date(prices.effectiveDate)
             if (new Date(prices.effectiveDate) - now < 0) {
@@ -31,23 +44,25 @@ function ProductDetails({product}) {
         // still need logic for in between sales
         if (product.Sales?.length > 0) {
             product.Sales?.map(sale => {
-                let tempDate = new Date(sale.effectiveDate)
-                if (new Date(sale.effectiveDate) - now < 0) {
-                    setSalePrice(sale.price)
-                }}
-
-        )} else {
-                setSalePrice(regularPrice)
+                    let tempDate = new Date(sale.effectiveDate)
+                    if (new Date(sale.effectiveDate) - now < 0) {
+                        setSalePrice(sale.price)
+                    }
+                }
+            )
+        } else {
+            setSalePrice(regularPrice)
         }
-    },[])
+    }, [])
 
-    console.log(currentPrice)
+    // console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
         handleShow()
         handleCloseTimed()
         dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, salePrice))
+
     }
 
     function handleQuantity(e) {
@@ -66,10 +81,34 @@ function ProductDetails({product}) {
                     <Col>
                         <Card style={{width: '30rem', height: '30rem'}}>
                             <Card.Body>
-                                <Card.Title>{currentPrice}$</Card.Title>
-                                {salePrice !== currentPrice && <Card.Title>{salePrice}</Card.Title>}
+                                <Row>
+                                    {!currentSale > 0 ?
+                                        <Col>
+                                            <Card.Title>{sellingPrice}$</Card.Title>
+                                        </Col>
+                                        :
+                                        <Col>
+                                            <Card.Title>{theDiscountPrice}$</Card.Title>
+                                        </Col>
+                                    }
+                                </Row>
+                                <Row>
+
+                                    <Col>
+                                        {currentSale > 0 &&
+                                        <Card.Title style={{color: 'red'}}>Sale ${currentSale}!</Card.Title>}
+                                    </Col>
+                                    <Col xs='auto'>
+                                        {currentSale > 0 &&
+                                        <Card.Title style={{textDecoration: 'line-through', color: 'red'}}>
+                                            {sellingPrice}
+                                        </Card.Title>}
+                                    </Col>
+                                </Row>
+                                {/*<Card.Title>{currentPrice}$</Card.Title>*/}
+                                {/*{salePrice !== currentPrice && <Card.Title>{salePrice}</Card.Title>}*/}
                                 <Card.Title>{product.brand}</Card.Title>
-                                <Card.Header>{product.productName}</Card.Header>
+                                <Card.Subtitle>{product.productName}</Card.Subtitle>
                                 <Card.Text>{product.productDescription}</Card.Text>
                                 <Card.Text>{product.discontinued && 'Discontinued'}</Card.Text>
                                 {product.unitsInStock !== 0 ?
@@ -77,14 +116,17 @@ function ProductDetails({product}) {
                                     : <Card.Text>Out of Stock</Card.Text>}
                                 <Row>
                                     <Col>
-                                        <Button variant="primary" size="sm" onClick={() => addToCart(product)}>
+                                        <Button variant="primary"
+                                                onClick={() => addToCart(product)}
+                                        >
                                             Add to Cart
                                         </Button>
                                     </Col>
                                     <Col>
                                         <Form.Select defaultValue={quantity} onChange={handleQuantity}>
-                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((quant, index) =>
-                                                <option key={index} value={quant}>
+                                            {Array.from(Array(15), (_, i) => i + 1).map((quant, index) =>
+                                                <option key={index}
+                                                        value={quant}>
                                                     {quant}
                                                 </option>)}
                                         </Form.Select>
@@ -92,9 +134,9 @@ function ProductDetails({product}) {
                                 </Row>
                                 <Row>
                                     <Col>
-                                    <Button variant="secondary" size="sm" id="cont-shopping-btn">
-                                        <Link className="link-item" to="/">Continue Shopping?</Link>
-                                    </Button>
+                                        <Button variant="secondary" size="sm" id="cont-shopping-btn">
+                                            <Link className="link-item" to="/">Continue Shopping?</Link>
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Card.Body>

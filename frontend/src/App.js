@@ -4,21 +4,35 @@ import GuestRouter from "./components/Router/GuestRouter";
 import {connect} from "react-redux";
 import ShopkeeperRouter from "./components/Router/ShopkeeperRouter";
 import CustomerRouter from "./components/Router/CustomerRouter";
+import {ThemeProvider} from "styled-components";
+import {GlobalStyles} from "./components/Theme/GlobalStyles";
+import {lightTheme, darkTheme} from "./components/Theme/Theme"
+import {useState} from "react";
 
 function App({userIsAdmin, userIsShopkeeper, userIsCustomer, cartQuantity}) {
 
-    if (userIsAdmin) {
-        return (<AdminRouter cartQuantity={cartQuantity}/>)
+    const [theme, setTheme] = useState('light');
+    const themeToggler = () => {
+        theme === 'light' ? setTheme('dark') : setTheme('light')
     }
-    else if(userIsShopkeeper){
-        return (<ShopkeeperRouter cartQuantity={cartQuantity}/>)
-    }
-    else if(userIsCustomer){
-        return (<CustomerRouter cartQuantity={cartQuantity}/>)
-    }
-    else {
-        return (<GuestRouter cartQuantity={cartQuantity}/>)
-    }
+
+
+
+    return (
+        <>
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+                <>
+                    <GlobalStyles/>
+            {userIsAdmin && <AdminRouter cartQuantity={cartQuantity} themeToggler={themeToggler} />}
+            {userIsShopkeeper && <ShopkeeperRouter cartQuantity={cartQuantity} themeToggler={themeToggler} />}
+            {userIsCustomer && <CustomerRouter cartQuantity={cartQuantity} themeToggler={themeToggler} />}
+            {(!userIsCustomer && !userIsShopkeeper && !userIsAdmin) && <GuestRouter cartQuantity={cartQuantity}  themeToggler={themeToggler}/>}
+                    </>
+            </ThemeProvider>
+        </>
+
+
+    )
 }
 
 function mapStateToProps(state) {
