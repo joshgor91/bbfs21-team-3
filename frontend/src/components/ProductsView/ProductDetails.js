@@ -95,33 +95,36 @@ function ProductDetails({product}) {
                                 <Card.Text>{product.productDescription}</Card.Text>
                                 <Card.Text>{product.discontinued && 'Discontinued'}</Card.Text>
                                 {product.unitsInStock !== 0 ?
-                                    <Card.Text>Available</Card.Text>
+                                    <>
+                                        <Card.Text>Available</Card.Text>
+                                    <Row>
+                                        <Col>
+                                            <Button variant="primary"
+                                                    onClick={() => addToCart(product)}
+                                            >
+                                                Add to Cart
+                                            </Button>
+                                        </Col>
+                                        <Col>
+                                            <Form.Select defaultValue={quantity} onChange={handleQuantity}>
+                                                {Array.from(Array(product.unitsInStock), (_, i) => i + 1).map((quant, index) =>
+                                                    <option key={index}
+                                                            value={quant}>
+                                                        {quant}
+                                                    </option>)}
+                                            </Form.Select>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                    <Col>
+                                    <Button variant="secondary" size="sm" id="cont-shopping-btn">
+                                    <Link className="link-item" to="/">Continue Shopping?</Link>
+                                    </Button>
+                                    </Col>
+                                    </Row>
+                                    </>
                                     : <Card.Text>Out of Stock</Card.Text>}
-                                <Row>
-                                    <Col>
-                                        <Button variant="primary"
-                                                onClick={() => addToCart(product)}
-                                        >
-                                            Add to Cart
-                                        </Button>
-                                    </Col>
-                                    <Col>
-                                        <Form.Select defaultValue={quantity} onChange={handleQuantity}>
-                                            {Array.from(Array(15), (_, i) => i + 1).map((quant, index) =>
-                                                <option key={index}
-                                                        value={quant}>
-                                                    {quant}
-                                                </option>)}
-                                        </Form.Select>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <Button variant="secondary" size="sm" id="cont-shopping-btn">
-                                            <Link className="link-item" to="/">Continue Shopping?</Link>
-                                        </Button>
-                                    </Col>
-                                </Row>
+
                             </Card.Body>
                         </Card>
                         {show && <Alert variant="success" onClick={handleClose}> Added to Cart</Alert>}

@@ -327,12 +327,19 @@ export function initiateLogin(credentials) {
             },
             body: JSON.stringify(credentials)
         }).then(response => {
-            if (!response.ok)
+            if (!response.ok) {
+                console.log("hits failure")
                 return dispatch(loginFailure())
+            }
             response.json().then(user => {
+
+                // if(user===null){
+                //     return dispatch(loginFailure())
+                // }
                 getUserCartRequest(user.id)
                     .then(response => {
-                        console.log(response)
+                        console.log(response, "response")
+
                         if (response.status === 200)
                             console.log(response.data)
                         dispatch(setUserCart(response.data))
