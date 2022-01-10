@@ -20,47 +20,31 @@ function ProductDetails({product}) {
     const [sellingPrice, setSellingPrice] = useState(0)
     const [theDiscountPrice, setTheDiscountPrice] = useState(0)
     const [currentSale, setCurrentSale] = useState(0)
-
+    const [cartItemSoldPrice, setCartItemSoldPrice] = useState(0)
+    console.log(theDiscountPrice, 'theDiscountPrice', currentSale, 'currentSale', sellingPrice, 'sellingPrice')
 
     useEffect(() => {
-        let now = new Date()
-        let regularPrice = 0
-        setSellingPrice(sellPrice(product))
         setTheDiscountPrice(discountPrice(product).discountPrice)
         setCurrentSale(discountPrice(product).currentSale)
-
-
-        product.scheduledPrices?.map(prices => {
-            let tempDate = new Date(prices.effectiveDate)
-            if (new Date(prices.effectiveDate) - now < 0) {
-                regularPrice = prices.price
-                setCurrentPrice(prices.price)
-            }
-        })
-
-        // sales is currently capitalized in redux
-        // if there isn't any sales set, saleprice is regular price
-        // still need logic for in between sales
-        if (product.Sales?.length > 0) {
-            product.Sales?.map(sale => {
-                    let tempDate = new Date(sale.effectiveDate)
-                    if (new Date(sale.effectiveDate) - now < 0) {
-                        setSalePrice(sale.price)
-                    }
-                }
-            )
-        } else {
-            setSalePrice(regularPrice)
-        }
+        setSellingPrice(sellPrice(product))
     }, [])
+
+    useEffect(() => {
+        if (currentSale === 0) {
+            setCartItemSoldPrice(sellingPrice)
+        } else {
+            setCartItemSoldPrice(theDiscountPrice)
+        }
+    }, [addToCart])
 
     // console.log(currentPrice)
 
 
     function addToCart(productToAdd) {
+
         handleShow()
         handleCloseTimed()
-        dispatch(initiateAddCartItem(productToAdd, quantity, currentPrice, salePrice))
+        dispatch(initiateAddCartItem(productToAdd, quantity, sellingPrice, cartItemSoldPrice))
 
     }
 

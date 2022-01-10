@@ -10,8 +10,6 @@ function CartSummary({cartItems, cartSummery}) {
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
 
-
-
     return <>
         <Card className="d-flex flex-row flex-wrap">
             <Card.Body>
@@ -60,7 +58,9 @@ function CartSummary({cartItems, cartSummery}) {
                     <hr/>
                     <Button variant="warning">
                         <Link id="checkout-button" to="checkout/">Checkout </Link>
-                    </Button></Row>
+                    </Button>
+                </Row>
+                <hr/>
                 <div>Apply today, shop today.</div>
                 <Image
                     style={{width: 85, height: 50, marginLeft: "5px"}}

@@ -205,7 +205,6 @@ export function initiateGuestOrder(email, total) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(filteredCartStorage)
-
         }).then(response => {
             if (!response.ok)
                 return dispatch(addOrderFailed())
