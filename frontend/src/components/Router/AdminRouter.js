@@ -14,7 +14,7 @@ import Checkout from "../../pages/Checkout";
 import OrderComplete from "../../pages/OrderComplete";
 
 
-function AdminRouter({cartquantity}) {
+function AdminRouter({cartQuantity, themeToggler}) {
 
     return (
 
@@ -22,7 +22,8 @@ function AdminRouter({cartquantity}) {
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
-                    <Link to="/" id="logo" className="link-item">Better Buy</Link>
+
+                    <Link to="/"> <img className="logo" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>
@@ -58,11 +59,14 @@ function AdminRouter({cartquantity}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartquantity}</Badge>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
                                 </Link>
                             </Nav.Item>
                         </Nav>
                         <Nav className='ms-auto'>
+                            <Nav.Item>
+                                <Button onClick={themeToggler}>Switch Theme</Button>
+                            </Nav.Item>
                             <Nav.Item>
                                 <LogoutBtn/>
                             </Nav.Item>

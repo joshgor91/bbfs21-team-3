@@ -2,13 +2,11 @@ package net.yorksolutions.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Embeddable
 public class OrderDetails {
     @Id
     @JsonProperty
@@ -17,6 +15,9 @@ public class OrderDetails {
 
     @JsonProperty
     public Long userId;
+
+    @JsonProperty
+    public String email;
 
     @JsonProperty
     public Float total;
@@ -29,6 +30,12 @@ public class OrderDetails {
 
     public OrderDetails(Long userid, Float total) {
         this.userId = userid;
+        this.total = total;
+        this.dateCreated = LocalDateTime.now();
+    }
+
+    public OrderDetails(String email, Float total) {
+        this.email = email;
         this.total = total;
         this.dateCreated = LocalDateTime.now();
     }

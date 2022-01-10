@@ -47,22 +47,21 @@ function ShopkeeperForm({products, initiateGetProducts, initiateGetCategories, d
     return <>
         <Container fluid>
             <Row>
-                <Col>
-                    <ShopkeeperNewProduct
-                        showNewProduct={show}
-                        setShowNewProduct={setShow}
-                    />
-                    <ShopkeeperCreateCategory
-                        showCreateCategory={showCreateCategory}
-                        setShowCreateCategory={setShowCreateCategory}
-                        isEditing={isEditing}
-                        setIsEditing={setIsEditing}
-                        categoryId={categoryId}
-                    />
-                    <Dropdown as={ButtonGroup}>
-                        <Button variant='primary'>Shopkeeper Ish</Button>
-
-                        <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
+            <Col>
+                <ShopkeeperNewProduct
+                    showNewProduct={show}
+                    setShowNewProduct={setShow}
+                />
+                <ShopkeeperCreateCategory
+                    showCreateCategory={showCreateCategory}
+                    setShowCreateCategory={setShowCreateCategory}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    categoryId={categoryId}
+                />
+                <Dropdown as={ButtonGroup}>
+                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'> Shopkeeper Ish
+                    </Dropdown.Toggle>
 
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>

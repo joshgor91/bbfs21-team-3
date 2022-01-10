@@ -13,14 +13,15 @@ import OrderComplete from "../../pages/OrderComplete";
 
 
 
-function CustomerRouter({cartquantity}) {
+function CustomerRouter({cartQuantity, themeToggler}) {
     return (
 
         <Router>
             <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                 <>
-                    <Link to="/" id="logo" className="link-item">Better Buy</Link>
+
+                    <Link to="/"> <img className="logo" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>
@@ -50,8 +51,11 @@ function CustomerRouter({cartquantity}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartquantity}</Badge>
+                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
                                 </Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Button onClick={themeToggler}>Switch Theme</Button>
                             </Nav.Item>
                             <Nav.Item>
                                 <LogoutBtn/>

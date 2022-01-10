@@ -44,11 +44,11 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
                     <td >{product.productAvailable}</td>
-                    <td><Button onClick={() => handleViewDetails(product)}>Details</Button></td>
+                    <td><Button variant="secondary" onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
-                            <Button onClick={() => editProduct(product)}>edit</Button>
-                            <Button onClick={() => initiateDeleteProduct(product.id)}>Delete</Button>
+                            <Button variant="info" onClick={() => editProduct(product)}>Edit</Button>
+                            <Button variant="danger" onClick={() => initiateDeleteProduct(product.id)}>Delete</Button>
                         </Stack>
                     </td>
                 </tr>

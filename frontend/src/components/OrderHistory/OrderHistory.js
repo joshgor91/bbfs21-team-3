@@ -1,8 +1,9 @@
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {Accordion, Button, Card} from "react-bootstrap";
+import {Accordion, Button, Card, Row} from "react-bootstrap";
 import {initiateGetOrderHistory} from "../../modules/order";
 import {useEffect} from "react";
+import moment from "moment";
 
 
 function OrderHistory({initiateGetOrderHistory, orderlist}) {
@@ -21,20 +22,22 @@ function OrderHistory({initiateGetOrderHistory, orderlist}) {
             <Accordion>
                 <Accordion.Item eventKey={idx}>
                     <Accordion.Header>
-                        {/*{order[0][0].productName}*/}
+                        {moment(order.orderDetails.dateCreated).format("MMM Do YYYY")}
                     </Accordion.Header>
-                    <Accordion.Body>
-                        {order.map((product, idx) => {
+                    <Accordion.Body className="d-flex flex-row flex-wrap" >
+                        {order.orderItems.map((product, idx) => {
                             return (
                         <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src="holder.js/100px180" />
+                            <Card.Img variant="top" src={product.picture} />
                             <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
+                                <Card.Title>{product.productName}</Card.Title>
                                 <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
+                                    {product.productDescription}
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Card.Text>
+                                    {product.salePrice}
+                                </Card.Text>
+
                             </Card.Body>
                         </Card>
                             )

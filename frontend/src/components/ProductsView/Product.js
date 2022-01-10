@@ -12,12 +12,11 @@ function Product({product}) {
     let currentPrice = 0
     // console.log(product.ScheduledPrices)
 
-    console.log(product)
-   for (let prices of product.scheduledPrices) {
-       // console.log(prices)
-       if (prices.effectiveDate <= currentDate)
-           currentPrice = prices.price
-   }
+   // for (let prices of product.ScheduledPrices) {
+   //     // console.log(prices)
+   //     if (prices.effectiveDate <= currentDate)
+   //         currentPrice = prices.price
+   // }
     // console.log(currentPrice)
 
     function goToProductDetails(productId) {
@@ -30,11 +29,11 @@ function Product({product}) {
     return (
         <>
             <Col>
-            <Card className='product-card' >
-                <Card.Img className='product-img' variant="top" src="holder.js/100px180" />
+            <Card className='product-card' onClick={() => goToProductDetails(product.id)} >
+                <Card.Img className='product-img' variant="top" src={product.picture} />
                 <Card.Body>
                     <Card.Title>{product.brand}</Card.Title>
-                    <Card.Header onClick={() => goToProductDetails(product.id)}>{product.productName}</Card.Header>
+                    <Card.Subtitle className="mb-2 text-muted">{product.productName}</Card.Subtitle>
                     <Card.Text>{product.productDescription}</Card.Text>
                 </Card.Body>
             </Card>
