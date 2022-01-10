@@ -37,6 +37,8 @@ export function cartSummery(cart) {
     let discount = 0
     let totalSavings = 0
     let total = 0
+    let couponAmount = 0
+
 
     cart?.forEach(cartItem => {
         for (let item of cartItem.scheduledPrices) {
