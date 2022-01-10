@@ -10,7 +10,6 @@ import {Badge} from "react-bootstrap";
 const Home = ({loggedInUser, isLoggedIn}) => {
     const dispatch = useDispatch()
 
-    console.log(loggedInUser)
     useEffect(() => {
         dispatch(initiateGetAllProducts())
         dispatch(unsetProduct())
