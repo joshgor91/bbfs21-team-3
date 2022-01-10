@@ -8,6 +8,7 @@ import net.yorksolutions.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -37,9 +38,6 @@ public class CouponController {
     @CrossOrigin
     @PutMapping("edit")
     String editCoupon(@RequestBody Coupon coupon) {
-        var response = couponRepo.findById(coupon.couponCode);
-        if (response.isPresent() && !response.get().couponCode.equals(coupon.couponCode))
-            return "Sorry, this coupon code already exists.";
         couponRepo.save(coupon);
         return "success";
     }
@@ -84,6 +82,13 @@ public class CouponController {
 
         if (numOfOrders >= coupon.useLimit)
             return "Sorry this coupon has reached its use limit.";
+
+        if (coupon.startDate != null && coupon.endDate != null) {
+            var currentDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
+            if (currentDate.before(coupon.startDate) || currentDate.after(coupon.endDate))
+                return "Sorry, this coupon isn't currently eligible for redemption.";
+        }
+
         return "success";
     }
 }
