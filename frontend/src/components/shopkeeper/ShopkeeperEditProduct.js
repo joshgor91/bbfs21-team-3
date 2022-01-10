@@ -142,10 +142,11 @@ function ShopkeeperEditProduct({
 
     function handleRemoveSalesPrice() {
         setScheduledSalesArray(scheduledSalesArray.filter(scheduledSales => {
-            const newDate = new Date(scheduledSales.effectiveDate)
-            const newDate2 = new Date(newSales.effectiveDate)
-
-            return newDate.getTime() !== newDate2.getTime()
+            const startDate = new Date(scheduledSales.saleStartDate)
+            const endDate = new Date(scheduledSales.saleEndDate)
+            const startDate2 = new Date(newSales.saleStartDate)
+            const endDate2 = new Date(newSales.saleEndDate)
+            return startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime()
         }))
     }
 
