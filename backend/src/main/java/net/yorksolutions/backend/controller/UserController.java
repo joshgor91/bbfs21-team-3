@@ -10,6 +10,7 @@ import net.yorksolutions.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,7 +77,9 @@ public class UserController {
 
             return foundUser;
         } else {
-            return null;
+            HashMap<String, String> res = new HashMap<>();
+            res.put("message", "user does not exist");
+            return res;
         }
     }
 

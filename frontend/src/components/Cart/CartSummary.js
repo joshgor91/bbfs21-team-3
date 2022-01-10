@@ -1,14 +1,22 @@
 import {Button, Card, Col, Form, Image, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {useEffect} from "react";
-import {clearReceipt} from "../../modules/order";
+import {useEffect, useState} from "react";
+import {clearReceipt, initiateValidateCoupon} from "../../modules/order";
 
 
 function CartSummary({cartItems, cartSummery}) {
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
+
+    const dispatch = useDispatch()
+
+    const [coupon, setCoupon] = useState()
+
+    function validateCoupon(){
+        dispatch(initiateValidateCoupon(coupon))
+    }
 
     return <>
         <Card className="d-flex flex-row flex-wrap">
@@ -45,11 +53,9 @@ function CartSummary({cartItems, cartSummery}) {
                         <Form.Group className="mb-3">
                             <Form.Label>Coupon Code</Form.Label>
                             <Row>
-                                <Form.Control type="text" placeholder="Enter coupon code"
-                                    // onChange={event => setCoupon(event.target.value)}
-                                />
+                                <Form.Control type="text" value={coupon} placeholder="Enter coupon code" onChange={event => setCoupon(event.target.value)}/>
                                 <hr/>
-                                <Button className="login-register-button">
+                                <Button onClick={validateCoupon} className="login-register-button">
                                     Apply
                                 </Button>
                             </Row>

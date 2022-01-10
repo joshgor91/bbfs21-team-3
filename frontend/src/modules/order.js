@@ -6,6 +6,7 @@ const GETTING_ORDER_HISTORY = 'GETTING_ORDER_HISTORY'
 const GET_ORDER_HISTORY_FAILED = 'GET_ORDER_HISTORY_FAILED'
 const GET_ORDER_HISTORY_SUCCESS = 'GET_ORDER_HISTORY_SUCCESS'
 const GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS = 'GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS'
+const SETTING_COUPON = 'SETTING_COUPON'
 
 
 const initialState = {
@@ -79,6 +80,12 @@ export default function reducer(state = initialState, action) {
                 errorMessage: ''
             }
 
+        // case SETTING_COUPON:
+        //     return {
+        //         ...state,
+        //         coupon:
+        //     }
+
         default:
             return state
     }
@@ -105,13 +112,17 @@ function gettingOrderHistory() {
 }
 
 function getOrderHistoryFailed(errorMessage) {
-    return {type: GET_ORDER_HISTORY_FAILED,
-    payload:errorMessage}
+    return {
+        type: GET_ORDER_HISTORY_FAILED,
+        payload: errorMessage
+    }
 }
 
 function getOrderHistorySuccess(orders) {
-    return {type: GET_ORDER_HISTORY_SUCCESS,
-        payload:orders}
+    return {
+        type: GET_ORDER_HISTORY_SUCCESS,
+        payload: orders
+    }
 }
 
 function getShopkeeperOrderHistorySuccess(orders) {
@@ -119,6 +130,10 @@ function getShopkeeperOrderHistorySuccess(orders) {
         type: GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS,
         payload: orders
     }
+}
+
+export function setCoupon() {
+    return {type: SETTING_COUPON}
 }
 
 // Side Effects
@@ -136,10 +151,10 @@ export function initiateAddOrder() {
             if (!response.ok)
                 return dispatch(addOrderFailed())
             response.text().then(text => {
-                if(text==="success"){
+                if (text === "success") {
                     console.log("order placed")
                     dispatch(goToReceipt())
-                }else{
+                } else {
                     dispatch(addOrderFailed())
                 }
             })
@@ -187,10 +202,10 @@ export function initiateGuestOrder(email, total) {
     console.log(cartStorage)
     const filteredCartStorage = cartStorage.map(cartItem => {
         return {
-                    "productId": cartItem.id,
-                    "quantity": cartItem.quantity,
-                    "regularPrice":parseFloat(cartItem.regularPrice),
-                    "salePrice":parseFloat(cartItem.salePrice)
+            "productId": cartItem.id,
+            "quantity": cartItem.quantity,
+            "regularPrice": parseFloat(cartItem.regularPrice),
+            "salePrice": parseFloat(cartItem.salePrice)
         }
     })
     console.log(filteredCartStorage)
@@ -201,7 +216,7 @@ export function initiateGuestOrder(email, total) {
             method: "POST",
             headers: {
                 'email': email,
-                'total':total,
+                'total': total,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(filteredCartStorage)
@@ -209,12 +224,36 @@ export function initiateGuestOrder(email, total) {
             if (!response.ok)
                 return dispatch(addOrderFailed())
             response.text().then(text => {
-                if(text==="success"){
+                if (text === "success") {
                     console.log("order placed")
                     dispatch(goToReceipt())
                     window.localStorage.clear()
-                }else{
+                } else {
                     dispatch(addOrderFailed())
+                }
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateValidateCoupon(coupon) {
+    return function validateCouponSideEffect(dispatch, getState) {
+        const userId = getState().userReducer.loggedInUser.id
+        fetch("http://localhost:8080/api/coupon/validateCoupon", {
+            method: "GET",
+            headers: {
+                'couponCode': coupon,
+                'userId': userId
+            },
+        }).then(response => {
+            if (!response.ok)
+                return dispatch(getOrderHistoryFailed("Unable to get coupon."))
+            response.json().then(coupon => {
+                console.log(coupon)
+                if (coupon.message === "success") {
+                 return coupon.couponDiscount
+                } else {
+                    console.log(coupon.message)
                 }
             })
         }).catch(error => console.log(error))

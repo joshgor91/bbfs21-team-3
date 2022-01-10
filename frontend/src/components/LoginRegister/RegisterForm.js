@@ -15,6 +15,12 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
     const [fname, setFName] = useState('')
     const [lname, setLName] = useState('')
     const [password, setPassword] = useState('')
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleCloseTimed = () => setTimeout(() => {
+        handleClose()
+    }, 1000);
 
 
     function handleSubmitRegister(e) {
@@ -26,6 +32,11 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
             email: email,
             password: password
         })
+
+        if(registerErrorOccurred) {
+            handleShow()
+            handleCloseTimed()
+        }
     }
 
 
@@ -66,8 +77,8 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
 
 
                     </Form>
-                {registerErrorOccurred &&
-                <Alert variant="warning"> Register error occurred </Alert>
+                {show &&
+                <Alert variant="danger"> Register error occurred </Alert>
                 }
                 {addUserSuccess &&
                 <Alert variant="success"> You are registered! </Alert>
