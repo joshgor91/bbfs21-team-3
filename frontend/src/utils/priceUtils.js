@@ -5,7 +5,7 @@ let saleAndPrice = 0
 
 
 export function sellPrice(product) {
-    product.scheduledPrices.map(prices => {
+    product.scheduledPrices?.map(prices => {
         if (new Date(prices.effectiveDate) - now < 0) {
             return currentPrice = prices.price
         }
@@ -18,7 +18,7 @@ export function discountPrice(product) {
         currentSale = 0
         saleAndPrice = 0
     } else {
-        product.Sales.map(sales => {
+        product.Sales?.map(sales => {
             if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0) {
                 currentSale = Math.round(currentPrice) * sales.discount
                 return saleAndPrice = currentPrice - currentSale
@@ -47,28 +47,28 @@ export function cartSummery(cart) {
         }
     })
 
-    cart.forEach(cartItem => {
-            for (let item of cartItem.Sales) {
-                if (new Date(item.saleStartDate) - now < 0 && new Date(item.saleEndDate) - now > 0) {
-                    discount = item.discount
-                    // console.log(cartItem.id, discount)
-                }
-                for (let itemPrice of cartItem.scheduledPrices) {
-                    console.log(itemPrice)
-                    if (new Date(itemPrice.effectiveDate) - now < 0) {
-                        console.log(itemPrice.price)
-                        salePrice = itemPrice.price
-                        discountPrice = Math.round(salePrice) * discount
-                        console.log(discount)
-                        console.log(discountPrice)
-                        return totalSavings += discountPrice * cartItem.quantity
-                    }
-                }
-
+    cart.map(cartItem => {
+        for (let item of cartItem.Sales) {
+            if (new Date(item.saleStartDate) - now < 0 && new Date(item.saleEndDate) - now > 0) {
+                discount = item.discount
+                // console.log(cartItem.id, discount)
             }
-    })
-        console.log(totalSavings)
-        return {
-            originalPrice: originalPrice
         }
+        for (let itemPrice of cartItem.scheduledPrices) {
+            console.log(itemPrice)
+            if (new Date(itemPrice.effectiveDate) - now < 0) {
+                // console.log(itemPrice.price)
+                salePrice = itemPrice.price
+                discountPrice = Math.round(salePrice) * discount
+            }
+        }
+        totalSavings += discountPrice * cartItem.quantity
+    })
+
+    total = originalPrice - totalSavings
+    return {
+        originalPrice: originalPrice,
+        totalSavings: totalSavings,
+        total: total
     }
+}
