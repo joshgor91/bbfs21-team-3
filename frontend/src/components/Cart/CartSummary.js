@@ -12,8 +12,6 @@ function CartSummary({cartItems, cartSummery}) {
     let total = cartSummery.total
 
 
-
-
     return <>
         <Card>
             <Card.Body>
@@ -43,18 +41,21 @@ function CartSummary({cartItems, cartSummery}) {
                     </Col>
                 </Row>
                 <Row>
-
-                <Button variant="warning">
-                    <Link id="checkout-button" to="checkout/">Checkout </Link>
-                </Button></Row>
+                    <Col></Col>
+                    <Col xs='auto'>
+                        <Button size='sm' variant="warning">
+                            <Link id="checkout-button" to="checkout/">Checkout </Link>
+                        </Button>
+                    </Col>
+                </Row>
                 <hr/>
                 <div>Apply today, shop today.</div>
                 <Image
-                    style={{width: 85, height: 50, marginLeft:"5px"}}
+                    style={{width: 85, height: 50, marginLeft: "5px"}}
                     alt="10% back in rewards on first day of purchases for new My Better Buy® Credit Card members"
                     src="https://www.bestbuy.com/~assets/bby/_com/MBBCC_MBBVC_2018_RGB-947585d1258e6806d8eeb072b8d2ad6a.png"/>
                 <span id="span" to="text">
-                    <strong >10% back in rewards </strong>
+                    <strong>10% back in rewards </strong>
                     on first day of purchases for new My Better Buy® Credit Card members
                 </span>
             </Card.Body>

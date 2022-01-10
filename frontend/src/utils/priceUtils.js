@@ -52,20 +52,26 @@ export function cartSummery(cart) {
         for (let item of cartItem.Sales) {
             if (new Date(item.saleStartDate) - now < 0 && new Date(item.saleEndDate) - now > 0) {
                 discount = item.discount
-                // console.log(cartItem.id, discount)
+                console.log(discount)
             }
-        }
-        for (let itemPrice of cartItem.scheduledPrices) {
-            // console.log(itemPrice)
-            if (new Date(itemPrice.effectiveDate) - now < 0) {
-                // console.log(itemPrice.price)
-                salePrice = itemPrice.price
-                discountPrice = Math.round(salePrice) * discount
+            for (let itemPrice of cartItem.scheduledPrices) {
+                console.log(itemPrice)
+                if (new Date(itemPrice.effectiveDate) - now < 0) {
+                    // console.log(itemPrice.price)
+                    salePrice = itemPrice.price
+                }
             }
+                discountPrice += Math.round(salePrice) * discount
         }
-        totalSavings += discountPrice * cartItem.quantity
+
+        console.log('salePrice', salePrice)
+        console.log('discountPrice', discountPrice)
+        totalSavings = discountPrice
+        console.log('totalsavings', totalSavings)
     })
+    console.log(originalPrice)
     total = originalPrice - totalSavings
+    console.log('total', total)
     return {
         originalPrice: originalPrice,
         totalSavings: totalSavings,
