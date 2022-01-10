@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/order")
@@ -31,6 +33,10 @@ public class OrderController {
 
     @Autowired
     ProductRepository productRepo;
+
+    @Autowired
+    CouponRepository couponRepo;
+
 
     class OrderItemsOutput extends Product{
         @JsonProperty
@@ -64,13 +70,13 @@ public class OrderController {
 
     @CrossOrigin
     @PostMapping("/add")
-    String createOrder (@RequestHeader Long cartId) {
+    String createOrder (@RequestHeader Long cartId, @RequestHeader Optional<String> couponCode) {
         var cart = cartRepo.findById(cartId).get();
         var userId = cart.userId;
         var total = cart.totalCost;
         var cartItems= cartItemRepo.findAllByCartId(cartId).orElseThrow();
         var order = new OrderDetails(userId, total);
-        var orderStatus = createOrder(cartItems, order);
+        var orderStatus = createOrder(cartItems, order, couponCode);
         if (!orderStatus.equals("success"))
             return orderStatus;
         cartItemRepo.deleteAllByCartId(cartId);
@@ -84,9 +90,10 @@ public class OrderController {
 
     @CrossOrigin
     @PostMapping("/addGuestOrder")
-    String createGuestOrder (@RequestBody List<CartItem> cartItems, @RequestHeader String email, @RequestHeader Float total) {
+    String createGuestOrder (@RequestBody List<CartItem> cartItems, @RequestHeader String email,
+                             @RequestHeader Float total, @RequestHeader Optional<String> couponCode) {
         var order = new OrderDetails(email, total);
-        var orderStatus = createOrder(cartItems, order);
+        var orderStatus = createOrder(cartItems, order, couponCode);
         if (!orderStatus.equals("success"))
             return orderStatus;
         return "success";
@@ -179,7 +186,7 @@ public class OrderController {
         return "success";
     }*/
 
-    String createOrder(List<CartItem> cartItems, OrderDetails order) {
+    String createOrder(List<CartItem> cartItems, OrderDetails order, Optional<String> couponCode) {
         orderDetailsRepo.save(order);
         var orderItems = new ArrayList<OrderItem>();
         var updatedProducts = new ArrayList<Product>();
@@ -205,6 +212,12 @@ public class OrderController {
         }
         productRepo.saveAll(updatedProducts);
         orderItemsRepo.saveAll(orderItems);
+
+        if (couponCode.isPresent()) {
+            var coupon = couponRepo.findById(couponCode.get()).get();
+            coupon.orders.add(order);
+            couponRepo.save(coupon);
+        }
 
         return "success";
     }
