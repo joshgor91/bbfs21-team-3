@@ -51,7 +51,6 @@ function Cart({cartItems, isLoggedIn, quantity}) {
 }
 
 function mapStateToProps(state) {
-    // console.log(state)
     return {
         cartItems: state.cartReducer.cartItems,
         isLoggedIn: state.userReducer.isLoggedIn,

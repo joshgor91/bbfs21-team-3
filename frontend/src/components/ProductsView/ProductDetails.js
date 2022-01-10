@@ -12,7 +12,9 @@ function ProductDetails({product}) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const handleCloseTimed = () => setTimeout(() => {handleClose()}, 2000);
+    const handleCloseTimed = () => setTimeout(() => {
+        handleClose()
+    }, 2000);
     const [currentPrice, setCurrentPrice] = useState(0)
     const [salePrice, setSalePrice] = useState(0)
     const [sellingPrice, setSellingPrice] = useState(0)
@@ -20,12 +22,14 @@ function ProductDetails({product}) {
     const [currentSale, setCurrentSale] = useState(0)
     console.log(currentSale, theDiscountPrice, sellingPrice)
 
+
     useEffect(() => {
         let now = new Date()
         let regularPrice = 0
         setSellingPrice(sellPrice(product))
         setTheDiscountPrice(discountPrice(product).discountPrice)
         setCurrentSale(discountPrice(product).currentSale)
+
 
         product.scheduledPrices?.map(prices => {
             let tempDate = new Date(prices.effectiveDate)
@@ -40,15 +44,16 @@ function ProductDetails({product}) {
         // still need logic for in between sales
         if (product.Sales?.length > 0) {
             product.Sales?.map(sale => {
-                let tempDate = new Date(sale.effectiveDate)
-                if (new Date(sale.effectiveDate) - now < 0) {
-                    setSalePrice(sale.price)
-                }}
-
-        )} else {
-                setSalePrice(regularPrice)
+                    let tempDate = new Date(sale.effectiveDate)
+                    if (new Date(sale.effectiveDate) - now < 0) {
+                        setSalePrice(sale.price)
+                    }
+                }
+            )
+        } else {
+            setSalePrice(regularPrice)
         }
-    },[])
+    }, [])
 
     // console.log(currentPrice)
 
@@ -129,9 +134,9 @@ function ProductDetails({product}) {
                                 </Row>
                                 <Row>
                                     <Col>
-                                    <Button variant="secondary" size="sm" id="cont-shopping-btn">
-                                        <Link className="link-item" to="/">Continue Shopping?</Link>
-                                    </Button>
+                                        <Button variant="secondary" size="sm" id="cont-shopping-btn">
+                                            <Link className="link-item" to="/">Continue Shopping?</Link>
+                                        </Button>
                                     </Col>
                                 </Row>
                             </Card.Body>

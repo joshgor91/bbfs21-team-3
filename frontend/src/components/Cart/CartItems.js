@@ -3,10 +3,9 @@ import {initiateDeleteCartItem, initiateEditCart} from "../../modules/cart";
 import {connect, useDispatch} from "react-redux";
 import {useState} from "react";
 
-function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}) {
+function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, sellPrice}) {
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(cartItem.quantity)
-
     function handleQuantity(e) {
         setQuantity(Number(e.target.value))
     }
@@ -68,9 +67,9 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, salePrice}
                                 {currentSale > 0 ?
                                     <Card.Text>${discountPrice}</Card.Text>
                                     :
-                                    <Card.Text>${salePrice}</Card.Text>}
+                                    <Card.Text>${sellPrice}</Card.Text>}
                             </Col>
-                            {currentSale &&
+                            {currentSale > 0 &&
                             <Col>
                                 <Card.Text style={{color: 'red'}}>
                                    Savings ${currentSale}
