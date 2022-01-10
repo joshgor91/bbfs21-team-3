@@ -47,22 +47,6 @@ function ShopkeeperOrderDetails({order, showOrderDetails, setShowOrderDetails}) 
                         {order.orderDetails.email}
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        Customer Address:
-                    </Col>
-                    <Col>
-                        {/*Need to include to orderDetails*/}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        Order total:
-                    </Col>
-                    <Col>
-                        {/*Currently returning as 0*/}
-                    </Col>
-                </Row>
             </Modal.Body>
         </Modal>
     )
