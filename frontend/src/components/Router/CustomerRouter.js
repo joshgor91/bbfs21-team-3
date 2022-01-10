@@ -51,7 +51,7 @@ function CustomerRouter({cartQuantity, themeToggler}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
-                                    <Badge pill bg="secondary">{cartQuantity}</Badge>
+                                    <Badge pill bg="warning">{cartQuantity}</Badge>
                                 </Link>
                             </Nav.Item>
                             <Nav.Item>

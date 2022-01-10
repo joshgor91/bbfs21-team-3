@@ -1,9 +1,11 @@
-import {Card, Col} from "react-bootstrap";
+import {Card, Col, Container, Image, Row} from "react-bootstrap";
 import './Product.css'
 import {initiateGetProductById} from "../../modules/products";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
 import moment from "moment";
+
+
 
 function Product({product}) {
     const dispatch = useDispatch()

@@ -73,9 +73,21 @@
 }
 
 #checkout-button{
+    color:black;
+    text-decoration: none;
+    font-style: italic;
+}
+#paypal-checkout-button{
     color:white;
     text-decoration: none;
+    font-style: italic;
 }
+#span{
+    font-style: italic;
+    font-size: smaller;
+    margin-left:5%;
+}
+
 #my-account-link{
     text-decoration: none;
     color: white;
