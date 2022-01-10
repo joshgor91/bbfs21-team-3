@@ -14,9 +14,7 @@ function ProductDetails({product}) {
     const handleClose = () => setShow(false);
     const handleCloseTimed = () => setTimeout(() => {
         handleClose()
-    }, 2000);
-    const [currentPrice, setCurrentPrice] = useState(0)
-    const [salePrice, setSalePrice] = useState(0)
+    }, 1000);
     const [sellingPrice, setSellingPrice] = useState(0)
     const [theDiscountPrice, setTheDiscountPrice] = useState(0)
     const [currentSale, setCurrentSale] = useState(0)
@@ -88,8 +86,6 @@ function ProductDetails({product}) {
                                         </Card.Title>}
                                     </Col>
                                 </Row>
-                                {/*<Card.Title>{currentPrice}$</Card.Title>*/}
-                                {/*{salePrice !== currentPrice && <Card.Title>{salePrice}</Card.Title>}*/}
                                 <Card.Title>{product.brand}</Card.Title>
                                 <Card.Subtitle>{product.productName}</Card.Subtitle>
                                 <Card.Text>{product.productDescription}</Card.Text>
