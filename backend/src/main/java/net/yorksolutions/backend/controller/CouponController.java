@@ -38,6 +38,7 @@ public class CouponController {
     @CrossOrigin
     @PutMapping("edit")
     String editCoupon(@RequestBody Coupon coupon) {
+        couponRepo.findById(coupon.couponCode).orElseThrow();
         couponRepo.save(coupon);
         return "success";
     }
