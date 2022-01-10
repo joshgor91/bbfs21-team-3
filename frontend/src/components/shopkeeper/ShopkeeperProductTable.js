@@ -11,10 +11,19 @@ const initialSalePriceForm = {
     effectiveDate: ''
 }
 
+const initialSalesForm = {
+    salesPrice: '',
+    effectiveSaleStartDate:'',
+    effectiveSaleEndDate:'',
+    discount: '',
+    description:''
+}
+
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
     const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
     const [showProductDetails, setShowProductDetails] = useState(false)
     const [salePrice, setSalePrice] = useState(initialSalePriceForm)
+    const [newSales, setNewSales] = useState(initialSalesForm)
 
     function handleViewDetails(product) {
         viewProductDetails(product)
@@ -22,7 +31,12 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
     }
 
     return <>
-            <ShopkeeperEditProduct salePrice={salePrice} setSalePrice={setSalePrice}/>
+            <ShopkeeperEditProduct
+                salePrice={salePrice}
+                setSalePrice={setSalePrice}
+                newSales={newSales}
+                setNewSales={setNewSales}
+            />
         {showProductDetails ? <ShopkeeperProduct/> : <></>}
 
 

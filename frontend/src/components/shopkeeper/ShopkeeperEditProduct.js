@@ -16,7 +16,7 @@ import {
     updateDateReceived,
     updateUnitsReceived,
     updateDiscountAvailable,
-    scheduledSalesPrice, scheduledSalesEffectiveDate
+    // scheduledSalesPrice, scheduledSalesEffectiveDate
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal, Badge, ListGroup, FormControl} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -26,6 +26,14 @@ import {useEffect, useState} from "react";
 const initialSalePriceForm = {
     effectiveDate: '',
     price: ''
+}
+
+const initialSalesForm = {
+    salesPrice: '',
+    effectiveSaleStartDate: '',
+    effectiveSaleEndDate: '',
+    discount: '',
+    description: ''
 }
 
 function ShopkeeperEditProduct({
@@ -62,8 +70,8 @@ function ShopkeeperEditProduct({
                                    updateUnitsReceived,
                                    salePrice,
                                    setSalePrice,
-                                   price,
-                                   effectiveDate
+                                   newSales,
+                                   setNewSales
                                }) {
 
     const newDate = new Date().toLocaleDateString()
@@ -71,10 +79,8 @@ function ShopkeeperEditProduct({
 
     const [productCategory, setProductCategory] = useState([])
     const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
-    // const [salePrice, setSalePrice] = useState(initialSalePriceForm)
     const [scheduledPricesArray, setScheduledPricesArray] = useState([])
-
-
+    const [scheduledSalesArray, setScheduledSalesArray] = useState([])
 
     function onChange(e) {
         console.log(`logging e.target = ${e.target}`)
@@ -85,6 +91,8 @@ function ShopkeeperEditProduct({
     }
 
     function onScheduledPricesChange(e) {
+        console.log("onScheduledPricesChange clicked" + e)
+        console.log(e)
         const {name, value} = e.target
         setSalePrice({
             ...salePrice,
@@ -92,11 +100,19 @@ function ShopkeeperEditProduct({
         })
     }
 
+    function onSalesPricesChange(e) {
+        const {name, value} = e.target
+        setNewSales({
+            ...newSales,
+            [name]: value
+        })
+    }
 
     useEffect(() => {
-        if (show){
+        if (show) {
             setProductCategory(product.categories)
-        setScheduledPricesArray(product.scheduledPrices)}
+            setScheduledPricesArray(product.sales)
+        }
     }, [show])
 
     function handleAdd() {
@@ -120,26 +136,58 @@ function ShopkeeperEditProduct({
         }))
     }
 
+    function handleRemoveSalesPrice() {
+        setScheduledSalesArray(scheduledSalesArray.filter(scheduledSales => {
+            const newDate = new Date(scheduledSales.effectiveDate)
+            const newDate2 = new Date(newSales.effectiveDate)
+
+            return newDate.getTime() !== newDate2.getTime()
+        }))
+    }
+
     function handleAddScheduledPrice() {
         const exists = scheduledPricesArray?.some((scheduledPrice) => {
             const newDate = new Date(scheduledPrice.effectiveDate)
             const newDate2 = new Date(salePrice.effectiveDate)
             return newDate.getTime() === newDate2.getTime()
         })
-        console.log(exists)
+        console.log("scheduled price " + exists)
         if (exists) {
             setScheduledPricesArray(scheduledPricesArray?.map(scheduledPrice => {
                 const newDate = new Date(scheduledPrice.effectiveDate)
                 const newDate2 = new Date(salePrice.effectiveDate)
-                if (newDate.getTime() === newDate2.getTime()){
+                if (newDate.getTime() === newDate2.getTime()) {
                     console.log(salePrice)
-                 return salePrice
+                    return salePrice
                 }
             }))
         } else {
-setScheduledPricesArray([...scheduledPricesArray, salePrice])
+            setScheduledPricesArray([...scheduledPricesArray, salePrice])
         }
     }
+
+    function handleAddSalesPrice() {
+        const exists = scheduledSalesArray?.some((scheduledSales) => {
+            const newDate = new Date(scheduledSales.effectiveDate)
+            const newDate2 = new Date(newSales.effectiveDate)
+            return newDate.getTime() === newDate2.getTime()
+        })
+        console.log("sales price " + exists)
+        if (exists) {
+            setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
+                const newDate = new Date(scheduledSales.effectiveDate)
+                const newDate2 = new Date(newSales.effectiveDate)
+                if (newDate.getTime() === newDate2.getTime()) {
+                    console.log(newSales)
+                    return newSales
+                }
+            }))
+        } else {
+            setScheduledSalesArray([...scheduledSalesArray, newSales])
+        }
+    }
+
+    console.log()
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -160,16 +208,21 @@ setScheduledPricesArray([...scheduledPricesArray, salePrice])
             picture,
             dateReceived,
             unitsReceived,
-            scheduledPrices: scheduledPricesArray
+            scheduledPrices: scheduledPricesArray,
+            sales: scheduledSalesArray
         })
         setSalePrice(initialSalePriceForm)
-
+        setNewSales(initialSalesForm)
         console.log(salePrice)
 
 
     }
 
-    // console.log(product.scheduledPrices)
+    // console.log(product.scheduledSales)
+
+    console.log(newSales)
+    console.log(newSales.effectiveSaleStartDate)
+    console.log(newSales.discount)
 
     return <Modal show={show} onHide={cancelEditProduct}>
         <Modal.Header closeButton>
@@ -245,7 +298,6 @@ setScheduledPricesArray([...scheduledPricesArray, salePrice])
             <hr/>
 
             {/*==========*/}
-
             <Form.Label>Scheduled Prices</Form.Label>
             <div className='mb-3'>{scheduledPricesArray?.map(scheduledPrice => <Badge>price={scheduledPrice.price}
                 effective date={scheduledPrice.effectiveDate}</Badge>)}</div>
@@ -259,16 +311,43 @@ setScheduledPricesArray([...scheduledPricesArray, salePrice])
             <div><Button size='sm' onClick={() => handleAddScheduledPrice()}>Add</Button><Button
                 size='sm' onClick={() => handleRemoveScheduledPrice()}>Remove</Button>
             </div>
-
             {/*==========*/}
 
+<hr/>
+            <Form.Label>Scheduled Sales</Form.Label>
+            <div className='mb-3'>{scheduledSalesArray?.map(scheduledSale =>
+                <Badge>
+                    {/*price={scheduledSale.salesPrice}*/}
+                    effective start date={scheduledSale.effectiveSaleStartDate}
+                    <br/>
+                    effective end date={scheduledSale.effectiveSaleEndDate}<br/>
+                    discount={scheduledSale.discount}<br/>
+                    description of discount={scheduledSale.description}
+                </Badge>
+            )}</div>
 
-            {/*<Form.Label>Effective Sales Date</Form.Label>*/}
-            {/*<Form.Control type={"date"} name="effectiveDate" value={salePrice.effectiveDate}*/}
+            <Form.Label>Effective scheduled price start date</Form.Label>
+            <Form.Control type={"date"} name="effectiveSaleStartDate" value={newSales.effectiveSaleStartDate}
+                          onChange={onSalesPricesChange}/>
+            <Form.Label>Effective scheduled price end date</Form.Label>
+            <Form.Control type={"date"} name="effectiveSaleEndDate" value={newSales.effectiveSaleEndDate}
+                          onChange={onSalesPricesChange}/>
+            {/*<Form.Label>Effective scheduled sales price</Form.Label>*/}
+            {/*<Form.Control type={'int'} name="salesPrice" value={newSales.salesPrice}*/}
             {/*              onChange={onScheduledPricesChange}/>*/}
-            {/*<Form.Label>Effective Sales Price</Form.Label>*/}
-            {/*<Form.Control type={'int'} name="price" value={salePrice.price}*/}
-            {/*              onChange={onScheduledPricesChange}/>*/}
+
+
+            <Form.Label>Scheduled sales discount</Form.Label>
+            <Form.Control type={'float'} name="discount" value={newSales.discount}
+                          onChange={onSalesPricesChange}/>
+            <Form.Label>Scheduled sales description</Form.Label>
+            <Form.Control type={'text'} name="description" value={newSales.description}
+                          onChange={onSalesPricesChange}/>
+
+            <div><Button size='sm' onClick={() => handleAddSalesPrice()}>Add</Button><Button
+                size='sm' onClick={() => handleRemoveSalesPrice()}>Remove</Button>
+            </div>
+
 
             <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
         </Form>
@@ -294,7 +373,11 @@ function mapStateToProps(state) {
         dateReceived: state.shopkeeperReducer.dateReceived,
         unitsReceived: state.shopkeeperReducer.unitsReceived,
         price: state.shopkeeperReducer.price,
-        effectiveDate: state.shopkeeperReducer.effectiveDate
+        effectiveDate: state.shopkeeperReducer.effectiveDate,
+        effectiveSaleStartDate: state.shopkeeperReducer.effectiveSaleStartDate,
+        effectiveSaleEndDate: state.shopkeeperReducer.effectiveSaleEndDate,
+        discount: state.shopkeeperReducer.discount,
+        description: state.shopkeeperReducer.description
     }
 }
 
@@ -316,8 +399,8 @@ function mapDispatchToProps(dispatch) {
         updatePicture,
         updateDateReceived,
         updateUnitsReceived,
-        scheduledSalesPrice,
-        scheduledSalesEffectiveDate
+        // scheduledSalesPrice,
+        // scheduledSalesEffectiveDate
     }, dispatch)
 
 }
