@@ -13,7 +13,7 @@ import OrderComplete from "../../pages/OrderComplete";
 
 
 
-function CustomerRouter({cartQuantity}) {
+function CustomerRouter({cartQuantity, themeToggler}) {
     return (
 
         <Router>
@@ -53,6 +53,9 @@ function CustomerRouter({cartQuantity}) {
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
                                     <Badge pill bg="secondary">{cartQuantity}</Badge>
                                 </Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Button onClick={themeToggler}>Switch Theme</Button>
                             </Nav.Item>
                             <Nav.Item>
                                 <LogoutBtn/>

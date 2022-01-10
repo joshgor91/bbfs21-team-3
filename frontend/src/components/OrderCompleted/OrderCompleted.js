@@ -1,12 +1,30 @@
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
-function OrderCompleted() {
+function OrderCompleted({isLoggedIn}) {
 
 
   return(
-      <h1>Order Complete!</h1>
+      <Container fluid>
+      <h1 id="order-complete-h1" className="order-complete">Order Complete!</h1>
+      <Row>
+          <h3 className="order-complete">Thank you for shopping at   <img className="order-complete-logo" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></h3>
+      </Row>
+          {isLoggedIn &&
+              <div className="order-complete">
+                  <Button variant="dark"><Link to="/myaccount" id="my-account-link">Go To My Account</Link></Button>
+              </div>
+             }
+      </Container>
   )
 }
 
 
-export default OrderCompleted
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: state.userReducer.isLoggedIn,
+    }
+}
+
+export default connect(mapStateToProps)(OrderCompleted)

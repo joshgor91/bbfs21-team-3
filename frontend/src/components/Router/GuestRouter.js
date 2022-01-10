@@ -14,7 +14,7 @@ import ProductDetails from "../ProductsView/ProductDetails";
 
 
 
-function GuestRouter({cartQuantity}) {
+function GuestRouter({cartQuantity, themeToggler}) {
 
         return (
 
@@ -60,6 +60,11 @@ function GuestRouter({cartQuantity}) {
                                     </Link>
                                 </Nav.Item>
 
+                            </Nav>
+                            <Nav className='ms-auto'>
+                                <Nav.Item>
+                                    <Button onClick={themeToggler}>Switch Theme</Button>
+                                </Nav.Item>
                             </Nav>
                         </Navbar.Collapse>
                     </>

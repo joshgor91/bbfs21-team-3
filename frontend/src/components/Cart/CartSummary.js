@@ -1,5 +1,7 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 import {clearReceipt} from "../../modules/order";
 
 
@@ -18,7 +20,7 @@ function CartSummary({cartItems, cartSummery}) {
     return <>
         <Card>
             <Card.Body>
-                <Card.Header>Order Summery</Card.Header>
+                <Card.Title>Order Summary</Card.Title>
                 <Row>
                     <Col>
                         <Card.Text>Original Price: </Card.Text>
