@@ -32,7 +32,9 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, sellPrice}
     }
 
     return <>
-        <Card style={{marginBottom: '1.5rem', width: 'auto', height: '12.5rem'}}>
+        <Card className="card-in-cart"
+              style={{marginBottom: '1.5rem', width: 'auto', height: '12.5rem'}}
+        >
             <Row>
                 <Col xs='3' style={{margin: 'auto'}}>
                     <Card.Img variant="top" style={{width: '8em', height: '8em'}} src="holder.js/100px180"/>

@@ -11,7 +11,12 @@ const CartPage = () => {
 
 
     return <>
-        <h1>Cart</h1>
+        <h1 style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop:'5px'
+        }}>Cart</h1>
         <Cart/>
     </>
 }

@@ -1,4 +1,4 @@
-import {Button, Card, Col, Image, Row} from "react-bootstrap";
+import {Button, Card, Col, Form, Image, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
@@ -6,14 +6,12 @@ import {clearReceipt} from "../../modules/order";
 
 
 function CartSummary({cartItems, cartSummery}) {
-
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
 
-
     return <>
-        <Card>
+        <Card className="d-flex flex-row flex-wrap">
             <Card.Body>
                 <Card.Title>Order Summary</Card.Title>
                 <Row>
@@ -41,6 +39,28 @@ function CartSummary({cartItems, cartSummery}) {
                     </Col>
                 </Row>
                 <Row>
+                    <hr/>
+                    <Form>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Coupon Code</Form.Label>
+                            <Row>
+                                <Form.Control type="text" placeholder="Enter coupon code"
+                                    // onChange={event => setCoupon(event.target.value)}
+                                />
+                                <hr/>
+                                <Button className="login-register-button">
+                                    Apply
+                                </Button>
+                            </Row>
+                        </Form.Group>
+                    </Form>
+                    <hr/>
+                    <Button variant="warning">
+                        <Link id="checkout-button" to="checkout/">Checkout </Link>
+                    </Button>
+                </Row>
+                <Row>
                     <Col></Col>
                     <Col xs='auto'>
                         <Button size='sm' variant="warning">
@@ -48,7 +68,6 @@ function CartSummary({cartItems, cartSummery}) {
                         </Button>
                     </Col>
                 </Row>
-                <hr/>
                 <div>Apply today, shop today.</div>
                 <Image
                     style={{width: 85, height: 50, marginLeft: "5px"}}
