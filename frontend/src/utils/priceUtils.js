@@ -48,7 +48,6 @@ export function cartSummery(cart) {
     })
 
     cart.forEach(cartItem => {
-        if (cartItem.Sales?.length > 0) {
             for (let item of cartItem.Sales) {
                 if (new Date(item.saleStartDate) - now < 0 && new Date(item.saleEndDate) - now > 0) {
                     discount = item.discount
@@ -67,7 +66,6 @@ export function cartSummery(cart) {
                 }
 
             }
-        }
     })
         console.log(totalSavings)
         return {
