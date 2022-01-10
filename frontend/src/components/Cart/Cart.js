@@ -39,11 +39,9 @@ function Cart({cartItems, isLoggedIn, quantity}) {
                 </Col>
             <Col lg={3}>
                 {isLoggedIn ?
-                    <CartSummary cartItems={cartItems}
-                                 cartSummery={cartSummery(cartItems)}
+                    <CartSummary cartSummery={cartSummery(cartItems)}
                     />
-                    : <CartSummary cartItems={cart}
-                                   cartSummery={cartSummery(cart)}/>}
+                    : <CartSummary cartSummery={cartSummery(cart)}/>}
             </Col>
             </Row>
         </Container>

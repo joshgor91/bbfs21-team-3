@@ -60,14 +60,7 @@ function CartSummary({cartItems, cartSummery}) {
                         <Link id="checkout-button" to="checkout/">Checkout </Link>
                     </Button>
                 </Row>
-                <Row>
-                    <Col></Col>
-                    <Col xs='auto'>
-                        <Button size='sm' variant="warning">
-                            <Link id="checkout-button" to="checkout/">Checkout </Link>
-                        </Button>
-                    </Col>
-                </Row>
+                <hr/>
                 <div>Apply today, shop today.</div>
                 <Image
                     style={{width: 85, height: 50, marginLeft: "5px"}}
