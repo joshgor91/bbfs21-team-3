@@ -38,7 +38,7 @@ export function cartSummery(cart) {
     let totalSavings = 0
     let total = 0
 
-    cart.forEach(cartItem => {
+    cart?.forEach(cartItem => {
         for (let item of cartItem.scheduledPrices) {
             if (new Date(item.effectiveDate) - now < 0) {
                 itemPrice = item.price
@@ -48,7 +48,7 @@ export function cartSummery(cart) {
         originalPrice += itemPrice * cartItem.quantity
     })
 
-    cart.map(cartItem => {
+    cart?.map(cartItem => {
         for (let item of cartItem.Sales) {
             if (new Date(item.saleStartDate) - now < 0 && new Date(item.saleEndDate) - now > 0) {
                 discount = item.discount
