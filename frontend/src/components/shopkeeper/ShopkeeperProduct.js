@@ -4,7 +4,7 @@ import {initiateDeleteProduct, editProduct, cancelViewProductDetails, initiateGe
 import {connect} from "react-redux";
 
 function ShopkeeperProduct({show, product, cancelViewProductDetails, initiateDeleteProduct}) {
-
+    console.log(product)
 
     return <Modal show={show} onHide={cancelViewProductDetails}>
         <Modal.Header closeButton>
