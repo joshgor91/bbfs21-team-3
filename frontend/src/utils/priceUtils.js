@@ -43,8 +43,9 @@ export function cartSummery(cart) {
             if (new Date(item.effectiveDate) - now < 0) {
                 itemPrice = item.price
             }
-            return originalPrice += itemPrice * cartItem.quantity
+
         }
+        originalPrice += itemPrice * cartItem.quantity
     })
 
     cart.map(cartItem => {
@@ -55,7 +56,7 @@ export function cartSummery(cart) {
             }
         }
         for (let itemPrice of cartItem.scheduledPrices) {
-            console.log(itemPrice)
+            // console.log(itemPrice)
             if (new Date(itemPrice.effectiveDate) - now < 0) {
                 // console.log(itemPrice.price)
                 salePrice = itemPrice.price
@@ -64,11 +65,10 @@ export function cartSummery(cart) {
         }
         totalSavings += discountPrice * cartItem.quantity
     })
-
     total = originalPrice - totalSavings
     return {
         originalPrice: originalPrice,
         totalSavings: totalSavings,
-        total: total
+        total: total.toFixed(2)
     }
 }
