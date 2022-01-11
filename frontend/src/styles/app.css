@@ -5,9 +5,14 @@
 
 
 
-.carousel-fade .carousel-item img  {
-    min-height: 200px;
-    min-width: 300px;
+.carousel-item img  {
+    width: 200px;
+    height: 100px;
+    /*min-height: 200px;*/
+    /*min-width: 100px;*/
+    /*background-color: black;*/
+
+
 }
 
 .carousel-caption{
@@ -16,13 +21,15 @@
     border-radius: 20px;
 }
 
+
 .carousel-text{
     opacity: 500%;
     color: black;
 }
 
 .carousel-item img {
-    /*background-color: white;*/
+
+
 }
 
 .general-form{
