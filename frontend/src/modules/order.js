@@ -1,4 +1,4 @@
-import {disableGuestEmailField} from "./guest";
+import {disableGuestEmailField, setGuestTotal} from "./guest";
 import {clearQuantity} from "./cart";
 
 const ADDING_ORDER = 'ADDING_ORDER'
@@ -10,6 +10,9 @@ const GET_ORDER_HISTORY_FAILED = 'GET_ORDER_HISTORY_FAILED'
 const GET_ORDER_HISTORY_SUCCESS = 'GET_ORDER_HISTORY_SUCCESS'
 const GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS = 'GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS'
 const SET_COUPON = "SET_COUPON"
+const VALIDATE_COUPON_START = "VALIDATE_COUPON_START"
+const VALIDATE_COUPON_SUCCESS = "VALIDATE_COUPON_SUCCESS"
+const VALIDATE_COUPON_FAIL = "VALIDATE_COUPON_FAIL"
 
 
 const initialState = {
@@ -90,7 +93,21 @@ export default function reducer(state = initialState, action) {
                 couponDiscount: action.couponDiscount,
                 couponCode: action.couponCode
             }
-
+        case VALIDATE_COUPON_START:
+            return {
+                ...state,
+                errorMessage: "",
+            }
+        case VALIDATE_COUPON_SUCCESS:
+            return {
+                ...state,
+                errorMessage: "",
+            }
+        case VALIDATE_COUPON_FAIL:
+            return {
+                ...state,
+                errorMessage: action.payload,
+            }
         default:
             return state
     }
@@ -138,7 +155,30 @@ function getShopkeeperOrderHistorySuccess(orders) {
 }
 
 export function setCoupon(couponDiscount, couponCode) {
-    return {type: SET_COUPON, couponDiscount, couponCode}
+    return {
+        type: SET_COUPON,
+        couponDiscount,
+        couponCode
+    }
+}
+
+export function validateCouponStart(){
+    return {
+        type: VALIDATE_COUPON_START
+    }
+}
+
+export function validateCouponSuccess(){
+    return {
+        type:VALIDATE_COUPON_SUCCESS
+    }
+}
+
+export function validateCouponFail(errMessage){
+    return {
+        type:VALIDATE_COUPON_FAIL,
+        payload:errMessage
+    }
 }
 
 // Side Effects
@@ -258,6 +298,7 @@ export function initiateGuestOrder(email, total) {
                     dispatch(goToReceipt())
                     dispatch(disableGuestEmailField(false))
                     dispatch(clearQuantity())
+                    dispatch(setGuestTotal(0))
                     window.localStorage.clear()
                 } else {
                     dispatch(addOrderFailed())
@@ -269,7 +310,8 @@ export function initiateGuestOrder(email, total) {
 
 export function initiateValidateCoupon(coupon) {
     // console.log("this is my coupon: ", coupon)
-    return function validateCouponSideEffect(dispatch, getState) {
+    return function (dispatch, getState) {
+        dispatch(validateCouponStart())
         // either guest or user will be calling the endpoint not both
         const userId = getState().userReducer.loggedInUser.id
         let email = getState().guestReducer.guestEmail
@@ -290,16 +332,18 @@ export function initiateValidateCoupon(coupon) {
             headers: headers,
         }).then(response => {
             if (!response.ok)
-                return dispatch(getOrderHistoryFailed("Unable to get coupon."))
+                return dispatch(validateCouponFail("Unable to get coupon."))
             response.json().then(couponRes => {
                 // console.log(couponRes)
                 if (couponRes.message === "success") {
                     if(!userId) {
                         dispatch(disableGuestEmailField(true))
                     }
+                    dispatch(validateCouponSuccess())
                     dispatch(setCoupon(couponRes.couponDiscount, coupon))
                 } else {
                     dispatch(disableGuestEmailField(false))
+                    dispatch(validateCouponFail(couponRes.message))
                     // console.log(couponRes.message)
                 }
             })
