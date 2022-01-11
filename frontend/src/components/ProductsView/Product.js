@@ -21,19 +21,19 @@ function Product({product}) {
     }
 
     return (
-
+        <>
+            {product.scheduledPrices?.length !== 0 &&
             <Col>
-            <Card className='product-card' onClick={() => goToProductDetails(product.id, product)} >
-                <Card.Img className='product-img' variant="top" src={product.picture} />
-                <Card.Body>
-                    <Card.Title>{product.brand}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{product.productName}</Card.Subtitle>
-                    <Card.Text>{product.productDescription}</Card.Text>
-                </Card.Body>
-            </Card>
-            </Col>
-
-
+                <Card className='product-card' onClick={() => goToProductDetails(product.id, product)}>
+                    <Card.Img className='product-img' variant="top" src={product.picture}/>
+                    <Card.Body>
+                        <Card.Title>{product.brand}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{product.productName}</Card.Subtitle>
+                        <Card.Text>{product.productDescription}</Card.Text>
+                    </Card.Body>
+                </Card>
+            </Col>}
+        </>
     )
 }
 
