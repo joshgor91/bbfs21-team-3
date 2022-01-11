@@ -15,8 +15,7 @@ import {
     updatePicture,
     updateDateReceived,
     updateUnitsReceived,
-    updateDiscountAvailable,
-    // scheduledSalesPrice, scheduledSalesEffectiveDate
+    updateDiscountAvailable
 } from "../../modules/shopkeeper";
 import {Button, Form, Modal, Badge, ListGroup, FormControl} from "react-bootstrap";
 import {connect} from "react-redux";
@@ -34,6 +33,11 @@ const initialSalesForm = {
     saleEndDate: '',
     discount: '',
     saleDescription: ''
+}
+
+const initialMinAdPriceForm = {
+    effectiveDate: '',
+    price: ''
 }
 
 function ShopkeeperEditProduct({
@@ -71,19 +75,39 @@ function ShopkeeperEditProduct({
                                    salePrice,
                                    setSalePrice,
                                    newSales,
-                                   setNewSales
+                                   setNewSales,
+                                   minAdPrice,
+                                   setMinAdPrice
                                }) {
 
+
     const newDate = new Date().toLocaleDateString()
-    // console.log(newDate)
 
     const [productCategory, setProductCategory] = useState([])
     const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
     const [scheduledPricesArray, setScheduledPricesArray] = useState([])
     const [scheduledSalesArray, setScheduledSalesArray] = useState([])
+    const [minimumAdPriceArray, setMinimumAdPriceArray] = useState([])
 
-    // console.log(product)
-    // console.log(product.scheduledPrices)
+
+    console.log(product)
+    useEffect(() => {
+        if (show) {
+            setProductCategory(product.categories)
+            setScheduledSalesArray(product.sales)
+            setScheduledPricesArray(product.scheduledPrices)
+            setMinimumAdPriceArray(product.minimumAdvertisedPrice)
+        }
+    }, [show])
+
+    function handleAdd() {
+        if (categorySelect.categoryName === '') {
+            // console.log(`logging empty string`)
+        } else {
+            setProductCategory([...productCategory, categorySelect])
+        }
+    }
+
 
     function onChange(e) {
         // console.log(`logging e.target = ${e.target}`)
@@ -111,6 +135,15 @@ function ShopkeeperEditProduct({
         })
     }
 
+
+    function onMAPChange(e) {
+        const {name, value} = e.target
+        console.log(value)
+        setMinAdPrice({
+            ...minAdPrice,
+            [name]: value
+        })
+
     useEffect(() => {
         if (show) {
             setProductCategory(product.categories)
@@ -125,10 +158,20 @@ function ShopkeeperEditProduct({
         } else {
             setProductCategory([...productCategory, categorySelect])
         }
+
     }
 
     function handleRemove() {
         setProductCategory(productCategory.filter(id => categorySelect.id !== id.id))
+    }
+
+    function handleRemoveMAP() {
+        setMinimumAdPriceArray(minimumAdPriceArray.filter(minAdvertisedPrice => {
+            const newDate = new Date(minAdvertisedPrice.effectiveDate)
+            const newDate2 = new Date(minAdPrice.effectiveDate)
+
+            return newDate.getTime() !== newDate2.getTime()
+        }))
     }
 
     function handleRemoveScheduledPrice() {
@@ -146,8 +189,32 @@ function ShopkeeperEditProduct({
             const endDate = new Date(scheduledSales.saleEndDate)
             const startDate2 = new Date(newSales.saleStartDate)
             const endDate2 = new Date(newSales.saleEndDate)
-            return startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime()
+            return (startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime())
         }))
+    }
+
+    function handleAddMAP() {
+        const exists = minimumAdPriceArray?.some((minAdvertisedPrice) => {
+            const newDate = new Date(minAdvertisedPrice.effectiveDate)
+            const newDate2 = new Date(minAdPrice.effectiveDate)
+            return newDate.getTime() === newDate2.getTime()
+        })
+        console.log("minimum AP " + exists)
+        if (exists) {
+            setMinimumAdPriceArray(minimumAdPriceArray?.map(minAdvertisedPrice => {
+                const newDate = new Date(minAdvertisedPrice.effectiveDate)
+                const newDate2 = new Date(minAdPrice.effectiveDate)
+                if (newDate.getTime() === newDate2.getTime()) {
+                    console.log(minAdPrice)
+                    return minAdPrice
+                }
+            }))
+        } else {
+            console.log("inside else")
+            console.log(minAdPrice)
+            console.log(minimumAdPriceArray)
+            setMinimumAdPriceArray([...minimumAdPriceArray, minAdPrice])
+        }
     }
 
     function handleAddScheduledPrice() {
@@ -217,20 +284,15 @@ function ShopkeeperEditProduct({
             dateReceived,
             unitsReceived,
             scheduledPrices: scheduledPricesArray,
-            sales: scheduledSalesArray
+            sales: scheduledSalesArray,
+            minimumAdvertisedPrice: minimumAdPriceArray
         })
         setSalePrice(initialSalePriceForm)
         setNewSales(initialSalesForm)
-        // console.log(salePrice)
 
+        setMinAdPrice(initialMinAdPriceForm)
 
     }
-
-    // console.log(product.scheduledSales)
-
-    // console.log(newSales)
-    // console.log(newSales.saleStartDate)
-    // console.log(scheduledPricesArray)
 
     return <Modal show={show} onHide={cancelEditProduct}>
         <Modal.Header closeButton>
@@ -303,6 +365,25 @@ function ShopkeeperEditProduct({
             <Form.Label>Units Received</Form.Label>
             <Form.Control type='int' value={unitsReceived}
                           onChange={event => updateUnitsReceived(event.target.value)}/>
+
+
+
+            <hr/>
+            <Form.Label>Minimum Advertised Price</Form.Label>
+            <div className='mb-3'>{minimumAdPriceArray?.map(minAdvertisedPrice => <Badge>price={minAdvertisedPrice.price}<br/>
+                effective date={minAdvertisedPrice.effectiveDate}</Badge>)}</div>
+            <Form.Label>Effective minimum advertised price date</Form.Label>
+            <Form.Control type={"date"} name="effectiveDate" value={minAdPrice.effectiveDate}
+                          onChange={onMAPChange}/>
+            <Form.Label>Price</Form.Label>
+            <Form.Control type={'int'} name="price" value={minAdPrice.price}
+                          onChange={onMAPChange}/>
+            <div><Button size='sm' onClick={() => handleAddMAP()}>Add</Button><Button
+                size='sm' onClick={() => handleRemoveMAP()}>Remove</Button>
+            </div>
+
+
+
             <hr/>
             <Form.Label>Scheduled Prices</Form.Label>
             <div className='mb-3'>{scheduledPricesArray?.map(scheduledPrice => <Badge>price={scheduledPrice.price}<br/>
@@ -317,7 +398,9 @@ function ShopkeeperEditProduct({
             <div><Button size='sm' onClick={() => handleAddScheduledPrice()}>Add</Button><Button
                 size='sm' onClick={() => handleRemoveScheduledPrice()}>Remove</Button>
             </div>
-<hr/>
+
+
+            <hr/>
             <Form.Label>Scheduled Sales</Form.Label>
             <div className='mb-3'>{scheduledSalesArray?.map(scheduledSale =>
                 <Badge>
@@ -397,9 +480,7 @@ function mapDispatchToProps(dispatch) {
         updateDiscountAvailable,
         updatePicture,
         updateDateReceived,
-        updateUnitsReceived,
-        // scheduledSalesPrice,
-        // scheduledSalesEffectiveDate
+        updateUnitsReceived
     }, dispatch)
 
 }

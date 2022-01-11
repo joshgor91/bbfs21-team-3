@@ -4,8 +4,9 @@ import {editProduct, cancelViewProductDetails, viewProductDetails} from "../../m
 import {connect} from "react-redux";
 import moment from "moment";
 
-function ShopkeeperProduct({show, product, sales, cancelViewProductDetails}) {
-    // console.log(product)
+
+function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
+
 
     return <Modal show={show} size="lg"
                   aria-labelledby="contained-modal-title-vcenter"
@@ -104,7 +105,7 @@ function ShopkeeperProduct({show, product, sales, cancelViewProductDetails}) {
                         </tr>
                         </thead>
                         <tbody>
-                        {product.mininumAdvertisedPrice?.map((productMap, idx) =>
+                        {product.minimumAdvertisedPrice?.map((productMap, idx) =>
                             <tr key={idx}>
                                 <td>{productMap.price}</td>
                                 <td>{moment(productMap.effectiveDate).format('llll')}</td>
