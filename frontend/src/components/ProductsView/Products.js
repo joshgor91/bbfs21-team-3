@@ -14,12 +14,11 @@ function Products({inventory}) {
                         </div>
                  </Row>
                  <Row>
-                <Carousel fade variant="dark" id="carousel" style={{width:800, height:250, margin:'auto'}}>
+                <Carousel fade variant="dark" id="carousel" style={{width:900, height:450, margin:'auto'}}>
 
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            style={{width:500, height:250, margin:'auto'}}
                             src="https://help.apple.com/assets/6062258EBFC7E7487E19DBB0/60622592BFC7E7487E19DBC1/en_US/a30dae33fdf21b2f7cd3045ae45f3dd9.png"
                             alt="First slide"
                         />
