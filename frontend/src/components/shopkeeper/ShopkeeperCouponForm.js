@@ -67,7 +67,7 @@ function ShopKeeperCouponForm({coupons}) {
     return (
         <>
                 <div>
-                    <Button variant="secondary" onClick={() => setCreating(true)}>Create Coupon</Button>
+                    <Button variant="secondary" className={'my-2 mx-3 text-white'} onClick={() => setCreating(true)}>Create Coupon</Button>
                 </div>
             <Modal show={editing || creating} onHide={hideModal}>
                 <Modal.Header closeButton>

@@ -65,7 +65,7 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
                     categoryId={categoryId}
                 />
                 <Dropdown as={ButtonGroup}>
-                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'>Shopkeeper Actions</Dropdown.Toggle>
+                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic' className={'text-white'}>Shopkeeper Actions</Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleShowCoupons}>Manage Coupons</Dropdown.Item>
                         <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
