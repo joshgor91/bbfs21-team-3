@@ -82,7 +82,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                         <option selected disabled hidden>Select Category</option>
                         {categories.map(category => <option key={category.id} id={category.id} value={category.categoryName}>{category.categoryName}</option>)}
                     </Form.Control>
-                    <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button size='sm' onClick={() => handleRemove()}>Remove</Button></div>
+                    <div><Button size='sm' className={'m-1 text-white'} onClick={() => handleAdd()}>Add</Button><Button size='sm' className={'m-1 text-white'} onClick={() => handleRemove()}>Remove</Button></div>
                     <Form.Label>Product Description</Form.Label>
                     <Form.Control required type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
@@ -125,7 +125,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     <Form.Label>Units Received</Form.Label>
                     <Form.Control required type='number' placeholder='Units Received' id='unitsReceived'/>
                 </Form.Group>
-                <Button variant='primary' type='submit'>Create</Button>
+                <Button variant='primary' type='submit' className={'text-white'}>Create</Button>
             </Form>
 
         </Modal.Body>
