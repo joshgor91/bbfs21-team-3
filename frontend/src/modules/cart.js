@@ -162,7 +162,7 @@ function clearCart() {
     }
 }
 
-function clearQuantity() {
+export function clearQuantity() {
     return {
         type: CLEAR_QUANTITY
     }
@@ -199,6 +199,7 @@ function updatedCartFailed(message) {
 export function initiateGetCartItems() {
     return function gettingCartItemsSideEffect(dispatch, getState) {
         let newCartItemQuantity = 0;
+        let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
         dispatch(gettingCartItems())
         if (getState().userReducer.isLoggedIn) {
             getCartItemsRequest(getState().userReducer.loggedInUser.id).then(res => {
@@ -213,6 +214,11 @@ export function initiateGetCartItems() {
                 }
             })
                 .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
+        } else if (cartStorage && (cartStorage.length !== 0)) {
+            cartStorage.forEach(item => {
+                newCartItemQuantity += item.quantity
+            })
+            dispatch(setQuantity(newCartItemQuantity))
         }
     }
 }

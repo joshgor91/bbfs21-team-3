@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {clearReceipt, initiateValidateCoupon} from "../../modules/order";
 import {setGuestState} from "../../modules/guest";
 
-function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
+function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDiscount}) {
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
@@ -15,9 +15,9 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
     const [coupon, setCoupon] = useState()
     const [applyingCoupon, setApplyingCoupon] = useState(false)
 
-    function validateCoupon(){
+    function validateCoupon() {
         console.log("validating coupon")
-        if(!isLoggedIn) {
+        if (!isLoggedIn) {
             setApplyingCoupon(true)
         } else {
             dispatch(initiateValidateCoupon(coupon))
@@ -49,20 +49,40 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
                         <Card.Text>${originalPrice.toFixed(2)}</Card.Text>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <Card.Text>Total Savings: </Card.Text>
-                    </Col>
-                    <Col xs={'auto'}>
-                        <Card.Text>${totalSavings}</Card.Text>
-                    </Col>
-                </Row>
+                {couponDiscount ?
+                    <>
+                        <Row>
+                            <Col>
+                                <Card.Text>Total Savings: </Card.Text>
+                            </Col>
+                            <Col xs={'auto'}>
+                                <Card.Text>${totalSavings}</Card.Text>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Card.Text>Coupon Discount: </Card.Text>
+                            </Col>
+                            <Col xs={'auto'}>
+                                <Card.Text>${couponDiscount}</Card.Text>
+                            </Col>
+                        </Row>
+                    </>
+                    :
+                    <Row>
+                        <Col>
+                            <Card.Text>Total Savings: </Card.Text>
+                        </Col>
+                        <Col xs={'auto'}>
+                            <Card.Text>${totalSavings}</Card.Text>
+                        </Col>
+                    </Row>}
                 <Row>
                     <Col>
                         <Card.Text>Total: </Card.Text>
                     </Col>
                     <Col xs={'auto'}>
-                        <Card.Text>${total}</Card.Text>
+                        <Card.Text>${total - couponDiscount}</Card.Text>
                     </Col>
                 </Row>
                 <Row>
@@ -72,7 +92,8 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
                         <Form.Group className="mb-3">
                             <Form.Label>Coupon Code</Form.Label>
                             <Row>
-                                <Form.Control type="text" value={coupon} placeholder="Enter coupon code" onChange={event => setCoupon(event.target.value)}/>
+                                <Form.Control type="text" value={coupon} placeholder="Enter coupon code"
+                                              onChange={event => setCoupon(event.target.value)}/>
                                 <hr/>
                                 <Button onClick={validateCoupon} className="login-register-button">
                                     Apply
@@ -115,8 +136,7 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
 function mapStateToProps(state) {
     return {
         guestEmail: state.guestReducer.guestEmail,
-        discount: state.orderReducer.discount,
-
+        couponDiscount: state.orderReducer.couponDiscount,
     }
 }
 

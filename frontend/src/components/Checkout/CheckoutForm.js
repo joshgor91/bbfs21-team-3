@@ -49,7 +49,6 @@ function CheckoutForm({
 
     function handleSubmit(event) {
         event.preventDefault()
-        dispatch(disableGuestEmailField(false))
         if (!isLoggedIn) {
             initiateGuestOrder(email, total)
         } else {
@@ -64,7 +63,6 @@ function CheckoutForm({
                 })
             initiateAddOrder()
         }
-
     }
 
     return (
