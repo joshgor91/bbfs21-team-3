@@ -14,7 +14,7 @@ function AdminForm({startAddingUser, initiateGetUsers, logout}){
             <Dropdown as={ButtonGroup}>
 
                 <Dropdown.Toggle split variant="primary" id="dropdown-split-basic">
-                    Admin Stuff
+                    Admin
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item
