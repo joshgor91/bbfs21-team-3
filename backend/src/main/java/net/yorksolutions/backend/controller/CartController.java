@@ -25,7 +25,7 @@ class CartItemOutput {
     @JsonProperty
     private List<ScheduledPrices> scheduledPrices;
     @JsonProperty
-    private List<Sales> Sales;
+    private List<Sales> sales;
     @JsonProperty
     private String productName;
     @JsonProperty
@@ -62,7 +62,7 @@ class CartItemOutput {
     private CartItemOutput(){
     }
 
-    public CartItemOutput(Long cartId, Set<Category> categories, Long productId, List<ScheduledPrices> scheduledPrices, List<Sales> Sales, String productName,
+    public CartItemOutput(Long cartId, Set<Category> categories, Long productId, List<ScheduledPrices> scheduledPrices, List<Sales> sales, String productName,
                           String productDescription, String brand,
                           Float unitPrice, int unitsInStock, String size, String color, Date productAvailable,
                           Boolean discontinued, Boolean discountAvailable,
@@ -72,7 +72,7 @@ class CartItemOutput {
         this.categories = categories;
         this.productId = productId;
         this.scheduledPrices = scheduledPrices;
-        this.Sales = Sales;
+        this.sales = sales;
         this.productName = productName;
         this.productDescription = productDescription;
         this.brand = brand;
