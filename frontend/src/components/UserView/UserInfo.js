@@ -34,6 +34,7 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
 
         dispatch(initiateEditUserInfo({
             ...userInfo,
+            password,
             address1,
             address2,
             city,
@@ -41,6 +42,7 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
             zipcode
         }))
         setShow(false)
+        setShowPassword(false)
     }
 
     return <>
