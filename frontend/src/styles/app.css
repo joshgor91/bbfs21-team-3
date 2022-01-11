@@ -4,12 +4,6 @@
 }
 
 
-
-.carousel-fade .carousel-item img  {
-    min-height: 200px;
-    min-width: 300px;
-}
-
 .carousel-caption{
     background-color: #f4f8ff;
     opacity: 60%;
@@ -29,7 +23,6 @@
     padding: 25px;
     border-radius: 5px;
     border: thin solid lightgrey;
-    /*background-color: white;*/
 }
 
 .link-item{
@@ -84,10 +77,6 @@
     float: right;
 }
 
-/*#root{*/
-/*    background-color: rgb(229,233,237);*/
-/*    padding-bottom: 500px;*/
-/*}*/
 
 #welcome-message{
     display: flex;
