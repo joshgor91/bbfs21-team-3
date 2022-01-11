@@ -41,10 +41,14 @@ function ShopkeeperProduct({show, product, sales, cancelViewProductDetails}) {
                     </Col>
                     <Col xs='sm'>
                         {minAdvPrice > sellingPrice &&
-                           <Card.Title style={{color: 'red'}}>CHECK ADVERTISED PRICE - SCHEDULED PRICE UNDER MAP!</Card.Title>
+                        <Card.Title style={{color: 'red'}}>CHECK ADVERTISED PRICE - SCHEDULED PRICE UNDER
+                            MAP!</Card.Title>
                         }
                         {minAdvPrice > theDiscountPrice &&
                         <Card.Title style={{color: 'red'}}>CHECK SALE - SALE UNDER MAP!</Card.Title>
+                        }
+                        {product.unitPrice > sellingPrice &&
+                        <Card.Title style={{color: 'red'}}>NO DUMPING! - CHECK PRICING</Card.Title>
                         }
                     </Col>
                 </Row>
