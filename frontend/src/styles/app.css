@@ -13,7 +13,7 @@
 .carousel-caption{
     background-color: #f4f8ff;
     opacity: 60%;
-    border-radius: 20px;
+    border-radius: 50px;
 }
 
 
@@ -22,9 +22,6 @@
     color: black;
 }
 
-.carousel-item img {
-    /*background-color: white;*/
-}
 
 .general-form{
     margin:auto;

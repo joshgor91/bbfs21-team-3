@@ -19,8 +19,8 @@ function Products({inventory}) {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-card-40-macbook-air-202110?wid=600&hei=150&fmt=p-jpg&qlt=95&.v=1633726242000"
-                            alt="First slide"
+                            src="https://i.ibb.co/8z70vn9/mac-card-40-macbook-air-202110-removebg-preview-1.png"
+                            alt="MacBook Air"
                         />
                         <Carousel.Caption>
                             <h3 className="carousel-text">MacBook Air</h3>
@@ -32,37 +32,37 @@ function Products({inventory}) {
                         <img
                             className="d-block w-100"
                             src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-max-gold-select?wid=600&hei=150&fmt=png-alpha&.v=1631652956000"
-                            alt="Second slide"
+                            alt="iPhone 13 Pro"
                         />
 
                         <Carousel.Caption>
-                            <h3>iPhone 13 Pro</h3>
-                            <p>Save up to 50%
+                            <h3 className="carousel-text">iPhone 13 Pro</h3>
+                            <p className="carousel-text">Save up to 50%
                                 on clearance and open-box items.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/watch-card-40-se-202109?wid=980&hei=245&fmt=p-jpg&qlt=95&.v=1629957411000"
-                            alt="Third slide"
+                            src="https://i.ibb.co/kmpwbvd/watch-card-40-se-202109-removebg-preview.png" alt="watch-card-40-se-202109-removebg-preview"
+                            alt="Apple Watch SE"
                         />
 
                         <Carousel.Caption>
-                            <h3>Apple Watch SE</h3>
-                            <p>Save up to 50%
+                            <h3 className="carousel-text">Apple Watch SE</h3>
+                            <p className="carousel-text">Save up to 50%
                                 on clearance and open-box items.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MME73?wid=600&hei=150&fmt=jpeg&qlt=80&.v=1632861342000"
-                            alt="First slide"
+                            src="https://i.ibb.co/XJX372J/MME73-removebg-preview.png" alt="MME73-removebg-preview" border="0"
+                            alt="Airpods"
                         />
                         <Carousel.Caption>
-                            <h3>AirPods (3rd generation)</h3>
-                            <p>A closer look at AirPods.</p>
+                            <h3 className="carousel-text">AirPods (3rd generation)</h3>
+                            <p className="carousel-text">A closer look at AirPods.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>
