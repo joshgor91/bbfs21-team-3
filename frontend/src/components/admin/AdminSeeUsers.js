@@ -35,9 +35,9 @@ function AdminSeeUsers({ users, hide, initiateEditUser, initiateDeleteUser, setU
                     <td >{user.password}</td>
                         <td>
                             <Stack>
-                            <Button onClick={handleEdit(user)}>edit</Button>
+                            <Button variant="info" onClick={handleEdit(user)}>Edit</Button>
                                 {user.id !== loggedInUser.id ?
-                                    <Button onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
+                                    <Button variant="danger" onClick={() => initiateDeleteUser(user.id)}>Delete</Button>
                                     : <></> }
                             </Stack>
                         </td>
