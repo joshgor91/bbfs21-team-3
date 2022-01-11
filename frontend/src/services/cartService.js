@@ -24,19 +24,19 @@ export async function getCartItemsRequest(userId) {
 }
 
 export async function getUserCartRequest(userId) {
-    console.log('user cart request', userId)
+    // console.log('user cart request', userId)
     const header = {
         'userId': userId
     }
     let res = await axios.get(`http://localhost:8080/api/cart/usercart`, {
         headers: header
     })
-    console.log(res)
+    // console.log(res)
     return res
 }
 
 export async function addCartItemRequest(productId, cartId, quantity, regularPrice, salePrice) {
-    console.log('in add cart item request', productId, cartId, quantity)
+    // console.log('in add cart item request', productId, cartId, quantity)
     let data = {
         productId: productId,
         cartId: cartId,
@@ -49,7 +49,7 @@ export async function addCartItemRequest(productId, cartId, quantity, regularPri
 }
 
     export async function editCartRequest(productId, cartId, quantity) {
-        console.log('in edit cart item request', productId, cartId, quantity)
+        // console.log('in edit cart item request', productId, cartId, quantity)
         let data = {
             productId: productId,
             cartId: cartId,

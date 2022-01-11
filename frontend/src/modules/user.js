@@ -288,7 +288,7 @@ function setUserAsCustomer(user) {
 }
 
 export function setUserInfo(user) {
-    console.log(user)
+    // console.log(user)
     return {
         type: SET_USER_INFO,
         payload: user
@@ -328,17 +328,17 @@ export function initiateLogin(credentials) {
             body: JSON.stringify(credentials)
         }).then(response => {
             if (!response.ok) {
-                console.log("hits failure")
+                // console.log("hits failure")
                 return dispatch(loginFailure())
             }
             response.json().then(user => {
 
                 getUserCartRequest(user.id)
                     .then(response => {
-                        console.log(response, "response")
+                        // console.log(response, "response")
 
                         if (response.status === 200)
-                            console.log(response.data)
+                            // console.log(response.data)
                         dispatch(setUserCart(response.data))
                     })
                     .catch(err => console.log('error with user cart request', err))
@@ -376,7 +376,7 @@ export function initiateRegisterUser(user) {
                 if (text === 'success') {
                     dispatch(addUserSuccess())
                     dispatch(initiateLogin(user))
-                    console.log("user registered")
+                    // console.log("user registered")
                 }
                 else {
                     dispatch(addUserFailed())
@@ -401,8 +401,7 @@ export function initiateEditUserInfo(userToEdit) {
 
 export function initiateDeleteUser(userId) {
     return function userToDelete(dispatch, getState) {
-        console.log(userId)
-        console.log()
+        // console.log(userId)
         if (userId === getState().userReducer.loggedInUser.id) {
             deleteUserRequest(userId).then(response => {
                 if (response.status !== 200)

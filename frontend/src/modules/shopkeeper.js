@@ -443,7 +443,7 @@ export function updateProductAvailable(productAvailable) {
 }
 
 export function updateDiscontinued(discontinued) {
-    console.log(discontinued)
+    // console.log(discontinued)
     return {
         type: UPDATE_DISCONTINUED,
         discontinued
@@ -451,7 +451,7 @@ export function updateDiscontinued(discontinued) {
 }
 
 export function updateDiscountAvailable(discountAvailable) {
-    console.log(discountAvailable)
+    // console.log(discountAvailable)
     return {
         type: UPDATE_DISCOUNT_AVAILABLE,
         discountAvailable
@@ -601,10 +601,10 @@ export function initiateGetCategories() {
 }
 
 export function initiateCreateCategory(newCategory) {
-    console.log(newCategory)
+    // console.log(newCategory)
     return function sideEffect(dispatch) {
         createCategoryRequest(newCategory).then(res => {
-            console.log(res)
+            // console.log(res)
             if (res.status !== 200) {
                 dispatch(createCategoryFailure(`Error creating category`))
             } else {

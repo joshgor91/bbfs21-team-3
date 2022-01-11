@@ -52,7 +52,7 @@ export default function reducer(state = initialState, action) {
             }
 
         case START_ADDING_USER:
-            console.log("starting to add user")
+            // console.log("starting to add user")
             return {
                 ...state,
                 showEditUser: true,
@@ -72,7 +72,7 @@ export default function reducer(state = initialState, action) {
                 errorMessage: action.payload
             }
         case EDITING_USER:
-            console.log("inside editing_user " + action.user.id)
+            // console.log("inside editing_user " + action.user.id)
             return {
                 ...state,
                 showEditUser: true,
@@ -260,7 +260,7 @@ export function initiateAddUser(user) {
                     console.log("user registered")
 
                 else {
-                    console.log("did not hit success")
+                    // console.log("did not hit success")
                     dispatch(addUserFailed("Unable to add user"))
                 }
             })
@@ -269,8 +269,8 @@ export function initiateAddUser(user) {
 }
 
 export function initiateEditUser(user) {
-    console.log("logging user from initiateEditUser" + user)
-    console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
+    // console.log("logging user from initiateEditUser" + user)
+    // console.log(user.id, user.authLevel, user.firstName, user.lastName, user.password)
     return function sideEffect(dispatch, getState) {
         dispatch(startEditingUser(user))
     }
@@ -292,14 +292,14 @@ export function submitEditUser(user) {
             response.text().then(text => {
                 if (text === 'success') {
                     dispatch(initiateGetUsers())
-                    console.log("user edited")
+                    // console.log("user edited")
                 }
                 else if (text === "email already exists")
                     dispatch(editUserFailed("This email exists with another user."))
                 // else if (user.email === getState().user.email)
                 //     dispatch(editUserFailed("Please select an authorization level of 1 for customer, 2 for shopkeeper, or 3 for an admin."))
                 else {
-                    console.log("did not hit success")
+                    // console.log("did not hit success")
                     dispatch(editUserFailed("Could not edit user"))
                 }
             })
@@ -308,7 +308,7 @@ export function submitEditUser(user) {
 }
 
 export function initiateDeleteUser(id) {
-    console.log("deleting " + id)
+    // console.log("deleting " + id)
     return function sideEffect(dispatch) {
         dispatch(deletingUser())
         fetch(`http://localhost:8080/api/users/delete/${id}`, {

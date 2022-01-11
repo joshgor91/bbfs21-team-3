@@ -19,7 +19,7 @@ function ProductDetails({product}) {
     const [theDiscountPrice, setTheDiscountPrice] = useState(0)
     const [currentSale, setCurrentSale] = useState(0)
     const [cartItemSoldPrice, setCartItemSoldPrice] = useState(0)
-    console.log(theDiscountPrice, 'theDiscountPrice', currentSale, 'currentSale', sellingPrice, 'sellingPrice')
+    // console.log(theDiscountPrice, 'theDiscountPrice', currentSale, 'currentSale', sellingPrice, 'sellingPrice')
 
     useEffect(() => {
         setTheDiscountPrice(discountPrice(product).discountPrice)

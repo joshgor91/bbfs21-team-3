@@ -16,7 +16,7 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDisc
     const [applyingCoupon, setApplyingCoupon] = useState(false)
 
     function validateCoupon() {
-        console.log("validating coupon")
+        // console.log("validating coupon")
         if (!isLoggedIn) {
             setApplyingCoupon(true)
         } else {
@@ -27,8 +27,8 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDisc
     function submitGuestCoupon(e) {
         e.preventDefault()
         setApplyingCoupon(false)
-        console.log(`this is their email ${guestEmail}`)
-        console.log('applying guest coupon')
+        // console.log(`this is their email ${guestEmail}`)
+        // console.log('applying guest coupon')
         dispatch(initiateValidateCoupon(coupon))
     }
 
