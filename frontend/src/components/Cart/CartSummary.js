@@ -4,6 +4,7 @@ import {connect, useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 import {clearReceipt, initiateValidateCoupon} from "../../modules/order";
 import {setGuestState, setGuestTotal} from "../../modules/guest";
+import {setTotalCost} from "../../modules/cart";
 
 function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDiscount, cart, couponCode, errorMessage}) {
     let originalPrice = cartSummery.originalPrice
@@ -35,6 +36,11 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDisc
     function onGuestEmailChange(e) {
         const {name, value} = e.target
         dispatch(setGuestState(name, value))
+    }
+
+    function handleCheckout(){
+        if(isLoggedIn) dispatch(setTotalCost(cartSummery.total - couponDiscount))
+        else dispatch(setGuestTotal(cartSummery.total - couponDiscount))
     }
 
     return <>
@@ -105,7 +111,7 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDisc
                         </Form.Group>
                     </Form>
                     <hr/>
-                    <Button variant="warning" onClick={() => dispatch(setGuestTotal(cartSummery.total - couponDiscount))}>
+                    <Button variant="warning" onClick={handleCheckout}>
                         <Link id="checkout-button" to="checkout/">Checkout </Link>
                     </Button>
                 </Row>

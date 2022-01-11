@@ -102,7 +102,16 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 updatedCartFailed: action.payload
             }
-
+        case SET_TOTAL_COST:
+            return {
+                ...state,
+                total:action.payload
+            }
+        case CLEAR_TOTAL_COST:
+            return{
+                ...state,
+                total:0
+            }
         default:
             return state
     }
@@ -168,13 +177,14 @@ export function clearQuantity() {
     }
 }
 
-function setTotalCost(){
+export function setTotalCost(total){
     return {
-        type:SET_TOTAL_COST
+        type:SET_TOTAL_COST,
+        payload:total
     }
 }
 
-function clearTotalCost(){
+export function clearTotalCost(){
     return {
         type:CLEAR_TOTAL_COST
     }
