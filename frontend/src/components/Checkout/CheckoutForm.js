@@ -1,6 +1,6 @@
 import {Button, Col, Form} from "react-bootstrap";
 import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {
     initiateEditUserInfo,
     updateAddress1,
@@ -12,6 +12,7 @@ import {
 import {initiateAddOrder, initiateGuestOrder} from "../../modules/order";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
+import {disableGuestEmailField} from "../../modules/guest";
 
 function CheckoutForm({
                           isLoggedIn,
@@ -38,9 +39,7 @@ function CheckoutForm({
     const [email, setEmail] = useState(guestEmail)
     const [total, setTotal] = useState(0)
 
-    useEffect(() => {
-
-    })
+    const dispatch = useDispatch()
     useEffect(() => {
         if (goToReceipt) {
             navigate("/cart/orderconfirmation")
@@ -50,6 +49,7 @@ function CheckoutForm({
 
     function handleSubmit(event) {
         event.preventDefault()
+        dispatch(disableGuestEmailField(false))
         if (!isLoggedIn) {
             initiateGuestOrder(email, total)
         } else {
