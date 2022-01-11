@@ -3,9 +3,26 @@ import {bindActionCreators} from "redux";
 import {editProduct, cancelViewProductDetails, viewProductDetails} from "../../modules/shopkeeper";
 import {connect} from "react-redux";
 import moment from "moment";
+import {useEffect, useState} from "react";
+import {discountPrice, minAdPrice, sellPrice} from "../../utils/priceUtils";
 
 
 function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
+    const [sellingPrice, setSellingPrice] = useState(0)
+    const [theDiscountPrice, setTheDiscountPrice] = useState(0)
+    const [minAdvPrice, setMinAdvPrice] = useState(0)
+
+    useEffect(() => {
+        setSellingPrice(sellPrice(product))
+        setTheDiscountPrice(discountPrice(product).discountPrice)
+        setMinAdvPrice(minAdPrice(product))
+
+        if (minAdvPrice > sellingPrice) {
+            console.log('DUMPING ALERT')
+        } else if (minAdvPrice > theDiscountPrice) {
+            console.log('SALE TO STRONG')
+        }
+    }, [show]);
 
 
     return <Modal show={show} size="lg"
@@ -17,8 +34,24 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
         </Modal.Header>
         <Col><Card>
             <Card.Header>
-                <Card.Title>Brand</Card.Title>
-                <Card.Text>{product.brand}</Card.Text>
+                <Row>
+                    <Col>
+                        <Card.Title>Brand</Card.Title>
+                        <Card.Text>{product.brand}</Card.Text>
+                    </Col>
+                    <Col xs='sm'>
+                        {minAdvPrice > sellingPrice &&
+                        <Card.Title style={{color: 'red'}}>CHECK ADVERTISED PRICE - SCHEDULED PRICE UNDER
+                            MAP!</Card.Title>
+                        }
+                        {minAdvPrice > theDiscountPrice &&
+                        <Card.Title style={{color: 'red'}}>CHECK SALE - SALE UNDER MAP!</Card.Title>
+                        }
+                        {product.unitPrice > sellingPrice &&
+                        <Card.Title style={{color: 'red'}}>NO DUMPING! - CHECK PRICING</Card.Title>
+                        }
+                    </Col>
+                </Row>
                 <Card.Subtitle>Product Name</Card.Subtitle>
                 <Card.Text>{product.productName}</Card.Text>
                 <Card.Subtitle>Categories</Card.Subtitle>

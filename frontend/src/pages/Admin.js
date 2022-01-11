@@ -5,18 +5,18 @@ import React, {useState} from "react";
 import AdminErrorMessage from "../components/admin/AdminErrorMessage";
 import {connect} from "react-redux";
 
-const initialUserForm = {
-    id: null,
-    firstName: '',
-    lastName: '',
-    role: '',
-    authLevel: '',
-    email: '',
-    password: '',
-}
+
 
 function Admin({showError}) {
-    const [userForm, setUserForm] = useState(initialUserForm);
+    const [userForm, setUserForm] = useState( {
+        id: null,
+        firstName: '',
+        lastName: '',
+        role: '',
+        authLevel: '1',
+        email: '',
+        password: '',
+    });
 
     return <>
     <h1>Welcome Admin
