@@ -68,10 +68,15 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
                     <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'>Shopkeeper Actions</Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleShowCoupons}>Manage Coupons</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item onClick={handleShowOrderHistory}>Display Orders</Dropdown.Item>
                     </Dropdown.Menu><br/>
                     {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}

@@ -118,7 +118,7 @@ function AdminCreateUser({
                                   onChange={onChange}
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className={'text-white'}>
                     Submit
                 </Button>
             </Form>
