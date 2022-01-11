@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import moment from "moment";
 
 function ShopkeeperProduct({show, product, sales, cancelViewProductDetails}) {
-    console.log(product)
+    // console.log(product)
 
     return <Modal show={show} size="lg"
                   aria-labelledby="contained-modal-title-vcenter"
