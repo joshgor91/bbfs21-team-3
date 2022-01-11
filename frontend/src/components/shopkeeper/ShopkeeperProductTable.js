@@ -4,8 +4,9 @@ import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
 import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
 import ShopkeeperProduct from "./ShopkeeperProduct";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import moment from "moment";
+import {discountPrice, minAdPrice, sellPrice} from "../../utils/priceUtils";
 
 const initialSalePriceForm = {
     price: '',
@@ -31,6 +32,8 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
     const [salePrice, setSalePrice] = useState(initialSalePriceForm)
     const [newSales, setNewSales] = useState(initialSalesForm)
     const [minAdPrice, setMinAdPrice] = useState(initialMinAdPriceForm)
+
+
 
     function handleViewDetails(product) {
         viewProductDetails(product)
@@ -66,7 +69,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitPrice}</td>
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
-                    <td >{moment(product.productAvailablemoment).format('llll')}</td>
+                    <td >{moment(product.productAvailable).format('llll')}</td>
                     <td><Button variant="secondary" onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
