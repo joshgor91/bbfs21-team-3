@@ -15,6 +15,12 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
     const [fname, setFName] = useState('')
     const [lname, setLName] = useState('')
     const [password, setPassword] = useState('')
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleCloseTimed = () => setTimeout(() => {
+        handleClose()
+    }, 1000);
 
 
     function handleSubmitRegister(e) {
@@ -26,6 +32,11 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
             email: email,
             password: password
         })
+
+        if(registerErrorOccurred) {
+            handleShow()
+            handleCloseTimed()
+        }
     }
 
 
@@ -38,7 +49,7 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Group className="mb-3">
                                     <Form.Label>First name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter first name"
+                                    <Form.Control required type="text" placeholder="Enter first name"
                                                   onChange={event => setFName(event.target.value)}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
@@ -56,7 +67,7 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
 
                             <Form.Group className="mb-3" controlId="formBasicPassword1">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password"
+                                <Form.Control required type="password" placeholder="Password"
                                               onChange={event => setPassword(event.target.value)}/>
                             </Form.Group>
 
@@ -66,8 +77,8 @@ function RegisterForm({initiateRegisterUser, registerErrorOccurred, addUserSucce
 
 
                     </Form>
-                {registerErrorOccurred &&
-                <Alert variant="warning"> Register error occurred </Alert>
+                {show &&
+                <Alert variant="danger"> Register error occurred </Alert>
                 }
                 {addUserSuccess &&
                 <Alert variant="success"> You are registered! </Alert>

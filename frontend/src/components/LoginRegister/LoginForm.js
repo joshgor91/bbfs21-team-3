@@ -21,15 +21,15 @@ function LoginForm({loginErrorOccurred, initiateLogin}) {
 
                             <h1> Login </h1>
 
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Group required className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter email"
+                                <Form.Control required type="text" placeholder="Enter email"
                                               onChange={event => setEmail(event.target.value)}/>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Group required className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password"
+                                <Form.Control required type="password" placeholder="Password"
                                               onChange={event => setPassword(event.target.value)}/>
                             </Form.Group>
 
