@@ -30,7 +30,8 @@ function CheckoutForm({
                           initiateAddOrder,
                           goToReceipt,
                           initiateGuestOrder,
-                          guestEmail
+                          guestEmail,
+                          disableEmail
                       }) {
 
     const navigate = useNavigate()
@@ -70,17 +71,17 @@ function CheckoutForm({
         <Form className="general-form" onSubmit={handleSubmit}>
 
             <Form.Group className="mb-3" controlId="formBasicAddress">
-                {!isLoggedIn && guestEmail.length === 0 ?
+                {!isLoggedIn &&
                     <>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control required type="text" placeholder="Email" value={email}
+                        <Form.Control required type="text" placeholder="Email" value={email} disabled={disableEmail}
                                       onChange={(event) => setEmail(event.target.value)}/>
                     </>
-                    :
+                    /*:
                     <>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="text" placeholder={guestEmail} value={guestEmail} disabled={true}/>
-                    </>}
+                    </>*/}
                 <Form.Label>Address</Form.Label>
                 <Form.Control required type="text required" placeholder="Address" value={address1}
                               defaultValue={loggedInUser.address1}
@@ -117,7 +118,8 @@ function mapStateToProps(state) {
         loggedInUser: state.userReducer.loggedInUser,
         goToReceipt: state.orderReducer.goToReceipt,
         isLoggedIn: state.userReducer.isLoggedIn,
-        guestEmail: state.guestReducer.guestEmail
+        guestEmail: state.guestReducer.guestEmail,
+        disableEmail: state.guestReducer.disableEmail
     }
 }
 
