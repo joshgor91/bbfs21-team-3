@@ -10,11 +10,18 @@ import Checkout from "../../pages/Checkout";
 import UserPage from "../../pages/UserPage";
 import OrderComplete from "../../pages/OrderComplete";
 import ProductDetails from "../ProductsView/ProductDetails";
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {initiateGetCartItems} from "../../modules/cart";
 
 
 
 
 function GuestRouter({cartQuantity, themeToggler}) {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(initiateGetCartItems())
+    },[])
 
         return (
 

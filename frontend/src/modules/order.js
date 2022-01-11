@@ -1,4 +1,5 @@
 import {disableGuestEmailField} from "./guest";
+import {clearQuantity} from "./cart";
 
 const ADDING_ORDER = 'ADDING_ORDER'
 const ADD_ORDER_FAILED = 'ADD_ORDER_FAILED'
@@ -19,7 +20,7 @@ const initialState = {
     getOrderHistoryFailed: false,
     errorMessage: '',
     getOrderHistorySuccess: false,
-    discount:0,
+    couponDiscount:0,
     couponCode:'',
     orders: [],
 }
@@ -86,7 +87,7 @@ export default function reducer(state = initialState, action) {
         case SET_COUPON:
             return {
                 ...state,
-                discount: action.discount,
+                couponDiscount: action.couponDiscount,
                 couponCode: action.couponCode
             }
 
@@ -136,8 +137,8 @@ function getShopkeeperOrderHistorySuccess(orders) {
     }
 }
 
-export function setCoupon(discount, couponCode) {
-    return {type: SET_COUPON, discount, couponCode}
+export function setCoupon(couponDiscount, couponCode) {
+    return {type: SET_COUPON, couponDiscount, couponCode}
 }
 
 // Side Effects
@@ -165,6 +166,7 @@ export function initiateAddOrder() {
             response.text().then(text => {
                 if (text === "success") {
                     console.log("order placed")
+                    dispatch(clearQuantity())
                     dispatch(goToReceipt())
                 } else {
                     dispatch(addOrderFailed())
@@ -223,7 +225,21 @@ export function initiateGuestOrder(email, total) {
     console.log(filteredCartStorage)
     return function addGuestOrderSideEffect(dispatch, getState) {
         console.log(typeof filteredCartStorage[0].regularPrice)
+        let couponCode = getState().orderReducer.couponCode
         dispatch(addingOrder())
+        let headers = {
+            'email': email,
+            'total': total,
+            'Content-Type': 'application/json'
+        }
+        if(couponCode !== "") {
+            headers = {
+                'email': email,
+                'total': total,
+                'Content-Type': 'application/json',
+                'couponCode':couponCode
+            }
+        }
         fetch("http://localhost:8080/api/order/addGuestOrder", {
             method: "POST",
             headers: {
@@ -238,7 +254,10 @@ export function initiateGuestOrder(email, total) {
             response.text().then(text => {
                 if (text === "success") {
                     console.log("order placed")
+                    dispatch(setCoupon(0, ""))
                     dispatch(goToReceipt())
+                    dispatch(disableGuestEmailField(false))
+                    dispatch(clearQuantity())
                     window.localStorage.clear()
                 } else {
                     dispatch(addOrderFailed())
@@ -279,7 +298,6 @@ export function initiateValidateCoupon(coupon) {
                         dispatch(disableGuestEmailField(true))
                     }
                     dispatch(setCoupon(couponRes.couponDiscount, coupon))
-                    return couponRes.couponDiscount
                 } else {
                     dispatch(disableGuestEmailField(false))
                     console.log(couponRes.message)
