@@ -11,6 +11,7 @@ import cartReducer from './modules/cart'
 import shopkeeperReducer from './modules/shopkeeper'
 import orderReducer from './modules/order'
 import guestReducer from './modules/guest'
+import couponReducer from './modules/coupon'
 
 
 const asyncMiddleware = storeAPI => next => action => {
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     cartReducer,
     shopkeeperReducer,
     orderReducer,
-    guestReducer
+    guestReducer,
+    couponReducer
 })
 const store = createStore(rootReducer, middlewareEnhancer)
 
