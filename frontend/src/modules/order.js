@@ -1,3 +1,5 @@
+import {disableGuestEmailField} from "./guest";
+
 const ADDING_ORDER = 'ADDING_ORDER'
 const ADD_ORDER_FAILED = 'ADD_ORDER_FAILED'
 const GO_TO_RECEIPT = 'GO_TO_RECEIPT'
@@ -6,6 +8,7 @@ const GETTING_ORDER_HISTORY = 'GETTING_ORDER_HISTORY'
 const GET_ORDER_HISTORY_FAILED = 'GET_ORDER_HISTORY_FAILED'
 const GET_ORDER_HISTORY_SUCCESS = 'GET_ORDER_HISTORY_SUCCESS'
 const GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS = 'GET_SHOPKEEPER_ORDER_HISTORY_SUCCESS'
+const SET_COUPON = "SET_COUPON"
 
 
 const initialState = {
@@ -16,6 +19,8 @@ const initialState = {
     getOrderHistoryFailed: false,
     errorMessage: '',
     getOrderHistorySuccess: false,
+    discount:0,
+    couponCode:'',
     orders: [],
 }
 
@@ -78,6 +83,12 @@ export default function reducer(state = initialState, action) {
                 orders: action.payload,
                 errorMessage: ''
             }
+        case SET_COUPON:
+            return {
+                ...state,
+                discount: action.discount,
+                couponCode: action.couponCode
+            }
 
         default:
             return state
@@ -105,13 +116,17 @@ function gettingOrderHistory() {
 }
 
 function getOrderHistoryFailed(errorMessage) {
-    return {type: GET_ORDER_HISTORY_FAILED,
-    payload:errorMessage}
+    return {
+        type: GET_ORDER_HISTORY_FAILED,
+        payload: errorMessage
+    }
 }
 
 function getOrderHistorySuccess(orders) {
-    return {type: GET_ORDER_HISTORY_SUCCESS,
-        payload:orders}
+    return {
+        type: GET_ORDER_HISTORY_SUCCESS,
+        payload: orders
+    }
 }
 
 function getShopkeeperOrderHistorySuccess(orders) {
@@ -121,25 +136,37 @@ function getShopkeeperOrderHistorySuccess(orders) {
     }
 }
 
+export function setCoupon(discount, couponCode) {
+    return {type: SET_COUPON, discount, couponCode}
+}
+
 // Side Effects
 export function initiateAddOrder() {
     return function addOrderSideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
+        const couponCode = getState().orderReducer.couponCode
         console.log(cartId)
         dispatch(addingOrder())
+        let headers = {
+            'cartId': cartId,
+        }
+        if(couponCode !== "") {
+            headers = {
+                'cartId': cartId,
+                'couponCode':couponCode
+            }
+        }
         fetch("http://localhost:8080/api/order/add", {
             method: "POST",
-            headers: {
-                'cartId': cartId,
-            },
+            headers: headers,
         }).then(response => {
             if (!response.ok)
                 return dispatch(addOrderFailed())
             response.text().then(text => {
-                if(text==="success"){
+                if (text === "success") {
                     console.log("order placed")
                     dispatch(goToReceipt())
-                }else{
+                } else {
                     dispatch(addOrderFailed())
                 }
             })
@@ -187,10 +214,10 @@ export function initiateGuestOrder(email, total) {
     console.log(cartStorage)
     const filteredCartStorage = cartStorage.map(cartItem => {
         return {
-                    "productId": cartItem.id,
-                    "quantity": cartItem.quantity,
-                    "regularPrice":parseFloat(cartItem.regularPrice),
-                    "salePrice":parseFloat(cartItem.salePrice)
+            "productId": cartItem.id,
+            "quantity": cartItem.quantity,
+            "regularPrice": parseFloat(cartItem.regularPrice),
+            "salePrice": parseFloat(cartItem.salePrice)
         }
     })
     console.log(filteredCartStorage)
@@ -201,7 +228,7 @@ export function initiateGuestOrder(email, total) {
             method: "POST",
             headers: {
                 'email': email,
-                'total':total,
+                'total': total,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(filteredCartStorage)
@@ -209,12 +236,53 @@ export function initiateGuestOrder(email, total) {
             if (!response.ok)
                 return dispatch(addOrderFailed())
             response.text().then(text => {
-                if(text==="success"){
+                if (text === "success") {
                     console.log("order placed")
                     dispatch(goToReceipt())
                     window.localStorage.clear()
-                }else{
+                } else {
                     dispatch(addOrderFailed())
+                }
+            })
+        }).catch(error => console.log(error))
+    }
+}
+
+export function initiateValidateCoupon(coupon) {
+    console.log("this is my coupon: ", coupon)
+    return function validateCouponSideEffect(dispatch, getState) {
+        // either guest or user will be calling the endpoint not both
+        const userId = getState().userReducer.loggedInUser.id
+        let email = getState().guestReducer.guestEmail
+        let headers;
+        if (userId) headers = {
+            'couponCode': coupon,
+            'userId': userId
+        }
+        else if (!userId && email) headers = {
+            'couponCode': coupon,
+            'email': email
+        }
+        else headers = {
+                'couponCode': coupon
+            }
+        fetch("http://localhost:8080/api/coupon/validateCoupon", {
+            method: "GET",
+            headers: headers,
+        }).then(response => {
+            if (!response.ok)
+                return dispatch(getOrderHistoryFailed("Unable to get coupon."))
+            response.json().then(couponRes => {
+                console.log(couponRes)
+                if (couponRes.message === "success") {
+                    if(!userId) {
+                        dispatch(disableGuestEmailField(true))
+                    }
+                    dispatch(setCoupon(couponRes.couponDiscount, coupon))
+                    return couponRes.couponDiscount
+                } else {
+                    dispatch(disableGuestEmailField(false))
+                    console.log(couponRes.message)
                 }
             })
         }).catch(error => console.log(error))

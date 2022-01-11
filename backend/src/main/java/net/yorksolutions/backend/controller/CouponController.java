@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -51,6 +52,12 @@ public class CouponController {
     }
 
     @CrossOrigin
+    @GetMapping("/couponCode")
+    Coupon getCouponCode(@RequestHeader String couponCode) {
+        return  couponRepo.findById(couponCode).orElseThrow();
+    }
+
+    @CrossOrigin
     @DeleteMapping("/delete")
     String deleteCoupon(@RequestHeader String couponCode) {
         couponRepo.findById(couponCode).orElseThrow();
@@ -60,10 +67,14 @@ public class CouponController {
 
     @CrossOrigin
     @GetMapping("/validateCoupon")
-    String validateCoupon(@RequestHeader String couponCode, @RequestHeader Optional<Long> userId, @RequestHeader Optional<String> email) {
+
+    Object validateCoupon(@RequestHeader String couponCode, @RequestHeader Optional<Long> userId, @RequestHeader Optional<String> email) {
         var response = couponRepo.findById(couponCode);
-        if (response.isEmpty())
-            return "This coupon code is invalid. Please enter a valid coupon code.";
+        HashMap<String, Object> res = new HashMap<>();
+        if (response.isEmpty()) {
+            res.put("message", "This coupon code is invalid. Please enter a valid coupon code.");
+            return res;
+        }
         var coupon = response.get();
         Stream<OrderDetails> couponOrders;
         long numOfOrders = 0;
@@ -74,16 +85,18 @@ public class CouponController {
             numOfOrders = couponOrders.count();
         }
         else if (email.isPresent()) {
-            var orders = orderDetailsRepo.findAllByEmail(email.get());
-            if (orders.isEmpty())
-                throw new NoSuchElementException("No orders associated with the email '" + email.get() + "'.");
             couponOrders = coupon.orders.stream().filter(orderDetails -> orderDetails.email.equals(email.get()));
             numOfOrders = couponOrders.count();
         }
-        else return "A userId or guest email must be provided to check coupon code validity.";
+        else {
+            res.put("message", "A userId or guest email must be provided to check coupon code validity.");
+            return res;
+        }
 
-        if (numOfOrders >= coupon.useLimit)
-            return "Sorry this coupon has reached its use limit.";
+        if (numOfOrders >= coupon.useLimit) {
+            res.put("message", "Sorry this coupon has reached its use limit.");
+            return res;
+        }
 
         if (coupon.startDate != null && coupon.endDate != null) {
             var currentDate = LocalDateTime.now();
@@ -92,10 +105,14 @@ public class CouponController {
             startDate = startDate.plusHours(6);
             endDate =  endDate.plusDays(1).plusHours(6).plusSeconds(-1);
 
-            if (currentDate.isBefore(startDate) || currentDate.isAfter(endDate))
-                return "Sorry, this coupon isn't currently eligible for redemption.";
+            if (currentDate.isBefore(startDate) || currentDate.isAfter(endDate)) {
+                res.put("message", "Sorry, this coupon isn't currently eligible for redemption.");
+                return res;
+            }
         }
 
-        return "success";
+        res.put("message", "success");
+        res.put("couponDiscount", coupon.discount);
+        return res;
     }
 }

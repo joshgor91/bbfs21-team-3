@@ -34,11 +34,11 @@ public class Product {
 
     @JsonProperty
     @ElementCollection
-    public List<MininumAdvertisedPrice> mininumAdvertisedPrices;
+    public List<MininumAdvertisedPrice> mininumAdvertisedPrice;
 
     @JsonProperty
     @ElementCollection
-    public List<Sales> Sales;
+    public List<Sales> sales;
 
     @JsonProperty
     public String productName;
@@ -117,6 +117,6 @@ public class Product {
     }
 
     public List<net.yorksolutions.backend.model.Sales> getSales() {
-        return Sales;
+        return sales;
     }
 }

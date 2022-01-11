@@ -5,11 +5,26 @@ import {connect} from "react-redux"
 import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
 import ShopkeeperProduct from "./ShopkeeperProduct";
 import {useState} from "react";
+import moment from "moment";
 
+const initialSalePriceForm = {
+    price: '',
+    effectiveDate: ''
+}
+
+const initialSalesForm = {
+    salesPrice: '',
+    saleStartDate: '',
+    saleEndDate: '',
+    discount: '',
+    saleDescription: ''
+}
 
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
     const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
     const [showProductDetails, setShowProductDetails] = useState(false)
+    const [salePrice, setSalePrice] = useState(initialSalePriceForm)
+    const [newSales, setNewSales] = useState(initialSalesForm)
 
     function handleViewDetails(product) {
         viewProductDetails(product)
@@ -17,8 +32,13 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
     }
 
     return <>
-            <ShopkeeperEditProduct/>
-        {showProductDetails ? <ShopkeeperProduct/> : ''}
+            <ShopkeeperEditProduct
+                salePrice={salePrice}
+                setSalePrice={setSalePrice}
+                newSales={newSales}
+                setNewSales={setNewSales}
+            />
+        {showProductDetails ? <ShopkeeperProduct/> : <></>}
 
 
         <Table striped bordered responsive hidden={hide}>
@@ -38,7 +58,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitPrice}</td>
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
-                    <td >{product.productAvailable}</td>
+                    <td >{moment(product.productAvailablemoment).format('llll')}</td>
                     <td><Button variant="secondary" onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
