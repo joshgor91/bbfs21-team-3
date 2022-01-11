@@ -223,6 +223,17 @@ export function initiateGetCartItems() {
                 }
             })
                 .catch(err => console.log(`Error in initiateGetCartItems = ${err}`))
+        } else {
+            let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
+            if(!cartStorage) dispatch(setQuantity(0))
+            else if(Array.isArray(cartStorage) && cartStorage.length > 0) {
+                cartStorage.forEach(cartItem => {
+                    newCartItemQuantity += cartItem.quantity
+                })
+                dispatch(setQuantity(newCartItemQuantity))
+            } else {
+                dispatch(setQuantity(0))
+            }
         }
     }
 }
