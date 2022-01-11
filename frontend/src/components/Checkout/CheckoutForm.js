@@ -33,7 +33,8 @@ function CheckoutForm({
                           initiateGuestOrder,
                           guestEmail,
                           disableEmail,
-                          guestTotal
+                          guestTotal,
+                          customerTotal
                       }) {
 
     const navigate = useNavigate()
@@ -62,7 +63,7 @@ function CheckoutForm({
                     state,
                     zipcode
                 })
-            initiateAddOrder()
+            initiateAddOrder(customerTotal)
         }
 
     }
@@ -120,7 +121,8 @@ function mapStateToProps(state) {
         isLoggedIn: state.userReducer.isLoggedIn,
         guestEmail: state.guestReducer.guestEmail,
         disableEmail: state.guestReducer.disableEmail,
-        guestTotal: state.guestReducer.guestTotal
+        guestTotal: state.guestReducer.guestTotal,
+        customerTotal: state.cartReducer.total
     }
 }
 
