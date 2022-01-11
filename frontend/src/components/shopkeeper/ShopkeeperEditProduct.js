@@ -144,13 +144,7 @@ function ShopkeeperEditProduct({
             [name]: value
         })
 
-        // useEffect(() => {
-        //     if (show) {
-        //         setProductCategory(product.categories)
-        //         setScheduledSalesArray(product.sales)
-        //         setScheduledPricesArray(product.scheduledPrices)
-        //     }
-        // }, [show])
+    }
 
         function handleAdd() {
             if (categorySelect.categoryName === '') {
@@ -434,7 +428,6 @@ function ShopkeeperEditProduct({
                 <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
             </Form>
         </Modal>
-    }
 }
 
     function mapStateToProps(state) {
