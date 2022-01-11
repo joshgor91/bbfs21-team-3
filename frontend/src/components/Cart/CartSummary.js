@@ -15,6 +15,7 @@ function CartSummary({cartItems, cartSummery}) {
     const [coupon, setCoupon] = useState()
 
     function validateCoupon(){
+        console.log("validating coupon")
         dispatch(initiateValidateCoupon(coupon))
     }
 
