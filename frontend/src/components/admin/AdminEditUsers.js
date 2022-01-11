@@ -28,7 +28,7 @@ function AdminCreateUser ({
 
 
     function handleSubmitCreateUser(e){
-        console.log("calling userFrom " + {userForm})
+        // console.log("calling userFrom " + {userForm})
         e.preventDefault()
         if (isEditing){
             submitEditUser({...userForm})
@@ -36,7 +36,7 @@ function AdminCreateUser ({
         else{
             initiateAddUser({...userForm})
             initiateGetUsers()
-        console.log(userForm)
+        // console.log(userForm)
     }
     setUserForm(initialUserForm)
     }

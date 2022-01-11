@@ -75,27 +75,27 @@ function ShopkeeperEditProduct({
                                }) {
 
     const newDate = new Date().toLocaleDateString()
-    console.log(newDate)
+    // console.log(newDate)
 
     const [productCategory, setProductCategory] = useState([])
     const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
     const [scheduledPricesArray, setScheduledPricesArray] = useState([])
     const [scheduledSalesArray, setScheduledSalesArray] = useState([])
 
-    console.log(product)
+    // console.log(product)
     // console.log(product.scheduledPrices)
 
     function onChange(e) {
-        console.log(`logging e.target = ${e.target}`)
+        // console.log(`logging e.target = ${e.target}`)
         const {value, selectedIndex} = e.target
-        console.log(`logging selectedIndex`)
+        // console.log(`logging selectedIndex`)
         const {id} = e.target.options[selectedIndex]
         setCategorySelect({id: Number(id), categoryName: value})
     }
 
     function onScheduledPricesChange(e) {
-        console.log("onScheduledPricesChange clicked" + e)
-        console.log(e)
+        // console.log("onScheduledPricesChange clicked" + e)
+        // console.log(e)
         const {name, value} = e.target
         setSalePrice({
             ...salePrice,
@@ -121,7 +121,7 @@ function ShopkeeperEditProduct({
 
     function handleAdd() {
         if (categorySelect.categoryName === '') {
-            console.log(`logging empty string`)
+            // console.log(`logging empty string`)
         } else {
             setProductCategory([...productCategory, categorySelect])
         }
@@ -156,13 +156,13 @@ function ShopkeeperEditProduct({
             const newDate2 = new Date(salePrice.effectiveDate)
             return newDate.getTime() === newDate2.getTime()
         })
-        console.log("scheduled price " + exists)
+        // console.log("scheduled price " + exists)
         if (exists) {
             setScheduledPricesArray(scheduledPricesArray?.map(scheduledPrice => {
                 const newDate = new Date(scheduledPrice.effectiveDate)
                 const newDate2 = new Date(salePrice.effectiveDate)
                 if (newDate.getTime() === newDate2.getTime()) {
-                    console.log(salePrice)
+                    // console.log(salePrice)
                     return salePrice
                 }
             }))
@@ -180,7 +180,7 @@ function ShopkeeperEditProduct({
             return startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()
 
         })
-        console.log("sales price " + exists)
+        // console.log("sales price " + exists)
         if (exists) {
             setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
                 const startDate = new Date(scheduledSales.saleStartDate)
@@ -188,7 +188,7 @@ function ShopkeeperEditProduct({
                 const startDate2 = new Date(newSales.saleStartDate)
                 const endDate2 = new Date(newSales.saleEndDate)
                 if (startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()) {
-                    console.log(newSales)
+                    // console.log(newSales)
                     return newSales
                 }
             }))
@@ -196,8 +196,6 @@ function ShopkeeperEditProduct({
             setScheduledSalesArray([...scheduledSalesArray, newSales])
         }
     }
-
-    console.log()
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -223,16 +221,16 @@ function ShopkeeperEditProduct({
         })
         setSalePrice(initialSalePriceForm)
         setNewSales(initialSalesForm)
-        console.log(salePrice)
+        // console.log(salePrice)
 
 
     }
 
     // console.log(product.scheduledSales)
 
-    console.log(newSales)
-    console.log(newSales.saleStartDate)
-    console.log(scheduledPricesArray)
+    // console.log(newSales)
+    // console.log(newSales.saleStartDate)
+    // console.log(scheduledPricesArray)
 
     return <Modal show={show} onHide={cancelEditProduct}>
         <Modal.Header closeButton>
