@@ -90,6 +90,8 @@ function ShopkeeperEditProduct({
     const [scheduledSalesArray, setScheduledSalesArray] = useState([])
     const [minimumAdPriceArray, setMinimumAdPriceArray] = useState([])
 
+
+    console.log(product)
     useEffect(() => {
         if (show) {
             setProductCategory(product.categories)
@@ -352,24 +354,24 @@ function ShopkeeperEditProduct({
 
             <hr/>
             <Card.Subtitle>Minimum Advertised Price</Card.Subtitle>
-            <div>
-                <Table striped bordered hover size="sm">
-                    <thead>
-                    <tr>
-                        <th>Price</th>
-                        <th>Effective Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {product.minimumAdvertisedPrice?.map((productMap, idx) =>
-                        <tr key={idx}>
-                            <td>{productMap.price}</td>
-                            <td>{moment(productMap.effectiveDate).format('llll')}</td>
-                        </tr>
-                    )}
-                    </tbody>
-                </Table>
-            </div>
+            {/*<div>*/}
+            {/*    <Table striped bordered hover size="sm">*/}
+            {/*        <thead>*/}
+            {/*        <tr>*/}
+            {/*            <th>Price</th>*/}
+            {/*            <th>Effective Date</th>*/}
+            {/*        </tr>*/}
+            {/*        </thead>*/}
+            {/*        <tbody>*/}
+            {/*        {product.minimumAdvertisedPrice?.map((productMap, idx) =>*/}
+            {/*            <tr key={idx}>*/}
+            {/*                <td>{productMap.price}</td>*/}
+            {/*                <td>{moment(productMap.effectiveDate).format('llll')}</td>*/}
+            {/*            </tr>*/}
+            {/*        )}*/}
+            {/*        </tbody>*/}
+            {/*    </Table>*/}
+            {/*</div>*/}
             <hr/>
             <Form.Label>Effective minimum advertised price date</Form.Label>
             <Form.Control type={"date"} name="effectiveDate" value={minAdPrice.effectiveDate}
@@ -384,24 +386,24 @@ function ShopkeeperEditProduct({
 
             <hr/>
             <Form.Label>Scheduled Prices</Form.Label>
-            <div>
-                <Table striped bordered hover size="sm">
-                    <thead>
-                    <tr>
-                        <th>Price</th>
-                        <th>Effective Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {product.scheduledPrices?.map((scheduledPrice, idx) =>
-                        <tr key={idx}>
-                            <td>{scheduledPrice.price}</td>
-                            <td>{moment(scheduledPrice.effectiveDate).format('llll')}</td>
-                        </tr>
-                    )}
-                    </tbody>
-                </Table>
-            </div>
+            {/*<div>*/}
+            {/*    <Table striped bordered hover size="sm">*/}
+            {/*        <thead>*/}
+            {/*        <tr>*/}
+            {/*            <th>Price</th>*/}
+            {/*            <th>Effective Date</th>*/}
+            {/*        </tr>*/}
+            {/*        </thead>*/}
+            {/*        <tbody>*/}
+            {/*        {product.scheduledPrices?.map((scheduledPrice, idx) =>*/}
+            {/*            <tr key={idx}>*/}
+            {/*                <td>{scheduledPrice.price}</td>*/}
+            {/*                <td>{moment(scheduledPrice.effectiveDate).format('llll')}</td>*/}
+            {/*            </tr>*/}
+            {/*        )}*/}
+            {/*        </tbody>*/}
+            {/*    </Table>*/}
+            {/*</div>*/}
 
             <Form.Label>Effective scheduled price date</Form.Label>
             <Form.Control type={"date"} name="effectiveDate" value={salePrice.effectiveDate}
@@ -416,28 +418,28 @@ function ShopkeeperEditProduct({
 
             <hr/>
             <Card.Subtitle>Scheduled Sales Start Date</Card.Subtitle>
-            <div>
-                <Table striped bordered hover size="sm">
-                    <thead>
-                    <tr>
-                        <th>Sale Start</th>
-                        <th>Sale End</th>
-                        <th>Discount</th>
-                        <th>Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {product.sales?.map((scheduledSale, idx) =>
-                        <tr key={idx}>
-                            <td>{moment(scheduledSale.saleStartDate).format('llll')}</td>
-                            <td>{moment(scheduledSale.saleEndDate).format('llll')}</td>
-                            <td>{scheduledSale.discount * 100}%</td>
-                            <td>{scheduledSale.saleDescription}</td>
-                        </tr>
-                    )}
-                    </tbody>
-                </Table>
-            </div>
+            {/*<div>*/}
+            {/*    <Table striped bordered hover size="sm">*/}
+            {/*        <thead>*/}
+            {/*        <tr>*/}
+            {/*            <th>Sale Start</th>*/}
+            {/*            <th>Sale End</th>*/}
+            {/*            <th>Discount</th>*/}
+            {/*            <th>Description</th>*/}
+            {/*        </tr>*/}
+            {/*        </thead>*/}
+            {/*        <tbody>*/}
+            {/*        {product.sales?.map((scheduledSale, idx) =>*/}
+            {/*            <tr key={idx}>*/}
+            {/*                <td>{moment(scheduledSale.saleStartDate).format('llll')}</td>*/}
+            {/*                <td>{moment(scheduledSale.saleEndDate).format('llll')}</td>*/}
+            {/*                <td>{scheduledSale.discount * 100}%</td>*/}
+            {/*                <td>{scheduledSale.saleDescription}</td>*/}
+            {/*            </tr>*/}
+            {/*        )}*/}
+            {/*        </tbody>*/}
+            {/*    </Table>*/}
+            {/*</div>*/}
             <hr/>
 
             <Form.Label>Sale start date</Form.Label>
