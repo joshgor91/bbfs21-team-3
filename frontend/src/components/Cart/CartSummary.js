@@ -114,7 +114,9 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
 
 function mapStateToProps(state) {
     return {
-        guestEmail: state.guestReducer.guestEmail
+        guestEmail: state.guestReducer.guestEmail,
+        discount: state.orderReducer.discount,
+
     }
 }
 
