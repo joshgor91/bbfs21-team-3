@@ -85,9 +85,6 @@ public class CouponController {
             numOfOrders = couponOrders.count();
         }
         else if (email.isPresent()) {
-            var orders = orderDetailsRepo.findAllByEmail(email.get());
-            if (orders.isEmpty())
-                throw new NoSuchElementException("No orders associated with the email '" + email.get() + "'.");
             couponOrders = coupon.orders.stream().filter(orderDetails -> orderDetails.email.equals(email.get()));
             numOfOrders = couponOrders.count();
         }
