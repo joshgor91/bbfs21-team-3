@@ -15,7 +15,7 @@ function Products({inventory}) {
                         </div>
                  </Row>
                  <Row>
-                <Carousel fade variant="dark" id="carousel" style={{width:900, height:450, margin:'auto'}}>
+                <Carousel fade variant="dark" id="carousel">
 
                     <Carousel.Item>
                         <img

@@ -162,7 +162,7 @@ function clearCart() {
     }
 }
 
-function clearQuantity() {
+export function clearQuantity() {
     return {
         type: CLEAR_QUANTITY
     }
