@@ -32,12 +32,13 @@ function CheckoutForm({
                           goToReceipt,
                           initiateGuestOrder,
                           guestEmail,
-                          disableEmail
+                          disableEmail,
+                          guestTotal,
+                          customerTotal
                       }) {
 
     const navigate = useNavigate()
     const [email, setEmail] = useState(guestEmail)
-    const [total, setTotal] = useState(0)
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -51,7 +52,7 @@ function CheckoutForm({
         event.preventDefault()
         dispatch(disableGuestEmailField(false))
         if (!isLoggedIn) {
-            initiateGuestOrder(email, total)
+            initiateGuestOrder(email, guestTotal)
         } else {
             initiateEditUserInfo(
                 {
@@ -62,7 +63,7 @@ function CheckoutForm({
                     state,
                     zipcode
                 })
-            initiateAddOrder()
+            initiateAddOrder(customerTotal)
         }
 
     }
@@ -119,7 +120,9 @@ function mapStateToProps(state) {
         goToReceipt: state.orderReducer.goToReceipt,
         isLoggedIn: state.userReducer.isLoggedIn,
         guestEmail: state.guestReducer.guestEmail,
-        disableEmail: state.guestReducer.disableEmail
+        disableEmail: state.guestReducer.disableEmail,
+        guestTotal: state.guestReducer.guestTotal,
+        customerTotal: state.cartReducer.total
     }
 }
 

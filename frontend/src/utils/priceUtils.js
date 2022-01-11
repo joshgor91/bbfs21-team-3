@@ -2,7 +2,18 @@ let now = new Date()
 let currentPrice = 0
 let currentSale = 0
 let saleAndPrice = 0
+let minAdvPrice = 0
 
+export function minAdPrice(product) {
+    // console.log(product)
+    product.mininumAdvertisedPrice?.map(minAdPr => {
+        if (new Date(minAdPr.effectiveDate) - now < 0) {
+            minAdvPrice = minAdPr.price
+        }
+    })
+    // console.log(minAdvPrice)
+    return minAdvPrice
+}
 
 export function sellPrice(product) {
     product.scheduledPrices?.map(prices => {

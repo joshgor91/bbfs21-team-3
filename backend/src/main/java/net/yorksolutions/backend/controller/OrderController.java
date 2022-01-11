@@ -70,12 +70,12 @@ public class OrderController {
 
     @CrossOrigin
     @PostMapping("/add")
-    String createOrder (@RequestHeader Long cartId, @RequestHeader Optional<String> couponCode) {
+    String createOrder (@RequestHeader Long cartId, @RequestHeader Optional<String> couponCode, @RequestHeader Float total) {
         var cart = cartRepo.findById(cartId).get();
         var userId = cart.userId;
-        var total = cart.totalCost;
+        var customerTotal = total;
         var cartItems= cartItemRepo.findAllByCartId(cartId).orElseThrow();
-        var order = new OrderDetails(userId, total);
+        var order = new OrderDetails(userId, customerTotal);
         var orderStatus = createOrder(cartItems, order, couponCode);
         if (!orderStatus.equals("success"))
             return orderStatus;

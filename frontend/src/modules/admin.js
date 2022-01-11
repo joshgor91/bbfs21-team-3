@@ -256,10 +256,10 @@ export function initiateAddUser(user) {
 
             response.text().then(text => {
                 if (text === 'success')
-                    // dispatch(initiateLogin(user))
-                    console.log("user registered")
+                    dispatch(initiateGetUsers())
+                // console.log("user registered")
 
-                else {
+            else {
                     // console.log("did not hit success")
                     dispatch(addUserFailed("Unable to add user"))
                 }
