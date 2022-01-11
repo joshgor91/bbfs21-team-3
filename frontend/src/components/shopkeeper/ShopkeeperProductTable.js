@@ -20,11 +20,17 @@ const initialSalesForm = {
     saleDescription: ''
 }
 
+const initialMinAdPriceForm = {
+    effectiveDate: '',
+    price: ''
+}
+
 function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProduct, viewProductDetails}) {
     const tHead = ['ID', 'Product Name', 'Brand', 'Unit Price', 'Units in Stock', 'Units Received', 'Product Available', 'Details', 'Edit/Delete']
     const [showProductDetails, setShowProductDetails] = useState(false)
     const [salePrice, setSalePrice] = useState(initialSalePriceForm)
     const [newSales, setNewSales] = useState(initialSalesForm)
+    const [minAdPrice, setMinAdPrice] = useState(initialMinAdPriceForm)
 
     function handleViewDetails(product) {
         viewProductDetails(product)
@@ -37,6 +43,8 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                 setSalePrice={setSalePrice}
                 newSales={newSales}
                 setNewSales={setNewSales}
+                minAdPrice={minAdPrice}
+                setMinAdPrice={setMinAdPrice}
             />
         {showProductDetails ? <ShopkeeperProduct/> : <></>}
 

@@ -38,6 +38,8 @@ const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
 const SCHEDULED_SALES_PRICE = 'SCHEDULED_SALES_PRICE'
 const SCHEDULED_SALES_EFFECTIVE_DATE = 'SCHEDULED_SALES_EFFECTIVE_DATE'
 
+const FORMAT_DATE = 'FORMAT_DATE'
+
 
 const initialState = {
     products: [],
@@ -89,7 +91,6 @@ export default function reducer(state = initialState, action) {
                 effectiveDate: action.effectiveDate
             }
 
-            // case SCHEDULED_
 
         case ADD_PRODUCT:
             return {
@@ -525,11 +526,22 @@ export function getProductsFailed() {
 }
 
 function productsUpdated(products) {
+    console.log(products)
     return {
         type: PRODUCTS_UPDATED,
         products
     }
 }
+
+function formatDate(effectiveDate){
+    console.log(effectiveDate)
+    // const formattedDate = new Date.toLocaleString(effectiveDate)
+    return{
+        type: FORMAT_DATE,
+        // formattedDate
+    }
+}
+
 
 export function initiateAddProduct(product) {
     return function sideEffect(dispatch) {
@@ -568,6 +580,7 @@ export function initiateGetProducts() {
 
             response.json().then(products => {
                 dispatch(productsUpdated(products))
+                dispatch(formatDate())
             })
         }).catch(error => console.log(error))
 

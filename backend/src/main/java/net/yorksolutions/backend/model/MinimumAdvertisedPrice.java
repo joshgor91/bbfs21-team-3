@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 import java.util.Date;
 
 @Embeddable
-public class MininumAdvertisedPrice {
+public class MinimumAdvertisedPrice {
     @JsonProperty
     private Float price;
 
@@ -14,10 +14,10 @@ public class MininumAdvertisedPrice {
     private Date effectiveDate;
 
 
-    public MininumAdvertisedPrice() {
+    public MinimumAdvertisedPrice() {
     }
 
-    public MininumAdvertisedPrice(Float price, Date effectiveDate) {
+    public MinimumAdvertisedPrice(Float price, Date effectiveDate) {
         this.price = price;
         this.effectiveDate = effectiveDate;
     }
