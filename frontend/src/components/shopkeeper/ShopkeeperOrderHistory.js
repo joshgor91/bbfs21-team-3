@@ -7,7 +7,7 @@ import ShopkeeperOrderDetails from "./ShopkeeperOrderDetails";
 function ShopkeeperOrderHistory({orderList, hide, setHide}) {
     const [showOrderDetails, setShowOrderDetails] = useState(false)
     const [order, setOrder] = useState({})
-    const tHead = ['Order Date', 'Order Total', 'Order Details']
+    const tHead = ['Order Date', 'Order Details']
 
     function handleSetOrder(order) {
         // console.log(`logging setOrder, order = ${order}`)
@@ -29,7 +29,6 @@ function ShopkeeperOrderHistory({orderList, hide, setHide}) {
             {orderList.map((order, i) => (
                 <tr key={order.orderDetails.orderDetailsId}>
                     <td >{moment(order.orderDetails.dateCreated).format("MMM Do YYYY")}</td>
-                    <td>${order.orderDetails.total}</td>
                     <td>
                         <Button size='xs' onClick={() => handleSetOrder(order)} >Details</Button>
                     </td>

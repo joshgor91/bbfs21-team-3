@@ -59,7 +59,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
             </thead>
             <tbody>
             {products.map((product, index) => (
-                <tr> key={index}>
+                <tr key={index}>
                     <td >{product.id}</td>
                     <td >{product.productName}</td>
                     <td >{product.brand}</td>
