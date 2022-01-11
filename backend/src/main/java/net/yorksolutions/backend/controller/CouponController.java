@@ -71,8 +71,10 @@ public class CouponController {
     Object validateCoupon(@RequestHeader String couponCode, @RequestHeader Optional<Long> userId, @RequestHeader Optional<String> email) {
         var response = couponRepo.findById(couponCode);
         HashMap<String, Object> res = new HashMap<>();
-        if (response.isEmpty())
-            return res.put("message", "This coupon code is invalid. Please enter a valid coupon code.");
+        if (response.isEmpty()) {
+            res.put("message", "This coupon code is invalid. Please enter a valid coupon code.");
+            return res;
+        }
         var coupon = response.get();
         Stream<OrderDetails> couponOrders;
         long numOfOrders = 0;
@@ -89,10 +91,15 @@ public class CouponController {
             couponOrders = coupon.orders.stream().filter(orderDetails -> orderDetails.email.equals(email.get()));
             numOfOrders = couponOrders.count();
         }
-        else return res.put("message", "A userId or guest email must be provided to check coupon code validity.");
+        else {
+            res.put("message", "A userId or guest email must be provided to check coupon code validity.");
+            return res;
+        }
 
-        if (numOfOrders >= coupon.useLimit)
-            return res.put("message", "Sorry this coupon has reached its use limit.");
+        if (numOfOrders >= coupon.useLimit) {
+            res.put("message", "Sorry this coupon has reached its use limit.");
+            return res;
+        }
 
         if (coupon.startDate != null && coupon.endDate != null) {
             var currentDate = LocalDateTime.now();
@@ -101,8 +108,10 @@ public class CouponController {
             startDate = startDate.plusHours(6);
             endDate =  endDate.plusDays(1).plusHours(6).plusSeconds(-1);
 
-            if (currentDate.isBefore(startDate) || currentDate.isAfter(endDate))
-                return res.put("message", "Sorry, this coupon isn't currently eligible for redemption.");
+            if (currentDate.isBefore(startDate) || currentDate.isAfter(endDate)) {
+                res.put("message", "Sorry, this coupon isn't currently eligible for redemption.");
+                return res;
+            }
         }
 
         res.put("message", "success");
