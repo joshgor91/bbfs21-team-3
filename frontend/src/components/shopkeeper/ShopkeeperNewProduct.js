@@ -74,7 +74,7 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='mb-3'>
                     <Form.Label>Product Name</Form.Label>
-                    <Form.Control type='productName' placeholder='Product Name' id='productName'/>
+                    <Form.Control required type='productName' placeholder='Product Name' id='productName'/>
                     <Form.Label>Categories</Form.Label>
                     <div className='mb-3'>{productCategories.map(category => <Badge key={category.id}>{category.categoryName}</Badge>)}</div>
                     <Form.Control type='categories' as='select'
@@ -84,17 +84,17 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                     </Form.Control>
                     <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button size='sm' onClick={() => handleRemove()}>Remove</Button></div>
                     <Form.Label>Product Description</Form.Label>
-                    <Form.Control type='productDescription' placeholder='Product Description' id='productDescription'/>
+                    <Form.Control required type='productDescription' placeholder='Product Description' id='productDescription'/>
                     <Form.Label>Brand</Form.Label>
-                    <Form.Control type='brand' placeholder='Brand' id='brand'/>
+                    <Form.Control required type='brand' placeholder='Brand' id='brand'/>
                     <Form.Label>Unit Price</Form.Label>
-                    <Form.Control type='number' step='.01' placeholder='Unit Price' id='unitPrice'/>
+                    <Form.Control required type='number' step='.01' placeholder='Unit Price' id='unitPrice'/>
                     <Form.Label>Units In Stock</Form.Label>
-                    <Form.Control type='number' placeholder='Units In Stock' id='unitsInStock'/>
+                    <Form.Control required type='number' placeholder='Units In Stock' id='unitsInStock'/>
                     <Form.Label>Size</Form.Label>
-                    <Form.Control type='size' placeholder='Size' id='size'/>
+                    <Form.Control required type='size' placeholder='Size' id='size'/>
                     <Form.Label>Color</Form.Label>
-                    <Form.Control type='text' as='select' id='color'>
+                    <Form.Control required type='text' as='select' id='color'>
                         <option value="white" selected>White</option>
                         <option value="grey">Grey</option>
                         <option value="blue">Blue</option>
@@ -107,9 +107,9 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                         <option value="silver">Silver</option>
                     </Form.Control>
                     <Form.Label>Product Available</Form.Label>
-                    <Form.Control type='date' id='productAvailable'/>
+                    <Form.Control required type='date' id='productAvailable'/>
                     <Form.Label>Discontinued</Form.Label>
-                    <Form.Control type='discontinued' as='select' id='discontinued'>
+                    <Form.Control required type='discontinued' as='select' id='discontinued'>
                         <option value={true}>True</option>
                         <option value={false} selected>False</option>
                     </Form.Control>
@@ -119,11 +119,11 @@ function ShopkeeperNewProduct({showNewProduct, setShowNewProduct, initiateAddPro
                         <option value={false} selected>False</option>
                     </Form.Control>
                     <Form.Label>Picture</Form.Label>
-                    <Form.Control type='img' id='picture'/>
+                    <Form.Control required type='img' id='picture'/>
                     <Form.Label>Date Received</Form.Label>
-                    <Form.Control type='date'  id='dateReceived'/>
+                    <Form.Control required type='date'  id='dateReceived'/>
                     <Form.Label>Units Received</Form.Label>
-                    <Form.Control type='number' placeholder='Units Received' id='unitsReceived'/>
+                    <Form.Control required type='number' placeholder='Units Received' id='unitsReceived'/>
                 </Form.Group>
                 <Button variant='primary' type='submit'>Create</Button>
             </Form>

@@ -1,4 +1,4 @@
-import {Card, Col} from "react-bootstrap";
+import {Card, Col, Image, Row} from "react-bootstrap";
 import './Product.css'
 import {initiateGetProductById} from "../../modules/products";
 import {useDispatch} from "react-redux";
@@ -17,10 +17,11 @@ function Product({product}) {
         setTimeout(() => {
             navigate(`/product/${productId}`)
         }, 50)
+
     }
 
     return (
-        <>
+
             <Col>
             <Card className='product-card' onClick={() => goToProductDetails(product.id, product)} >
                 <Card.Img className='product-img' variant="top" src={product.picture} />
@@ -31,7 +32,8 @@ function Product({product}) {
                 </Card.Body>
             </Card>
             </Col>
-        </>
+
+
     )
 }
 

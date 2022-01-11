@@ -6,11 +6,11 @@ import moment from "moment";
 import {useEffect, useState} from "react";
 import {discountPrice, minAdPrice, sellPrice} from "../../utils/priceUtils";
 
-function ShopkeeperProduct({show, product, sales, cancelViewProductDetails}) {
+
+function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
     const [sellingPrice, setSellingPrice] = useState(0)
     const [theDiscountPrice, setTheDiscountPrice] = useState(0)
     const [minAdvPrice, setMinAdvPrice] = useState(0)
-    // console.log(minAdvPrice, sellingPrice, theDiscountPrice)
 
     useEffect(() => {
         setSellingPrice(sellPrice(product))
@@ -138,7 +138,7 @@ function ShopkeeperProduct({show, product, sales, cancelViewProductDetails}) {
                         </tr>
                         </thead>
                         <tbody>
-                        {product.mininumAdvertisedPrice?.map((productMap, idx) =>
+                        {product.minimumAdvertisedPrice?.map((productMap, idx) =>
                             <tr key={idx}>
                                 <td>{productMap.price}</td>
                                 <td>{moment(productMap.effectiveDate).format('llll')}</td>

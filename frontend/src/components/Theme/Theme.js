@@ -19,5 +19,8 @@ export const darkTheme = {
     modalTitle: 'white',
     modalTitleBackground: '#282828',
     formLabel: 'grey',
+    carouselCaption: '#363537',
+    carouselText: 'white'
+
 
 }

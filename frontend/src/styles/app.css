@@ -5,15 +5,19 @@
 
 
 
-.carousel-fade .carousel-item img  {
-    min-height: 200px;
-    min-width: 300px;
+.carousel-item img  {
+
+    min-height: 400px;
+    min-width: 200px;
+    background-color: black;
+
+
 }
 
 .carousel-caption{
     background-color: #f4f8ff;
     opacity: 60%;
-    border-radius: 20px;
+    border-radius: 50px;
 }
 
 
@@ -22,9 +26,6 @@
     color: black;
 }
 
-.carousel-item img {
-    /*background-color: white;*/
-}
 
 .general-form{
     margin:auto;

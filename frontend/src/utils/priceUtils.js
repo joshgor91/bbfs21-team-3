@@ -64,12 +64,12 @@ export function cartSummery(cart) {
         for (let sale of cartItem.sales) {
             if (new Date(sale.saleStartDate) - now < 0 && new Date(sale.saleEndDate) - now > 0) {
                 discount = sale.discount
-                console.log(discount)
+                // console.log(discount)
             }
         }
         // check scheduled price
         for (let scheduledPrice of cartItem.scheduledPrices) {
-            console.log(scheduledPrice)
+            // console.log(scheduledPrice)
             if (new Date(scheduledPrice.effectiveDate) - now < 0) {
                 salePrice = scheduledPrice.price
             }

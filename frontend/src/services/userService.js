@@ -8,8 +8,8 @@ export async function editUserRequest(userToEdit) {
 }
 
 export async function deleteUserRequest(userId) {
-    console.log(userId, 'in delete user request')
+    // console.log(userId, 'in delete user request')
     let res = await axios.delete(`http://localhost:8080/api/users/delete/${userId}`)
-    console.log(res)
+    // console.log(res)
     return res
 }

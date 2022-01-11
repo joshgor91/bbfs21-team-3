@@ -46,4 +46,12 @@ export const GlobalStyles = createGlobalStyle`
 .d-block{
  background ${({ theme }) => theme.body};
 }
+
+.carousel-caption{
+background ${({ theme }) => theme.carouselCaption};
+}
+
+.carousel-text{
+color ${({ theme }) => theme.carouselText};
+}
   `

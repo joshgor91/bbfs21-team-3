@@ -11,7 +11,7 @@ function OrderHistory({initiateGetOrderHistory, orderlist}) {
     useEffect(() => {
         initiateGetOrderHistory()
     }, []);
-    console.log(orderlist)
+    // console.log(orderlist)
 
     return(
         <>

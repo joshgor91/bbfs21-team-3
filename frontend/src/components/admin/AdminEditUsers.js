@@ -28,7 +28,7 @@ function AdminCreateUser ({
 
 
     function handleSubmitCreateUser(e){
-        console.log("calling userFrom " + {userForm})
+        // console.log("calling userFrom " + {userForm})
         e.preventDefault()
         if (isEditing){
             submitEditUser({...userForm})
@@ -36,7 +36,7 @@ function AdminCreateUser ({
         else{
             initiateAddUser({...userForm})
             initiateGetUsers()
-        console.log(userForm)
+        // console.log(userForm)
     }
     setUserForm(initialUserForm)
     }
@@ -57,12 +57,12 @@ function AdminCreateUser ({
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit User </Modal.Title>
+                <Modal.Title>{isEditing? "Edit User" : "Create User"} </Modal.Title>
             </Modal.Header>
         <Form className={'m-3'} onSubmit={handleSubmitCreateUser}>
             <Form.Group className="mb-3" controlId="firstName">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter first name"
+                <Form.Control required type="text" placeholder="Enter first name"
                               value={userForm.firstName}
                               name="firstName"
                               onChange={onChange}
@@ -70,7 +70,7 @@ function AdminCreateUser ({
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastName">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter last name"
+                <Form.Control required type="text" placeholder="Enter last name"
                               value={userForm.lastName}
                               name="lastName"
                               onChange={onChange}
@@ -85,7 +85,7 @@ function AdminCreateUser ({
             </Form.Group>
             {(userToEdit === null || userToEdit.id !== loggedInUser.id) ? <Form.Group className="mb-3" controlId="authLevel">
                 <Form.Label>Auth Level</Form.Label>
-                <Form.Select type="select"
+                <Form.Select required type="select"
                               value={userForm.authLevel}
                               name="authLevel"
                              onChange={onChange}>
@@ -99,7 +99,7 @@ function AdminCreateUser ({
             </Form.Group> : <></>}
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email"
+                <Form.Control required type="email" placeholder="Enter email"
                               value={userForm.email}
                               name="email"
                               onChange={onChange}
@@ -110,7 +110,7 @@ function AdminCreateUser ({
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password"
+                <Form.Control required type="password" placeholder="Password"
                               value={userForm.password}
                               name="password"
                               onChange={onChange}
