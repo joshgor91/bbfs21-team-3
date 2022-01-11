@@ -10,10 +10,12 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case SET_GUEST_STATE:
             return {
+                ...state,
                 [action.name]: action.value
             }
         case SET_DISABLE_GUEST_EMAIL:
             return {
+                ...state,
                 disableEmail: action.payload
             }
         default:
