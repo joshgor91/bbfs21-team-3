@@ -306,8 +306,6 @@ function ShopkeeperEditProduct({
             <Form.Control type='int' value={unitsReceived}
                           onChange={event => updateUnitsReceived(event.target.value)}/>
             <hr/>
-
-            {/*==========*/}
             <Form.Label>Scheduled Prices</Form.Label>
             <div className='mb-3'>{scheduledPricesArray?.map(scheduledPrice => <Badge>price={scheduledPrice.price}<br/>
                 effective date={scheduledPrice.effectiveDate}</Badge>)}</div>
@@ -321,16 +319,13 @@ function ShopkeeperEditProduct({
             <div><Button size='sm' onClick={() => handleAddScheduledPrice()}>Add</Button><Button
                 size='sm' onClick={() => handleRemoveScheduledPrice()}>Remove</Button>
             </div>
-            {/*==========*/}
-
 <hr/>
             <Form.Label>Scheduled Sales</Form.Label>
             <div className='mb-3'>{scheduledSalesArray?.map(scheduledSale =>
                 <Badge>
-                    {/*price={scheduledSale.salesPrice}*/}
-                    effective start date={scheduledSale.saleStartDate}
+                    sale start date={scheduledSale.saleStartDate}
                     <br/>
-                    effective end date={scheduledSale.saleEndDate}<br/>
+                    sale end date={scheduledSale.saleEndDate}<br/>
                     discount={scheduledSale.discount}<br/>
                     description of discount={scheduledSale.saleDescription}
                 </Badge>
