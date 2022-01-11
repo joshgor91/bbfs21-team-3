@@ -13,8 +13,8 @@ import ShopkeeperCreateCategory from "./ShopkeeperCreateCategory";
 import ShopkeeperProductTable from "./ShopkeeperProductTable";
 import {initiateGetShopkeeperOrderHistory} from "../../modules/order";
 import ShopkeeperOrderHistory from "./ShopkeeperOrderHistory";
+import ShopkeeperCouponForm from "./ShopkeeperCouponForm";
 import {logout} from "../../modules/user";
-
 
 function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCategories, initiateGetShopkeeperOrderHistory, dispatch}) {
     const [hide, setHide] = useState(true)
@@ -24,6 +24,7 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
     const [showProductList, setShowProductList] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [categoryId, setCategoryId] = useState();
+    const [manageCoupon, setManageCoupon] = useState(false)
 
     useEffect(() => {
         initiateGetProducts()
@@ -34,10 +35,9 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
 
     const handleShowCreateProduct = () => setShow(true)
     const handleShowCreateCategory = () => setShowCreateCategory(true)
-
     const handleShowProductList = () => setShowProductList(true)
-
-    const handleShowCategories = () => setHide(false);
+    const handleShowCategories = () => setHide(false)
+    const handleShowCoupons = () => setManageCoupon(true)
     const handleHide = () => {
         setHide(true)
         setShowProductList(false)
@@ -65,11 +65,9 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
                     categoryId={categoryId}
                 />
                 <Dropdown as={ButtonGroup}>
-                    <Button variant='primary'>Shopkeeper Actions</Button>
-
-                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'/>
-
+                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'>Shopkeeper Actions</Dropdown.Toggle>
                     <Dropdown.Menu>
+                        <Dropdown.Item onClick={handleShowCoupons}>Manage Coupons</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
                         <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
@@ -78,6 +76,7 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
                     </Dropdown.Menu><br/>
                     {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}
                 </Dropdown>
+                {manageCoupon && <ShopkeeperCouponForm/>}
                 {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
                 {!showOrderHistory && <ShopkeeperOrderHistory hide={showOrderHistory} setHide={setShowOrderHistory}/>}
             </Col>
