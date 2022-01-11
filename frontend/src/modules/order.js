@@ -239,12 +239,16 @@ export function initiateGuestOrder(email, total) {
 export function initiateValidateCoupon(coupon) {
     console.log("this is my coupon: ", coupon)
     return function validateCouponSideEffect(dispatch, getState) {
-        const userId = getState().userReducer.loggedInUser.id
+        // either guest or user will be calling the endpoint not both
+        const userId = getState().userReducer.loggedInUser.id || null
+        let guestEmail = getState().guestReducer.guestEmail
+        if(guestEmail.trim() === "" || userId !== null) guestEmail = null
         fetch("http://localhost:8080/api/coupon/validateCoupon", {
             method: "GET",
             headers: {
                 'couponCode': coupon,
-                'userId': userId
+                'userId': userId,
+                'email':guestEmail
             },
         }).then(response => {
             if (!response.ok)

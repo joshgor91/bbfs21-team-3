@@ -29,6 +29,7 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
         setApplyingCoupon(false)
         console.log(`this is their email ${guestEmail}`)
         console.log('applying guest coupon')
+        dispatch(initiateValidateCoupon(coupon))
     }
 
     function onGuestEmailChange(e) {
