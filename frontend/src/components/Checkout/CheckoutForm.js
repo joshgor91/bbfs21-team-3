@@ -96,7 +96,7 @@ function CheckoutForm({
                 <Form.Control required type="text required" placeholder="State" value={state}
                               defaultValue={loggedInUser.state} onChange={event => updateState(event.target.value)}/>
                 <Form.Label>Zip Code</Form.Label>
-                <Form.Control type="text required" placeholder="Zip Code" value={zipcode}
+                <Form.Control required type="text required" placeholder="Zip Code" value={zipcode}
                               defaultValue={loggedInUser.zipcode}
                               onChange={event => updateZipcode(event.target.value)}/>
             </Form.Group>

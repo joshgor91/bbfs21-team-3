@@ -1,4 +1,5 @@
 import {disableGuestEmailField} from "./guest";
+import {clearQuantity} from "./cart";
 
 const ADDING_ORDER = 'ADDING_ORDER'
 const ADD_ORDER_FAILED = 'ADD_ORDER_FAILED'
@@ -19,7 +20,7 @@ const initialState = {
     getOrderHistoryFailed: false,
     errorMessage: '',
     getOrderHistorySuccess: false,
-    discount:0,
+    couponDiscount:0,
     couponCode:'',
     orders: [],
 }
@@ -86,7 +87,7 @@ export default function reducer(state = initialState, action) {
         case SET_COUPON:
             return {
                 ...state,
-                discount: action.discount,
+                couponDiscount: action.couponDiscount,
                 couponCode: action.couponCode
             }
 
@@ -136,8 +137,8 @@ function getShopkeeperOrderHistorySuccess(orders) {
     }
 }
 
-export function setCoupon(discount, couponCode) {
-    return {type: SET_COUPON, discount, couponCode}
+export function setCoupon(couponDiscount, couponCode) {
+    return {type: SET_COUPON, couponDiscount, couponCode}
 }
 
 // Side Effects
@@ -145,7 +146,7 @@ export function initiateAddOrder() {
     return function addOrderSideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
         const couponCode = getState().orderReducer.couponCode
-        console.log(cartId)
+        // console.log(cartId)
         dispatch(addingOrder())
         let headers = {
             'cartId': cartId,
@@ -164,7 +165,8 @@ export function initiateAddOrder() {
                 return dispatch(addOrderFailed())
             response.text().then(text => {
                 if (text === "success") {
-                    console.log("order placed")
+                    // console.log("order placed")
+                    dispatch(clearQuantity())
                     dispatch(goToReceipt())
                 } else {
                     dispatch(addOrderFailed())
@@ -211,7 +213,7 @@ export function initiateGetShopkeeperOrderHistory() {
 export function initiateGuestOrder(email, total) {
 
     let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
-    console.log(cartStorage)
+    // console.log(cartStorage)
     const filteredCartStorage = cartStorage.map(cartItem => {
         return {
             "productId": cartItem.id,
@@ -220,10 +222,24 @@ export function initiateGuestOrder(email, total) {
             "salePrice": parseFloat(cartItem.salePrice)
         }
     })
-    console.log(filteredCartStorage)
+    // console.log(filteredCartStorage)
     return function addGuestOrderSideEffect(dispatch, getState) {
-        console.log(typeof filteredCartStorage[0].regularPrice)
+        // console.log(typeof filteredCartStorage[0].regularPrice)
+        let couponCode = getState().orderReducer.couponCode
         dispatch(addingOrder())
+        let headers = {
+            'email': email,
+            'total': total,
+            'Content-Type': 'application/json'
+        }
+        if(couponCode !== "") {
+            headers = {
+                'email': email,
+                'total': total,
+                'Content-Type': 'application/json',
+                'couponCode':couponCode
+            }
+        }
         fetch("http://localhost:8080/api/order/addGuestOrder", {
             method: "POST",
             headers: {
@@ -237,8 +253,11 @@ export function initiateGuestOrder(email, total) {
                 return dispatch(addOrderFailed())
             response.text().then(text => {
                 if (text === "success") {
-                    console.log("order placed")
+                    // console.log("order placed")
+                    dispatch(setCoupon(0, ""))
                     dispatch(goToReceipt())
+                    dispatch(disableGuestEmailField(false))
+                    dispatch(clearQuantity())
                     window.localStorage.clear()
                 } else {
                     dispatch(addOrderFailed())
@@ -249,7 +268,7 @@ export function initiateGuestOrder(email, total) {
 }
 
 export function initiateValidateCoupon(coupon) {
-    console.log("this is my coupon: ", coupon)
+    // console.log("this is my coupon: ", coupon)
     return function validateCouponSideEffect(dispatch, getState) {
         // either guest or user will be calling the endpoint not both
         const userId = getState().userReducer.loggedInUser.id
@@ -273,16 +292,15 @@ export function initiateValidateCoupon(coupon) {
             if (!response.ok)
                 return dispatch(getOrderHistoryFailed("Unable to get coupon."))
             response.json().then(couponRes => {
-                console.log(couponRes)
+                // console.log(couponRes)
                 if (couponRes.message === "success") {
                     if(!userId) {
                         dispatch(disableGuestEmailField(true))
                     }
                     dispatch(setCoupon(couponRes.couponDiscount, coupon))
-                    return couponRes.couponDiscount
                 } else {
                     dispatch(disableGuestEmailField(false))
-                    console.log(couponRes.message)
+                    // console.log(couponRes.message)
                 }
             })
         }).catch(error => console.log(error))

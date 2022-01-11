@@ -296,7 +296,7 @@ export function initiateEditCart(quantity, productId) {
 
 
 export function initiateDeleteCartItem(prodId) {
-    console.log("deleting " + prodId)
+    // console.log("deleting " + prodId)
     return function sideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
         dispatch(clearCart())

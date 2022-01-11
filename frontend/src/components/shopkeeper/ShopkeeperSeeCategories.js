@@ -5,7 +5,7 @@ function ShopkeeperSeeCategories({categories, hide, setCategoryId, setIsEditing}
     const tHead = ["ID", "Category Name", "Edit"]
 
     function handleEdit(id) {
-        console.log(`handleEdit log with id = ${id}`)
+        // console.log(`handleEdit log with id = ${id}`)
         setIsEditing(true)
         setCategoryId(id)
     }
@@ -23,7 +23,7 @@ function ShopkeeperSeeCategories({categories, hide, setCategoryId, setIsEditing}
             <tbody>
             {categories.map((category, index) => (
                 <tr key={index}>
-                    {console.log(category)}
+                    {/*{console.log(category)}*/}
                     <td >{category.id}</td>
                     <td >{category.categoryName}</td>
                     <td>

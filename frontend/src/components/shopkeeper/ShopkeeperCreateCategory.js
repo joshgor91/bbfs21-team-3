@@ -9,7 +9,7 @@ function ShopkeeperCreateCategory({showCreateCategory, setShowCreateCategory, ca
     const [categoryName, setCategoryName] = useState('');
 
     useEffect(() => {
-        console.log(`useEffect in createCat`)
+        // console.log(`useEffect in createCat`)
         if (isEditing) {
             setCategoryName(categories.filter(category => category.id === categoryId)[0].categoryName)
         }
@@ -22,7 +22,7 @@ function ShopkeeperCreateCategory({showCreateCategory, setShowCreateCategory, ca
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(`logging categoryName = ${categoryName}`)
+        // console.log(`logging categoryName = ${categoryName}`)
         if (isEditing) {
             const updatedCategory = {
                 id: categoryId,
@@ -50,7 +50,7 @@ function ShopkeeperCreateCategory({showCreateCategory, setShowCreateCategory, ca
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
                     <Form.Label>Category Name</Form.Label>
-                    <Form.Control type='text' placeholder='Category Name' value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
+                    <Form.Control required type='text' placeholder='Category Name' value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
                     <Button variant='primary' type='submit'>{isEditing ? 'Apply' : 'Create'}</Button>
                 </Form>
             </Modal.Body>
