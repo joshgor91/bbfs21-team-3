@@ -13,6 +13,7 @@ import ShopkeeperCreateCategory from "./ShopkeeperCreateCategory";
 import ShopkeeperProductTable from "./ShopkeeperProductTable";
 import {initiateGetShopkeeperOrderHistory} from "../../modules/order";
 import ShopkeeperOrderHistory from "./ShopkeeperOrderHistory";
+import {logout} from "../../modules/user";
 
 
 function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCategories, initiateGetShopkeeperOrderHistory, dispatch}) {
@@ -48,7 +49,7 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
         dispatch(deleteProduct(id))
     }
 
-    return<>
+    return <>
         <Container fluid>
             <Row>
             <Col>
@@ -82,7 +83,8 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
             </Col>
         </Row>
             <Row>
-                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products} initiateDeleteProduct={handleDeleteProduct}/> : ''}
+                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products}
+                                                           initiateDeleteProduct={handleDeleteProduct}/> : <></>}
             </Row>
         </Container>
 
@@ -96,7 +98,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({initiateGetProducts, initiateGetCategories, initiateGetShopkeeperOrderHistory}, dispatch)
+    return bindActionCreators({initiateGetProducts, initiateGetCategories, initiateGetShopkeeperOrderHistory, logout}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperForm)

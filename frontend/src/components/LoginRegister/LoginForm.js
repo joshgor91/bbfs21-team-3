@@ -21,7 +21,7 @@ function LoginForm({loginErrorOccurred, initiateLogin}) {
 
                             <h1> Login </h1>
 
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Group required className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control required type="text" placeholder="Enter email"
                                               onChange={event => setEmail(event.target.value)}/>

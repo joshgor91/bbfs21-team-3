@@ -44,6 +44,6 @@ export const GlobalStyles = createGlobalStyle`
  }
  
 .d-block{
- background ${({ theme }) => theme.modalTitle};
+ background ${({ theme }) => theme.body};
 }
   `
