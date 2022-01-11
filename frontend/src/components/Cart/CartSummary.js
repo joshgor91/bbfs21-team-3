@@ -3,9 +3,9 @@ import {Link} from "react-router-dom";
 import {connect, useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 import {clearReceipt, initiateValidateCoupon} from "../../modules/order";
-import {setGuestState} from "../../modules/guest";
+import {setGuestState, setGuestTotal} from "../../modules/guest";
 
-function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail,couponDiscount }) {
+function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDiscount, cart, couponCode, errorMessage}) {
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
@@ -90,7 +90,10 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail,couponDisco
                     <Form>
 
                         <Form.Group className="mb-3">
-                            <Form.Label>Coupon Code</Form.Label>
+                            <Form.Label>Coupon Code
+                                {couponDiscount !== 0 && <p style={{"color":"red"}}>Applied! {couponCode}</p>}
+                                {errorMessage !== "" && <p style={{"color":"red"}}>{errorMessage}</p>}
+                            </Form.Label>
                             <Row>
                                 <Form.Control type="text" value={coupon} placeholder="Enter coupon code"
                                               onChange={event => setCoupon(event.target.value)}/>
@@ -102,7 +105,7 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail,couponDisco
                         </Form.Group>
                     </Form>
                     <hr/>
-                    <Button variant="warning">
+                    <Button variant="warning" onClick={() => dispatch(setGuestTotal(cartSummery.total - couponDiscount))}>
                         <Link id="checkout-button" to="checkout/">Checkout </Link>
                     </Button>
                 </Row>
@@ -135,8 +138,11 @@ function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail,couponDisco
 
 function mapStateToProps(state) {
     return {
+        cart: state.userReducer.userCart,
         guestEmail: state.guestReducer.guestEmail,
         couponDiscount: state.orderReducer.couponDiscount,
+        couponCode: state.orderReducer.couponCode,
+        errorMessage: state.orderReducer.errorMessage
     }
 }
 

@@ -1,8 +1,8 @@
+
 import {Button, Form, Modal} from "react-bootstrap";
 import {cancelEditUser, submitEditUser, initiateAddUser, initiateGetUsers} from "../../modules/admin"
 import {bindActionCreators} from "redux";
-import {connect, useDispatch} from "react-redux";
-import {useEffect} from "react";
+import {connect} from "react-redux";
 
 const initialUserForm = {
     id: null,
@@ -29,20 +29,16 @@ function AdminCreateUser({
 
 
     function handleSubmitCreateUser(e) {
-        // console.log("calling userFrom " + {userForm})
         e.preventDefault()
-        // console.log(userForm)
-        if (isEditing) {
+        if (isEditing){
             submitEditUser({...userForm})
         } else {
             initiateAddUser({...userForm})
             initiateGetUsers()
-            console.log("authlevel", userForm.authLevel)
-        }
-        setUserForm(initialUserForm)
+
     }
-
-
+    setUserForm(initialUserForm)
+    }
 
     function onChange(e) {
         const {name, value} = e.target
@@ -51,7 +47,6 @@ function AdminCreateUser({
             [name]: value
         })
     }
-
 
     function onHide() {
         cancelEditUser()
