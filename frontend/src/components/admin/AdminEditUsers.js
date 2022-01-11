@@ -1,3 +1,4 @@
+
 import {Button, Form, Modal} from "react-bootstrap";
 import {cancelEditUser, submitEditUser, initiateAddUser, initiateGetUsers} from "../../modules/admin"
 import {bindActionCreators} from "redux";
@@ -8,7 +9,7 @@ const initialUserForm = {
     firstName: '',
     lastName: '',
     role: '',
-    authLevel: '1',
+    authLevel: '',
     email: '',
     password: '',
 }
@@ -26,23 +27,21 @@ function AdminCreateUser({
                              loggedInUser
                          }) {
 
-    console.log(userForm)
+
     function handleSubmitCreateUser(e) {
-        console.log(userForm)
         e.preventDefault()
-        if (isEditing) {
+        if (isEditing){
             submitEditUser({...userForm})
         } else {
             initiateAddUser({...userForm})
             initiateGetUsers()
-            // console.log(userForm)
-        }
-        setUserForm(initialUserForm)
+
+    }
+    setUserForm(initialUserForm)
     }
 
     function onChange(e) {
         const {name, value} = e.target
-        console.log(name, value)
         setUserForm({
             ...userForm,
             [name]: value
@@ -84,20 +83,22 @@ function AdminCreateUser({
                                   onChange={onChange}/>
                 </Form.Group>
                 {(userToEdit === null || userToEdit.id !== loggedInUser.id) ?
-                    <Form.Group className="mb-3">
+                    <>
                         <Form.Label>Auth Level</Form.Label>
-                        <Form.Select required
-                                     value={userForm.authLevel}
-                                     name="authLevel"
-                                     onChange={onChange}>
-                            <option value={1}>1</option>
+                        <Form.Control required type='text' as='select'
+                                      defaultValue={isEditing ? userForm.authLevel : 1}
+                                      name="authLevel"
+                                      onChange={onChange}>
+                    <option value="" selected >Select a level</option>
+                            <option value={1} >1</option>
                             <option value={2}>2</option>
-                            <option value={3}>3</option>
-                        </Form.Select>
+                            <option value={3} >3</option>
+                        </Form.Control>
                         <Form.Text className="text-muted">
                             '1' for Consumer, '2' for Business Owner, '3' for Admin.
                         </Form.Text>
-                    </Form.Group> : <></>}
+                    </>
+                    : <></>}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control required type="email" placeholder="Enter email"

@@ -526,7 +526,7 @@ export function getProductsFailed() {
 }
 
 function productsUpdated(products) {
-    console.log(products)
+    // console.log(products)
     return {
         type: PRODUCTS_UPDATED,
         products
@@ -534,7 +534,7 @@ function productsUpdated(products) {
 }
 
 function formatDate(effectiveDate){
-    console.log(effectiveDate)
+    // console.log(effectiveDate)
     // const formattedDate = new Date.toLocaleString(effectiveDate)
     return{
         type: FORMAT_DATE,

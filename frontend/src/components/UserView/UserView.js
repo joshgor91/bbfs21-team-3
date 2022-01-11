@@ -3,9 +3,8 @@ import {connect, useDispatch} from "react-redux";
 import UserInfo from "./UserInfo";
 import {clearUserInfo, initiateDeleteUser, setUserInfo} from "../../modules/user";
 
-function UserView({user, showInfo}) {
+function UserView({user, showInfo, userIsAdmin}) {
     const dispatch = useDispatch()
-
 
     return <>
         <Container>
@@ -28,9 +27,13 @@ function UserView({user, showInfo}) {
                                     </Button>}
                             </Col>
                             <Col xs='auto'>
-                                <Button size='sm' variant='outline-danger' onClick={() => dispatch(initiateDeleteUser(user.id))}>
-                                    Delete My Account
-                                </Button>
+
+                                {userIsAdmin ? "" :
+                                    <Button size='sm' variant='outline-danger'
+                                            onClick={() => dispatch(initiateDeleteUser(user.id))}>
+                                        Delete My Account
+                                    </Button>
+                                }
                             </Col>
                         </Row>
                     </Card.Body>
@@ -47,7 +50,8 @@ function UserView({user, showInfo}) {
 function mapStateToProps(state) {
     return {
         user: state.userReducer.loggedInUser,
-        showInfo: state.userReducer.showInfo
+        showInfo: state.userReducer.showInfo,
+        userIsAdmin: state.userReducer.userIsAdmin
     }
 }
 

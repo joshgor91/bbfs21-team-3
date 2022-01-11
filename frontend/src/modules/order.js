@@ -182,7 +182,7 @@ export function validateCouponFail(errMessage){
 }
 
 // Side Effects
-export function initiateAddOrder() {
+export function initiateAddOrder(total) {
     return function addOrderSideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
         const couponCode = getState().orderReducer.couponCode
@@ -190,10 +190,12 @@ export function initiateAddOrder() {
         dispatch(addingOrder())
         let headers = {
             'cartId': cartId,
+            'total':total
         }
         if(couponCode !== "") {
             headers = {
                 'cartId': cartId,
+                'total':total,
                 'couponCode':couponCode
             }
         }

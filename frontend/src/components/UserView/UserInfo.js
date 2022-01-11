@@ -34,6 +34,7 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
 
         dispatch(initiateEditUserInfo({
             ...userInfo,
+            password,
             address1,
             address2,
             city,
@@ -41,6 +42,7 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
             zipcode
         }))
         setShow(false)
+        setShowPassword(false)
     }
 
     return <>
@@ -69,9 +71,10 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
                 <Form onSubmit={submitEdit}>
                     <Row>
                         {!show && <Card.Text>Password ************</Card.Text>}
-                        {show && <Card.Link href="#" onClick={() => setShowPassword(true)}>
+                        {show && <Button variant="info" onClick={() => setShowPassword(true)}>
                             Change Password
-                        </Card.Link>}
+                        </Button>}
+                        <hr/>
                         {showPassword &&
                             <Form.Group className="mb-3">
                                 <Form.Control type="password"
