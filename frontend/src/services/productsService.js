@@ -7,7 +7,7 @@ export async function getProductsRequest() {
         url: 'http://localhost:8080/api/products/all'
     }
     let res = await axios(config)
-    console.log(res)
+    // console.log(res)
     return res
 }
 

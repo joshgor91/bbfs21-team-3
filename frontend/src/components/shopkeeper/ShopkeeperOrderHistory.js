@@ -10,7 +10,7 @@ function ShopkeeperOrderHistory({orderList, hide, setHide}) {
     const tHead = ['Order Date', 'Order Total', 'Order Details']
 
     function handleSetOrder(order) {
-        console.log(`logging setOrder, order = ${order}`)
+        // console.log(`logging setOrder, order = ${order}`)
         setOrder(order)
         setShowOrderDetails(true)
     }

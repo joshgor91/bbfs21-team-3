@@ -38,6 +38,8 @@ const UPDATE_UNITS_RECEIVED = 'UPDATE_UNITS_RECEIVED'
 const SCHEDULED_SALES_PRICE = 'SCHEDULED_SALES_PRICE'
 const SCHEDULED_SALES_EFFECTIVE_DATE = 'SCHEDULED_SALES_EFFECTIVE_DATE'
 
+const FORMAT_DATE = 'FORMAT_DATE'
+
 
 const initialState = {
     products: [],
@@ -89,7 +91,6 @@ export default function reducer(state = initialState, action) {
                 effectiveDate: action.effectiveDate
             }
 
-            // case SCHEDULED_
 
         case ADD_PRODUCT:
             return {
@@ -442,7 +443,7 @@ export function updateProductAvailable(productAvailable) {
 }
 
 export function updateDiscontinued(discontinued) {
-    console.log(discontinued)
+    // console.log(discontinued)
     return {
         type: UPDATE_DISCONTINUED,
         discontinued
@@ -450,7 +451,7 @@ export function updateDiscontinued(discontinued) {
 }
 
 export function updateDiscountAvailable(discountAvailable) {
-    console.log(discountAvailable)
+    // console.log(discountAvailable)
     return {
         type: UPDATE_DISCOUNT_AVAILABLE,
         discountAvailable
@@ -525,11 +526,22 @@ export function getProductsFailed() {
 }
 
 function productsUpdated(products) {
+    console.log(products)
     return {
         type: PRODUCTS_UPDATED,
         products
     }
 }
+
+function formatDate(effectiveDate){
+    console.log(effectiveDate)
+    // const formattedDate = new Date.toLocaleString(effectiveDate)
+    return{
+        type: FORMAT_DATE,
+        // formattedDate
+    }
+}
+
 
 export function initiateAddProduct(product) {
     return function sideEffect(dispatch) {
@@ -568,6 +580,7 @@ export function initiateGetProducts() {
 
             response.json().then(products => {
                 dispatch(productsUpdated(products))
+                dispatch(formatDate())
             })
         }).catch(error => console.log(error))
 
@@ -588,10 +601,10 @@ export function initiateGetCategories() {
 }
 
 export function initiateCreateCategory(newCategory) {
-    console.log(newCategory)
+    // console.log(newCategory)
     return function sideEffect(dispatch) {
         createCategoryRequest(newCategory).then(res => {
-            console.log(res)
+            // console.log(res)
             if (res.status !== 200) {
                 dispatch(createCategoryFailure(`Error creating category`))
             } else {
