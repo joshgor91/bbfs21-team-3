@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {clearReceipt, initiateValidateCoupon} from "../../modules/order";
 import {setGuestState} from "../../modules/guest";
 
-function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
+function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail, couponDiscount}) {
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
