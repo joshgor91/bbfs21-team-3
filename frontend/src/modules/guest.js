@@ -1,7 +1,9 @@
 const SET_GUEST_STATE = "SET_GUEST_STATE"
+const SET_DISABLE_GUEST_EMAIL = "SET_DISABLE_GUEST_EMAIL"
 
 const initialState = {
-    guestEmail: ""
+    guestEmail: "",
+    disableEmail:false
 }
 
 export default function reducer(state = initialState, action) {
@@ -9,6 +11,10 @@ export default function reducer(state = initialState, action) {
         case SET_GUEST_STATE:
             return {
                 [action.name]: action.value
+            }
+        case SET_DISABLE_GUEST_EMAIL:
+            return {
+                disableEmail: action.payload
             }
         default:
             return state
@@ -20,5 +26,11 @@ export function setGuestState(name, value) {
         type:SET_GUEST_STATE,
         name,
         value
+    }
+}
+export function disableGuestEmailField(value) {
+    return {
+        type:SET_DISABLE_GUEST_EMAIL,
+        payload:value
     }
 }
