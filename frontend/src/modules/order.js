@@ -243,7 +243,7 @@ export function initiateValidateCoupon(coupon) {
         fetch("http://localhost:8080/api/coupon/validateCoupon", {
             method: "GET",
             headers: {
-                'couponCode': String(coupon),
+                'couponCode': coupon,
                 'userId': userId
             },
         }).then(response => {

@@ -19,7 +19,9 @@ function CheckoutForm({isLoggedIn, loggedInUser, address1,address2,city,state,zi
     const [email, setEmail] = useState()
     const [total, setTotal] = useState(0)
 
+    useEffect(() => {
 
+    })
     useEffect(() => {
         if(goToReceipt){
             navigate("/cart/orderconfirmation")

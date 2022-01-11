@@ -1,11 +1,11 @@
-import {Button, Card, Col, Form, Image, Row} from "react-bootstrap";
+import {Button, Card, Col, Form, Image, Modal, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 import {clearReceipt, initiateValidateCoupon} from "../../modules/order";
+import {setGuestState} from "../../modules/guest";
 
-
-function CartSummary({cartItems, cartSummery}) {
+function CartSummary({cartItems, cartSummery, isLoggedIn, guestEmail}) {
     let originalPrice = cartSummery.originalPrice
     let totalSavings = cartSummery.totalSavings
     let total = cartSummery.total
@@ -13,10 +13,27 @@ function CartSummary({cartItems, cartSummery}) {
     const dispatch = useDispatch()
 
     const [coupon, setCoupon] = useState()
+    const [applyingCoupon, setApplyingCoupon] = useState(false)
 
     function validateCoupon(){
         console.log("validating coupon")
-        dispatch(initiateValidateCoupon(coupon))
+        if(!isLoggedIn) {
+            setApplyingCoupon(true)
+        } else {
+            dispatch(initiateValidateCoupon(coupon))
+        }
+    }
+
+    function submitGuestCoupon(e) {
+        e.preventDefault()
+        setApplyingCoupon(false)
+        console.log(`this is their email ${guestEmail}`)
+        console.log('applying guest coupon')
+    }
+
+    function onGuestEmailChange(e) {
+        const {name, value} = e.target
+        dispatch(setGuestState(name, value))
     }
 
     return <>
@@ -79,7 +96,25 @@ function CartSummary({cartItems, cartSummery}) {
                 </span>
             </Card.Body>
         </Card>
+        <Modal show={applyingCoupon} onHide={() => setApplyingCoupon(false)}>
+            <Modal.Header closeButton>
+                <Modal.Title>Enter Email To Redeem As Guest</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form onSubmit={submitGuestCoupon}>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="text" value={guestEmail} name="guestEmail" onChange={onGuestEmailChange}/>
+                    <Button type="submit">Apply</Button>
+                </Form>
+            </Modal.Body>
+        </Modal>
     </>
 }
 
-export default CartSummary
+function mapStateToProps(state) {
+    return {
+        guestEmail: state.guestReducer.guestEmail
+    }
+}
+
+export default connect(mapStateToProps)(CartSummary)
