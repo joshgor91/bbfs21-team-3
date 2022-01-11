@@ -5,6 +5,7 @@ import {connect} from "react-redux"
 import ShopkeeperEditProduct from "./ShopkeeperEditProduct"
 import ShopkeeperProduct from "./ShopkeeperProduct";
 import {useState} from "react";
+import moment from "moment";
 
 const initialSalePriceForm = {
     price: '',
@@ -57,7 +58,7 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitPrice}</td>
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
-                    <td >{product.productAvailable}</td>
+                    <td >{moment(product.productAvailablemoment).format('llll')}</td>
                     <td><Button variant="secondary" onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>

@@ -39,7 +39,6 @@ export function cartSummery(cart) {
     let total = 0
     let couponAmount = 0
 
-
     cart?.forEach(cartItem => {
         for (let item of cartItem.scheduledPrices) {
             if (new Date(item.effectiveDate) - now < 0) {
@@ -62,22 +61,18 @@ export function cartSummery(cart) {
             console.log(scheduledPrice)
             if (new Date(scheduledPrice.effectiveDate) - now < 0) {
                 salePrice = scheduledPrice.price
-                console.log(`new sale price ${salePrice}`)
             }
         }
         if (discount) {
             discountPrice += Math.round(salePrice) * discount * cartItem.quantity
         }
 
-        console.log('salePrice', salePrice)
-        console.log('discountPrice', discountPrice)
         totalSavings = discountPrice
-        console.log('totalsavings', totalSavings)
         discount = 0
     })
-    console.log(originalPrice)
+
     total = originalPrice - totalSavings
-    console.log('total', total)
+
     return {
         originalPrice: originalPrice,
         totalSavings: totalSavings,

@@ -34,7 +34,7 @@ public class Product {
 
     @JsonProperty
     @ElementCollection
-    public List<MininumAdvertisedPrice> mininumAdvertisedPrices;
+    public List<MininumAdvertisedPrice> mininumAdvertisedPrice;
 
     @JsonProperty
     @ElementCollection
