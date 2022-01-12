@@ -15,7 +15,7 @@ export const darkTheme = {
     buttonBorder: 'thin solid black',
     navbarBackground: '#000112',
     formText: 'black',
-    cardBorder: 'thin solid white',
+    cardBorder: ' solid #2a2a2a',
     modalTitle: 'white',
     modalTitleBackground: '#282828',
     formLabel: 'grey',
