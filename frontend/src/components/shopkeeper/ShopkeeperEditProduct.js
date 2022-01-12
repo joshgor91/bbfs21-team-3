@@ -400,17 +400,17 @@ function ShopkeeperEditProduct({
                         </tbody>
                     </Table>
                 </div>
-                <Form.Label>Effective scheduled price start date</Form.Label>
+                <Form.Label>Sale Start Date</Form.Label>
                 <Form.Control type={"date"} name="saleStartDate" value={newSales.saleStartDate}
                               onChange={onSalesPricesChange}/>
-                <Form.Label>Effective scheduled price end date</Form.Label>
+                <Form.Label>Sale End Date</Form.Label>
                 <Form.Control type={"date"} name="saleEndDate" value={newSales.saleEndDate}
                               onChange={onSalesPricesChange}/>
 
-            <Form.Label>Scheduled sales discount</Form.Label>
+            <Form.Label>Sale Discount</Form.Label>
             <Form.Control type={'float'} name="discount" value={newSales.discount}
                           onChange={onSalesPricesChange}/>
-            <Form.Label>Scheduled sales description</Form.Label>
+            <Form.Label>Sale Description</Form.Label>
             <Form.Control type={'text'} name="saleDescription" value={newSales.saleDescription}
                           onChange={onSalesPricesChange}/>
 
