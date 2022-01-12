@@ -16,15 +16,22 @@ import ShopkeeperOrderHistory from "./ShopkeeperOrderHistory";
 import ShopkeeperCouponForm from "./ShopkeeperCouponForm";
 import {logout} from "../../modules/user";
 
+const initialShowValues = {
+    showOrderHistory:false,
+    showCreateProduct:false,
+    showCreateCategory:false,
+    showProductList: false,
+    showCategories:false,
+    showCoupons:false
+}
+
 function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCategories, initiateGetShopkeeperOrderHistory, dispatch}) {
-    const [hide, setHide] = useState(true)
-    const [showOrderHistory, setShowOrderHistory] = useState(true)
     const [showCreateCategory, setShowCreateCategory] = useState(false)
     const [show, setShow] = useState(false)
-    const [showProductList, setShowProductList] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [categoryId, setCategoryId] = useState();
-    const [manageCoupon, setManageCoupon] = useState(false)
+
+    const [showValues, setShowValues] = useState(initialShowValues)
 
     useEffect(() => {
         initiateGetProducts()
@@ -35,15 +42,14 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
 
     const handleShowCreateProduct = () => setShow(true)
     const handleShowCreateCategory = () => setShowCreateCategory(true)
-    const handleShowProductList = () => setShowProductList(true)
-    const handleShowCategories = () => setHide(false)
-    const handleShowCoupons = () => setManageCoupon(true)
-    const handleHide = () => {
-        setHide(true)
-        setShowProductList(false)
-    }
 
-    const handleShowOrderHistory = () => setShowOrderHistory(false)
+    function handleShowValue(e) {
+        const {name} = e.target
+        setShowValues({
+            ...initialShowValues,
+            [name]:true
+        })
+    }
 
     function handleDeleteProduct(id) {
         dispatch(deleteProduct(id))
@@ -67,28 +73,27 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
                 <Dropdown as={ButtonGroup}>
                     <Dropdown.Toggle split variant='primary' id='dropdown-split-basic' className={'text-white'}>Shopkeeper Actions</Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleShowCoupons}>Manage Coupons</Dropdown.Item>
+                        <Dropdown.Item name="showCoupons" onClick={handleShowValue}>Manage Coupons</Dropdown.Item>
                         <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
-                        <Dropdown.Item onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
+                        <Dropdown.Item name="showCreateProduct" onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
                         <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
-                        <Dropdown.Item onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
+                        <Dropdown.Item name="showCreateCategory" onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
                         <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
-                        <Dropdown.Item onClick={handleShowProductList}>Display Product List</Dropdown.Item>
+                        <Dropdown.Item name="showProductList" onClick={handleShowValue}>Display Product List</Dropdown.Item>
                         <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
-                        <Dropdown.Item onClick={handleShowCategories}>Display Categories</Dropdown.Item>
+                        <Dropdown.Item name="showCategories" onClick={handleShowValue}>Display Categories</Dropdown.Item>
                         <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
-                        <Dropdown.Item onClick={handleShowOrderHistory}>Display Orders</Dropdown.Item>
+                        <Dropdown.Item name="showOrderHistory" onClick={handleShowValue}>Display Orders</Dropdown.Item>
                     </Dropdown.Menu><br/>
-                    {(!hide || showProductList) && <Col><Button onClick={handleHide}>Hide table</Button></Col>}
                 </Dropdown>
-                {manageCoupon && <ShopkeeperCouponForm/>}
-                {!hide && <ShopkeeperSeeCategories hide={hide} setHide={setHide} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
-                {!showOrderHistory && <ShopkeeperOrderHistory hide={showOrderHistory} setHide={setShowOrderHistory}/>}
+                {showValues.showCoupons && <ShopkeeperCouponForm/>}
+                {showValues.showCategories && <ShopkeeperSeeCategories hide={!showValues.showCategories} setIsEditing={setIsEditing} setCategoryId={setCategoryId}/>}
+                {showValues.showOrderHistory && <ShopkeeperOrderHistory hide={!showValues.showOrderHistory}/>}
             </Col>
         </Row>
             <Row>
-                {showProductList ? <ShopkeeperProductTable showProductList={showProductList} products={products}
-                                                           initiateDeleteProduct={handleDeleteProduct}/> : <></>}
+                {showValues.showProductList && <ShopkeeperProductTable showProductList={showValues.showProductList} products={products}
+                                                           initiateDeleteProduct={handleDeleteProduct}/>}
             </Row>
         </Container>
 

@@ -16,7 +16,7 @@ function Cart({cartItems, isLoggedIn, quantity}) {
     }, []);
 
     return <>
-        <Container >
+        <Container>
             <Row className="checkout-cart-summary">
                 <Col lg={9}>
                     {isLoggedIn && cartItems.length > 0 ?
@@ -28,8 +28,8 @@ function Cart({cartItems, isLoggedIn, quantity}) {
                             />)
                         : ''}
 
-                        {!isLoggedIn && cart ?
-                            cart.map((cartItem, idx) =>
+                    {!isLoggedIn && cart ?
+                        cart.map((cartItem, idx) =>
                             <CartItems key={idx} cartItem={cartItem}
                                        sellPrice={sellPrice(cartItem)}
                                        currentSale={discountPrice(cartItem).currentSale}
@@ -37,12 +37,15 @@ function Cart({cartItems, isLoggedIn, quantity}) {
                             />)
                         : ''}
                 </Col>
-            <Col lg={3}>
-                {isLoggedIn ?
-                    <CartSummary cartSummery={cartSummery(cartItems)} isLoggedIn={isLoggedIn}
-                    />
-                    : <CartSummary cartSummery={cartSummery(cart)} isLoggedIn={isLoggedIn}/>}
-            </Col>
+                <Col lg={3}>
+                    {isLoggedIn ?
+                        <CartSummary cartItems={cartItems}
+                                     cartSummery={cartSummery(cartItems)}
+                                     isLoggedIn={isLoggedIn}/>
+                        : <CartSummary cartItems={cartItems}
+                                       cartSummery={cartSummery(cart)}
+                                       isLoggedIn={isLoggedIn}/>}
+                </Col>
             </Row>
         </Container>
     </>

@@ -154,7 +154,6 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
                         </tbody>
                     </Table>
                 </div>
-
             </Card.Body>
         </Card></Col>
     </Modal>

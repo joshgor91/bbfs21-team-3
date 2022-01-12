@@ -21,7 +21,7 @@ function CustomerRouter({cartQuantity, themeToggler}) {
 
                 <>
 
-                    <Link to="/"> <img className="logo ms-3 me-5" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></Link>
+                    <Link to="/"> <img className="logo ms-3 me-5" src="https://i.ibb.co/zWMxYXP/betterbuy-copy.png" alt="betterbuy"/></Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>

@@ -23,7 +23,7 @@ function App({userIsAdmin, userIsShopkeeper, userIsCustomer, cartQuantity}) {
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                 <>
                     <GlobalStyles/>
-            {userIsAdmin && <AdminRouter cartQuantity={cartQuantity} themeToggler={themeToggler} />}
+            {userIsAdmin && <AdminRouter cartQuantity={cartQuantity} themeToggler={themeToggler} theme={theme} />}
             {userIsShopkeeper && <ShopkeeperRouter cartQuantity={cartQuantity} themeToggler={themeToggler} />}
             {userIsCustomer && <CustomerRouter cartQuantity={cartQuantity} themeToggler={themeToggler} />}
             {(!userIsCustomer && !userIsShopkeeper && !userIsAdmin) && <GuestRouter cartQuantity={cartQuantity}  themeToggler={themeToggler}/>}

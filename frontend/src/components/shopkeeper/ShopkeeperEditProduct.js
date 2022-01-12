@@ -17,10 +17,9 @@ import {
     updateUnitsReceived,
     updateDiscountAvailable
 } from "../../modules/shopkeeper";
-import {Button, Form, Modal, Badge, ListGroup, FormControl, Card, Table} from "react-bootstrap";
+import {Button, Form, Modal, Badge} from "react-bootstrap";
 import {connect} from "react-redux";
 import {useEffect, useState} from "react";
-import moment from "moment";
 
 
 const initialSalePriceForm = {
@@ -81,9 +80,6 @@ function ShopkeeperEditProduct({
                                    setMinAdPrice
                                }) {
 
-
-    const newDate = new Date().toLocaleDateString()
-
     const [productCategory, setProductCategory] = useState([])
     const [categorySelect, setCategorySelect] = useState({id: '', categoryName: ''})
     const [scheduledPricesArray, setScheduledPricesArray] = useState([])
@@ -101,26 +97,13 @@ function ShopkeeperEditProduct({
         }
     }, [show])
 
-    function handleAdd() {
-        if (categorySelect.categoryName === '') {
-            // console.log(`logging empty string`)
-        } else {
-            setProductCategory([...productCategory, categorySelect])
-        }
-    }
-
-
     function onChange(e) {
-        // console.log(`logging e.target = ${e.target}`)
         const {value, selectedIndex} = e.target
-        // console.log(`logging selectedIndex`)
         const {id} = e.target.options[selectedIndex]
         setCategorySelect({id: Number(id), categoryName: value})
     }
 
     function onScheduledPricesChange(e) {
-        // console.log("onScheduledPricesChange clicked" + e)
-        // console.log(e)
         const {name, value} = e.target
         setSalePrice({
             ...salePrice,
@@ -147,147 +130,146 @@ function ShopkeeperEditProduct({
 
     }
 
-        function handleAdd() {
-            if (categorySelect.categoryName === '') {
-                // console.log(`logging empty string`)
-            } else {
-                setProductCategory([...productCategory, categorySelect])
-            }
-
+    function handleAdd() {
+        if (categorySelect.categoryName === '') {
+            // console.log(`logging empty string`)
+        } else {
+            setProductCategory([...productCategory, categorySelect])
         }
 
-        function handleRemove() {
-            setProductCategory(productCategory.filter(id => categorySelect.id !== id.id))
-        }
+    }
 
-        function handleRemoveMAP() {
-            setMinimumAdPriceArray(minimumAdPriceArray.filter(minAdvertisedPrice => {
+    function handleRemove() {
+        setProductCategory(productCategory.filter(id => categorySelect.id !== id.id))
+    }
+
+    function handleRemoveMAP() {
+        setMinimumAdPriceArray(minimumAdPriceArray.filter(minAdvertisedPrice => {
+            const newDate = new Date(minAdvertisedPrice.effectiveDate)
+            const newDate2 = new Date(minAdPrice.effectiveDate)
+
+            return newDate.getTime() !== newDate2.getTime()
+        }))
+    }
+
+    function handleRemoveScheduledPrice() {
+        setScheduledPricesArray(scheduledPricesArray.filter(scheduledPrice => {
+            const newDate = new Date(scheduledPrice.effectiveDate)
+            const newDate2 = new Date(salePrice.effectiveDate)
+
+            return newDate.getTime() !== newDate2.getTime()
+        }))
+    }
+
+    function handleRemoveSalesPrice() {
+        setScheduledSalesArray(scheduledSalesArray.filter(scheduledSales => {
+            const startDate = new Date(scheduledSales.saleStartDate)
+            const endDate = new Date(scheduledSales.saleEndDate)
+            const startDate2 = new Date(newSales.saleStartDate)
+            const endDate2 = new Date(newSales.saleEndDate)
+            return (startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime())
+        }))
+    }
+
+    function handleAddMAP() {
+        const exists = minimumAdPriceArray?.some((minAdvertisedPrice) => {
+            const newDate = new Date(minAdvertisedPrice.effectiveDate)
+            const newDate2 = new Date(minAdPrice.effectiveDate)
+            return newDate.getTime() === newDate2.getTime()
+        })
+        console.log("minimum AP " + exists)
+        if (exists) {
+            setMinimumAdPriceArray(minimumAdPriceArray?.map(minAdvertisedPrice => {
                 const newDate = new Date(minAdvertisedPrice.effectiveDate)
                 const newDate2 = new Date(minAdPrice.effectiveDate)
-
-                return newDate.getTime() !== newDate2.getTime()
+                if (newDate.getTime() === newDate2.getTime()) {
+                    console.log(minAdPrice)
+                    return minAdPrice
+                }
             }))
+        } else {
+            console.log("inside else")
+            console.log(minAdPrice)
+            console.log(minimumAdPriceArray)
+            setMinimumAdPriceArray([...minimumAdPriceArray, minAdPrice])
         }
+    }
 
-        function handleRemoveScheduledPrice() {
-            setScheduledPricesArray(scheduledPricesArray.filter(scheduledPrice => {
+    function handleAddScheduledPrice() {
+        const exists = scheduledPricesArray?.some((scheduledPrice) => {
+            const newDate = new Date(scheduledPrice.effectiveDate)
+            const newDate2 = new Date(salePrice.effectiveDate)
+            return newDate.getTime() === newDate2.getTime()
+        })
+        // console.log("scheduled price " + exists)
+        if (exists) {
+            setScheduledPricesArray(scheduledPricesArray?.map(scheduledPrice => {
                 const newDate = new Date(scheduledPrice.effectiveDate)
                 const newDate2 = new Date(salePrice.effectiveDate)
-
-                return newDate.getTime() !== newDate2.getTime()
+                if (newDate.getTime() === newDate2.getTime()) {
+                    // console.log(salePrice)
+                    return salePrice
+                }
             }))
+        } else {
+            setScheduledPricesArray([...scheduledPricesArray, salePrice])
         }
+    }
 
-        function handleRemoveSalesPrice() {
-            setScheduledSalesArray(scheduledSalesArray.filter(scheduledSales => {
+    function handleAddSalesPrice() {
+        const exists = scheduledSalesArray?.some((scheduledSales) => {
+            const startDate = new Date(scheduledSales.saleStartDate)
+            const endDate = new Date(scheduledSales.saleEndDate)
+            const startDate2 = new Date(newSales.saleStartDate)
+            const endDate2 = new Date(newSales.saleEndDate)
+            return startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()
+
+        })
+        if (exists) {
+            setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
                 const startDate = new Date(scheduledSales.saleStartDate)
                 const endDate = new Date(scheduledSales.saleEndDate)
                 const startDate2 = new Date(newSales.saleStartDate)
                 const endDate2 = new Date(newSales.saleEndDate)
-                return (startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime())
+                if (startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()) {
+                    // console.log(newSales)
+                    return newSales
+                }
             }))
+        } else {
+            setScheduledSalesArray([...scheduledSalesArray, newSales])
         }
+    }
 
-        function handleAddMAP() {
-            const exists = minimumAdPriceArray?.some((minAdvertisedPrice) => {
-                const newDate = new Date(minAdvertisedPrice.effectiveDate)
-                const newDate2 = new Date(minAdPrice.effectiveDate)
-                return newDate.getTime() === newDate2.getTime()
-            })
-            console.log("minimum AP " + exists)
-            if (exists) {
-                setMinimumAdPriceArray(minimumAdPriceArray?.map(minAdvertisedPrice => {
-                    const newDate = new Date(minAdvertisedPrice.effectiveDate)
-                    const newDate2 = new Date(minAdPrice.effectiveDate)
-                    if (newDate.getTime() === newDate2.getTime()) {
-                        console.log(minAdPrice)
-                        return minAdPrice
-                    }
-                }))
-            } else {
-                console.log("inside else")
-                console.log(minAdPrice)
-                console.log(minimumAdPriceArray)
-                setMinimumAdPriceArray([...minimumAdPriceArray, minAdPrice])
-            }
-        }
+    function handleSubmit(event) {
+        event.preventDefault()
 
-        function handleAddScheduledPrice() {
-            const exists = scheduledPricesArray?.some((scheduledPrice) => {
-                const newDate = new Date(scheduledPrice.effectiveDate)
-                const newDate2 = new Date(salePrice.effectiveDate)
-                return newDate.getTime() === newDate2.getTime()
-            })
-            // console.log("scheduled price " + exists)
-            if (exists) {
-                setScheduledPricesArray(scheduledPricesArray?.map(scheduledPrice => {
-                    const newDate = new Date(scheduledPrice.effectiveDate)
-                    const newDate2 = new Date(salePrice.effectiveDate)
-                    if (newDate.getTime() === newDate2.getTime()) {
-                        // console.log(salePrice)
-                        return salePrice
-                    }
-                }))
-            } else {
-                setScheduledPricesArray([...scheduledPricesArray, salePrice])
-            }
-        }
+        initiateEditProduct({
+            ...product,
+            productName,
+            categories: productCategory,
+            productDescription,
+            brand,
+            unitPrice,
+            unitsInStock,
+            size,
+            color,
+            productAvailable,
+            discontinued,
+            discountAvailable,
+            picture,
+            dateReceived,
+            unitsReceived,
+            scheduledPrices: scheduledPricesArray,
+            sales: scheduledSalesArray,
+            minimumAdvertisedPrice: minimumAdPriceArray
+        })
+        setSalePrice(initialSalePriceForm)
+        setNewSales(initialSalesForm)
 
-        function handleAddSalesPrice() {
-            const exists = scheduledSalesArray?.some((scheduledSales) => {
-                const startDate = new Date(scheduledSales.saleStartDate)
-                const endDate = new Date(scheduledSales.saleEndDate)
-                const startDate2 = new Date(newSales.saleStartDate)
-                const endDate2 = new Date(newSales.saleEndDate)
-                return startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()
+        setMinAdPrice(initialMinAdPriceForm)
 
-            })
-            // console.log("sales price " + exists)
-            if (exists) {
-                setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
-                    const startDate = new Date(scheduledSales.saleStartDate)
-                    const endDate = new Date(scheduledSales.saleEndDate)
-                    const startDate2 = new Date(newSales.saleStartDate)
-                    const endDate2 = new Date(newSales.saleEndDate)
-                    if (startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()) {
-                        // console.log(newSales)
-                        return newSales
-                    }
-                }))
-            } else {
-                setScheduledSalesArray([...scheduledSalesArray, newSales])
-            }
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault()
-
-            initiateEditProduct({
-                ...product,
-                productName,
-                categories: productCategory,
-                productDescription,
-                brand,
-                unitPrice,
-                unitsInStock,
-                size,
-                color,
-                productAvailable,
-                discontinued,
-                discountAvailable,
-                picture,
-                dateReceived,
-                unitsReceived,
-                scheduledPrices: scheduledPricesArray,
-                sales: scheduledSalesArray,
-                minimumAdvertisedPrice: minimumAdPriceArray
-            })
-            setSalePrice(initialSalePriceForm)
-            setNewSales(initialSalesForm)
-
-            setMinAdPrice(initialMinAdPriceForm)
-
-        }
+    }
 
         return <Modal show={show} onHide={cancelEditProduct}>
             <Modal.Header closeButton>
@@ -353,14 +335,14 @@ function ShopkeeperEditProduct({
                     <option value={false}>False</option>
                 </Form.Control>
 
-                <Form.Label>Picture</Form.Label>
-                <Form.Control type='img' value={picture} onChange={event => updatePicture(event.target.value)}/>
-                <Form.Label>Date Received</Form.Label>
-                <Form.Control type='date' value={dateReceived}
-                              onChange={event => updateDateReceived(event.target.value)}/>
-                <Form.Label>Units Received</Form.Label>
-                <Form.Control type='int' value={unitsReceived}
-                              onChange={event => updateUnitsReceived(event.target.value)}/>
+            <Form.Label>Picture</Form.Label>
+            <Form.Control type='img' value={picture} onChange={event => updatePicture(event.target.value)}/>
+            <Form.Label>Date Received</Form.Label>
+            <Form.Control type='date' value={dateReceived}
+                          onChange={event => updateDateReceived(event.target.value)}/>
+            <Form.Label>Units Received</Form.Label>
+            <Form.Control type='int' value={unitsReceived}
+                          onChange={event => updateUnitsReceived(event.target.value)}/>
 
                 <hr/>
                 <Card.Subtitle>Scheduled Price(s)</Card.Subtitle>
@@ -421,12 +403,12 @@ function ShopkeeperEditProduct({
                 <Form.Control type={"date"} name="saleEndDate" value={newSales.saleEndDate}
                               onChange={onSalesPricesChange}/>
 
-                <Form.Label>Scheduled sales discount</Form.Label>
-                <Form.Control type={'float'} name="discount" value={newSales.discount}
-                              onChange={onSalesPricesChange}/>
-                <Form.Label>Scheduled sales description</Form.Label>
-                <Form.Control type={'text'} name="saleDescription" value={newSales.saleDescription}
-                              onChange={onSalesPricesChange}/>
+            <Form.Label>Scheduled sales discount</Form.Label>
+            <Form.Control type={'float'} name="discount" value={newSales.discount}
+                          onChange={onSalesPricesChange}/>
+            <Form.Label>Scheduled sales description</Form.Label>
+            <Form.Control type={'text'} name="saleDescription" value={newSales.saleDescription}
+                          onChange={onSalesPricesChange}/>
 
                 <div><Button size='sm' className={'m-1 text-white'} onClick={() => handleAddSalesPrice()}>Add</Button><Button
                     size='sm' className={'m-1 text-white'} onClick={() => handleRemoveSalesPrice()}>Remove</Button>
@@ -466,54 +448,54 @@ function ShopkeeperEditProduct({
         </Modal>
 }
 
-    function mapStateToProps(state) {
-        return {
-            show: state.shopkeeperReducer.showEditProduct,
-            product: state.shopkeeperReducer.productToEdit,
-            productName: state.shopkeeperReducer.productName,
-            productDescription: state.shopkeeperReducer.productDescription,
-            brand: state.shopkeeperReducer.brand,
-            unitPrice: state.shopkeeperReducer.unitPrice,
-            unitsInStock: state.shopkeeperReducer.unitsInStock,
-            categories: state.shopkeeperReducer.categories,
-            size: state.shopkeeperReducer.size,
-            color: state.shopkeeperReducer.color,
-            productAvailable: state.shopkeeperReducer.productAvailable,
-            discontinued: state.shopkeeperReducer.discontinued,
-            discountAvailable: state.shopkeeperReducer.discountAvailable,
-            picture: state.shopkeeperReducer.picture,
-            dateReceived: state.shopkeeperReducer.dateReceived,
-            unitsReceived: state.shopkeeperReducer.unitsReceived,
-            price: state.shopkeeperReducer.price,
-            effectiveDate: state.shopkeeperReducer.effectiveDate,
-            saleStartDate: state.shopkeeperReducer.saleStartDate,
-            saleEndDate: state.shopkeeperReducer.saleEndDate,
-            discount: state.shopkeeperReducer.discount,
-            saleDescription: state.shopkeeperReducer.saleDescription
-        }
+function mapStateToProps(state) {
+    return {
+        show: state.shopkeeperReducer.showEditProduct,
+        product: state.shopkeeperReducer.productToEdit,
+        productName: state.shopkeeperReducer.productName,
+        productDescription: state.shopkeeperReducer.productDescription,
+        brand: state.shopkeeperReducer.brand,
+        unitPrice: state.shopkeeperReducer.unitPrice,
+        unitsInStock: state.shopkeeperReducer.unitsInStock,
+        categories: state.shopkeeperReducer.categories,
+        size: state.shopkeeperReducer.size,
+        color: state.shopkeeperReducer.color,
+        productAvailable: state.shopkeeperReducer.productAvailable,
+        discontinued: state.shopkeeperReducer.discontinued,
+        discountAvailable: state.shopkeeperReducer.discountAvailable,
+        picture: state.shopkeeperReducer.picture,
+        dateReceived: state.shopkeeperReducer.dateReceived,
+        unitsReceived: state.shopkeeperReducer.unitsReceived,
+        price: state.shopkeeperReducer.price,
+        effectiveDate: state.shopkeeperReducer.effectiveDate,
+        saleStartDate: state.shopkeeperReducer.saleStartDate,
+        saleEndDate: state.shopkeeperReducer.saleEndDate,
+        discount: state.shopkeeperReducer.discount,
+        saleDescription: state.shopkeeperReducer.saleDescription
     }
+}
 
 
-    function mapDispatchToProps(dispatch) {
-        return bindActionCreators({
-            initiateAddProduct,
-            initiateEditProduct,
-            cancelEditProduct,
-            updateProductName,
-            updateProductDescription,
-            updateBrand,
-            updateUnitPrice,
-            updateUnitsInStock,
-            updateSize,
-            updateColor,
-            updateProductAvailable,
-            updateDiscontinued,
-            updateDiscountAvailable,
-            updatePicture,
-            updateDateReceived,
-            updateUnitsReceived
-        }, dispatch)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        initiateAddProduct,
+        initiateEditProduct,
+        cancelEditProduct,
+        updateProductName,
+        updateProductDescription,
+        updateBrand,
+        updateUnitPrice,
+        updateUnitsInStock,
+        updateSize,
+        updateColor,
+        updateProductAvailable,
+        updateDiscontinued,
+        updateDiscountAvailable,
+        updatePicture,
+        updateDateReceived,
+        updateUnitsReceived
+    }, dispatch)
 
-    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopkeeperEditProduct)

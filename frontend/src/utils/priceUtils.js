@@ -30,12 +30,17 @@ export function discountPrice(product) {
         saleAndPrice = 0
     } else {
         product.sales?.map(sales => {
-            if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0) {
+            if(new Date(sales.saleEndDate) - now < 0) {
+                currentSale = 0
+                saleAndPrice = 0
+            }
+            else if (new Date(sales.saleStartDate) - now < 0 && new Date(sales.saleEndDate) - now > 0) {
                 currentSale = Math.round(currentPrice) * sales.discount
                 return saleAndPrice = currentPrice - currentSale
             }
         })
     }
+    console.log(`currentsale is : ${currentSale}, current price is: ${saleAndPrice}`)
     return {currentSale: currentSale, discountPrice: saleAndPrice}
 }
 

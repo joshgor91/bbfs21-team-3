@@ -4,10 +4,10 @@ import moment from "moment";
 import {useState} from "react";
 import ShopkeeperOrderDetails from "./ShopkeeperOrderDetails";
 
-function ShopkeeperOrderHistory({orderList, hide, setHide}) {
+function ShopkeeperOrderHistory({orderList, hide}) {
     const [showOrderDetails, setShowOrderDetails] = useState(false)
     const [order, setOrder] = useState({})
-    const tHead = ['Order Date', 'Order Total', 'Order Details']
+    const tHead = ['Order Date', 'Order Details']
 
     function handleSetOrder(order) {
         // console.log(`logging setOrder, order = ${order}`)
@@ -29,7 +29,6 @@ function ShopkeeperOrderHistory({orderList, hide, setHide}) {
             {orderList.map((order, i) => (
                 <tr key={order.orderDetails.orderDetailsId}>
                     <td >{moment(order.orderDetails.dateCreated).format("MMM Do YYYY")}</td>
-                    <td>${order.orderDetails.total}</td>
                     <td>
                         <Button  size='xs' onClick={() => handleSetOrder(order)} >Details</Button>
                     </td>
@@ -37,7 +36,7 @@ function ShopkeeperOrderHistory({orderList, hide, setHide}) {
             ))}
             </tbody>
         </Table>
-        <Button className={'m-1 text-white'} onClick={() => setHide(true)}>Close Table</Button>
+{/*        <Button className={'m-1 text-white'} onClick={() => setHide(true)}>Close Table</Button>*/}
             {Object.keys(order).length > 0 && <ShopkeeperOrderDetails order={order} showOrderDetails={showOrderDetails} setShowOrderDetails={setShowOrderDetails} />}
         </>
     );
