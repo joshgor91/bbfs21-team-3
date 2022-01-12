@@ -23,9 +23,9 @@ export const GlobalStyles = createGlobalStyle`
    color: ${({ theme }) => theme.text};
   }
  
- // .navbar{
- // background: ${({ theme }) => theme.navbarBackground};
- // }
+ .navbar{
+ background: ${({ theme }) => theme.navbarBackground};
+ }
  
  .form{
   color: ${({ theme }) => theme.formText};

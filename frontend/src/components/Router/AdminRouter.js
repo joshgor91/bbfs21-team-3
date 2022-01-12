@@ -23,7 +23,7 @@ function AdminRouter({cartQuantity, themeToggler}) {
 
                 <>
 
-                    <Link to="/"> <img className="logo" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></Link>
+                    <Link to="/"> <img className="logo" src="https://i.ibb.co/zWMxYXP/betterbuy-copy.png" alt="ubetterbuy"/></Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>
@@ -44,17 +44,7 @@ function AdminRouter({cartQuantity, themeToggler}) {
                             <Nav.Item>
                                 <Link className="link-item" to="/myaccount">My Account</Link>
                             </Nav.Item>
-                            {/*<Nav.Item>*/}
-                            {/*    <Form className="d-flex">*/}
-                            {/*        <FormControl*/}
-                            {/*            type="search"*/}
-                            {/*            placeholder="Search"*/}
-                            {/*            className="me-2"*/}
-                            {/*            aria-label="Search"*/}
-                            {/*        />*/}
-                            {/*        <Button variant="light">Search</Button>*/}
-                            {/*    </Form>*/}
-                            {/*</Nav.Item>*/}
+
                         </Nav>
                         <Nav className='ms-auto'>
 
