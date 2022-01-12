@@ -28,7 +28,7 @@ function ShopkeeperSeeCategories({categories, hide, setCategoryId, setIsEditing}
                     <td >{category.categoryName}</td>
                     <td>
                         <Stack>
-                            <Button onClick={() => handleEdit(category.id)}>Edit</Button>
+                            <Button className={'m-1 text-white'} onClick={() => handleEdit(category.id)}>Edit</Button>
                         </Stack>
                     </td>
                 </tr>

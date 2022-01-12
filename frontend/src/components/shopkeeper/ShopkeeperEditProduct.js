@@ -17,9 +17,10 @@ import {
     updateUnitsReceived,
     updateDiscountAvailable
 } from "../../modules/shopkeeper";
-import {Button, Form, Modal, Badge, ListGroup, FormControl} from "react-bootstrap";
+import {Button, Form, Modal, Badge, ListGroup, FormControl, Card, Table} from "react-bootstrap";
 import {connect} from "react-redux";
 import {useEffect, useState} from "react";
+import moment from "moment";
 
 
 const initialSalePriceForm = {
@@ -297,15 +298,15 @@ function ShopkeeperEditProduct({
                 <Form.Control type='productName' value={productName}
                               onChange={event => updateProductName(event.target.value)}/>
                 <Form.Label>Categories</Form.Label>
-                <div className='mb-3'>{productCategory.map(category => <Badge>{category.categoryName}</Badge>)}</div>
+                <div className='mb-3'>{productCategory.map(category => <Badge className={'m-1'}>{category.categoryName}</Badge>)}</div>
                 <Form.Control type='categories' as='select'
                               onChange={onChange}>
                     <option selected disabled hidden>Select Category</option>
                     {categories.map(category => <option id={category.id}
                                                         value={category.categoryName}>{category.categoryName}</option>)}
                 </Form.Control>
-                <div><Button size='sm' onClick={() => handleAdd()}>Add</Button><Button
-                    size='sm' onClick={() => handleRemove()}>Remove</Button>
+                <div><Button size='sm' className={'m-1 text-white'} onClick={() => handleAdd()}>Add</Button><Button
+                    size='sm' className={'m-1 text-white'} onClick={() => handleRemove()}>Remove</Button>
                 </div>
                 <Form.Label>Product Description</Form.Label>
                 <Form.Control type='productDescription' value={productDescription}
@@ -324,6 +325,7 @@ function ShopkeeperEditProduct({
                 <Form.Control type='text' as='select' selected value={color}
                               onChange={event => updateColor(event.target.value)}>
                     <option value="white">White</option>
+                    <option value="black">Black</option>
                     <option value="grey">Grey</option>
                     <option value="blue">Blue</option>
                     <option value="green">Green</option>
@@ -360,52 +362,58 @@ function ShopkeeperEditProduct({
                 <Form.Control type='int' value={unitsReceived}
                               onChange={event => updateUnitsReceived(event.target.value)}/>
 
-
                 <hr/>
-                <Form.Label>Minimum Advertised Price</Form.Label>
-                <div className='mb-3'>{minimumAdPriceArray?.map(minAdvertisedPrice =>
-                    <Badge>price={minAdvertisedPrice.price}<br/>
-                        effective date={minAdvertisedPrice.effectiveDate}</Badge>)}</div>
-                <Form.Label>Effective minimum advertised price date</Form.Label>
-                <Form.Control type={"date"} name="effectiveDate" value={minAdPrice.effectiveDate}
-                              onChange={onMAPChange}/>
-                <Form.Label>Price</Form.Label>
-                <Form.Control type={'int'} name="price" value={minAdPrice.price}
-                              onChange={onMAPChange}/>
-                <div><Button size='sm' onClick={() => handleAddMAP()}>Add</Button><Button
-                    size='sm' onClick={() => handleRemoveMAP()}>Remove</Button>
+                <Card.Subtitle>Scheduled Price(s)</Card.Subtitle>
+                <div>
+                    <Table striped bordered hover size="sm">
+                        <thead>
+                        <tr>
+                            <th>Price</th>
+                            <th>Effective Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {scheduledPricesArray?.map((scheduledPrice, idx) =>
+                            <tr key={idx}>
+                                <td>{scheduledPrice.price}</td>
+                                <td>{moment(scheduledPrice.effectiveDate).format('llll')}</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
+                    <Form.Label>Scheduled Price Date</Form.Label>
+                    <Form.Control type={"date"} name="effectiveDate" value={salePrice.effectiveDate}
+                                  onChange={onScheduledPricesChange}/>
+                    <Form.Control type={'int'} name="price" placeholder={'Scheduled price amount'} value={salePrice.price}
+                                  onChange={onScheduledPricesChange}/>
+                    <div><Button className={'m-1 text-white'} size='sm' onClick={() => handleAddScheduledPrice()}>Add</Button><Button
+                        size='sm' className={'m-1 text-white'} onClick={() => handleRemoveScheduledPrice()}>Remove</Button>
+                    </div>
                 </div>
-
-
-                <hr/>
-                <Form.Label>Scheduled Prices</Form.Label>
-                <div className='mb-3'>{scheduledPricesArray?.map(scheduledPrice =>
-                    <Badge>price={scheduledPrice.price}<br/>
-                        effective date={scheduledPrice.effectiveDate}</Badge>)}</div>
-
-                <Form.Label>Effective scheduled price date</Form.Label>
-                <Form.Control type={"date"} name="effectiveDate" value={salePrice.effectiveDate}
-                              onChange={onScheduledPricesChange}/>
-                <Form.Label>Effective scheduled Price</Form.Label>
-                <Form.Control type={'int'} name="price" value={salePrice.price}
-                              onChange={onScheduledPricesChange}/>
-                <div><Button size='sm' onClick={() => handleAddScheduledPrice()}>Add</Button><Button
-                    size='sm' onClick={() => handleRemoveScheduledPrice()}>Remove</Button>
-                </div>
-
-
                 <hr/>
                 <Form.Label>Scheduled Sales</Form.Label>
-                <div className='mb-3'>{scheduledSalesArray?.map(scheduledSale =>
-                    <Badge>
-                        sale start date={scheduledSale.saleStartDate}
-                        <br/>
-                        sale end date={scheduledSale.saleEndDate}<br/>
-                        discount={scheduledSale.discount}<br/>
-                        description of discount={scheduledSale.saleDescription}
-                    </Badge>
-                )}</div>
-
+                <div>
+                    <Table striped bordered hover size="sm">
+                        <thead>
+                        <tr>
+                            <th>Sale Start</th>
+                            <th>Sale End</th>
+                            <th>Discount</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {scheduledSalesArray?.map((scheduledSale, idx) =>
+                            <tr key={idx}>
+                                <td>{moment(scheduledSale.saleStartDate).format('llll')}</td>
+                                <td>{moment(scheduledSale.saleEndDate).format('llll')}</td>
+                                <td>{scheduledSale.discount * 100}%</td>
+                                <td>{scheduledSale.saleDescription}</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
+                </div>
                 <Form.Label>Effective scheduled price start date</Form.Label>
                 <Form.Control type={"date"} name="saleStartDate" value={newSales.saleStartDate}
                               onChange={onSalesPricesChange}/>
@@ -420,12 +428,40 @@ function ShopkeeperEditProduct({
                 <Form.Control type={'text'} name="saleDescription" value={newSales.saleDescription}
                               onChange={onSalesPricesChange}/>
 
-                <div><Button size='sm' onClick={() => handleAddSalesPrice()}>Add</Button><Button
-                    size='sm' onClick={() => handleRemoveSalesPrice()}>Remove</Button>
+                <div><Button size='sm' className={'m-1 text-white'} onClick={() => handleAddSalesPrice()}>Add</Button><Button
+                    size='sm' className={'m-1 text-white'} onClick={() => handleRemoveSalesPrice()}>Remove</Button>
+                </div>
+                <hr/>
+                  <Card.Subtitle>Minimum Advertised Price</Card.Subtitle>
+                <div>
+                    <Table striped bordered hover size="sm">
+                        <thead>
+                        <tr>
+                            <th>Price</th>
+                            <th>Effective Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {minimumAdPriceArray?.map((productMap, idx) =>
+                            <tr key={idx}>
+                                <td>{productMap.price}</td>
+                                <td>{moment(productMap.effectiveDate).format('llll')}</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
+                </div>
+                <Form.Label>Effective minimum advertised price date</Form.Label>
+                <Form.Control type={"date"} name="effectiveDate" value={minAdPrice.effectiveDate}
+                              onChange={onMAPChange}/>
+                <Form.Label>Price</Form.Label>
+                <Form.Control type={'int'} name="price" value={minAdPrice.price}
+                              onChange={onMAPChange}/>
+                <div><Button className={'m-1 text-white'} size='sm' onClick={() => handleAddMAP()}>Add</Button><Button
+                    className={'m-1 text-white'} size='sm' onClick={() => handleRemoveMAP()}>Remove</Button>
                 </div>
 
-
-                <Button type='submit'>{product ? 'Apply' : 'Create'}</Button>
+                <Button className={'text-white m-3'} type='submit'>{product ? 'Apply' : 'Create'}</Button>
             </Form>
         </Modal>
 }

@@ -87,7 +87,7 @@ function ShopKeeperCouponForm({coupons}) {
                         <Form.Control type="number" name="useLimit" value={couponForm.useLimit} onChange={onChange}/>
                         <Form.Label>Description</Form.Label>
                         <Form.Control type="text" name="description" value={couponForm.description} onChange={onChange}/>
-                        <Button variant='primary' type='submit'>{editing ? "Apply" : "Create"}</Button>
+                        <Button className={'m-1 text-white'} variant='primary' type='submit'>{editing ? "Apply" : "Create"}</Button>
                     </Form>
                 </Modal.Body>
             </Modal>
