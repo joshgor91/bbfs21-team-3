@@ -11,7 +11,7 @@ function ShopkeeperOrderDetails({order, showOrderDetails, setShowOrderDetails}) 
                         return (
                             <Row key={i}>
                                 <Col>
-                                    <Card>
+                                    <Card className={'m-2'}>
                                         <Card.Img className='product-img' variant="top" src={item.picture}/>
                                     </Card>
                                 </Col>

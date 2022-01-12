@@ -51,7 +51,7 @@ function ShopkeeperCreateCategory({showCreateCategory, setShowCreateCategory, ca
                 <Form onSubmit={handleSubmit}>
                     <Form.Label>Category Name</Form.Label>
                     <Form.Control required type='text' placeholder='Category Name' value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
-                    <Button variant='primary' type='submit'>{isEditing ? 'Apply' : 'Create'}</Button>
+                    <Button variant='primary' type='submit' className={'m-2 text-white'}>{isEditing ? 'Apply' : 'Create'}</Button>
                 </Form>
             </Modal.Body>
         </Modal>

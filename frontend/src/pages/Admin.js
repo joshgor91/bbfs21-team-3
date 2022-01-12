@@ -4,6 +4,7 @@ import AdminEditUsers from "../components/admin/AdminEditUsers";
 import React, {useState} from "react";
 import AdminErrorMessage from "../components/admin/AdminErrorMessage";
 import {connect} from "react-redux";
+import {Col} from "react-bootstrap";
 
 
 
@@ -18,10 +19,8 @@ function Admin({showError}) {
         password: '',
     });
 
-    return <>
+    return <Col className={"m-3"}>
     <h1>Welcome Admin
-    {/* add conditional to this page that if user auth /= 3,
-    it redirects to home if a random tried to access this endpoint*/}
     </h1>
 
         <AdminForm/>
@@ -29,7 +28,7 @@ function Admin({showError}) {
         <AdminEditUsers userForm={userForm} setUserForm={setUserForm}/>
         <AdminErrorMessage show={showError}/>
 
-    </>
+    </Col>
 }
 
 function mapStateToProps(state){

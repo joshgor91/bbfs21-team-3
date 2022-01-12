@@ -27,7 +27,7 @@ function OrderHistory({initiateGetOrderHistory, orderlist}) {
                     <Accordion.Body className="d-flex flex-row flex-wrap" >
                         {order.orderItems.map((product, idx) => {
                             return (
-                        <Card style={{ width: '18rem' }}>
+                        <Card style={{ width: '18rem' }} className={'mx-auto my-1'}>
                             <Card.Img variant="top" src={product.picture} />
                             <Card.Body>
                                 <Card.Title>{product.productName}</Card.Title>

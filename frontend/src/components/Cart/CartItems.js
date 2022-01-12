@@ -38,7 +38,7 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, sellPrice}
         >
             <Row>
                 <Col xs='3' style={{margin: 'auto'}}>
-                    <Card.Img variant="top" style={{width: '8em', height: '8em'}} src="holder.js/100px180"/>
+                    <Card.Img variant="top" className={'m-3'} style={{width: '8em', height: '8em'}} src="holder.js/100px180"/>
                 </Col>
                 <Col>
                     <Card.Body>
@@ -62,7 +62,7 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, sellPrice}
                                 <Card.Text>{cartItem.size}</Card.Text>
                             </Col>
                             <Col xs='auto' style={{marginTop: '.2em', width: 'auto'}}>
-                                <Button variant="primary" size="sm" onClick={editCart}>Save</Button>
+                                <Button variant="primary" className={'m-1'} size="sm" onClick={editCart}>Save</Button>
                             </Col>
                         </Row>
                         <Row>

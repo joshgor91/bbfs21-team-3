@@ -89,7 +89,7 @@ function ProductDetails({product}) {
                                 <Card.Title>{product.brand}</Card.Title>
                                 <Card.Subtitle>{product.productName}</Card.Subtitle>
                                 <Card.Text>{product.productDescription}</Card.Text>
-                                {product.categories.map((category, idx) => <Badge key={idx}>{category.categoryName}</Badge>)}
+                                {product.categories.map(category => <Badge className={'m-1'} key={'idx'}>{category.categoryName}</Badge>)}
                                 <Card.Text>{product.discontinued && 'Discontinued'}</Card.Text>
                                 {product.unitsInStock !== 0 ?
                                     <>

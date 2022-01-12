@@ -3,9 +3,7 @@ import ShopkeeperEditProduct from "./ShopkeeperEditProduct";
 import {Row} from "react-bootstrap";
 import {connect} from "react-redux";
 
-// console.log("Inside shopkeeper product list")
 function ShopkeeperProductList({products}) {
-    // console.log("Inside shopkeeper product list" + products)
     return <>
         <ShopkeeperEditProduct/>
         <Row>

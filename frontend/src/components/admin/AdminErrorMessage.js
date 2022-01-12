@@ -13,7 +13,6 @@ function AdminErrorMessage ({showError, errorMessage}) {
         [showError]
     )
 
-    // console.log(errorMessage)
     return (
         <ToastContainer position={'middle-center'}
         >
@@ -21,7 +20,7 @@ function AdminErrorMessage ({showError, errorMessage}) {
                    onClose={() => setShow(false)}
                    show={show}
                    autohide
-                   delay={3000}
+                   delay={5000}
             >
                 <Toast.Body className={"text-white"}>{errorMessage}</Toast.Body>
             </Toast>
