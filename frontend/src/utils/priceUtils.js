@@ -5,13 +5,13 @@ let saleAndPrice = 0
 let minAdvPrice = 0
 
 export function minAdPrice(product) {
-    // console.log(product)
-    product.mininumAdvertisedPrice?.map(minAdPr => {
+    console.log(product)
+    product.minimumAdvertisedPrice?.map(minAdPr => {
         if (new Date(minAdPr.effectiveDate) - now < 0) {
             minAdvPrice = minAdPr.price
         }
     })
-    // console.log(minAdvPrice)
+    console.log(minAdvPrice)
     return minAdvPrice
 }
 

@@ -11,17 +11,14 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
     const [sellingPrice, setSellingPrice] = useState(0)
     const [theDiscountPrice, setTheDiscountPrice] = useState(0)
     const [minAdvPrice, setMinAdvPrice] = useState(0)
+    console.log(minAdvPrice, theDiscountPrice, sellingPrice)
+
 
     useEffect(() => {
         setSellingPrice(sellPrice(product))
         setTheDiscountPrice(discountPrice(product).discountPrice)
         setMinAdvPrice(minAdPrice(product))
 
-        if (minAdvPrice > sellingPrice) {
-            console.log('DUMPING ALERT')
-        } else if (minAdvPrice > theDiscountPrice) {
-            console.log('SALE TO STRONG')
-        }
     }, [show]);
 
 
