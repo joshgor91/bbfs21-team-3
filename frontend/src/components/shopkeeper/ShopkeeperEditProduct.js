@@ -17,9 +17,10 @@ import {
     updateUnitsReceived,
     updateDiscountAvailable
 } from "../../modules/shopkeeper";
-import {Button, Form, Modal, Badge} from "react-bootstrap";
+import {Button, Form, Modal, Badge, Card, Table} from "react-bootstrap";
 import {connect} from "react-redux";
 import {useEffect, useState} from "react";
+import moment from "moment";
 
 
 const initialSalePriceForm = {
@@ -145,8 +146,8 @@ function ShopkeeperEditProduct({
 
     function handleRemoveMAP() {
         setMinimumAdPriceArray(minimumAdPriceArray.filter(minAdvertisedPrice => {
-            const newDate = new Date(minAdvertisedPrice.effectiveDate)
-            const newDate2 = new Date(minAdPrice.effectiveDate)
+            const newDate = new Date(minAdvertisedPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const newDate2 = new Date(minAdPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
 
             return newDate.getTime() !== newDate2.getTime()
         }))
@@ -154,34 +155,41 @@ function ShopkeeperEditProduct({
 
     function handleRemoveScheduledPrice() {
         setScheduledPricesArray(scheduledPricesArray.filter(scheduledPrice => {
-            const newDate = new Date(scheduledPrice.effectiveDate)
-            const newDate2 = new Date(salePrice.effectiveDate)
+            const newDate = new Date(scheduledPrice.effectiveDate).getHours() + 6
 
-            return newDate.getTime() !== newDate2.getTime()
+            const newDate2 = new Date(salePrice.effectiveDate).getHours() + 6
+
+            console.log("DATES " + newDate, newDate2)
+            console.log("getTime " + newDate.getTime() + (60*60*1000))
+            return  (newDate.setTime(newDate.getTime() + (60*60*1000)) !== newDate2.getTime())
+            // newDate.getTime() !== newDate2.getTime()
         }))
     }
 
     function handleRemoveSalesPrice() {
         setScheduledSalesArray(scheduledSalesArray.filter(scheduledSales => {
-            const startDate = new Date(scheduledSales.saleStartDate)
-            const endDate = new Date(scheduledSales.saleEndDate)
-            const startDate2 = new Date(newSales.saleStartDate)
-            const endDate2 = new Date(newSales.saleEndDate)
+            const startDate = new Date(scheduledSales.saleStartDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const endDate = new Date(scheduledSales.saleEndDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const startDate2 = new Date(newSales.saleStartDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const endDate2 = new Date(newSales.saleEndDate.replace(/-/g, '\/').replace(/T.+/, ''))
+
+            console.log("DATES " + startDate, endDate, startDate2, endDate2)
+
             return (startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime())
         }))
     }
 
     function handleAddMAP() {
         const exists = minimumAdPriceArray?.some((minAdvertisedPrice) => {
-            const newDate = new Date(minAdvertisedPrice.effectiveDate)
-            const newDate2 = new Date(minAdPrice.effectiveDate)
+            const newDate = new Date(minAdvertisedPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const newDate2 = new Date(minAdPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
             return newDate.getTime() === newDate2.getTime()
         })
         console.log("minimum AP " + exists)
         if (exists) {
             setMinimumAdPriceArray(minimumAdPriceArray?.map(minAdvertisedPrice => {
-                const newDate = new Date(minAdvertisedPrice.effectiveDate)
-                const newDate2 = new Date(minAdPrice.effectiveDate)
+                const newDate = new Date(minAdvertisedPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
+                const newDate2 = new Date(minAdPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
                 if (newDate.getTime() === newDate2.getTime()) {
                     console.log(minAdPrice)
                     return minAdPrice
@@ -195,17 +203,19 @@ function ShopkeeperEditProduct({
         }
     }
 
+    console.log(salePrice.effectiveDate)
+
     function handleAddScheduledPrice() {
         const exists = scheduledPricesArray?.some((scheduledPrice) => {
-            const newDate = new Date(scheduledPrice.effectiveDate)
-            const newDate2 = new Date(salePrice.effectiveDate)
+            const newDate = new Date(scheduledPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const newDate2 = new Date(salePrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
             return newDate.getTime() === newDate2.getTime()
         })
         // console.log("scheduled price " + exists)
         if (exists) {
             setScheduledPricesArray(scheduledPricesArray?.map(scheduledPrice => {
-                const newDate = new Date(scheduledPrice.effectiveDate)
-                const newDate2 = new Date(salePrice.effectiveDate)
+                const newDate = new Date(scheduledPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
+                const newDate2 = new Date(salePrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
                 if (newDate.getTime() === newDate2.getTime()) {
                     // console.log(salePrice)
                     return salePrice
@@ -218,20 +228,20 @@ function ShopkeeperEditProduct({
 
     function handleAddSalesPrice() {
         const exists = scheduledSalesArray?.some((scheduledSales) => {
-            const startDate = new Date(scheduledSales.saleStartDate)
-            const endDate = new Date(scheduledSales.saleEndDate)
-            const startDate2 = new Date(newSales.saleStartDate)
-            const endDate2 = new Date(newSales.saleEndDate)
-            return startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()
+            const startDate = scheduledSales.saleStartDate
+            const endDate = scheduledSales.saleEndDate
+            const startDate2 = newSales.saleStartDate
+            const endDate2 = newSales.saleEndDate
+            return startDate === startDate2 && endDate === endDate2
 
         })
         if (exists) {
             setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
-                const startDate = new Date(scheduledSales.saleStartDate)
-                const endDate = new Date(scheduledSales.saleEndDate)
-                const startDate2 = new Date(newSales.saleStartDate)
-                const endDate2 = new Date(newSales.saleEndDate)
-                if (startDate.getTime() === startDate2.getTime() && endDate.getTime() === endDate2.getTime()) {
+                const startDate = scheduledSales.saleStartDate
+                const endDate = scheduledSales.saleEndDate
+                const startDate2 =newSales.saleStartDate
+                const endDate2 = newSales.saleEndDate
+                if (startDate === startDate2 && endDate === endDate2) {
                     // console.log(newSales)
                     return newSales
                 }
