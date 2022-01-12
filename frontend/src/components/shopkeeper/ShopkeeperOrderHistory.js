@@ -4,7 +4,7 @@ import moment from "moment";
 import {useState} from "react";
 import ShopkeeperOrderDetails from "./ShopkeeperOrderDetails";
 
-function ShopkeeperOrderHistory({orderList, hide, setHide}) {
+function ShopkeeperOrderHistory({orderList, hide}) {
     const [showOrderDetails, setShowOrderDetails] = useState(false)
     const [order, setOrder] = useState({})
     const tHead = ['Order Date', 'Order Details']
@@ -36,7 +36,7 @@ function ShopkeeperOrderHistory({orderList, hide, setHide}) {
             ))}
             </tbody>
         </Table>
-        <Button onClick={() => setHide(true)}>Close Table</Button>
+{/*        <Button onClick={() => setHide(true)}>Close Table</Button>*/}
             {Object.keys(order).length > 0 && <ShopkeeperOrderDetails order={order} showOrderDetails={showOrderDetails} setShowOrderDetails={setShowOrderDetails} />}
         </>
     );
