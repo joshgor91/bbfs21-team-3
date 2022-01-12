@@ -145,8 +145,8 @@ function ShopkeeperEditProduct({
 
     function handleRemoveMAP() {
         setMinimumAdPriceArray(minimumAdPriceArray.filter(minAdvertisedPrice => {
-            const newDate = new Date(minAdvertisedPrice.effectiveDate)
-            const newDate2 = new Date(minAdPrice.effectiveDate)
+            const newDate = new Date(minAdvertisedPrice.effectiveDate).toLocaleDateString()
+            const newDate2 = new Date(minAdPrice.effectiveDate).toLocaleDateString()
 
             return newDate.getTime() !== newDate2.getTime()
         }))
