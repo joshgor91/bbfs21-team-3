@@ -5,22 +5,20 @@ export const lightTheme = {
     background: '#363537',
 }
 export const darkTheme = {
-    body: '#363537',
+    body: '#202124',
     text: '#FAFAFA',
     toggleBorder: '#6B8096',
     background: '#999',
     tableText: 'lightgrey',
     tableStripeBackground: 'black',
-    buttonBackground: 'grey',
+    buttonBackground: '#24292F',
     buttonBorder: 'thin solid black',
-    navbarBackground: 'darkblue',
+    navbarBackground: '#000112',
     formText: 'black',
     cardBorder: 'thin solid white',
     modalTitle: 'white',
     modalTitleBackground: '#282828',
     formLabel: 'grey',
-    carouselCaption: '#363537',
+    carouselCaption: '#202124',
     carouselText: 'white'
-
-
 }

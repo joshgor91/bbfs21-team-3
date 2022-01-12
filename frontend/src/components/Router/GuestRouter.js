@@ -22,7 +22,7 @@ function GuestRouter({cartQuantity, themeToggler}) {
                 <Navbar variant="dark" id="navbar" expand="lg" sticky="top-0">
 
                     <>
-                        <Link to="/"> <img className="logo" src="https://i.ibb.co/z6DF5XJ/betterbuy.png" alt="betterbuy"/></Link>
+                        <Link to="/"> <img className="logo" src="https://i.ibb.co/4gdmb56/betterbuy-copy-removebg-preview.png"  alt="betterbuy"/></Link>
                         <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>
@@ -40,18 +40,6 @@ function GuestRouter({cartQuantity, themeToggler}) {
                                 <Nav.Item>
                                     <Link className="link-item" to="/register">Register </Link>
                                 </Nav.Item>
-
-                                {/*<Nav.Item>*/}
-                                {/*    <Form className="d-flex">*/}
-                                {/*        <FormControl*/}
-                                {/*            type="search"*/}
-                                {/*            placeholder="Search"*/}
-                                {/*            className="me-2"*/}
-                                {/*            aria-label="Search"*/}
-                                {/*        />*/}
-                                {/*        <Button variant="light">Search</Button>*/}
-                                {/*    </Form>*/}
-                                {/*</Nav.Item>*/}
 
 
                             </Nav>
