@@ -6,6 +6,11 @@ import {clearUserInfo, initiateDeleteUser, setUserInfo} from "../../modules/user
 function UserView({user, showInfo, userIsAdmin}) {
     const dispatch = useDispatch()
 
+    function handleDeleteUser() {
+        dispatch(initiateDeleteUser(user.id))
+        window.location.reload(false)
+    }
+
     return <>
         <Container>
             <Row>
@@ -30,7 +35,7 @@ function UserView({user, showInfo, userIsAdmin}) {
 
                                 {userIsAdmin ? "" :
                                     <Button size='sm' className={'m-1'} variant='outline-danger'
-                                            onClick={() => dispatch(initiateDeleteUser(user.id))}>
+                                            onClick={handleDeleteUser}>
                                         Delete My Account
                                     </Button>
                                 }
