@@ -1,31 +1,30 @@
-import {Button, ButtonGroup, Col, Dropdown} from "react-bootstrap";
+import {ButtonGroup, Dropdown} from "react-bootstrap";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {logout} from "../../modules/user";
 import {initiateGetUsers, startAddingUser} from '../../modules/admin'
 
 
-
-
-function AdminForm({startAddingUser, initiateGetUsers, logout}){
+function AdminForm({startAddingUser, initiateGetUsers}){
 
     return <>
-        <Col className={'m-5'}>
+        <div className={'mx-5 my-2'}>
             <Dropdown as={ButtonGroup}>
 
-                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic">
+                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" className={'text-white'}>
                     Admin
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item
                         onClick={startAddingUser}
                     >Create</Dropdown.Item>
+                    <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                     <Dropdown.Item
                         onClick={initiateGetUsers}
                     >View all Users</Dropdown.Item>
                 </Dropdown.Menu><br/>
             </Dropdown>
-            </Col></>
+            </div></>
 
 
 }

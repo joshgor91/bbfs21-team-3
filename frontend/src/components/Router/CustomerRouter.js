@@ -21,12 +21,12 @@ function CustomerRouter({cartQuantity, themeToggler}) {
 
                 <>
 
-                    <Link to="/"> <img className="logo" src="https://i.ibb.co/zWMxYXP/betterbuy-copy.png" alt="betterbuy"/></Link>
+                    <Link to="/"> <img className="logo ms-3 me-5" src="https://i.ibb.co/zWMxYXP/betterbuy-copy.png" alt="betterbuy"/></Link>
                     <Navbar.Toggle aria-controls="navbar-nav"><span>
             Menu
                 </span></Navbar.Toggle>
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="ml-auto pr-3 ">
+                        <Nav className="m-2">
 
                             <Nav.Item>
                                 <Link className="link-item" to="/">Home </Link>
@@ -38,16 +38,16 @@ function CustomerRouter({cartQuantity, themeToggler}) {
 
                         </Nav>
                         <Nav className='ms-auto'>
-                            <Nav.Item>
+                            <Nav.Item className={'m-1'}>
                                 <Link className="link-item" to="/cart">
                                     <GiShoppingCart style={{width: '2em', height: '2em', marginLeft: "10px"}}/>
                                     <Badge pill bg="secondary">{cartQuantity}</Badge>
                                 </Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            <Nav.Item className={'m-1'}>
                                 <Button onClick={themeToggler}>Switch Theme</Button>
                             </Nav.Item>
-                            <Nav.Item>
+                            <Nav.Item className={'m-1'}>
                                 <LogoutBtn/>
                             </Nav.Item>
 

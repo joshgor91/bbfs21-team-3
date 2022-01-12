@@ -30,13 +30,13 @@ function ShopkeeperOrderHistory({orderList, hide}) {
                 <tr key={order.orderDetails.orderDetailsId}>
                     <td >{moment(order.orderDetails.dateCreated).format("MMM Do YYYY")}</td>
                     <td>
-                        <Button size='xs' onClick={() => handleSetOrder(order)} >Details</Button>
+                        <Button  size='xs' onClick={() => handleSetOrder(order)} >Details</Button>
                     </td>
                 </tr>
             ))}
             </tbody>
         </Table>
-{/*        <Button onClick={() => setHide(true)}>Close Table</Button>*/}
+{/*        <Button className={'m-1 text-white'} onClick={() => setHide(true)}>Close Table</Button>*/}
             {Object.keys(order).length > 0 && <ShopkeeperOrderDetails order={order} showOrderDetails={showOrderDetails} setShowOrderDetails={setShowOrderDetails} />}
         </>
     );

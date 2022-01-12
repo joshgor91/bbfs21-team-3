@@ -30,7 +30,7 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
             <Modal.Title>View Product</Modal.Title>
         </Modal.Header>
         <Col><Card>
-            <Card.Header>
+            <Card.Body>
                 <Row>
                     <Col>
                         <Card.Title>Brand</Card.Title>
@@ -52,36 +52,43 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
                 <Card.Subtitle>Product Name</Card.Subtitle>
                 <Card.Text>{product.productName}</Card.Text>
                 <Card.Subtitle>Categories</Card.Subtitle>
-                <Card.Text>{product.categories.map((category, idx) => <Badge
+                <Card.Text>{product.categories.map((category, idx) => <Badge className={'m-1'}
                     key={idx}>{category.categoryName}</Badge>)}</Card.Text>
-            </Card.Header>
-            <Card.Body>
+<hr/>
                 <Card.Subtitle>Product Description</Card.Subtitle>
                 <Card.Text>{product.productDescription}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Size</Card.Subtitle>
                 <Card.Text>{product.size}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Color</Card.Subtitle>
                 <Card.Text>{product.color}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Product Available</Card.Subtitle>
-                <Card.Text>{moment(product.productAvailable).format('llll')}</Card.Text>
+                <Card.Text>{moment(product.productAvailable).add(6, "hours").format('llll')}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Discontinued</Card.Subtitle>
                 <Card.Text>{product.discontinued ? 'True' : 'False'}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Discount Available</Card.Subtitle>
                 <Card.Text>{product.discountAvailable ? 'True' : 'False'}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Product Picture</Card.Subtitle>
                 <Card.Text>{product.picture}</Card.Text>
-
+                <hr  />
                 <Card.Subtitle>Unit Price</Card.Subtitle>
                 <Card.Text>{product.unitPrice}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Units in Stock</Card.Subtitle>
                 <Card.Text>{product.unitsInStock}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Date Received</Card.Subtitle>
-                <Card.Text>{moment(product.dateReceived).format('llll')}</Card.Text>
+                <Card.Text>{moment(product.dateReceived).add(6, "hours").format('llll')}</Card.Text>
+                <hr  />
                 <Card.Subtitle>Units Received</Card.Subtitle>
                 <Card.Text>{product.unitsReceived}</Card.Text>
-
                 <hr/>
-                <Card.Subtitle>Scheduled Price Date</Card.Subtitle>
+                <Card.Subtitle>Scheduled Price(s)</Card.Subtitle>
                 <div>
                     <Table striped bordered hover size="sm">
                         <thead>

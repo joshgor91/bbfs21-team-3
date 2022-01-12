@@ -67,7 +67,7 @@ function ShopKeeperCouponForm({coupons}) {
     return (
         <>
                 <div>
-                    <Button variant="secondary" onClick={() => setCreating(true)}>Create Coupon</Button>
+                    <Button variant="secondary" className={'my-2 mx-3 text-white'} onClick={() => setCreating(true)}>Create Coupon</Button>
                 </div>
             <Modal show={editing || creating} onHide={hideModal}>
                 <Modal.Header closeButton>
@@ -87,7 +87,7 @@ function ShopKeeperCouponForm({coupons}) {
                         <Form.Control type="number" name="useLimit" value={couponForm.useLimit} onChange={onChange}/>
                         <Form.Label>Description</Form.Label>
                         <Form.Control type="text" name="description" value={couponForm.description} onChange={onChange}/>
-                        <Button variant='primary' type='submit'>{editing ? "Apply" : "Create"}</Button>
+                        <Button className={'m-1 text-white'} variant='primary' type='submit'>{editing ? "Apply" : "Create"}</Button>
                     </Form>
                 </Modal.Body>
             </Modal>

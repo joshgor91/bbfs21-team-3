@@ -1,10 +1,9 @@
 import Products from "../components/ProductsView/Products";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {initiateGetAllProducts, unsetProduct} from "../modules/products";
 import {connect}from "react-redux";
 import {initiateGetCartItems} from "../modules/cart";
-import {Badge} from "react-bootstrap";
 
 
 const Home = ({loggedInUser, isLoggedIn}) => {

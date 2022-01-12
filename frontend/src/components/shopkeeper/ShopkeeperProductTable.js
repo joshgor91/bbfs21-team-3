@@ -68,11 +68,11 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
                     <td >{product.unitsInStock}</td>
                     <td >{product.unitsReceived}</td>
                     <td >{moment(product.productAvailable).format('llll')}</td>
-                    <td><Button variant="secondary" onClick={() => handleViewDetails(product)}>Details</Button></td>
+                    <td><Button className={'m-1'} variant="secondary" onClick={() => handleViewDetails(product)}>Details</Button></td>
                     <td>
                         <Stack>
-                            <Button variant="info" onClick={() => editProduct(product)}>Edit</Button>
-                            <Button variant="danger" onClick={() => initiateDeleteProduct(product.id)}>Delete</Button>
+                            <Button className={'m-1'} variant="info" onClick={() => editProduct(product)}>Edit</Button>
+                            <Button className={'m-1'} variant="danger" onClick={() => initiateDeleteProduct(product.id)}>Delete</Button>
                         </Stack>
                     </td>
                 </tr>

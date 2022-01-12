@@ -55,14 +55,14 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
                     </Col>
                     <Col xs='auto'>
                         {show ?
-                            <Button size='sm' variant="outline-secondary" onClick={() => {
+                            <Button size='sm' className={'m-1'} variant="outline-secondary" onClick={() => {
                                 setShow(false)
                                 setShowPassword(false)
                             }}>
                                 Cancel Edit
                             </Button>
                             :
-                            <Button size='sm' variant="outline-secondary" onClick={() => setShow(true)}>
+                            <Button size='sm' className={'m-1'} variant="outline-secondary" onClick={() => setShow(true)}>
                                 Edit Info
                             </Button>}
                     </Col>
@@ -71,7 +71,7 @@ function UserInfo({user, userInfo, password, address1, address2, city, state, zi
                 <Form onSubmit={submitEdit}>
                     <Row>
                         {!show && <Card.Text>Password ************</Card.Text>}
-                        {show && <Button variant="info" onClick={() => setShowPassword(true)}>
+                        {show && <Button variant="info" className={'m-1'} onClick={() => setShowPassword(true)}>
                             Change Password
                         </Button>}
                         <hr/>

@@ -71,13 +71,18 @@ function ShopkeeperForm({products, orders, initiateGetProducts, initiateGetCateg
                     categoryId={categoryId}
                 />
                 <Dropdown as={ButtonGroup}>
-                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic'>Shopkeeper Actions</Dropdown.Toggle>
+                    <Dropdown.Toggle split variant='primary' id='dropdown-split-basic' className={'text-white'}>Shopkeeper Actions</Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item name="showCoupons" onClick={handleShowValue}>Manage Coupons</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item name="showCreateProduct" onClick={handleShowCreateProduct}>Create New Product</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item name="showCreateCategory" onClick={handleShowCreateCategory}>Create New Category</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item name="showProductList" onClick={handleShowValue}>Display Product List</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item name="showCategories" onClick={handleShowValue}>Display Categories</Dropdown.Item>
+                        <Dropdown.Divider style={{width: '90%', margin:'auto'}}/>
                         <Dropdown.Item name="showOrderHistory" onClick={handleShowValue}>Display Orders</Dropdown.Item>
                     </Dropdown.Menu><br/>
                 </Dropdown>
