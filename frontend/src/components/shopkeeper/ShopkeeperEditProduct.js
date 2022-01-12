@@ -133,7 +133,6 @@ function ShopkeeperEditProduct({
 
     function handleAdd() {
         if (categorySelect.categoryName === '') {
-            // console.log(`logging empty string`)
         } else {
             setProductCategory([...productCategory, categorySelect])
         }
@@ -146,8 +145,8 @@ function ShopkeeperEditProduct({
 
     function handleRemoveMAP() {
         setMinimumAdPriceArray(minimumAdPriceArray.filter(minAdvertisedPrice => {
-            const newDate = new Date(minAdvertisedPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            const newDate2 = new Date(minAdPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const newDate = new Date(minAdvertisedPrice.effectiveDate)
+            const newDate2 = new Date(minAdPrice.effectiveDate)
 
             return newDate.getTime() !== newDate2.getTime()
         }))
@@ -155,50 +154,46 @@ function ShopkeeperEditProduct({
 
     function handleRemoveScheduledPrice() {
         setScheduledPricesArray(scheduledPricesArray.filter(scheduledPrice => {
-            const newDate = new Date(scheduledPrice.effectiveDate).getHours() + 6
+            const newDate = new Date(scheduledPrice.effectiveDate).toLocaleDateString()
+            console.log(newDate)
+            const newDate2 = new Date(salePrice.effectiveDate).toLocaleDateString()
+            console.log(newDate2)
 
-            const newDate2 = new Date(salePrice.effectiveDate).getHours() + 6
+            return  newDate !== newDate2
 
-            console.log("DATES " + newDate, newDate2)
-            console.log("getTime " + newDate.getTime() + (60*60*1000))
-            return  (newDate.setTime(newDate.getTime() + (60*60*1000)) !== newDate2.getTime())
-            // newDate.getTime() !== newDate2.getTime()
         }))
     }
 
     function handleRemoveSalesPrice() {
         setScheduledSalesArray(scheduledSalesArray.filter(scheduledSales => {
-            const startDate = new Date(scheduledSales.saleStartDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            const endDate = new Date(scheduledSales.saleEndDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            const startDate2 = new Date(newSales.saleStartDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            const endDate2 = new Date(newSales.saleEndDate.replace(/-/g, '\/').replace(/T.+/, ''))
+            const startDate = new Date(scheduledSales.saleStartDate).toLocaleDateString()
+            const endDate = new Date(scheduledSales.saleEndDate).toLocaleDateString()
+            const startDate2 = new Date(newSales.saleStartDate).toLocaleDateString()
+            const endDate2 = new Date(newSales.saleEndDate).toLocaleDateString()
 
             console.log("DATES " + startDate, endDate, startDate2, endDate2)
 
-            return (startDate.getTime() !== startDate2.getTime() && endDate.getTime() !== endDate2.getTime())
+            return (startDate !== startDate2 && endDate !== endDate2)
         }))
     }
 
     function handleAddMAP() {
         const exists = minimumAdPriceArray?.some((minAdvertisedPrice) => {
-            const newDate = new Date(minAdvertisedPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            const newDate2 = new Date(minAdPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            return newDate.getTime() === newDate2.getTime()
+            const newDate = new Date(minAdvertisedPrice.effectiveDate).toLocaleDateString()
+            const newDate2 = new Date(minAdPrice.effectiveDate).toLocaleDateString()
+            return newDate === newDate2
         })
         console.log("minimum AP " + exists)
         if (exists) {
             setMinimumAdPriceArray(minimumAdPriceArray?.map(minAdvertisedPrice => {
-                const newDate = new Date(minAdvertisedPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-                const newDate2 = new Date(minAdPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-                if (newDate.getTime() === newDate2.getTime()) {
+                const newDate = new Date(minAdvertisedPrice.effectiveDate).toLocaleDateString()
+                const newDate2 = new Date(minAdPrice.effectiveDate).toLocaleDateString()
+                if (newDate === newDate2) {
                     console.log(minAdPrice)
                     return minAdPrice
                 }
             }))
         } else {
-            console.log("inside else")
-            console.log(minAdPrice)
-            console.log(minimumAdPriceArray)
             setMinimumAdPriceArray([...minimumAdPriceArray, minAdPrice])
         }
     }
@@ -207,17 +202,16 @@ function ShopkeeperEditProduct({
 
     function handleAddScheduledPrice() {
         const exists = scheduledPricesArray?.some((scheduledPrice) => {
-            const newDate = new Date(scheduledPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            const newDate2 = new Date(salePrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-            return newDate.getTime() === newDate2.getTime()
+            const newDate = new Date(scheduledPrice).toLocaleDateString()
+            const newDate2 = new Date(salePrice.effectiveDate).toLocaleDateString()
+            console.log("handleAdd " + newDate, newDate2)
+            return newDate === newDate2
         })
-        // console.log("scheduled price " + exists)
         if (exists) {
             setScheduledPricesArray(scheduledPricesArray?.map(scheduledPrice => {
-                const newDate = new Date(scheduledPrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-                const newDate2 = new Date(salePrice.effectiveDate.replace(/-/g, '\/').replace(/T.+/, ''))
-                if (newDate.getTime() === newDate2.getTime()) {
-                    // console.log(salePrice)
+                const newDate = new Date(scheduledPrice.effectiveDate).toLocaleDateString()
+                const newDate2 = new Date(salePrice.effectiveDate).toLocaleDateString()
+                if (newDate === newDate2) {
                     return salePrice
                 }
             }))
@@ -228,19 +222,19 @@ function ShopkeeperEditProduct({
 
     function handleAddSalesPrice() {
         const exists = scheduledSalesArray?.some((scheduledSales) => {
-            const startDate = scheduledSales.saleStartDate
-            const endDate = scheduledSales.saleEndDate
-            const startDate2 = newSales.saleStartDate
-            const endDate2 = newSales.saleEndDate
+            const startDate = scheduledSales.saleStartDate.toLocaleDateString()
+            const endDate = scheduledSales.saleEndDate.toLocaleDateString()
+            const startDate2 = newSales.saleStartDate.toLocaleDateString()
+            const endDate2 = newSales.saleEndDate.toLocaleDateString()
             return startDate === startDate2 && endDate === endDate2
 
         })
         if (exists) {
             setScheduledSalesArray(scheduledSalesArray?.map(scheduledSales => {
-                const startDate = scheduledSales.saleStartDate
-                const endDate = scheduledSales.saleEndDate
-                const startDate2 =newSales.saleStartDate
-                const endDate2 = newSales.saleEndDate
+                const startDate = scheduledSales.saleStartDate.toLocaleDateString()
+                const endDate = scheduledSales.saleEndDate.toLocaleDateString()
+                const startDate2 =newSales.saleStartDate.toLocaleDateString()
+                const endDate2 = newSales.saleEndDate.toLocaleDateString()
                 if (startDate === startDate2 && endDate === endDate2) {
                     // console.log(newSales)
                     return newSales
@@ -368,7 +362,7 @@ function ShopkeeperEditProduct({
                         {scheduledPricesArray?.map((scheduledPrice, idx) =>
                             <tr key={idx}>
                                 <td>{scheduledPrice.price}</td>
-                                <td>{moment(scheduledPrice.effectiveDate).format('llll')}</td>
+                                <td>{moment(scheduledPrice.effectiveDate).add(6, "hours").format('llll')}</td>
                             </tr>
                         )}
                         </tbody>
@@ -397,8 +391,8 @@ function ShopkeeperEditProduct({
                         <tbody>
                         {scheduledSalesArray?.map((scheduledSale, idx) =>
                             <tr key={idx}>
-                                <td>{moment(scheduledSale.saleStartDate).format('llll')}</td>
-                                <td>{moment(scheduledSale.saleEndDate).format('llll')}</td>
+                                <td>{moment(scheduledSale.saleStartDate).add(6, "hours").format('llll')}</td>
+                                <td>{moment(scheduledSale.saleEndDate).add(6, "hours").format('llll')}</td>
                                 <td>{scheduledSale.discount * 100}%</td>
                                 <td>{scheduledSale.saleDescription}</td>
                             </tr>
@@ -437,7 +431,7 @@ function ShopkeeperEditProduct({
                         {minimumAdPriceArray?.map((productMap, idx) =>
                             <tr key={idx}>
                                 <td>{productMap.price}</td>
-                                <td>{moment(productMap.effectiveDate).format('llll')}</td>
+                                <td>{moment(productMap.effectiveDate).add(6, "hours").format('llll')}</td>
                             </tr>
                         )}
                         </tbody>
