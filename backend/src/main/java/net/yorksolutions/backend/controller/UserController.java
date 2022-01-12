@@ -116,7 +116,7 @@ public class UserController {
     // returning string to notify the front end that the admin successfully edited the user.
     String editThree(@RequestBody User userToEdit) throws JsonProcessingException {
 //        System.out.println(objectMapper.writeValueAsString(user));
-        var user = userRepo.findById(userToEdit.getId());
+        var user = userRepo.findByEmail(userToEdit.getEmail());
         if (user.isPresent() && !user.get().email.equals(userToEdit.email))
             return "email already exists";
         userRepo.save(userToEdit);
