@@ -65,7 +65,7 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
                 <Card.Text>{product.color}</Card.Text>
                 <hr  />
                 <Card.Subtitle>Product Available</Card.Subtitle>
-                <Card.Text>{moment(product.productAvailable).format('llll')}</Card.Text>
+                <Card.Text>{moment(product.productAvailable).add(6, "hours").format('llll')}</Card.Text>
                 <hr  />
                 <Card.Subtitle>Discontinued</Card.Subtitle>
                 <Card.Text>{product.discontinued ? 'True' : 'False'}</Card.Text>
@@ -83,7 +83,7 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
                 <Card.Text>{product.unitsInStock}</Card.Text>
                 <hr  />
                 <Card.Subtitle>Date Received</Card.Subtitle>
-                <Card.Text>{moment(product.dateReceived).format('llll')}</Card.Text>
+                <Card.Text>{moment(product.dateReceived).add(6, "hours").format('llll')}</Card.Text>
                 <hr  />
                 <Card.Subtitle>Units Received</Card.Subtitle>
                 <Card.Text>{product.unitsReceived}</Card.Text>
