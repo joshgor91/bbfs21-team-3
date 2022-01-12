@@ -28,9 +28,10 @@ public class OrderDetails {
     public OrderDetails() {
     }
 
-    public OrderDetails(Long userid, Float total) {
+    public OrderDetails(Long userid, Float total, String email) {
         this.userId = userid;
         this.total = total;
+        this.email = email;
         this.dateCreated = LocalDateTime.now();
     }
 
