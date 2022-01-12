@@ -38,7 +38,8 @@
 
 .logo{
     height:50px;
-    width: 90px;
+    width: 120px;
+    margin-left: 10px;
 }
 .navbar {
     padding-bottom: 0px;
@@ -57,10 +58,11 @@
 }
 
 .order-complete-logo{
-    width: 110px;
+    width: 140px;
     height: 55px;
     justify-content: center;
     margin-left: 10px;
+    border-radius: 10px;
 }
 
 #checkout-button{
