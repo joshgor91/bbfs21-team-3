@@ -7,7 +7,9 @@ function ShopkeeperProductList({products}) {
     return <>
         <ShopkeeperEditProduct/>
         <Row>
-            {products.map(product => <ShopkeeperProduct key={product.id} product={product}/>)}
+            {products.map(product => <ShopkeeperProduct key={product.id}
+                                                        product={product}
+            />)}
         </Row>
     </>
 }

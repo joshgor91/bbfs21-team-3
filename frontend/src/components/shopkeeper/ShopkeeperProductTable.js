@@ -33,8 +33,6 @@ function ShopkeeperProductTable({products, hide, editProduct, initiateDeleteProd
     const [newSales, setNewSales] = useState(initialSalesForm)
     const [minAdPrice, setMinAdPrice] = useState(initialMinAdPriceForm)
 
-
-
     function handleViewDetails(product) {
         viewProductDetails(product)
         setShowProductDetails(true)

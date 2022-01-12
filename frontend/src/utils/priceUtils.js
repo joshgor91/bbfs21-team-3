@@ -5,13 +5,11 @@ let saleAndPrice = 0
 let minAdvPrice = 0
 
 export function minAdPrice(product) {
-    // console.log(product)
-    product.mininumAdvertisedPrice?.map(minAdPr => {
+    product.minimumAdvertisedPrice?.map(minAdPr => {
         if (new Date(minAdPr.effectiveDate) - now < 0) {
             minAdvPrice = minAdPr.price
         }
     })
-    // console.log(minAdvPrice)
     return minAdvPrice
 }
 
@@ -40,7 +38,7 @@ export function discountPrice(product) {
             }
         })
     }
-    console.log(`currentsale is : ${currentSale}, current price is: ${saleAndPrice}`)
+    // console.log(`currentsale is : ${currentSale}, current price is: ${saleAndPrice}`)
     return {currentSale: currentSale, discountPrice: saleAndPrice}
 }
 
@@ -53,7 +51,6 @@ export function cartSummery(cart) {
     let discount = 0
     let totalSavings = 0
     let total = 0
-    let couponAmount = 0
 
     cart?.forEach(cartItem => {
         for (let item of cartItem.scheduledPrices) {

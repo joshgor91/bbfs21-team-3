@@ -11,18 +11,15 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
     const [sellingPrice, setSellingPrice] = useState(0)
     const [theDiscountPrice, setTheDiscountPrice] = useState(0)
     const [minAdvPrice, setMinAdvPrice] = useState(0)
+    console.log(minAdvPrice, theDiscountPrice, sellingPrice)
 
     useEffect(() => {
         setSellingPrice(sellPrice(product))
         setTheDiscountPrice(discountPrice(product).discountPrice)
         setMinAdvPrice(minAdPrice(product))
 
-        if (minAdvPrice > sellingPrice) {
-            console.log('DUMPING ALERT')
-        } else if (minAdvPrice > theDiscountPrice) {
-            console.log('SALE TO STRONG')
-        }
     }, [show]);
+
 
 
     return <Modal show={show} size="lg"
@@ -44,11 +41,11 @@ function ShopkeeperProduct({show, product, cancelViewProductDetails}) {
                         <Card.Title style={{color: 'red'}}>CHECK ADVERTISED PRICE - SCHEDULED PRICE UNDER
                             MAP!</Card.Title>
                         }
-                        {minAdvPrice > theDiscountPrice &&
+                        {minAdvPrice > theDiscountPrice && theDiscountPrice !== 0 &&
                         <Card.Title style={{color: 'red'}}>CHECK SALE - SALE UNDER MAP!</Card.Title>
                         }
                         {product.unitPrice > sellingPrice &&
-                        <Card.Title style={{color: 'red'}}>NO DUMPING! - CHECK PRICING</Card.Title>
+                        <Card.Title style={{color: 'red'}}>NO DUMPING! - CHECK PRICING - ADVERTISED PRICE WAY TO LOW</Card.Title>
                         }
                     </Col>
                 </Row>

@@ -27,7 +27,8 @@ function CartItems({cartItem, isLoggedIn, currentSale, discountPrice, sellPrice}
             let cartStorage = JSON.parse(window.localStorage.getItem('cartItems'))
             const updatedCart = cartStorage.filter(item => item.id !== cartItem.id)
             localStorage.setItem('cartItems', JSON.stringify(updatedCart))
-            window.location.reload(false)
+            window.location.reload(true)
+
         }
     }
 
