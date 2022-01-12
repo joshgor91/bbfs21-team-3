@@ -28,7 +28,7 @@ function ShopkeeperOrderDetails({order, showOrderDetails, setShowOrderDetails}) 
                                         Item Cost
                                     </Row>
                                     <Row>
-                                        {item.salePrice}
+                                        {item.salePrice ? item.salePrice : item.regularPrice}
                                     </Row>
                                 </Col>
                             </Row>
