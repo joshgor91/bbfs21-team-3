@@ -16,12 +16,12 @@ function UserView({user, showInfo, userIsAdmin}) {
                         <Row>
                             <Col>
                                 {!showInfo ?
-                                    <Button size='sm' variant="outline-secondary"
+                                    <Button size='sm' className={'m-1'} variant="outline-secondary"
                                             onClick={() => dispatch(setUserInfo(user))}>
                                         Manage My Account
                                     </Button>
                                     :
-                                    <Button size='sm' variant="outline-secondary"
+                                    <Button size='sm' className={'m-1'} variant="outline-secondary"
                                             onClick={() => dispatch(clearUserInfo())}>
                                         I'm Done
                                     </Button>}
@@ -29,7 +29,7 @@ function UserView({user, showInfo, userIsAdmin}) {
                             <Col xs='auto'>
 
                                 {userIsAdmin ? "" :
-                                    <Button size='sm' variant='outline-danger'
+                                    <Button size='sm' className={'m-1'} variant='outline-danger'
                                             onClick={() => dispatch(initiateDeleteUser(user.id))}>
                                         Delete My Account
                                     </Button>

@@ -10,7 +10,7 @@ function Products({inventory}) {
 
             <Container fluid>
              <Row>
-                        <div className="col-sm-12">
+                        <div className="col-sm-12 m-1">
                             <h3>Today's featured deals</h3>
                         </div>
                  </Row>
@@ -69,59 +69,7 @@ function Products({inventory}) {
                 </Carousel>
                     </Row>
 
-                {/*<div className="se-item-image-wrapper"> Shop these deals and more by category*/}
-                {/*    <Col >*/}
-
-
-
-                {/*        <Image*/}
-                {/*            alt="TVs &amp; Projectors"*/}
-                {/*               aria-hidden="false"*/}
-                {/*               className="rounded-circle"*/}
-                {/*               style={{width: 150, height: 150, marginLeft:"250px"}}*/}
-                {/*               src="https://pisces.bbystatic.com/image2/BestBuy_US/dam/MMT-500743-flex-icons-tv-220107-ccfb48bf-33d4-4617-be76-1b6950b91ed3.jpg;maxWidth=100"/>*/}
-                {/*        /!*<Col>*!/*/}
-                {/*        /!*    <div>*!/*/}
-                {/*        /!*        <a href="/product/:id" data-track="">Cell Phones</a>*!/*/}
-                {/*        /!*    </div>*!/*/}
-                {/*        /!*</Col>*!/*/}
-
-
-                {/*        <Image*/}
-                {/*            aria-hidden="false"*/}
-                {/*            className="rounded-circle"*/}
-                {/*            style={{width: 150, height: 150, marginLeft:"15px"}}*/}
-                {/*            src="https://www.apple.com/newsroom/images/product/iphone/standard/Apple_iPhone-13-Pro_iPhone-13-Pro-Max_09142021_inline.jpg.small_2x.jpg" />*/}
-
-                {/*        <Image*/}
-                {/*            aria-hidden="false"*/}
-                {/*            className="rounded-circle"*/}
-                {/*            style={{width: 150, height: 150, marginLeft:"15px"}}*/}
-                {/*            src="https://pisces.bbystatic.com/image2/BestBuy_US/dam/MMT-500743-flex-icons-vg-220107-d7951283-9e54-4f19-9d60-eac250530915.jpg;maxWidth=100"/>*/}
-
-                {/*        <Image*/}
-                {/*            aria-hidden="false"*/}
-                {/*            className="rounded-circle"*/}
-                {/*            style={{width: 150, height: 150, marginLeft:"15px"}}*/}
-                {/*            src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MWP22?wid=2000&hei=2000&fmt=jpeg&qlt=80&.v=1591634795000" />*/}
-
-                {/*        <Image*/}
-                {/*            aria-hidden="false"*/}
-                {/*            className="rounded-circle"*/}
-                {/*            style={{width: 150, height: 150, marginLeft:"15px"}}*/}
-                {/*            src="https://pisces.bbystatic.com/image2/BestBuy_US/dam/MMT-500743-flex-icons-tl-220107-c8140774-d8ea-46d2-8c43-1cb4d6325d63.jpg;maxWidth=100" />*/}
-
-                {/*        <Image*/}
-                {/*            aria-hidden="false"*/}
-                {/*            className="rounded-circle"*/}
-                {/*            style={{width: 150, height: 150, marginLeft:"15px"}}*/}
-                {/*            src="https://pisces.bbystatic.com/image2/BestBuy_US/dam/MMT-495056-ghp-img-icons-laptops-03a491af-cab2-43c4-a6e2-30b8a2303b30.jpg;maxWidth=100" />*/}
-
-                {/*    </Col>*/}
-
-                {/*</div><br/>*/}
-
-                <Row>
+                <Row className={'m-3'}>
                         {inventory && inventory.map((product, idx) =>
                             <Product key={idx} product={product}/>
                         )}
