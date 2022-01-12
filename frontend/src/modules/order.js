@@ -186,17 +186,20 @@ export function initiateAddOrder(total) {
     return function addOrderSideEffect(dispatch, getState) {
         const cartId = getState().userReducer.userCart.id
         const couponCode = getState().orderReducer.couponCode
+        const email = getState().userReducer.loggedInUser.email
         // console.log(cartId)
         dispatch(addingOrder())
         let headers = {
             'cartId': cartId,
-            'total':total
+            'total':total,
+            'email': email
         }
         if(couponCode !== "") {
             headers = {
                 'cartId': cartId,
                 'total':total,
-                'couponCode':couponCode
+                'couponCode':couponCode,
+                'email': email
             }
         }
         fetch("http://localhost:8080/api/order/add", {
